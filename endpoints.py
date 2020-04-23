@@ -17,7 +17,7 @@ logging.basicConfig(filename='inven3s.log',level=logging.DEBUG)
 db = mysql.connect(
 	host = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com",
 	user = "inven3suser", passwd = "pan3spwd", database='inven3s')
-cursor = db.cursor(buffered=True)
+cursor = db.cursor()
 
 useragents = [
    #Chrome
@@ -55,18 +55,20 @@ app = Flask(__name__,static_url_path='',static_folder=template_dir,template_fold
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
     query1 = "REPLACE INTO productcandidates (gtin,source,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s)"
-    #cursor.execute(query1,(gtin,source,id,title,url,rank))
-    #db.commit()
-    
-def discoverproductnamebygtin(gtin):
-	engine  = "google"
-	url     = ""
+    cursor.execute(query1,(gtin,source,id,title,url,rank))
+    db.commit()
+   
+def downloadproductpages(gtin,engine,preferredsources):
 	if engine == 'google':
 		url = "https://www.google.com/search?q=%s" % gtin
 	elif engine == 'bing':
 		url = "https://www.bing.com/search?q=%s" % gtin
 
-	productnamesuggest = ''
+	selectedhtml = ""
+	selectedurl = ""
+	selectedtitle = ""
+	firsturl = ""
+	firsttitle = ""
 	try:
 		randagent = random.choice(useragents)
 		headers = {'User-Agent': randagent}
@@ -75,10 +77,12 @@ def discoverproductnamebygtin(gtin):
 		html = r.content
 
 		soup = BeautifulSoup(html, 'html.parser')
+		results = []
 		if engine == 'google':
 			results = soup.find_all('div',{'class':'r'})
 		elif engine == 'bing':
 			results = soup.find_all('li',{'class':'b_algo'})
+
 		i = 1
 		for result in results:
 			resulttitle = ""
@@ -90,11 +94,18 @@ def discoverproductnamebygtin(gtin):
 				resulttitle = result.find('a').text
 				resultlink  = result.find('a').get('href', '')
 
-			if i == 1 and resulttitle != '':
-				productnamesuggest = resulttitle
+			for preferredsrc in preferredsources:
+				if preferredsrc in resultlink:
+					selectedurl = resultlink
+					selectedtitle = resulttitle
+
+			if i == 1:
+				firsturl = resultlink
+				firsttitle = resulttitle
 
 			addproductcandidate(engine,gtin,resulttitle,resultlink,i)
 			i += 1
+
 	except requests.ConnectionError as e:
 		logging.debug("internet connection error for [%s] [%s]" % (url,str(e)))
 	except requests.Timeout as e:
@@ -102,7 +113,73 @@ def discoverproductnamebygtin(gtin):
 	except requests.RequestException as e:
 		logging.debug("general error for [%s] [%s]" % (url,str(e)))
 
-	return productnamesuggest
+	if selectedurl == "":
+		selectedurl = firsturl
+		selectedtitle = firsttitle
+
+	if selectedurl != "":
+		randagent = random.choice(useragents)
+		headers = {'User-Agent': randagent}
+		r = requests.get(selectedurl, headers=headers, timeout=10)
+		selectedhtml = r.content
+
+	return selectedurl,selectedtitle,selectedhtml
+
+def discoverproductnamebygtin(gtin):
+	preferredsources = ["buycott.co","openfoodfacts.org","ebay.co"]
+
+	selectedurl,selectedtitle,selectedhtml = downloadproductpages(gtin,"google",preferredsources)
+	soup = BeautifulSoup(selectedhtml, 'html.parser')
+	
+	productname = ""
+	brandname = ""
+	brandid = ""
+	manufacturername = ""
+	if "buycott.co" in selectedurl:
+		productname = soup.find('h2').text.strip()
+
+		brandcell = soup.find('td', text = re.compile('Brand'))
+		brandname = brandcell.find_next_sibling('td').find('a').text.strip()
+		manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
+		manufacturername = manufacturercell.find_next_sibling('td').find('a').text.strip()
+	elif "ebay.co" in selectedurl:
+		productname = soup.find('title').text
+		productname = re.sub(r"\|.+$", "", productname).strip()
+		#print("[%s][%s]" % (selectedurl,productname))
+		brandcell = soup.find('td', text = re.compile('Brand:'))
+		if brandcell is not None:
+			brandname = brandcell.find_next_sibling('td').text.strip()
+			#<td class="attrLabels">Brand:</td><td width="50.0%"><span>Campbell Soups</span></td>
+			#<td class="attrLabels">Brand:</td><td width="50.0%"><h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Sirena</span></h2></td>
+		else:
+			brandcell = soup.find('div', text = re.compile('BRAND'))
+			brandname = brandcell.find_next_sibling('div').text.strip()
+			#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
+	elif "openfoodfacts.org" in selectedurl:
+		productname = soup.find('title').text
+		productname = re.sub(r"\|.+$", "", productname).strip()
+		#print("[%s][%s]" % (selectedurl,productname))
+		brandcell = soup.find('span', text = re.compile('Brands:'))
+		if brandcell is not None:
+			brandname = brandcell.find_next_sibling('a').text.strip()
+			#<span class="field">Brands:</span> <a itemprop="brand" href="/brand/nestle">Nestlé</a>
+	else:
+		productname = selectedtitle
+
+	if brandname != '':
+		query1 = """
+	    	SELECT
+	        brandid, brandname
+	    	FROM brands
+	    	WHERE brandname = %s
+		"""
+		cursor.execute(query1,(brandname,))
+		records = cursor.fetchall()
+		if records:
+			brandid = records[0][0]
+			brandname = records[0][1]
+
+	return productname,brandid,brandname,manufacturername
 
 def lookupproductbygtin(gtin):
 	query = """
@@ -203,12 +280,14 @@ def product_add():
 	else:
 		query1 = """
 	    	SELECT
-	        *
+	        count(*)
 	    	FROM products
 	    	WHERE gtin = %s
 		"""
 		cursor.execute(query1,(gtin,))
-		if cursor.rowcount > 0:
+		records = cursor.fetchall()
+		rowcount = records[0][0]
+		if rowcount > 0:
 			productname = productname.strip()
 			if productname != '':
 				query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
@@ -220,8 +299,8 @@ def product_add():
 			records = lookupproductbygtin(gtin)
 			return jsonify(jsonifyproducts(records)), '200'
 		else:
-			productnamesuggest = discoverproductnamebygtin(gtin)
-			return jsonify(jsonifymessage("product name suggestion [%s]" % productnamesuggest)), '200'
+			productname,brandid,brandname,manufacturername = discoverproductnamebygtin(gtin)
+			return jsonify(jsonifymessage("product name suggestion [%s] [%s] [%s] [%s]" % (productname,brandid,brandname,manufacturername))), '200'
 
 @app.route('/product/<gtin>', methods=['GET'])
 @app.route('/product/', methods=['GET'])

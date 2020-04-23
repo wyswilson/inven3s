@@ -46,8 +46,9 @@ useragents = [
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
+url = "https://www.buycott.com/upc/9310006004034"
 
-url = []
+url = "https://www.buycott.com/upc/9310072001654"
 randagent = random.choice(useragents)
 headers = {'User-Agent': randagent}
 r = requests.get(url, headers=headers, timeout=10)
@@ -55,15 +56,12 @@ urlresolved = r.url
 html = r.content
 
 soup = BeautifulSoup(html, 'html.parser')
-brandcell = soup.findAll('td', text = re.compile('Brand'))
-manufacturercell = soup.findAll('td', text = re.compile('Manufacturer'))
+productname = soup.find('h2').text
+print(productname)
+brandcell = soup.find('td', text = re.compile('Brand'))
+manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
+brandname = brandcell.find_next_sibling('td').find('a').text
+manufacturername = manufacturercell.find_next_sibling('td').find('a').text
 
- <h2>Arnott's Shortbread Cream Biscuits 250g.</h2>
-
- <td>Brand</td>
-    <td><a href="/brand/11634/arnotts-upc">Arnott&#x27;s</a></td>
-  </tr>
-  <tr>
-    <td>Manufacturer</td>
-    <td><a href="/company/435246/arnott-s-biscuits-ltd">Arnott&#x27;s Biscuits Ltd</a></td>
-  </tr>
+print(brandname)
+print(manufacturername)
