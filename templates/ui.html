@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Python Flask Bucket List App</title>
+
+  <link href="./style.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+  <script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  
+  <script>
+
+  $(function() {
+      $("#searchterm").autocomplete({
+          source:function(request, response) {
+              $.getJSON("{{url_for('autocomplete')}}",{
+                  q: request.term, // in flask, "q" will be the argument to look for using request.args
+              }, function(data) {
+                  response(data.matching_results); // matching_results from jsonify
+              });
+          },
+          minLength: 2,
+          select: function(event, ui) {
+              alert(ui.item.value); // not in your question, but might help later
+          }
+      });
+  })
+
+  $(document).ready(function(){
+      $('#searchform').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: '/search',
+            data: $('#searchform').serialize(),
+            type: 'POST',
+            success: function(response) {
+              $('#items').text('');
+              $.each(response.items, function(i, item) {
+                  $('#items').append('<LI>' + item.title + '<BR><span class="secondaryinfo"><BR>[' + item.brand + '] [' + item.product + '] [' + item.tag + ']</BR>by <B>' + item.retailer  + '</B> on <B>' + item.date  + '</B></span></li>');
+              });
+            },
+            error: function(error) {                
+                $('#response').text(JSON.stringify(error));
+            }
+        });
+      });
+  });
+  </script>
+</head>
+
+<body>
+<BR>
+<form id="searchform">
+<div class="container">
+  <div class="row">
+        <div class="col-md-6">
+        <div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input type="text" name="searchterm" id="searchterm" class="form-control input-lg" placeholder="e.g., Google Pixel, Bellroy" />
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-lg" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        </div>
+  </div>
+  <UL class="search-slat" id="items">
+
+  </UL>
+</div>
+</form>
+
+
+</body>
+</html>
