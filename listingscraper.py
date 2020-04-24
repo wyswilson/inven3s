@@ -16,8 +16,9 @@ logging.basicConfig(filename='inven3s.log',level=logging.DEBUG)
 
 db = mysql.connect(
 	host = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com",
-	user = "inven3suser", passwd = "pan3spwd", database='inven3s')
-cursor = db.cursor(buffered=True)
+	port = '3363',
+	user = "inven3suser", passwd = "P?a&N$3!s", database='inven3s')
+cursor = db.cursor()
 
 useragents = [
    #Chrome
