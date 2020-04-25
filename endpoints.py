@@ -6,18 +6,27 @@ import re
 from bs4 import BeautifulSoup
 from datetime import datetime
 import random
-import Levenshtein as lev
 import os
 import urllib
 import hashlib
 import logging
+from functools import wraps
 
-logging.basicConfig(filename='inven3s.log',level=logging.DEBUG)
+mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
+mysqlport = "3363"
+mysqluser = "inven3suser"
+mysqlpwrd = "P?a&N$3!s"
+mysqldb = "inven3s"
+apiuser = "inven3sapiuser"
+apipwrd = "N0tS3cUr3!"
+flasktemplatedir = "c:/dev/templates"
+logfile = "inven3s.log"
 
+logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connect(
-	host = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com",
-	port = '3363',
-	user = "inven3suser", passwd = "P?a&N$3!s", database='inven3s')
+	host = mysqlhost,
+	port = mysqlport,
+	user = mysqluser, passwd = mysqlpwrd, database=mysqldb)
 cursor = db.cursor()
 
 useragents = [
@@ -50,8 +59,34 @@ useragents = [
 
 imageroot = "http://127.0.0.1:5000/products"
 
-template_dir = os.path.abspath('c:/dev/templates')
+template_dir = os.path.abspath(flasktemplatedir)
 app = Flask(__name__,static_url_path='',static_folder=template_dir,template_folder=template_dir)
+app.config['JSON_SORT_KEYS'] = False
+
+def check_auth(username, password):
+    return username == apiuser and password == apipwrd
+
+def authenticate():
+    message = {'message': "authentication required"}
+    resp = jsonify(message)
+
+    resp.status_code = 401
+    resp.headers['WWW-Authenticate'] = 'Basic realm="Example"'
+
+    return resp
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth: 
+            return authenticate()
+
+        elif not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+
+    return decorated
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
@@ -142,6 +177,22 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 	return "ERR",""
 
+def resolvebrand(brandname):
+	query1 = """
+    	SELECT
+        	brandid, brandname, brandowner
+    	FROM brands
+    	WHERE lower(brandname) = %s
+	"""
+	cursor.execute(query1,(brandname.lower(),))
+	records = cursor.fetchall()
+	if records:
+		brandid = records[0][0]
+		brandname = records[0][1]
+		return brandid,brandname
+	else:
+		return "",""
+
 def discoverproductnamebygtin(gtin,attempt):
 	preferredsources = ["buycott.com","openfoodfacts.org","ebay.co","campbells.com.au"]
 
@@ -199,20 +250,10 @@ def discoverproductnamebygtin(gtin,attempt):
 
 		if brandname != '':
 			logging.debug("brand-resolver: [%s] [%s]" % (gtin,brandname))
+			brandid,brandname = resolvebrand(brandname)
+			logging.debug("brand-resolver: [%s] [%s] [%s]" % (gtin,brandname,brandid))
 
-			query1 = """
-		    	SELECT
-		        	brandid, brandname, brandowner
-		    	FROM brands
-		    	WHERE lower(brandname) = %s
-			"""
-			cursor.execute(query1,(brandname.lower(),))
-			records = cursor.fetchall()
-			if records:
-				brandid = records[0][0]
-				brandname = records[0][1]
-				logging.debug("brand-resolver: [%s] [%s] [%s]" % (gtin,brandname,brandid))
-			else:
+			if brandid == '':
 				brandid = addnewbrand(brandname,brandowner,"","")
 
 		if productname != "" and brandid != "":
@@ -323,131 +364,154 @@ def jsonifyinventory(records):
 
 	return inventory
 
-def jsonifyoutput(messagetext,records):
+def jsonifyoutput(statuscode,status,records):
 	messages = []
 	message = {}
-	message['status'] = messagetext
+	message['status'] = status
 	message['results'] = records
 	messages.append(message)
 
-	return jsonify(messages),'200'
+	return jsonify(messages),statuscode
 
 @app.route("/")
+@requires_auth
 def main():
-	return jsonifyoutput("error, provide a valid endpoint",[])
+	status = "invalid endpoint"
+	statuscode = 500
 
-@app.route('/product', methods=['POST'])
-def product_add():
+	return jsonifyoutput(statuscode,status,[])
+
+@app.route('/products', methods=['POST'])
+@requires_auth
+def productupsert():
+	status = ""
+	statuscode = 200
+
 	gtin = request.args.get("gtin")
 	productname 	= request.args.get("productname").strip()
 	productimage	= request.args.get("productimage").strip()
 	brandname		= request.args.get("brandname").strip()
 	isperishable 	= request.args.get("isperishable").strip()
 	isedible 		= request.args.get("isedible").strip()
+		
+	query1 = """
+    	SELECT
+        	gtin
+    	FROM products
+    	WHERE gtin = %s
+	"""
+	cursor.execute(query1,(gtin,))
+	records = cursor.fetchall()
+	if records:
+		gtin = records[0][0]
+		if productname != '':
+			query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
+			cursor.execute(query2,(productname,gtin))
+			db.commit()
 
-	if gtin is None or gtin == '':
-		return jsonifyoutput("no gtin is provided",[])
-	else:
-		status = ""
+			status = status + "productname"
+		if isperishable != '':
+			query2 = "UPDATE products SET isperishable = %s WHERE gtin = %s"
+			cursor.execute(query2,(isperishable,gtin))
+			db.commit()
 
-		query1 = """
-	    	SELECT
-	        	gtin
-	    	FROM products
-	    	WHERE gtin = %s
-		"""
-		cursor.execute(query1,(gtin,))
-		records = cursor.fetchall()
-		if records:
-			gtin = records[0][0]
-			if productname != '':
-				query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-				cursor.execute(query2,(productname,gtin))
-				db.commit()
+			status = status + "isperishable"
+		if isedible != '':
+			query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
+			cursor.execute(query2,(isedible,gtin))
+			db.commit()
 
-				status = status + "productname "
-			if isperishable != '':
-				query2 = "UPDATE products SET isperishable = %s WHERE gtin = %s"
-				cursor.execute(query2,(isperishable,gtin))
-				db.commit()
+			status = status + "isedible"
+		if productimage != '':
+			query2 = "UPDATE products SET productimage = %s WHERE gtin = %s"
+			cursor.execute(query2,(productimage,gtin))
+			db.commit()
 
-				status = status + "isperishable"
-			if isedible != '':
-				query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
-				cursor.execute(query2,(isedible,gtin))
-				db.commit()
-
-				status = status + "isedible"
-			if productimage != '':
-				query2 = "UPDATE products SET productimage = %s WHERE gtin = %s"
-				cursor.execute(query2,(productimage,gtin))
-				db.commit()
-
-				status = status + "productimage"
-			
-			if status != "":
-				status = status + " updated"
-			else:
-				status = "no updates"
+			status = status + "productimage"
+		
+		if status != "":
+			status = status + " updated"
 		else:
-			productname,brandid = discoverproductnamebygtin(gtin,1)
-			if productname != "ERR" and productname != "WARN":
-				if productname != "" and brandid != '':
-					status = status + "new product and brand discovered"
-				elif productname != "":
-					status = status + "new product discovered without brand which errored"
-			elif productname == "ERR":
-				status = "public search for product errored"
-			elif productname == "WARN":
-				status = "public search for product returned no data"
+			status = "no updates"
 
-		product = lookupproductbygtin(gtin)
-		return jsonifyoutput(status,jsonifyproducts(product))
+		records = lookupproductbygtin(gtin)
+	elif gtin == "":
+		status = "no gtin provided"
+		statuscode = 412
+	else:
+		productname,brandid = discoverproductnamebygtin(gtin,1)
+		if productname != "ERR" and productname != "WARN":
+			if productname != "" and brandid != '':
+				status = status + "new product and brand discovered"
 
-@app.route('/product/<gtin>', methods=['GET'])
-@app.route('/product/', methods=['GET'])
-@app.route('/product', methods=['GET'])
-def product_fetch(gtin=None):
-	records = []
+				records = lookupproductbygtin(gtin)
+			elif productname != "":
+				status = status + "new product discovered without brand"
+				statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+		elif productname == "ERR":
+			status = "public search for product errored"
+			statuscode = 503#service unavailable
+		elif productname == "WARN":
+			status = "public search for product returned no data"
+			statuscode = 404#not found
+
+	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
+
+@app.route('/products/<gtin>', methods=['GET'])
+@requires_auth
+def productselect(gtin):
 	status = ""
-	if gtin is None:
-		query = """
+	statuscode = 200
+
+	records = lookupproductbygtin(gtin)
+	if not records:
+		query1 = """
 			SELECT
 				p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
 			FROM products AS p
 			JOIN brands AS b
 			ON p.brandid = b.brandid
+			WHERE p.productname LIKE %s
 			GROUP BY 1,2,3,4,5
 		"""
-		cursor.execute(query)
+		cursor.execute(query1,("%" + gtin + "%",))
 		records = cursor.fetchall()
-		status = "all products returned"
+
+		status = "products searched by keyword"
 	else:
-		records = lookupproductbygtin(gtin)
-		if not records:
-			query1 = """
-				SELECT
-					p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
-				FROM products AS p
-				JOIN brands AS b
-				ON p.brandid = b.brandid
-				WHERE p.productname LIKE %s
-				GROUP BY 1,2,3,4,5
-			"""
-			cursor.execute(query1,("%" + gtin + "%",))
-			records = cursor.fetchall()
+		status = "product looked up by id"
 
-			status = "products searched by keyword"
-		else:
-			status = "individual product looked up by id"
+	if not records:
+		status = "product does not exists"
+		statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
 
-	if records:
-		return jsonifyoutput(status,jsonifyproducts(records))
-	else:
-		return jsonifyoutput("product does not exists",[])
+	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
-@app.route('/brand', methods=['POST'])
-def brand_add():
+@app.route('/products', methods=['GET'])
+@requires_auth
+def productselectall():
+	status = "all products returned"
+	statuscode = 200
+
+	query1 = """
+		SELECT
+			p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
+		FROM products AS p
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		GROUP BY 1,2,3,4,5
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
+
+@app.route('/brands', methods=['POST'])
+@requires_auth
+def brandupsert():
+	status = ""
+	statuscode = 200
+
 	brandid 	= request.args.get("brandid").strip()
 	brandname 	= request.args.get("brandname").strip()
 	brandimage 	= request.args.get("brandimage").strip()
@@ -464,7 +528,6 @@ def brand_add():
 	records = cursor.fetchall()
 	if records:
 		brandid = records[0][0]
-		status = ""
 		if brandname != "":
 			query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandname,brandid))
@@ -479,107 +542,114 @@ def brand_add():
 			query2 = "UPDATE brands SET brandimage = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandimage,brandid))
 			db.commit()
-			status = status + "brandowner "
+			status = status + "brandimage "
 		if brandurl != "":
 			query2 = "UPDATE brands SET brandurl = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandurl,brandid))
 			db.commit()
 			status = status + "brandurl "
+
 		if status != "":
 			status = status + "updated"
 		else:
-			status = 'no updates'
+			status = "no updates"
 
-		brands = lookupbrandbyid(brandid)
-
-		return jsonifyoutput(status,jsonifybrands(brands))
+		records = lookupbrandbyid(brandid)
 	elif brandname != '':
 		brandid = addnewbrand(brandname,brandowner,brandimage,brandurl)
-		brands = lookupbrandbyid(brandid)
+		records = lookupbrandbyid(brandid)
 
-		return jsonifyoutput("new brand added",jsonifybrands(brands))
+		status = "new brand added"
 	else:
-		return jsonifyoutput("no brand id or name provided",[])
+		status = "no brand id or name provided"
+		statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields
 
-@app.route('/brand/<brandid>', methods=['GET'])
-@app.route('/brand/', methods=['GET'])
-@app.route('/brand', methods=['GET'])
-def brand_fetch(brandid=None):
-	records = []
+	return jsonifyoutput(statuscode,status,jsonifybrands(records))
+
+@app.route('/brands/<brandid>', methods=['GET'])
+@requires_auth
+def brandselect(brandid):
 	status = ""
-	if brandid is None:
+	statuscode = 200
+
+	records = lookupbrandbyid(brandid)
+	if not records:
 		query1 = """
 			SELECT
 				b.brandid, b.brandname, b.brandimage, b.brandurl, b.brandowner, count(distinct(p.gtin))
 			FROM brands AS b
 			LEFT JOIN products as p
 			ON b.brandid = p.brandid
+			WHERE b.brandname LIKE %s
 			GROUP BY 1,2,3,4,5
 		"""
-		cursor.execute(query1)
+		cursor.execute(query1,("%" + brandid + "%",))
 		records = cursor.fetchall()
 
-		status = "all brands returned"
+		status = "brands found with keyword search"
 	else:
-		records = lookupbrandbyid(brandid)
-		if not records:
-			query2 = """
-				SELECT
-					b.brandid, b.brandname, b.brandimage, b.brandurl, b.brandowner, count(distinct(p.gtin))
-				FROM brands AS b
-				LEFT JOIN products as p
-				ON b.brandid = p.brandid
-				WHERE b.brandname LIKE %s
-				GROUP BY 1,2,3,4,5
-			"""
-			cursor.execute(query2,("%" + brandid + "%",))
-			records = cursor.fetchall()
+		status = "brand found with id lookup"
 
-			status = "brands found with keyword search"
-		else:
-			status = "brand found with id lookup"
+	if not records:
+		status = "brand does not exists"
+		statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
 
-	if records:
-		return jsonifyoutput(status,jsonifybrands(records))
-	else:
-		return jsonifyoutput("brand does not exists",[])
+	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
-@app.route('/inventory/<uid>', methods=['GET'])
-@app.route("/inventory/", methods=['GET'])
-@app.route("/inventory", methods=['GET'])
-def inventory_fetch(uid=None):
-	if uid is None:
-		return jsonifyoutput("no user id provided",[])
-	else:
-		query1 = """
-			SELECT
-				useremail
-			FROM users
-			WHERE userid LIKE %s
-		"""
-		cursor.execute(query1,(uid,))
-		records = cursor.fetchall()
-		if records:
-			query2 = """
-				SELECT
-					i.gtin,p.productname,b.brandname,i.dateexpiry,sum(i.quantity) AS itemcount
-				FROM inventory AS i
-				JOIN products AS p
-				ON i.gtin = p.gtin
-				JOIN brands AS b
-				ON p.brandid = b.brandid
-				WHERE i.userid = %s
-				GROUP BY 1,2,3,4
-			"""
-			cursor.execute(query2,(uid,))
-			records = cursor.fetchall()
+@app.route('/brands', methods=['GET'])
+@requires_auth
+def brandselectall():
+	status = "all brands returned"
+	statuscode = 200
 
-			if records:
-				return jsonifyoutput("user inventory found",jsonifyinventory(records))
-			else:
-				return jsonifyoutput("user does not have an inventory",[])
-		else:
-			return jsonifyoutput("invalid user id",[])
+	query1 = """
+		SELECT
+			b.brandid, b.brandname, b.brandimage, b.brandurl, b.brandowner, count(distinct(p.gtin))
+		FROM brands AS b
+		LEFT JOIN products as p
+		ON b.brandid = p.brandid
+		GROUP BY 1,2,3,4,5
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
 
+	return jsonifyoutput(statuscode,status,jsonifybrands(records))
+
+@app.route("/inventories", methods=['GET'])
+@requires_auth
+def inventoryselectall():
+	status = "no user id provided"
+	statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields.
+
+	return jsonifyoutput(statuscode,status,[])
+
+@app.route('/inventories/<uid>', methods=['GET'])
+@requires_auth
+def inventoryselect(uid):
+	status = ""
+	statuscode = 200
+
+	query1 = """
+		SELECT
+			i.gtin,p.productname,b.brandname,i.dateexpiry,sum(i.quantity) AS itemcount
+		FROM inventory AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		WHERE i.userid = %s
+		GROUP BY 1,2,3,4
+	"""
+	cursor.execute(query1,(uid,))
+	records = cursor.fetchall()
+
+	status = "all inventory items for the user returned"
+
+	if not records:
+		status = "user id is either invalid or does not have an inventory"
+		statuscode = 404#404 Not Found The requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+
+	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
+	
 if __name__ == "__main__":
 	app.run(debug=True)
