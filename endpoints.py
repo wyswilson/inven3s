@@ -21,6 +21,8 @@ apiuser = "inven3sapiuser"
 apipwrd = "N0tS3cUr3!"
 flasktemplatedir = "c:/dev/templates"
 logfile = "inven3s.log"
+emptybrandid = "N_000000"
+emptybrandname = "Unavailable"
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connect(
@@ -94,19 +96,18 @@ def addproductcandidate(source,gtin,title,url,rank):
     cursor.execute(query1,(gtin,source,id,title,url,rank))
     db.commit()
 
-def addnewbrand(brandname,brandowner,brandimage,brandurl):
-	brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
-	brandid = "N_" + brandidlong[:6].upper()
-	query2 = "INSERT INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
+def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
+	query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
 	cursor.execute(query2,(brandid,brandname.title(),brandowner.title(),brandimage,brandurl))
 	db.commit()
 
 	return brandid
 
-def addnewproduct(gtin,productname,brandid,isperishable,isedible):
-	query2 = "INSERT INTO products (gtin,productname,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s)"
-	cursor.execute(query2,(gtin,productname.title(),brandid,isperishable,isedible))
-	db.commit()
+def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
+	if productname != "":#and brandid != ""
+		query2 = "INSERT INTO products (gtin,productname,productimage,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s,%s)"
+		cursor.execute(query2,(gtin,productname.title(),productimage,brandid,isperishable,isedible))
+		db.commit()
 
 	return gtin
 
@@ -189,9 +190,13 @@ def resolvebrand(brandname):
 	if records:
 		brandid = records[0][0]
 		brandname = records[0][1]
-		return brandid,brandname
+		return "EXIST",brandid,brandname
+	elif brandname != "":
+		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
+		brandid = "N_" + brandidlong[:6].upper()
+		return "NEW",brandid,brandname
 	else:
-		return "",""
+		return "INVALID",emptybrandid,emptybrandname
 
 def discoverproductnamebygtin(gtin,attempt):
 	preferredsources = ["buycott.com","openfoodfacts.org","ebay.co","campbells.com.au"]
@@ -248,16 +253,10 @@ def discoverproductnamebygtin(gtin,attempt):
 		else:
 			productname = selectedtitle
 
-		if brandname != '':
-			logging.debug("brand-resolver: [%s] [%s]" % (gtin,brandname))
-			brandid,brandname = resolvebrand(brandname)
-			logging.debug("brand-resolver: [%s] [%s] [%s]" % (gtin,brandname,brandid))
-
-			if brandid == '':
-				brandid = addnewbrand(brandname,brandowner,"","")
-
-		if productname != "" and brandid != "":
-			addnewproduct(gtin,productname,brandid,0,1)
+		outcome,brandid,brandname = resolvebrand(brandname)
+		if outcome == 'NEW':
+			brandid = addnewbrand(brandid,brandname,brandowner,"","")
+		gtin = addnewproduct(gtin,productname,"",brandid,0,1)
 
 		return productname,brandid
 	elif selectedurl == "" and attempt == 2:
@@ -271,12 +270,12 @@ def discoverproductnamebygtin(gtin,attempt):
 def lookupproductbygtin(gtin):
 	query = """
 		SELECT
-			p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
+			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		WHERE p.gtin = %s
-		GROUP by 1,2,3,4,5
+		GROUP by 1,2,3,4,5,6
 	"""
 	cursor.execute(query,(gtin,))
 	records = cursor.fetchall()
@@ -325,10 +324,10 @@ def jsonifyproducts(records):
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
-		brandname   	= record[2]
-		isperishable   	= record[3]
-		isedible	   	= record[4]
-		productimage 	= imageroot + '/' + gtin + '.jpg'
+		productimage	= record[2]
+		brandname   	= record[3]
+		isperishable   	= record[4]
+		isedible	   	= record[5]
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -381,6 +380,25 @@ def main():
 
 	return jsonifyoutput(statuscode,status,[])
 
+@app.route('/products', methods=['DELETE'])
+@requires_auth
+def productdelete():
+	status = "product deleted"
+	statuscode = 200
+
+	gtin = request.args.get("gtin").strip()
+
+	try:
+		query1 = "DELETE FROM products WHERE gtin = %s"
+		cursor.execute(query1,(gtin,))
+		db.commit()
+	except:
+		status = "products attached to inventory - unable to delete"
+		statuscode = 403#forbidden
+
+	records = lookupproductbygtin(gtin)
+	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
+
 @app.route('/products', methods=['POST'])
 @requires_auth
 def productupsert():
@@ -409,32 +427,47 @@ def productupsert():
 			cursor.execute(query2,(productname,gtin))
 			db.commit()
 
-			status = status + "productname"
+			status = status + "productname "
 		if isperishable != '':
 			query2 = "UPDATE products SET isperishable = %s WHERE gtin = %s"
 			cursor.execute(query2,(isperishable,gtin))
 			db.commit()
 
-			status = status + "isperishable"
+			status = status + "isperishable "
 		if isedible != '':
 			query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
 			cursor.execute(query2,(isedible,gtin))
 			db.commit()
 
-			status = status + "isedible"
+			status = status + "isedible "
 		if productimage != '':
 			query2 = "UPDATE products SET productimage = %s WHERE gtin = %s"
 			cursor.execute(query2,(productimage,gtin))
 			db.commit()
 
-			status = status + "productimage"
-		
+			status = status + "productimage "
+		if brandname != '':
+			outcome,brandid,brandname = resolvebrand(brandname)
+
+			query2 = "UPDATE products SET brandid = %s WHERE gtin = %s"
+			cursor.execute(query2,(brandid,gtin))
+			db.commit()
+
+			status = status + "brandname "
 		if status != "":
-			status = status + " updated"
+			status = status + "updated"
 		else:
 			status = "no updates"
 
 		records = lookupproductbygtin(gtin)
+	elif gtin != '' and productname != '':
+		outcome,brandid,brandname = resolvebrand(brandname)
+		if outcome == 'NEW':
+			brandid = addnewbrand(brandid,brandname,"","","")
+		gtin = addnewproduct(gtin,productname,productimage,brandid,0,1)	
+
+		records = lookupproductbygtin(gtin)
+		status = "new product (and branded) added"
 	elif gtin == "":
 		status = "no gtin provided"
 		statuscode = 412
@@ -442,17 +475,16 @@ def productupsert():
 		productname,brandid = discoverproductnamebygtin(gtin,1)
 		if productname != "ERR" and productname != "WARN":
 			if productname != "" and brandid != '':
-				status = status + "new product and brand discovered"
-
-				records = lookupproductbygtin(gtin)
+				status = status + "new product and brand discovered and added"
 			elif productname != "":
-				status = status + "new product discovered without brand"
-				statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+				status = status + "new product discovered and added without brand"
+
+			records = lookupproductbygtin(gtin)
 		elif productname == "ERR":
-			status = "public search for product errored"
+			status = "public search for product errored - try again later"
 			statuscode = 503#service unavailable
 		elif productname == "WARN":
-			status = "public search for product returned no data"
+			status = "public search for product returned no data - manual entry required"
 			statuscode = 404#not found
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
@@ -467,12 +499,12 @@ def productselect(gtin):
 	if not records:
 		query1 = """
 			SELECT
-				p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
+				p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
 			FROM products AS p
 			JOIN brands AS b
 			ON p.brandid = b.brandid
 			WHERE p.productname LIKE %s
-			GROUP BY 1,2,3,4,5
+			GROUP BY 1,2,3,4,5,6
 		"""
 		cursor.execute(query1,("%" + gtin + "%",))
 		records = cursor.fetchall()
@@ -495,16 +527,35 @@ def productselectall():
 
 	query1 = """
 		SELECT
-			p.gtin,p.productname,b.brandname,p.isperishable,p.isedible,count(*)
+			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		GROUP BY 1,2,3,4,5
+		GROUP BY 1,2,3,4,5,6
 	"""
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
+
+@app.route('/brands', methods=['DELETE'])
+@requires_auth
+def branddelete():
+	status = "brand deleted"
+	statuscode = 200
+
+	brandid = request.args.get("brandid").strip()
+
+	try:
+		query1 = "DELETE FROM brands WHERE brandid = %s"
+		cursor.execute(query1,(brandid,))
+		db.commit()
+	except:
+		status = "products attached to brand - unable to delete"
+		statuscode = 403#forbidden
+
+	records = lookupbrandbyid(brandid)
+	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
 @app.route('/brands', methods=['POST'])
 @requires_auth
@@ -556,7 +607,9 @@ def brandupsert():
 
 		records = lookupbrandbyid(brandid)
 	elif brandname != '':
-		brandid = addnewbrand(brandname,brandowner,brandimage,brandurl)
+		outcome,brandid,brandname = resolvebrand(brandname)
+		if outcome == 'NEW':
+			brandid = addnewbrand(brandid,brandname,brandowner,brandimage,brandurl)
 		records = lookupbrandbyid(brandid)
 
 		status = "new brand added"
@@ -614,6 +667,14 @@ def brandselectall():
 	records = cursor.fetchall()
 
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
+
+@app.route('/inventories', methods=['POST'])
+@requires_auth
+def inventoryadd():
+	status = ""
+	statuscode = 200
+
+	brandid = request.args.get("brandid").strip()
 
 @app.route("/inventories", methods=['GET'])
 @requires_auth
