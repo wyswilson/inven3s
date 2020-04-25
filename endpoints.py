@@ -652,4 +652,4 @@ def inventoryselect(uid):
 	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
 	
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True,port=8989)
