@@ -6,18 +6,27 @@ import re
 from bs4 import BeautifulSoup
 from datetime import datetime
 import random
-import Levenshtein as lev
 import os
 import urllib
 import hashlib
 import logging
+from functools import wraps
 
-logging.basicConfig(filename='inven3s.log',level=logging.DEBUG)
+mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
+mysqlport = "3363"
+mysqluser = "inven3suser"
+mysqlpwrd = "P?a&N$3!s"
+mysqldb = "inven3s"
+apiuser = "inven3sapiuser"
+apipwrd = "N0tS3cUr3!"
+flasktemplatedir = "c:/dev/templates"
+logfile = "inven3s.log"
 
+logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connect(
-	host = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com",
-	port = '3363',
-	user = "inven3suser", passwd = "P?a&N$3!s", database='inven3s')
+	host = mysqlhost,
+	port = mysqlport,
+	user = mysqluser, passwd = mysqlpwrd, database=mysqldb)
 cursor = db.cursor()
 
 useragents = [
