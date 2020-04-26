@@ -19,8 +19,9 @@ mysqlpwrd = "P?a&N$3!s"
 mysqldb = "inven3s"
 apiuser = "inven3sapiuser"
 apipwrd = "N0tS3cUr3!"
-flasktemplatedir = "c:/dev/templates"
 logfile = "inven3s.log"
+emptybrandid = "N_000000"
+emptybrandname = "Unavailable"
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connect(

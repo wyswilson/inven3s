@@ -19,7 +19,6 @@ mysqlpwrd = "P?a&N$3!s"
 mysqldb = "inven3s"
 apiuser = "inven3sapiuser"
 apipwrd = "N0tS3cUr3!"
-flasktemplatedir = "c:/dev/templates"
 logfile = "inven3s.log"
 emptybrandid = "N_000000"
 emptybrandname = "Unavailable"
@@ -59,10 +58,7 @@ useragents = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
 
-imageroot = "http://127.0.0.1:5000/products"
-
-template_dir = os.path.abspath(flasktemplatedir)
-app = Flask(__name__,static_url_path='',static_folder=template_dir,template_folder=template_dir)
+app = Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
 
 def check_auth(username, password):
@@ -178,26 +174,6 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 	return "ERR",""
 
-def resolvebrand(brandname):
-	query1 = """
-    	SELECT
-        	brandid, brandname, brandowner
-    	FROM brands
-    	WHERE lower(brandname) = %s
-	"""
-	cursor.execute(query1,(brandname.lower(),))
-	records = cursor.fetchall()
-	if records:
-		brandid = records[0][0]
-		brandname = records[0][1]
-		return "EXIST",brandid,brandname
-	elif brandname != "":
-		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
-		brandid = "N_" + brandidlong[:6].upper()
-		return "NEW",brandid,brandname
-	else:
-		return "INVALID",emptybrandid,emptybrandname
-
 def discoverproductnamebygtin(gtin,attempt):
 	preferredsources = ["buycott.com","openfoodfacts.org","ebay.co","campbells.com.au"]
 
@@ -296,6 +272,58 @@ def lookupbrandbyid(brandid):
 	records = cursor.fetchall()
 
 	return records
+
+def resolveretailer(retailername):
+	query1 = """
+    	SELECT
+        	retailerid,retailername
+    	FROM retailers
+    	WHERE lower(retailername) = %s
+	"""
+	cursor.execute(query1,(retailername.lower(),))
+	records = cursor.fetchall()
+	if records:
+		retailerid = records[0][0]
+		retailername = records[0][1]
+		return "EXIST",retailerid,retailername
+	else:
+		return "NOT-EXIST","",""
+
+def resolvebrand(brandname):
+	query1 = """
+    	SELECT
+        	brandid, brandname, brandowner
+    	FROM brands
+    	WHERE lower(brandname) = %s
+	"""
+	cursor.execute(query1,(brandname.lower(),))
+	records = cursor.fetchall()
+	if records:
+		brandid = records[0][0]
+		brandname = records[0][1]
+		return "EXIST",brandid,brandname
+	elif brandname != "":
+		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
+		brandid = "N_" + brandidlong[:6].upper()
+		return "NEW",brandid,brandname
+	else:
+		return "INVALID",emptybrandid,emptybrandname
+
+def resolveproduct(gtin,productname):
+	query1 = """
+    	SELECT
+        	gtin,productname
+    	FROM products
+    	WHERE gtin = %s OR lower(productname) = %s
+	"""
+	cursor.execute(query1,(gtin,productname.lower()))
+	records = cursor.fetchall()
+	if records:
+		gtin = records[0][0]
+		productname = records[0][1]
+		return "EXIST",gtin,productname
+	else:
+		return "NOT-EXIST","",""
 
 def jsonifybrands(records):
 	brands = []
@@ -674,7 +702,25 @@ def inventoryadd():
 	status = ""
 	statuscode = 200
 
-	brandid = request.args.get("brandid").strip()
+	gtin = request.args.get("gtin").strip()
+	productname = request.args.get("productname").strip()
+	userid	= request.args.get("userid").strip()
+	retailername	= request.args.get("retailername").strip()
+	dateexpiry	= request.args.get("dateexpiry").strip()
+	quantity	= request.args.get("quantity").strip()
+	receiptno	= request.args.get("receiptno").strip()
+
+	outcomeprod,gtin,productname = resolveproduct(gtin,productname)
+	outcomeretailer,retailerid,retailername = resolveretailer(retailername)
+	
+	#if outcome == "NOT-EXIST":
+	status = "[%s][%s][%s][%s][%s][%s][%s][%s]" % (gtin,productname,userid,retailerid,retailername,quantity,dateexpiry,receiptno)
+
+	query1 = "INSERT INTO inventories (userid,gtin,retailerid,datepurchase,dateexpiry,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+	cursor.execute(query1,(userid,gtin,retailerid,'',dateexpiry,quantity,receiptno))
+	db.commit()
+
+	return jsonifyoutput(statuscode,status,[])		
 
 @app.route("/inventories", methods=['GET'])
 @requires_auth
@@ -693,7 +739,7 @@ def inventoryselect(uid):
 	query1 = """
 		SELECT
 			i.gtin,p.productname,b.brandname,i.dateexpiry,sum(i.quantity) AS itemcount
-		FROM inventory AS i
+		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
 		JOIN brands AS b
