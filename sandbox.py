@@ -46,22 +46,6 @@ useragents = [
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
-url = "https://www.buycott.com/upc/9310006004034"
 
-url = "https://www.buycott.com/upc/9310072001654"
-randagent = random.choice(useragents)
-headers = {'User-Agent': randagent}
-r = requests.get(url, headers=headers, timeout=10)
-urlresolved = r.url
-html = r.content
 
-soup = BeautifulSoup(html, 'html.parser')
-productname = soup.find('h2').text
-print(productname)
-brandcell = soup.find('td', text = re.compile('Brand'))
-manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
-brandname = brandcell.find_next_sibling('td').find('a').text
-manufacturername = manufacturercell.find_next_sibling('td').find('a').text
 
-print(brandname)
-print(manufacturername)

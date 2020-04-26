@@ -20,8 +20,9 @@ mysqldb = "inven3s"
 apiuser = "inven3sapiuser"
 apipwrd = "N0tS3cUr3!"
 logfile = "inven3s.log"
-emptybrandid = "N_000000"
-emptybrandname = "Unavailable"
+defaultbrandid = "N_000000"
+defaultbrandname = "Unavailable"
+defaultretailercity = "4084"
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connect(
@@ -93,19 +94,40 @@ def addproductcandidate(source,gtin,title,url,rank):
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
-	query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
-	cursor.execute(query2,(brandid,brandname.title(),brandowner.title(),brandimage,brandurl))
-	db.commit()
+	if brandname != "":
+		query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
+		cursor.execute(query2,(brandid,brandname.title(),brandowner.title(),brandimage,brandurl))
+		db.commit()
 
-	return brandid
+		return brandid
+	else:
+		return ""
 
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
 		query2 = "INSERT INTO products (gtin,productname,productimage,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s,%s)"
 		cursor.execute(query2,(gtin,productname.title(),productimage,brandid,isperishable,isedible))
 		db.commit()
+	
+		return gtin
+	else:
+		return ""
 
-	return gtin
+def addnewretailer(retailername,retailercity):
+	if retailercity == "":
+		retailercity = defaultretailercity
+
+	if retailername != "":
+		retailermash = retailername + "&&" + retailercity
+
+		retailerid = hashlib.md5(retailermash.encode('utf-8')).hexdigest()
+		query2 = "INSERT INTO retailers (retailerid,retailername,retailercity) VALUES (%s,%s,%s)"
+		cursor.execute(query2,(retailerid,retailername.title(),retailercity))
+		db.commit()
+
+		return retailerid
+	else:
+		return ""
 
 def downloadproductpages(gtin,engine,preferredsources):
 	if engine == 'google':
@@ -148,7 +170,7 @@ def downloadproductpages(gtin,engine,preferredsources):
 			logging.debug("webcrawl: found [%s] [%s]" % (resulttitle,resultlink))
 
 			for preferredsrc in preferredsources:
-				if preferredsrc in resultlink:
+				if re.match(r"^%s" % preferredsrc,resultlink):
 					selectedurl = resultlink
 					selectedtitle = resulttitle
 
@@ -174,8 +196,8 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 	return "ERR",""
 
-def discoverproductnamebygtin(gtin,attempt):
-	preferredsources = ["buycott.com","openfoodfacts.org","ebay.co","campbells.com.au"]
+def discovernewproduct(gtin,attempt):
+	preferredsources = ["https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org","https:\/\/www\.campbells\.com\.au","https:\/\/www\.ebay\.com"]
 
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,"google",preferredsources)
@@ -187,18 +209,20 @@ def discoverproductnamebygtin(gtin,attempt):
 
 		soup = BeautifulSoup(selectedhtml, 'html.parser')
 		
+		logging.debug("crawler: selectedurl [%s]" % (selectedurl))
+
 		brandid = ""
 		productname = ""
 		brandname = ""
 		brandowner = ""
-		if "buycott.com" in selectedurl:
+		if re.match(r'^https:\/\/www\.buycott\.com',selectedurl):
 			productname = soup.find('h2').text.strip()
 
 			brandcell = soup.find('td', text = re.compile('Brand'))
 			brandname = brandcell.find_next_sibling('td').find('a').text.strip()
 			manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
 			brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
-		elif "ebay.co" in selectedurl:
+		elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
 			productname = soup.find('title').text
 			productname = re.sub(r"\|.+$", "", productname).strip()
 			#print("[%s][%s]" % (selectedurl,productname))
@@ -211,7 +235,7 @@ def discoverproductnamebygtin(gtin,attempt):
 				brandcell = soup.find('div', text = re.compile('BRAND'))
 				brandname = brandcell.find_next_sibling('div').text.strip()
 				#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
-		elif "openfoodfacts.org" in selectedurl:
+		elif re.match(r'^https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org',selectedurl):
 			productname = soup.find('title').text
 			productname = re.sub(r"\|.+$", "", productname).strip()
 			#print("[%s][%s]" % (selectedurl,productname))
@@ -219,7 +243,7 @@ def discoverproductnamebygtin(gtin,attempt):
 			if brandcell is not None:
 				brandname = brandcell.find_next_sibling('a').text.strip()
 				#<span class="field">Brands:</span> <a itemprop="brand" href="/brand/nestle">Nestlé</a>
-		elif "campbells.com.au" in selectedurl:
+		elif re.match(r'^https:\/\/www\.campbells\.com\.au',selectedurl):
 			productname = soup.find('title').text
 			productname = re.sub(r"\|.+$", "", productname).strip()
 			#productname = soup.find('div', {'class':'productName'}).text
@@ -229,14 +253,14 @@ def discoverproductnamebygtin(gtin,attempt):
 		else:
 			productname = selectedtitle
 
-		outcome,brandid,brandname = resolvebrand(brandname)
+		brandid,brandname,outcome = resolvebrand(brandname)
 		if outcome == 'NEW':
 			brandid = addnewbrand(brandid,brandname,brandowner,"","")
 		gtin = addnewproduct(gtin,productname,"",brandid,0,1)
 
 		return productname,brandid
 	elif selectedurl == "" and attempt == 2:
-		productname,brandid = discoverproductnamebygtin(gtin,attempt)
+		productname,brandid = discovernewproduct(gtin,attempt)
 		return productname,brandid
 	elif selectedurl == "":
 		return "WARN",""
@@ -252,11 +276,53 @@ def lookupproductbygtin(gtin):
 		ON p.brandid = b.brandid
 		WHERE p.gtin = %s
 		GROUP by 1,2,3,4,5,6
+		ORDER BY 2
 	"""
 	cursor.execute(query,(gtin,))
 	records = cursor.fetchall()
 
 	return records
+
+def lookupinventorybyuser(uid,isedible=None):
+	if isedible is None:
+		isedible = 1
+
+	query1 = """
+		SELECT
+			i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
+			SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		WHERE i.userid = %s AND p.isedible = %s
+		GROUP BY 1,2,3,4,5
+		ORDER BY 2
+	"""
+	cursor.execute(query1,(uid,isedible))
+	records = cursor.fetchall()
+
+	return records
+
+def countinventoryitems(uid,isedible=None):
+	if isedible is None:
+		isedible = 1
+
+	query1 = """
+		SELECT
+			SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		WHERE i.userid = %s AND p.isedible = %s
+	"""
+	cursor.execute(query1,(uid,isedible))
+	records = cursor.fetchall()
+
+	return records[0][0]
 
 def lookupbrandbyid(brandid):
 	query = """
@@ -267,6 +333,7 @@ def lookupbrandbyid(brandid):
 		ON b.brandid = p.brandid
 		WHERE b.brandid = %s
 		GROUP BY 1,2,3,4,5
+		ORDER BY 2
 	"""
 	cursor.execute(query,(brandid,))
 	records = cursor.fetchall()
@@ -285,9 +352,10 @@ def resolveretailer(retailername):
 	if records:
 		retailerid = records[0][0]
 		retailername = records[0][1]
-		return "EXIST",retailerid,retailername
+
+		return retailerid,retailername
 	else:
-		return "NOT-EXIST","",""
+		return "",retailername
 
 def resolvebrand(brandname):
 	query1 = """
@@ -301,29 +369,29 @@ def resolvebrand(brandname):
 	if records:
 		brandid = records[0][0]
 		brandname = records[0][1]
-		return "EXIST",brandid,brandname
+		return brandid,brandname,"EXIST"
 	elif brandname != "":
 		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
 		brandid = "N_" + brandidlong[:6].upper()
-		return "NEW",brandid,brandname
+		return brandid,brandname,"NEW"
 	else:
-		return "INVALID",emptybrandid,emptybrandname
+		return defaultbrandid,defaultbrandname,"INVALID"
 
-def resolveproduct(gtin,productname):
+def resolveproduct(gtin):
 	query1 = """
     	SELECT
         	gtin,productname
     	FROM products
-    	WHERE gtin = %s OR lower(productname) = %s
+    	WHERE gtin = %s
 	"""
-	cursor.execute(query1,(gtin,productname.lower()))
+	cursor.execute(query1,(gtin,))
 	records = cursor.fetchall()
 	if records:
 		gtin = records[0][0]
 		productname = records[0][1]
-		return "EXIST",gtin,productname
+		return gtin,productname
 	else:
-		return "NOT-EXIST","",""
+		return gtin,""
 
 def jsonifybrands(records):
 	brands = []
@@ -374,10 +442,10 @@ def jsonifyinventory(records):
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
-		brandname   	= record[2]
-		dateexpiry   	= record[3]
-		itemcount		= record[4]
-		productimage 	= imageroot + '/' + gtin + '.jpg'
+		productimage	= record[2]
+		brandname   	= record[3]
+		dateexpiry   	= record[4]
+		itemcount		= record[5]
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
@@ -395,6 +463,7 @@ def jsonifyoutput(statuscode,status,records):
 	messages = []
 	message = {}
 	message['status'] = status
+	message['count'] = len(records)
 	message['results'] = records
 	messages.append(message)
 
@@ -437,8 +506,8 @@ def productupsert():
 	productname 	= request.args.get("productname").strip()
 	productimage	= request.args.get("productimage").strip()
 	brandname		= request.args.get("brandname").strip()
-	isperishable 	= request.args.get("isperishable").strip()
-	isedible 		= request.args.get("isedible").strip()
+	isperishable 	= request.args.get("isperishable").strip()#DEFAULT '0'
+	isedible 		= request.args.get("isedible").strip()#DEFAULT '1'
 		
 	query1 = """
     	SELECT
@@ -452,7 +521,7 @@ def productupsert():
 		gtin = records[0][0]
 		if productname != '':
 			query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-			cursor.execute(query2,(productname,gtin))
+			cursor.execute(query2,(productname.title(),gtin))
 			db.commit()
 
 			status = status + "productname "
@@ -475,8 +544,9 @@ def productupsert():
 
 			status = status + "productimage "
 		if brandname != '':
-			outcome,brandid,brandname = resolvebrand(brandname)
-
+			brandid,brandname,outcome = resolvebrand(brandname)
+			if outcome == 'NEW':
+				brandid = addnewbrand(brandid,brandname,"","","")
 			query2 = "UPDATE products SET brandid = %s WHERE gtin = %s"
 			cursor.execute(query2,(brandid,gtin))
 			db.commit()
@@ -489,7 +559,7 @@ def productupsert():
 
 		records = lookupproductbygtin(gtin)
 	elif gtin != '' and productname != '':
-		outcome,brandid,brandname = resolvebrand(brandname)
+		brandid,brandname,outcome = resolvebrand(brandname)
 		if outcome == 'NEW':
 			brandid = addnewbrand(brandid,brandname,"","","")
 		gtin = addnewproduct(gtin,productname,productimage,brandid,0,1)	
@@ -500,7 +570,7 @@ def productupsert():
 		status = "no gtin provided"
 		statuscode = 412
 	else:
-		productname,brandid = discoverproductnamebygtin(gtin,1)
+		productname,brandid = discovernewproduct(gtin,1)
 		if productname != "ERR" and productname != "WARN":
 			if productname != "" and brandid != '':
 				status = status + "new product and brand discovered and added"
@@ -609,12 +679,12 @@ def brandupsert():
 		brandid = records[0][0]
 		if brandname != "":
 			query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
-			cursor.execute(query2,(brandname,brandid))
+			cursor.execute(query2,(brandname.title(),brandid))
 			db.commit()
 			status = status + "brandname "
 		if brandowner != "":
 			query2 = "UPDATE brands SET brandowner = %s WHERE brandid = %s"
-			cursor.execute(query2,(brandowner,brandid))
+			cursor.execute(query2,(brandowner.title(),brandid))
 			db.commit()
 			status = status + "brandowner "
 		if brandimage != "":
@@ -635,7 +705,7 @@ def brandupsert():
 
 		records = lookupbrandbyid(brandid)
 	elif brandname != '':
-		outcome,brandid,brandname = resolvebrand(brandname)
+		brandid,brandname,outcome = resolvebrand(brandname)
 		if outcome == 'NEW':
 			brandid = addnewbrand(brandid,brandname,brandowner,brandimage,brandurl)
 		records = lookupbrandbyid(brandid)
@@ -702,25 +772,46 @@ def inventoryadd():
 	status = ""
 	statuscode = 200
 
-	gtin = request.args.get("gtin").strip()
-	productname = request.args.get("productname").strip()
-	userid	= request.args.get("userid").strip()
-	retailername	= request.args.get("retailername").strip()
-	dateexpiry	= request.args.get("dateexpiry").strip()
-	quantity	= request.args.get("quantity").strip()
+	gtin 		= request.args.get("gtin").strip()
+	uid			= request.args.get("uid").strip()
+	retailername= request.args.get("retailername").strip()
+	dateexpiry	= request.args.get("dateexpiry").strip()#DEFAULT '0000-00-00'
+	quantity	= int(request.args.get("quantity"))#DEFAULT '1'
+	itemstatus	= request.args.get("itemstatus").strip()#DEFAULT 'IN'
 	receiptno	= request.args.get("receiptno").strip()
 
-	outcomeprod,gtin,productname = resolveproduct(gtin,productname)
-	outcomeretailer,retailerid,retailername = resolveretailer(retailername)
-	
-	#if outcome == "NOT-EXIST":
-	status = "[%s][%s][%s][%s][%s][%s][%s][%s]" % (gtin,productname,userid,retailerid,retailername,quantity,dateexpiry,receiptno)
+	gtin,productname = resolveproduct(gtin)
+	if productname == "":
+		productname,brandid = discovernewproduct(gtin,1)
+		if productname == "ERR":
+			status = "public search for product errored - try again later"
+			statuscode = 503#service unavailable
+		elif productname == "WARN":
+			status = "public search for product returned no data - manual entry required"
+			statuscode = 404#not found
 
-	query1 = "INSERT INTO inventories (userid,gtin,retailerid,datepurchase,dateexpiry,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-	cursor.execute(query1,(userid,gtin,retailerid,'',dateexpiry,quantity,receiptno))
-	db.commit()
+		if productname == "ERR" or productname == "WARN":
+			productname = ""
 
-	return jsonifyoutput(statuscode,status,[])		
+	retailerid,retailername = resolveretailer(retailername)
+	if retailername != "" and retailerid == "":
+		retailerid = addnewretailer(retailername,"")
+	elif retailername == "":
+		status = " retailername not provided "
+		statuscode = 412
+
+	if uid != "" and (gtin != "" and productname != "") and retailerid != "":
+		dateentry = datetime.today().strftime('%Y-%m-%d')
+
+		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+		cursor.execute(query1,(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno))
+		db.commit()
+
+		status = "product item added to inventory"
+
+	records = lookupinventorybyuser(uid,None)
+
+	return jsonifyoutput(statuscode,status,jsonifyinventory(records))		
 
 @app.route("/inventories", methods=['GET'])
 @requires_auth
@@ -736,21 +827,12 @@ def inventoryselect(uid):
 	status = ""
 	statuscode = 200
 
-	query1 = """
-		SELECT
-			i.gtin,p.productname,b.brandname,i.dateexpiry,sum(i.quantity) AS itemcount
-		FROM inventories AS i
-		JOIN products AS p
-		ON i.gtin = p.gtin
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		WHERE i.userid = %s
-		GROUP BY 1,2,3,4
-	"""
-	cursor.execute(query1,(uid,))
-	records = cursor.fetchall()
+	isedible	= request.args.get("isedible").strip()
 
-	status = "all inventory items for the user returned"
+	records = lookupinventorybyuser(uid,isedible)
+	inventoryitems = countinventoryitems(uid,isedible)
+
+	status = "all inventory items for the user returned - %s" % inventoryitems
 
 	if not records:
 		status = "user id is either invalid or does not have an inventory"
