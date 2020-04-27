@@ -185,7 +185,7 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 		return ""
 
 def addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno):
-	if userid != "" and gtin != "" and retailerid != "" and dateentry != "":
+	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
 		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 		cursor.execute(query1,(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno))
 		db.commit()
