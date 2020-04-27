@@ -428,7 +428,7 @@ def findinventorybyuser(uid,isedible):
 
 	return records
 
-def countinventoryitems(uid,isedible):
+def countinventoryitems(uid,isedible,gtin=None):
 
 	if isedible is None or isedible == "":
 		isedible = "0,1"
@@ -443,6 +443,8 @@ def countinventoryitems(uid,isedible):
 		ON p.brandid = b.brandid
 		WHERE i.userid = %s AND p.isedible IN (%s)
 	""" % (uid,isedible)
+	if gtin is not None and gtin != "":
+		query1 += " AND p.gtin = %s" % (gtin)
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -841,15 +843,28 @@ def inventoryadd():
 	retailerid,retailername = resolveretailer(retailername)
 	if retailername != "" and retailerid == "":
 		retailerid = addnewretailer(retailername,"")
-	elif retailername == "":
-		status = " retailername not provided "
-		statuscode = 412
 
 	if uid != "" and (gtin != "" and productname != "") and retailerid != "":
-		dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-		addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno)
-		
-		status = "product item added to inventory"
+		inventorycount = countinventoryitems(uid,"",gtin)
+		if itemstatus == "OUT" and inventorycount-quantity < 0:
+			status = "unable to register items consumed - inadequate stock in inventory"
+		else:
+			dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
+			addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno)
+			if itemstatus == "IN":
+				status = "product item added to inventory"
+			else:
+				status = "product item removed from inventory"
+	else:
+		if uid == "":
+			status += "uid "
+		if gtin == "":
+			status += "gtin "
+		if retailerid == "":
+			status += "retailername "
+
+		status += "is not provided"
+		statuscode = 412
 
 	records = findinventorybyuser(uid,None)
 
