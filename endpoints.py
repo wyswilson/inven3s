@@ -87,6 +87,12 @@ def requires_auth(f):
 
     return decorated
 
+def formatisedible(isedible):
+	if isedible is None or isedible == "":
+		isedible = "0,1"
+
+	return isedible
+
 def jsonifybrands(records):
 	brands = []
 	for record in records:
@@ -345,8 +351,8 @@ def discovernewproduct(gtin,attempt):
 		else:
 			productname = selectedtitle
 
-		brandid,brandname,outcome = resolvebrand(brandname)
-		if outcome == 'NEW':
+		brandid,brandname,brandstatus = isbrandvalid("",brandname)
+		if brandstatus == 'NEW':
 			brandid = addnewbrand(brandid,brandname,brandowner,"","")
 		gtin = addnewproduct(gtin,productname,"",brandid,0,1)
 
@@ -359,7 +365,7 @@ def discovernewproduct(gtin,attempt):
 	else:
 		return "ERR",""
 
-def findallproducts():
+def findallproducts(isedible):
 	query1 = """
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
@@ -368,7 +374,7 @@ def findallproducts():
 		ON p.brandid = b.brandid
 		WHERE isedible IN (%s)
 		GROUP BY 1,2,3,4,5,6
-	""" % isedible
+	""" % formatisedible(isedible)
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -383,7 +389,7 @@ def findproductbykeyword(gtin,isedible):
 		ON p.brandid = b.brandid
 		WHERE p.productname LIKE %s AND p.isedible IN (%s)
 		GROUP BY 1,2,3,4,5,6
-	""" % ("'%" + gtin + "%'",isedible)
+	""" % ("'%" + gtin + "%'",formatisedible(isedible))
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -406,10 +412,6 @@ def findproductbygtin(gtin):
 	return records
 
 def findinventorybyuser(uid,isedible):
-
-	if isedible is None or isedible == "":
-		isedible = "0,1"
-
 	query1 = """
 		SELECT
 			i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
@@ -422,17 +424,13 @@ def findinventorybyuser(uid,isedible):
 		WHERE i.userid = %s AND p.isedible IN (%s)
 		GROUP BY 1,2,3,4,5
 		ORDER BY 2
-	""" % (uid,isedible)
+	""" % (uid,formatisedible(isedible))
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
 	return records
 
 def countinventoryitems(uid,isedible,gtin=None):
-
-	if isedible is None or isedible == "":
-		isedible = "0,1"
-
 	query1 = """
 		SELECT
 			SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
@@ -442,7 +440,7 @@ def countinventoryitems(uid,isedible,gtin=None):
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		WHERE i.userid = %s AND p.isedible IN (%s)
-	""" % (uid,isedible)
+	""" % (uid,formatisedible(isedible))
 	if gtin is not None and gtin != "":
 		query1 += " AND p.gtin = %s" % (gtin)
 	cursor.execute(query1)
@@ -512,19 +510,19 @@ def resolveretailer(retailername):
 	else:
 		return "",retailername
 
-def resolvebrand(brandname):
+def isbrandvalid(brandid,brandname):
 	query1 = """
     	SELECT
-        	brandid, brandname, brandowner
+        	brandid, brandname
     	FROM brands
-    	WHERE lower(brandname) = %s
+    	WHERE brandid = %s OR lower(brandname) = %s
 	"""
-	cursor.execute(query1,(brandname.lower(),))
+	cursor.execute(query1,(brandid,brandname.lower()))
 	records = cursor.fetchall()
 	if records:
 		brandid = records[0][0]
 		brandname = records[0][1]
-		return brandid,brandname,"EXIST"
+		return brandid,brandname,"EXISTS"
 	elif brandname != "":
 		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
 		brandid = "N_" + brandidlong[:6].upper()
@@ -532,21 +530,30 @@ def resolvebrand(brandname):
 	else:
 		return defaultbrandid,defaultbrandname,"INVALID"
 
-def resolveproduct(gtin):
-	query1 = """
-    	SELECT
-        	gtin,productname
-    	FROM products
-    	WHERE gtin = %s
-	"""
-	cursor.execute(query1,(gtin,))
-	records = cursor.fetchall()
-	if records:
-		gtin = records[0][0]
-		productname = records[0][1]
-		return gtin,productname
+def isuservalid(uid):
+	if uid is not None and uid != "":
+		return "VALID"
 	else:
-		return gtin,""
+		return "INVALID"
+
+def isgtinvalid(gtin):
+	if gtin is not None and gtin != "" and len(gtin) == 13:
+		query1 = """
+	    	SELECT
+	        	gtin,productname
+	    	FROM products
+	    	WHERE gtin = %s
+		"""
+		cursor.execute(query1,(gtin,))
+		records = cursor.fetchall()
+		if records:
+			gtin = records[0][0]
+			productname = records[0][1]
+			return gtin,productname,"EXISTS"
+		else:
+			return gtin,"","NEW"
+	else:
+		return gtin,"","INVALID"
 
 @app.route("/")
 @requires_auth
@@ -556,21 +563,25 @@ def main():
 
 	return jsonifyoutput(statuscode,status,[])
 
-@app.route('/products', methods=['DELETE'])
+@app.route('/products/<gtin>', methods=['DELETE'])
 @requires_auth
-def productdelete():
+def productdelete(gtin):
 	status = ""
 	statuscode = 200
+	records = []
 
-	gtin = flask.request.args.get("gtin").strip()
+	gtin,productname,gtinstatus = isgtinvalid(gtin)
+	if gtinstatus == "EXISTS":
+		try:
+			removeproduct(gtin)
 
-	try:
-		removeproduct(gtin)
-
-		status = "product deleted"
-	except:
-		status = "products attached to inventory - unable to delete"
-		statuscode = 403#forbidden
+			status = "product deleted"
+		except:
+			status = "products attached to inventory - unable to delete"
+			statuscode = 403#forbidden
+	else:
+		status = "invalid gtin"
+		statuscode = 414
 
 	records = findproductbygtin(gtin)
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
@@ -580,27 +591,20 @@ def productdelete():
 def productupsert():
 	status = ""
 	statuscode = 200
+	records = []
 
 	gtin 			= flask.request.args.get("gtin")
-	productname 	= flask.request.args.get("productname").strip()
-	productimage	= flask.request.args.get("productimage").strip()
-	brandname		= flask.request.args.get("brandname").strip()
-	isperishable 	= flask.request.args.get("isperishable").strip()#DEFAULT '0'
-	isedible 		= flask.request.args.get("isedible").strip()#DEFAULT '1'
-		
-	query1 = """
-    	SELECT
-        	gtin
-    	FROM products
-    	WHERE gtin = %s
-	"""
-	cursor.execute(query1,(gtin,))
-	records = cursor.fetchall()
-	if records:
-		gtin = records[0][0]
+	productname 	= flask.request.args.get("productname")
+	productimage	= flask.request.args.get("productimage")
+	brandname		= flask.request.args.get("brandname")
+	isperishable 	= flask.request.args.get("isperishable")#DEFAULT '0'
+	isedible 		= flask.request.args.get("isedible")#DEFAULT '1'
+	
+	gtin,productname_old,gtinstatus = isgtinvalid(gtin)
+	if gtinstatus == "EXISTS":
 		if productname != '':
 			query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-			cursor.execute(query2,(productname.title(),gtin))
+			cursor.execute(query2,(productname.strip().title(),gtin))
 			db.commit()
 
 			status = status + "productname "
@@ -623,8 +627,8 @@ def productupsert():
 
 			status = status + "productimage "
 		if brandname != '':
-			brandid,brandname,outcome = resolvebrand(brandname)
-			if outcome == 'NEW':
+			brandid,brandname,brandstatus = isbrandvalid("",brandname.strip())
+			if brandstatus == 'NEW':
 				brandid = addnewbrand(brandid,brandname,"","","")
 			query2 = "UPDATE products SET brandid = %s WHERE gtin = %s"
 			cursor.execute(query2,(brandid,gtin))
@@ -637,18 +641,15 @@ def productupsert():
 			status = "no updates"
 
 		records = findproductbygtin(gtin)
-	elif gtin != '' and productname != '':
-		brandid,brandname,outcome = resolvebrand(brandname)
-		if outcome == 'NEW':
+	elif gtinstatus == "NEW" and productname != "":
+		brandid,brandname,brandstatus = isbrandvalid("",brandname)
+		if brandstatus == 'NEW':
 			brandid = addnewbrand(brandid,brandname,"","","")
 		gtin = addnewproduct(gtin,productname,productimage,brandid,0,1)	
 
 		records = findproductbygtin(gtin)
 		status = "new product (and branded) added"
-	elif gtin == "":
-		status = "no gtin provided"
-		statuscode = 412
-	else:
+	elif gtinstatus == "NEW" and productname == "":
 		productname,brandid = discovernewproduct(gtin,1)
 		if productname != "ERR" and productname != "WARN":
 			if productname != "" and brandid != '':
@@ -663,6 +664,9 @@ def productupsert():
 		elif productname == "WARN":
 			status = "public search for product returned no data - manual entry required"
 			statuscode = 404#not found
+	else:
+		status = "invalid gtin"
+		statuscode = 412
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
@@ -671,22 +675,24 @@ def productupsert():
 def productselect(gtin):
 	status = ""
 	statuscode = 200
+	records = []
 
-	isedible = flask.request.args.get("isedible")
-	if isedible is None or isedible == "":
-		isedible = "0,1"
-
-	records = findproductbygtin(gtin)
-	if not records:
-		records = findproductbykeyword(gtin)
-
-		status = "products searched by keyword"
-	else:
-		status = "product looked up by id"
-
-	if not records:
+	gtin,productname,gtinstatus = isgtinvalid(gtin)
+	if gtinstatus == "EXISTS":
+		records = findproductbygtin(gtin)
+	elif gtinstatus == "NEW":
 		status = "product does not exists"
-		statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+		statuscode = 404
+	else:
+		records = findproductbykeyword(gtin,isedible)
+		if records:
+			status = "products searched by keyword"
+		elif gtinstatus == "INVALID":
+			status = "invalid gtin"
+			statuscode = 412
+		else:
+			status = "unable to find products"
+			statuscode = 404
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
@@ -697,28 +703,31 @@ def productselectall():
 	statuscode = 200
 
 	isedible = flask.request.args.get("isedible")
-	if isedible is None or isedible == "":
-		isedible = "0,1"
-
-	records = findallproducts()
+	
+	records = findallproducts(isedible)
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
-@app.route('/brands', methods=['DELETE'])
+@app.route('/brands/<brandid>', methods=['DELETE'])
 @requires_auth
-def branddelete():
+def branddelete(brandid):
 	status = "brand deleted"
 	statuscode = 200
+	records = []
 
-	brandid = flask.request.args.get("brandid").strip()
+	brandid,brandname,brandstatus = isbrandvalid(brandid,"")
+	if brandstatus == "EXISTS":
+		try:
+			removebrand(brandid)
+		except:
+			status = "products attached to brand - unable to delete"
+			statuscode = 403#forbidden
 
-	try:
-		removebrand(brandid)
-	except:
-		status = "products attached to brand - unable to delete"
-		statuscode = 403#forbidden
+		records = findbrandbyid(brandid)
+	else:
+		status = "invalid brandid"
+		statuscode = 414
 
-	records = findbrandbyid(brandid)
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
 @app.route('/brands', methods=['POST'])
@@ -726,6 +735,7 @@ def branddelete():
 def brandupsert():
 	status = ""
 	statuscode = 200
+	records = []
 
 	brandid 	= flask.request.args.get("brandid").strip()
 	brandname 	= flask.request.args.get("brandname").strip()
@@ -733,47 +743,37 @@ def brandupsert():
 	brandurl 	= flask.request.args.get("brandurl").strip()
 	brandowner 	= flask.request.args.get("brandowner").strip()
 
-	query1 = """
-    	SELECT
-        	brandid, brandname
-    	FROM brands
-    	WHERE brandid = %s OR brandname = %s
-	"""
-	cursor.execute(query1,(brandid,brandname))
-	records = cursor.fetchall()
-	if records:
-		brandid = records[0][0]
+	brandid, brandname, brandstatus = isbrandvalid(brandid,brandname)
+	if brandstatus == "EXISTS":
 		if brandname != "":
 			query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandname.title(),brandid))
 			db.commit()
-			status = status + "brandname "
+			status += "brandname "
 		if brandowner != "":
 			query2 = "UPDATE brands SET brandowner = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandowner.title(),brandid))
 			db.commit()
-			status = status + "brandowner "
+			status += "brandowner "
 		if brandimage != "":
 			query2 = "UPDATE brands SET brandimage = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandimage,brandid))
 			db.commit()
-			status = status + "brandimage "
+			status += "brandimage "
 		if brandurl != "":
 			query2 = "UPDATE brands SET brandurl = %s WHERE brandid = %s"
 			cursor.execute(query2,(brandurl,brandid))
 			db.commit()
-			status = status + "brandurl "
+			status += "brandurl "
 
 		if status != "":
-			status = status + "updated"
+			status += "updated"
 		else:
 			status = "no updates"
 
 		records = findbrandbyid(brandid)
-	elif brandname != '':
-		brandid,brandname,outcome = resolvebrand(brandname)
-		if outcome == 'NEW':
-			brandid = addnewbrand(brandid,brandname,brandowner,brandimage,brandurl)
+	elif brandstatus == "NEW":
+		brandid = addnewbrand(brandid,brandname,brandowner,brandimage,brandurl)
 		records = findbrandbyid(brandid)
 
 		status = "new brand added"
@@ -813,67 +813,68 @@ def brandselectall():
 
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
-@app.route('/inventories', methods=['POST'])
+@app.route('/inventories/<uid>', methods=['POST'])
 @requires_auth
-def inventoryadd():
+def inventoryadd(uid):
 	status = ""
 	statuscode = 200
+	records = []
 
-	gtin 		= flask.request.args.get("gtin").strip()
-	uid			= flask.request.args.get("uid").strip()
-	retailername= flask.request.args.get("retailername").strip()
-	dateexpiry	= flask.request.args.get("dateexpiry").strip()#DEFAULT '0000-00-00'
-	quantity	= int(flask.request.args.get("quantity"))#DEFAULT '1'
-	itemstatus	= flask.request.args.get("itemstatus").strip()#DEFAULT 'IN'
-	receiptno	= flask.request.args.get("receiptno").strip()
+	gtin 		= flask.request.args.get("gtin")
+	retailername= flask.request.args.get("retailername")
+	dateexpiry	= flask.request.args.get("dateexpiry")#DEFAULT '0000-00-00'
+	quantity	= flask.request.args.get("quantity")#DEFAULT '1'
+	itemstatus	= flask.request.args.get("itemstatus")#DEFAULT 'IN'
+	receiptno	= flask.request.args.get("receiptno")
 
-	gtin,productname = resolveproduct(gtin)
-	if productname == "":
-		productname,brandid = discovernewproduct(gtin,1)
-		if productname == "ERR":
-			status = "public search for product errored - try again later"
-			statuscode = 503#service unavailable
-		elif productname == "WARN":
-			status = "public search for product returned no data - manual entry required"
-			statuscode = 404#not found
+	gtin,productname,gtinstatus = isgtinvalid(gtin)
+	userstatus = isuservalid(uid)
+	if gtinstatus != "INVALID" and userstatus != "INVALID":
+		if productname == "":
+			productname,brandid = discovernewproduct(gtin,1)
+			if productname == "ERR":
+				status = "public search for product errored - try again later"
+				statuscode = 503#service unavailable
+			elif productname == "WARN":
+				status = "public search for product returned no data - manual entry required"
+				statuscode = 404#not found
 
-		if productname == "ERR" or productname == "WARN":
-			productname = ""
+			if productname == "ERR" or productname == "WARN":
+				productname = ""
 
-	retailerid,retailername = resolveretailer(retailername)
-	if retailername != "" and retailerid == "":
-		retailerid = addnewretailer(retailername,"")
-
-	if uid != "" and (gtin != "" and productname != "") and retailerid != "":
-		inventorycount = countinventoryitems(uid,"",gtin)
-		if itemstatus == "OUT" and inventorycount-quantity < 0:
-			status = "unable to register items consumed - inadequate stock in inventory"
+		retailerid,retailername = resolveretailer(retailername)
+		if retailerid == "" and retailername != "":
+			retailerid = addnewretailer(retailername,"")
 		else:
-			dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-			addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno)
-			if itemstatus == "IN":
-				status = "product item added to inventory"
-			else:
-				status = "product item removed from inventory"
-	else:
-		if uid == "":
-			status += "uid "
-		if gtin == "":
-			status += "gtin "
-		if retailerid == "":
-			status += "retailername "
+			status = "no retailername provided"
+			statuscode = 412
 
-		status += "is not provided"
+		if productname != "" and retailerid != "":
+			inventorycount = countinventoryitems(uid,"",gtin)
+			if itemstatus == "OUT" and inventorycount-int(quantity) < 0:
+				status = "unable to register items consumed - inadequate stock in inventory"
+			else:
+				dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
+				addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno)
+				if itemstatus == "IN":
+					status = "product item added to inventory"
+				else:
+					status = "product item removed from inventory"
+
+		records = findinventorybyuser(uid,None)
+	elif userstatus == "INVALID":
+		status = "invalid uid"
+		statuscode = 412
+	else:
+		status = "invalid gtin"
 		statuscode = 412
 
-	records = findinventorybyuser(uid,None)
-
-	return jsonifyoutput(statuscode,status,jsonifyinventory(records))		
+	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
 
 @app.route("/inventories", methods=['GET'])
 @requires_auth
 def inventoryselectall():
-	status = "no user id provided"
+	status = "invalid uid"
 	statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields.
 
 	return jsonifyoutput(statuscode,status,[])
@@ -883,19 +884,25 @@ def inventoryselectall():
 def inventoryselect(uid):
 	status = ""
 	statuscode = 200
+	records = []
 
-	isedible = flask.request.args.get("isedible")
+	userstatus = isuservalid(uid)
+	if userstatus == "VALID":
+		isedible = flask.request.args.get("isedible")
 
-	records = findinventorybyuser(uid,isedible)
-	inventorycount = countinventoryitems(uid,isedible)
+		records 		= findinventorybyuser(uid,isedible)
+		inventorycount 	= countinventoryitems(uid,isedible)
 
-	status = "all inventory items for the user returned - %s" % inventorycount
+		status = "all inventory items for the user returned - %s" % inventorycount
 
-	if not records:
-		status = "user id is either invalid or does not have an inventory"
-		statuscode = 404#404 Not Found The requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+		if not records:
+			status = "invalid uid or uid does not have an inventory"
+			statuscode = 404#404 Not Found The requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+	else:
+		status = "invalid uid"
+		statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields.
 
 	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
-	
+
 if __name__ == "__main__":
 	app.run(debug=True,host='0.0.0.0',port=8989)
