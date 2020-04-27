@@ -1,16 +1,16 @@
-from flask import Flask, render_template, json, request, jsonify
+import flask
 import simplejson as json
 import requests
-import mysql.connector as mysql
+import mysql.connector
 import re
-from bs4 import BeautifulSoup
-from datetime import datetime
+import bs4
+import datetime
 import random
 import os
 import urllib
 import hashlib
 import logging
-from functools import wraps
+import functools
 
 mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
 mysqlport = "3363"
@@ -24,7 +24,7 @@ emptybrandid = "N_000000"
 emptybrandname = "Unavailable"
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
-db = mysql.connect(
+db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpwrd, database=mysqldb)
@@ -157,7 +157,7 @@ while continuescrape == 1:
 	headers = {'User-Agent': randagent}
 	searchpage = requests.get(searchurl, headers=headers, timeout=10)
 	if searchpage.status_code != 404:
-		soup = BeautifulSoup(searchpage.text, 'html.parser')
+		soup = bs4.BeautifulSoup(searchpage.text, 'html.parser')
 		content = soup.find('div',{'id':'main','class':'main'})
 		items = content.find_all_next('div',{'class':'n-right'})
 
@@ -206,7 +206,7 @@ while continuescrape == 1:
 							savelisting(listinglink,listingdate,listingtitle,listinghtml,userlink,sourcename,sourcelink)
 
 							status = 'IS-NEW'
-							listingdateobj = datetime.strptime(listingdate, '%Y-%m-%d %H:%M')
+							listingdateobj = datetime.datetime.strptime(listingdate, '%Y-%m-%d %H:%M')
 							if listingdateobj < mostrecentlistingdate:
 								status = "ALREADY-EXISTS"
 								continuescrape = 0
