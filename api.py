@@ -23,6 +23,7 @@ logfile = "inven3s.log"
 defaultbrandid = "N_000000"
 defaultbrandname = "Unavailable"
 defaultretailercity = "4084"
+defaultdateexpiry = "0000-00-00"
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 db = mysql.connector.connect(
@@ -190,10 +191,11 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 	else:
 		return ""
 
-def addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno):
+def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno):
+	print(gtin + "<=>" + retailerid + "<=>" + str(dateentry) + "<=>" + str(dateexpiry))
 	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
-		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query1,(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno))
+		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+		cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
 		db.commit()
 
 def removeproduct(gtin):
@@ -291,6 +293,8 @@ def downloadproductpages(gtin,engine,preferredsources):
 		logging.debug("error: timeout for [%s] [%s]" % (url,str(e)))
 	except requests.RequestException as e:
 		logging.debug("error: [%s] [%s]" % (url,str(e)))
+	except:
+		logging.debug("error: unknown [%s]" % url)
 
 	return "ERR",""
 
@@ -300,63 +304,77 @@ def discovernewproduct(gtin,attempt):
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,"google",preferredsources)
 	if selectedurl != "ERROR" and selectedurl != "":
-		randagent = random.choice(useragents)
-		headers = {'User-Agent': randagent}
-		r = requests.get(selectedurl, headers=headers, timeout=10)
-		selectedhtml = r.content
+		selectedhtml = ""
+		try:
+			randagent1 = random.choice(useragents)
+			headers1 = {'User-Agent': randagent1}
+			r1 = requests.get(selectedurl, headers=headers1, timeout=10)
+			selectedhtml = r1.content
+		except:
+			logging.debug("scraper-error: [%s]" % selectedurl)
+			selectedurl,selectedtitle = downloadproductpages(gtin,"bing",preferredsources)
+			if selectedurl != "ERROR" and selectedurl != "":
+				randagent2 = random.choice(useragents)
+				headers2 = {'User-Agent': randagent2}
+				r2 = requests.get(selectedurl, headers=headers2, timeout=10)
+				selectedhtml = r2.content
 
-		soup = bs4.BeautifulSoup(selectedhtml, 'html.parser')
-		
-		logging.debug("crawler: selectedurl [%s]" % (selectedurl))
+		if selectedhtml != "":
+			soup = bs4.BeautifulSoup(selectedhtml, 'html.parser')
+			
+			logging.debug("crawler: selectedurl [%s]" % (selectedurl))
 
-		brandid = ""
-		productname = ""
-		brandname = ""
-		brandowner = ""
-		if re.match(r'^https:\/\/www\.buycott\.com',selectedurl):
-			productname = soup.find('h2').text.strip()
+			brandid = ""
+			productname = ""
+			brandname = ""
+			brandowner = ""
+			if re.match(r'^https:\/\/www\.buycott\.com',selectedurl):
+				productname = soup.find('h2').text.strip()
 
-			brandcell = soup.find('td', text = re.compile('Brand'))
-			brandname = brandcell.find_next_sibling('td').find('a').text.strip()
-			manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
-			brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
-		elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
-			productname = soup.find('title').text
-			productname = re.sub(r"\|.+$", "", productname).strip()
-			#print("[%s][%s]" % (selectedurl,productname))
-			brandcell = soup.find('td', text = re.compile('Brand:'))
-			if brandcell is not None:
-				brandname = brandcell.find_next_sibling('td').text.strip()
-				#<td class="attrLabels">Brand:</td><td width="50.0%"><span>Campbell Soups</span></td>
-				#<td class="attrLabels">Brand:</td><td width="50.0%"><h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Sirena</span></h2></td>
+				brandcell = soup.find('td', text = re.compile('Brand'))
+				brandname = brandcell.find_next_sibling('td').find('a').text.strip()
+				manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
+				brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
+			elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
+				productname = soup.find('title').text
+				productname = re.sub(r"\|.+$", "", productname).strip()
+				#print("[%s][%s]" % (selectedurl,productname))
+				brandcell = soup.find('td', text = re.compile('Brand:'))
+				if brandcell is not None:
+					brandname = brandcell.find_next_sibling('td').text.strip()
+					#<td class="attrLabels">Brand:</td><td width="50.0%"><span>Campbell Soups</span></td>
+					#<td class="attrLabels">Brand:</td><td width="50.0%"><h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Sirena</span></h2></td>
+				else:
+					brandcell = soup.find('div', text = re.compile('BRAND'))
+					brandname = brandcell.find_next_sibling('div').text.strip()
+					#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
+			elif re.match(r'^https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org',selectedurl):
+				productname = soup.find('title').text
+				productname = re.sub(r"\|.+$", "", productname).strip()
+				#print("[%s][%s]" % (selectedurl,productname))
+				brandcell = soup.find('span', text = re.compile('Brands:'))
+				if brandcell is not None:
+					brandname = brandcell.find_next_sibling('a').text.strip()
+					#<span class="field">Brands:</span> <a itemprop="brand" href="/brand/nestle">Nestlé</a>
+			elif re.match(r'^https:\/\/www\.campbells\.com\.au',selectedurl):
+				productname = soup.find('title').text
+				productname = re.sub(r"\|.+$", "", productname).strip()
+				#productname = soup.find('div', {'class':'productName'}).text
+				brandname = soup.find('div', {'class':'productBrand'}).text.strip()
+				#<div class="productBrand">ARNOTTS</div>
+				#<div class="productName"><h1>BISCUITS CUSTARD CREAM 250GM</h1></div>
 			else:
-				brandcell = soup.find('div', text = re.compile('BRAND'))
-				brandname = brandcell.find_next_sibling('div').text.strip()
-				#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
-		elif re.match(r'^https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org',selectedurl):
-			productname = soup.find('title').text
-			productname = re.sub(r"\|.+$", "", productname).strip()
-			#print("[%s][%s]" % (selectedurl,productname))
-			brandcell = soup.find('span', text = re.compile('Brands:'))
-			if brandcell is not None:
-				brandname = brandcell.find_next_sibling('a').text.strip()
-				#<span class="field">Brands:</span> <a itemprop="brand" href="/brand/nestle">Nestlé</a>
-		elif re.match(r'^https:\/\/www\.campbells\.com\.au',selectedurl):
-			productname = soup.find('title').text
-			productname = re.sub(r"\|.+$", "", productname).strip()
-			#productname = soup.find('div', {'class':'productName'}).text
-			brandname = soup.find('div', {'class':'productBrand'}).text.strip()
-			#<div class="productBrand">ARNOTTS</div>
-			#<div class="productName"><h1>BISCUITS CUSTARD CREAM 250GM</h1></div>
+				productname = selectedtitle
+
+			brandid,brandname,brandstatus = isbrandvalid("",brandname)
+			if brandstatus == 'NEW':
+				brandid = addnewbrand(brandid,brandname,brandowner,"","")
+			gtin = addnewproduct(gtin,productname,"",brandid,0,1)
+
+			return productname,brandid
 		else:
-			productname = selectedtitle
+			return "ERR",""
 
-		brandid,brandname,brandstatus = isbrandvalid("",brandname)
-		if brandstatus == 'NEW':
-			brandid = addnewbrand(brandid,brandname,brandowner,"","")
-		gtin = addnewproduct(gtin,productname,"",brandid,0,1)
-
-		return productname,brandid
 	elif selectedurl == "" and attempt == 2:
 		productname,brandid = discovernewproduct(gtin,attempt)
 		return productname,brandid
@@ -413,22 +431,50 @@ def findproductbygtin(gtin):
 
 def findinventorybyuser(uid,isedible):
 	query1 = """
-		SELECT
-			i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
-			SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
-		FROM inventories AS i
-		JOIN products AS p
-		ON i.gtin = p.gtin
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		WHERE i.userid = %s AND p.isedible IN (%s)
-		GROUP BY 1,2,3,4,5
-		ORDER BY 2
+		SELECT * FROM (
+			SELECT
+				i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
+				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
+			WHERE i.userid = %s AND p.isedible IN (%s)
+			GROUP BY 1,2,3,4,5
+			ORDER BY 2
+		) as items
+		WHERE itemcount > 0
 	""" % (uid,formatisedible(isedible))
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
 	return records
+
+def findproductexpiry(uid,gtin):
+	query1 = """
+		SELECT
+			i.retailerid,i.dateexpiry
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		WHERE i.userid = %s AND p.gtin = %s
+		ORDER BY i.dateexpiry asc
+		LIMIT 1
+	""" % (uid,gtin)
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	if records:
+		retailerid = records[0][0]
+		dateexpiry = records[0][1]
+		if dateexpiry is None:
+			dateexpiry = defaultdateexpiry
+		print("=>[%s][%s]" % (retailerid,dateexpiry))
+		return retailerid,dateexpiry
+	else:
+		return "",defaultdateexpiry
 
 def countinventoryitems(uid,isedible,gtin=None):
 	query1 = """
@@ -445,8 +491,11 @@ def countinventoryitems(uid,isedible,gtin=None):
 		query1 += " AND p.gtin = %s" % (gtin)
 	cursor.execute(query1)
 	records = cursor.fetchall()
-
-	return records[0][0]
+	count = records[0][0]
+	if count:
+		return float(count)
+	else:
+		return float(0) 
 
 def findallbrands():
 	query1 = """
@@ -532,9 +581,9 @@ def isbrandvalid(brandid,brandname):
 
 def isuservalid(uid):
 	if uid is not None and uid != "":
-		return "VALID"
+		return True
 	else:
-		return "INVALID"
+		return False
 
 def isgtinvalid(gtin):
 	if gtin is not None and gtin != "" and len(gtin) == 13:
@@ -555,11 +604,24 @@ def isgtinvalid(gtin):
 	else:
 		return gtin,"","INVALID"
 
+def isitemstatusvalid(itemstatus):
+	if itemstatus == "IN" or itemstatus == "OUT":
+		return True
+	else:
+		return False
+
+def isfloat(quantity):
+    try:
+        float(quantity)
+        return True
+    except ValueError:
+        return False
+
 @app.route("/")
 @requires_auth
 def main():
 	status = "invalid endpoint"
-	statuscode = 500
+	statuscode = 501#Not Implemented
 
 	return jsonifyoutput(statuscode,status,[])
 
@@ -574,14 +636,13 @@ def productdelete(gtin):
 	if gtinstatus == "EXISTS":
 		try:
 			removeproduct(gtin)
-
 			status = "product deleted"
 		except:
 			status = "products attached to inventory - unable to delete"
-			statuscode = 403#forbidden
+			statuscode = 403#Forbidden
 	else:
 		status = "invalid gtin"
-		statuscode = 414
+		statuscode = 412#Precondition Failed
 
 	records = findproductbygtin(gtin)
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
@@ -660,13 +721,13 @@ def productupsert():
 			records = findproductbygtin(gtin)
 		elif productname == "ERR":
 			status = "public search for product errored - try again later"
-			statuscode = 503#service unavailable
+			statuscode = 503#Service Unavailable
 		elif productname == "WARN":
 			status = "public search for product returned no data - manual entry required"
-			statuscode = 404#not found
+			statuscode = 404#Not Found
 	else:
 		status = "invalid gtin"
-		statuscode = 412
+		statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
@@ -677,22 +738,24 @@ def productselect(gtin):
 	statuscode = 200
 	records = []
 
+	isedible = flask.request.args.get("isedible")
+
 	gtin,productname,gtinstatus = isgtinvalid(gtin)
 	if gtinstatus == "EXISTS":
 		records = findproductbygtin(gtin)
 	elif gtinstatus == "NEW":
 		status = "product does not exists"
-		statuscode = 404
+		statuscode = 404#Not Found
 	else:
 		records = findproductbykeyword(gtin,isedible)
 		if records:
 			status = "products searched by keyword"
 		elif gtinstatus == "INVALID":
 			status = "invalid gtin"
-			statuscode = 412
+			statuscode = 412#Precondition Failed
 		else:
-			status = "unable to find products"
-			statuscode = 404
+			status = "product does not exists"
+			statuscode = 404#Not Found
 
 	return jsonifyoutput(statuscode,status,jsonifyproducts(records))
 
@@ -721,12 +784,12 @@ def branddelete(brandid):
 			removebrand(brandid)
 		except:
 			status = "products attached to brand - unable to delete"
-			statuscode = 403#forbidden
+			statuscode = 403#Forbidden
 
 		records = findbrandbyid(brandid)
 	else:
 		status = "invalid brandid"
-		statuscode = 414
+		statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
@@ -778,8 +841,8 @@ def brandupsert():
 
 		status = "new brand added"
 	else:
-		status = "no brand id or name provided"
-		statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields
+		status = "invalid brandid or brandname"
+		statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
@@ -799,7 +862,7 @@ def brandselect(brandid):
 
 	if not records:
 		status = "brand does not exists"
-		statuscode = 404#404 Not FoundThe requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+		statuscode = 404#Not Found
 
 	return jsonifyoutput(statuscode,status,jsonifybrands(records))
 
@@ -815,7 +878,7 @@ def brandselectall():
 
 @app.route('/inventories/<uid>', methods=['POST'])
 @requires_auth
-def inventoryadd(uid):
+def inventoryupsert(uid):
 	status = ""
 	statuscode = 200
 	records = []
@@ -828,16 +891,15 @@ def inventoryadd(uid):
 	receiptno	= flask.request.args.get("receiptno")
 
 	gtin,productname,gtinstatus = isgtinvalid(gtin)
-	userstatus = isuservalid(uid)
-	if gtinstatus != "INVALID" and userstatus != "INVALID":
+	if gtinstatus != "INVALID" and isuservalid(uid) and isfloat(quantity) and isitemstatusvalid(itemstatus):
 		if productname == "":
 			productname,brandid = discovernewproduct(gtin,1)
 			if productname == "ERR":
 				status = "public search for product errored - try again later"
-				statuscode = 503#service unavailable
+				statuscode = 503#Service Unavailable
 			elif productname == "WARN":
 				status = "public search for product returned no data - manual entry required"
-				statuscode = 404#not found
+				statuscode = 404#Not found
 
 			if productname == "ERR" or productname == "WARN":
 				productname = ""
@@ -845,37 +907,50 @@ def inventoryadd(uid):
 		retailerid,retailername = resolveretailer(retailername)
 		if retailerid == "" and retailername != "":
 			retailerid = addnewretailer(retailername,"")
-		else:
-			status = "no retailername provided"
-			statuscode = 412
+		elif retailername == "" and itemstatus == "IN":
+			status = "invalid retailername"
+			statuscode = 412#Precondition Failed
 
-		if productname != "" and retailerid != "":
-			inventorycount = countinventoryitems(uid,"",gtin)
-			if itemstatus == "OUT" and inventorycount-int(quantity) < 0:
+		if productname != "" and ((itemstatus == "IN" and retailerid != "") or itemstatus == "OUT"):
+			inventorycount = countinventoryitems(uid,1,gtin)
+			if itemstatus == "OUT" and inventorycount-float(quantity) < 0:
 				status = "unable to register items consumed - inadequate stock in inventory"
+				statuscode = 403#Forbidden
 			else:
+				if itemstatus == "OUT" and (dateexpiry is None or dateexpiry == ""):
+					print("=>" + str(dateexpiry))
+					retailerid,dateexpiry = findproductexpiry(uid,gtin)
+					print("=>" + str(dateexpiry))
 				dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-				addinventoryitem(uid,gtin,retailerid,dateentry,itemstatus,dateexpiry,quantity,receiptno)
+				print("==>" + str(dateexpiry) + "<=>" + gtin + "<=>" + retailerid)
+				addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno)
 				if itemstatus == "IN":
 					status = "product item added to inventory"
 				else:
-					status = "product item removed from inventory"
+					status = "product item removed (or marked as being consumed) in inventory"
 
 		records = findinventorybyuser(uid,None)
-	elif userstatus == "INVALID":
+	elif not isuservalid(uid):
 		status = "invalid uid"
-		statuscode = 412
+		statuscode = 412#Precondition Failed
+	elif not isfloat(quantity):
+		status = "invalid quantity"
+		statuscode = 412#Precondition Failed
+	elif not isitemstatusvalid(itemstatus):
+		status = "invalid itemstatus"
+		statuscode = 412#Precondition Failed		
 	else:
 		status = "invalid gtin"
-		statuscode = 412
+		statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
 
-@app.route("/inventories", methods=['GET'])
+@app.route("/inventories/", methods=['GET','POST'])
+@app.route("/inventories", methods=['GET','POST'])
 @requires_auth
 def inventoryselectall():
 	status = "invalid uid"
-	statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields.
+	statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,[])
 
@@ -886,8 +961,7 @@ def inventoryselect(uid):
 	statuscode = 200
 	records = []
 
-	userstatus = isuservalid(uid)
-	if userstatus == "VALID":
+	if isuservalid(uid):
 		isedible = flask.request.args.get("isedible")
 
 		records 		= findinventorybyuser(uid,isedible)
@@ -896,13 +970,19 @@ def inventoryselect(uid):
 		status = "all inventory items for the user returned - %s" % inventorycount
 
 		if not records:
-			status = "invalid uid or uid does not have an inventory"
-			statuscode = 404#404 Not Found The requested resource could not be found but may be available in the future. Subsequent requests by the client are 
+			status = "uid does not have an inventory"
+			statuscode = 404#Not Found
 	else:
 		status = "invalid uid"
-		statuscode = 412#412 Precondition Failed (RFC 7232) The server does not meet one of the preconditions that the requester put on the request header fields.
+		statuscode = 412#Precondition Failed
 
 	return jsonifyoutput(statuscode,status,jsonifyinventory(records))
 
 if __name__ == "__main__":
 	app.run(debug=True,host='0.0.0.0',port=8989)
+
+#403#Forbidden
+#404#Not Found
+#412#Precondition Failed
+#503#Service Unavailable
+#501#Not Implemented

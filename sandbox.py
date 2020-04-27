@@ -1,22 +1,34 @@
-from flask import Flask, render_template, json, request, jsonify
+import flask
 import simplejson as json
 import requests
-import mysql.connector as mysql
+import mysql.connector
 import re
-from bs4 import BeautifulSoup
-from datetime import datetime
+import bs4
+import datetime
 import random
-import Levenshtein as lev
 import os
 import urllib
 import hashlib
 import logging
+import functools
 
-logging.basicConfig(filename='inven3s.log',level=logging.DEBUG)
+mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
+mysqlport = "3363"
+mysqluser = "inven3suser"
+mysqlpwrd = "P?a&N$3!s"
+mysqldb = "inven3s"
+apiuser = "inven3sapiuser"
+apipwrd = "N0tS3cUr3!"
+logfile = "inven3s.log"
+defaultbrandid = "N_000000"
+defaultbrandname = "Unavailable"
+defaultretailercity = "4084"
 
-db = mysql.connect(
-    host = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com",
-    user = "inven3suser", passwd = "pan3spwd", database='inven3s')
+logging.basicConfig(filename=logfile,level=logging.DEBUG)
+db = mysql.connector.connect(
+    host = mysqlhost,
+    port = mysqlport,
+    user = mysqluser, passwd = mysqlpwrd, database=mysqldb)
 cursor = db.cursor(buffered=True)
 
 useragents = [
@@ -49,3 +61,7 @@ useragents = [
 
 
 
+
+
+strg = "Gulong Chaosansi 190g"
+print(strg.title())
