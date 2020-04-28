@@ -89,10 +89,25 @@ def requires_auth(f):
     return decorated
 
 def formatisedible(isedible):
-	if isedible is None or isedible == "":
-		isedible = "0,1"
+	try:
+		isedible = str(isedible)
+		if isedible is None or isedible == "":
+			return "0,1"
+		elif isedible == "0" or isedible == "1":
+			return str(isedible)
+		else:
+			return "1"
+	except:
+		return "1"
 
-	return isedible
+def formatispartiallyconsumed(ispartiallyconsumed):
+	try:
+		if int(ispartiallyconsumed) == 1 or int(ispartiallyconsumed) == 0:
+			return int(ispartiallyconsumed)
+		else:
+			return 0
+	except:
+		return 0
 
 def jsonifybrands(records):
 	brands = []
@@ -192,7 +207,6 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 		return ""
 
 def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno):
-	print(gtin + "<=>" + retailerid + "<=>" + str(dateentry) + "<=>" + str(dateexpiry))
 	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
 		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 		cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
@@ -338,7 +352,6 @@ def discovernewproduct(gtin,attempt):
 			elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
 				productname = soup.find('title').text
 				productname = re.sub(r"\|.+$", "", productname).strip()
-				#print("[%s][%s]" % (selectedurl,productname))
 				brandcell = soup.find('td', text = re.compile('Brand:'))
 				if brandcell is not None:
 					brandname = brandcell.find_next_sibling('td').text.strip()
@@ -351,7 +364,6 @@ def discovernewproduct(gtin,attempt):
 			elif re.match(r'^https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org',selectedurl):
 				productname = soup.find('title').text
 				productname = re.sub(r"\|.+$", "", productname).strip()
-				#print("[%s][%s]" % (selectedurl,productname))
 				brandcell = soup.find('span', text = re.compile('Brands:'))
 				if brandcell is not None:
 					brandname = brandcell.find_next_sibling('a').text.strip()
@@ -429,12 +441,12 @@ def findproductbygtin(gtin):
 
 	return records
 
-def findinventorybyuser(uid,isedible):
+def findinventorybyuser(uid,isedible,ispartiallyconsumed):
 	query1 = """
 		SELECT * FROM (
 			SELECT
 				i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
-				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
+				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemsremaining
 			FROM inventories AS i
 			JOIN products AS p
 			ON i.gtin = p.gtin
@@ -444,12 +456,18 @@ def findinventorybyuser(uid,isedible):
 			GROUP BY 1,2,3,4,5
 			ORDER BY 2
 		) as items
-		WHERE itemcount > 0
+		WHERE itemsremaining > 0
 	""" % (uid,formatisedible(isedible))
+	if formatispartiallyconsumed(ispartiallyconsumed) == 1:
+		query1 += " AND MOD(itemsremaining*2,2) != 0"
+	elif formatispartiallyconsumed(ispartiallyconsumed) == 0:
+		query1 += " AND MOD(itemsremaining*2,2) = 0"
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
-	return records
+	itemsremainingtotal = sum(row[5] for row in records)
+
+	return records, itemsremainingtotal
 
 def findproductexpiry(uid,gtin):
 	query1 = """
@@ -471,12 +489,11 @@ def findproductexpiry(uid,gtin):
 		dateexpiry = records[0][1]
 		if dateexpiry is None:
 			dateexpiry = defaultdateexpiry
-		print("=>[%s][%s]" % (retailerid,dateexpiry))
 		return retailerid,dateexpiry
 	else:
 		return "",defaultdateexpiry
 
-def countinventoryitems(uid,isedible,gtin=None):
+def countinventoryitems(uid,gtin):
 	query1 = """
 		SELECT
 			SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemcount
@@ -485,10 +502,8 @@ def countinventoryitems(uid,isedible,gtin=None):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE i.userid = %s AND p.isedible IN (%s)
-	""" % (uid,formatisedible(isedible))
-	if gtin is not None and gtin != "":
-		query1 += " AND p.gtin = %s" % (gtin)
+		WHERE i.userid = %s AND p.gtin = %s
+	""" % (uid,gtin)
 	cursor.execute(query1)
 	records = cursor.fetchall()
 	count = records[0][0]
@@ -912,24 +927,23 @@ def inventoryupsert(uid):
 			statuscode = 412#Precondition Failed
 
 		if productname != "" and ((itemstatus == "IN" and retailerid != "") or itemstatus == "OUT"):
-			inventorycount = countinventoryitems(uid,1,gtin)
+			inventorycount = countinventoryitems(uid,gtin)
 			if itemstatus == "OUT" and inventorycount-float(quantity) < 0:
 				status = "unable to register items consumed - inadequate stock in inventory"
 				statuscode = 403#Forbidden
 			else:
 				if itemstatus == "OUT" and (dateexpiry is None or dateexpiry == ""):
-					print("=>" + str(dateexpiry))
 					retailerid,dateexpiry = findproductexpiry(uid,gtin)
-					print("=>" + str(dateexpiry))
 				dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-				print("==>" + str(dateexpiry) + "<=>" + gtin + "<=>" + retailerid)
 				addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno)
 				if itemstatus == "IN":
 					status = "product item added to inventory"
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-		records = findinventorybyuser(uid,None)
+			records,inventorycount = findinventorybyuser(uid,"0,1",0)
+			status += " - %s" % inventorycount
+
 	elif not isuservalid(uid):
 		status = "invalid uid"
 		statuscode = 412#Precondition Failed
@@ -963,9 +977,9 @@ def inventoryselect(uid):
 
 	if isuservalid(uid):
 		isedible = flask.request.args.get("isedible")
+		ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
 
-		records 		= findinventorybyuser(uid,isedible)
-		inventorycount 	= countinventoryitems(uid,isedible)
+		records,inventorycount = findinventorybyuser(uid,isedible,ispartiallyconsumed)
 
 		status = "all inventory items for the user returned - %s" % inventorycount
 

@@ -60,8 +60,9 @@ useragents = [
 ]
 
 
+number = 3.0
 
-
-
-strg = "Gulong Chaosansi 190g"
-print(strg.title())
+if int(number) == number:
+    print("is int")
+else:
+    print("is float")
