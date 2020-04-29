@@ -11,6 +11,8 @@ import urllib
 import hashlib
 import logging
 import functools
+import configparser
+import io
 
 mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
 mysqlport = "3363"
@@ -59,10 +61,3 @@ useragents = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
 
-
-number = 3.0
-
-if int(number) == number:
-    print("is int")
-else:
-    print("is float")

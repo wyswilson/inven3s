@@ -7,23 +7,28 @@ import simplejson as json
 import requests
 import random
 import bs4
+import re
+import configparser
 
-apiuser = "inven3sapiuser"
-apipwrd = "N0tS3cUr3!"
-mysqlhost = "inven3sdb.ciphd8suvvza.ap-southeast-1.rds.amazonaws.com"
-mysqlport = "3363"
-mysqluser = "inven3suser"
-mysqlpwrd = "P?a&N$3!s"
-mysqldb = "inven3s"
-defaultbrandid = "N_000000"
-defaultbrandname = "Unavailable"
-defaultretailercity = "4084"
-defaultdateexpiry = "0000-00-00"
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+apiuser 		= config['api']['user']
+apipassword		= config['api']['password']
+mysqlhost 		= config['mysql']['host']
+mysqlport 		= config['mysql']['port']
+mysqluser 		= config['mysql']['user']
+mysqlpassword 	= config['mysql']['password']
+mysqldb 		= config['mysql']['db']
+defaultbrandid 		= config['default']['brandid']
+defaultbrandname 	= config['default']['brandname']
+defaultretailercity = config['default']['retailercity']
+defaultdateexpiry 	= config['default']['dateexpiry']
 
 db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
-	user = mysqluser, passwd = mysqlpwrd, database=mysqldb)
+	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
 
 logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
@@ -55,6 +60,31 @@ useragents = [
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
 ]
+
+def checkauth(username, password):
+    return username == apiuser and password == apipassword
+
+def authenticate():
+    message = {'message': "authentication required"}
+    resp = flask.jsonify(message)
+
+    resp.status_code = 401
+    resp.headers['WWW-Authenticate'] = 'Basic realm="Example"'
+
+    return resp
+
+def requiresauth(f):
+    @functools.wraps(f)
+    def decorated(*args, **kwargs):
+        auth = flask.request.authorization
+        if not auth: 
+            return authenticate()
+
+        elif not checkauth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+
+    return decorated
 
 def updatebrandurl(brandid,brandurl):
 	query2 = "UPDATE brands SET brandurl = %s WHERE brandid = %s"
@@ -110,52 +140,6 @@ def updateproductname(gtin,productname):
 	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
 	cursor.execute(query2,(productname.strip().title(),gtin))
 	db.commit()
-
-def check_auth(username, password):
-    return username == apiuser and password == apipwrd
-
-def authenticate():
-    message = {'message': "authentication required"}
-    resp = flask.jsonify(message)
-
-    resp.status_code = 401
-    resp.headers['WWW-Authenticate'] = 'Basic realm="Example"'
-
-    return resp
-
-def requires_auth(f):
-    @functools.wraps(f)
-    def decorated(*args, **kwargs):
-        auth = flask.request.authorization
-        if not auth: 
-            return authenticate()
-
-        elif not check_auth(auth.username, auth.password):
-            return authenticate()
-        return f(*args, **kwargs)
-
-    return decorated
-
-def formatisedible(isedible):
-	try:
-		isedible = str(isedible)
-		if isedible is None or isedible == "":
-			return "0,1"
-		elif isedible == "0" or isedible == "1":
-			return str(isedible)
-		else:
-			return "1"
-	except:
-		return "1"
-
-def formatispartiallyconsumed(ispartiallyconsumed):
-	try:
-		if int(ispartiallyconsumed) == 1 or int(ispartiallyconsumed) == 0:
-			return int(ispartiallyconsumed)
-		else:
-			return 0
-	except:
-		return 0
 
 def jsonifybrands(records):
 	brands = []
@@ -239,11 +223,6 @@ def addproductcandidate(source,gtin,title,url,rank):
     cursor.execute(query1,(gtin,source,id,title,url,rank))
     db.commit()
 
-def removebrand(brandid):
-	query1 = "DELETE FROM brands WHERE brandid = %s"
-	cursor.execute(query1,(brandid,))
-	db.commit()
-
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 	if brandname != "":
 		query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
@@ -259,11 +238,6 @@ def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantit
 		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 		cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
 		db.commit()
-
-def removeproduct(gtin):
-	query1 = "DELETE FROM products WHERE gtin = %s"
-	cursor.execute(query1,(gtin,))
-	db.commit()
 
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
@@ -290,6 +264,16 @@ def addnewretailer(retailername,retailercity):
 		return retailerid
 	else:
 		return ""
+
+def removebrand(brandid):
+	query1 = "DELETE FROM brands WHERE brandid = %s"
+	cursor.execute(query1,(brandid,))
+	db.commit()
+	
+def removeproduct(gtin):
+	query1 = "DELETE FROM products WHERE gtin = %s"
+	cursor.execute(query1,(gtin,))
+	db.commit()
 
 def downloadproductpages(gtin,engine,preferredsources):
 	if engine == 'google':
@@ -328,8 +312,6 @@ def downloadproductpages(gtin,engine,preferredsources):
 			elif engine == 'bing':
 				resulttitle = result.find('a').text
 				resultlink  = result.find('a').get('href', '')
-
-			logging.debug("webcrawl: found [%s] [%s]" % (resulttitle,resultlink))
 
 			for preferredsrc in preferredsources:
 				if re.match(r"^%s" % preferredsrc,resultlink):
@@ -427,7 +409,7 @@ def discovernewproduct(gtin,attempt):
 			else:
 				productname = selectedtitle
 
-			brandid,brandname,brandstatus = isbrandvalid("",brandname)
+			brandid,brandname,brandstatus = validatebrand("",brandname)
 			if brandstatus == 'NEW':
 				brandid = addnewbrand(brandid,brandname,brandowner,"","")
 			gtin = addnewproduct(gtin,productname,"",brandid,0,1)
@@ -453,7 +435,7 @@ def findallproducts(isedible):
 		ON p.brandid = b.brandid
 		WHERE isedible IN (%s)
 		GROUP BY 1,2,3,4,5,6
-	""" % formatisedible(isedible)
+	""" % validateisedible(isedible)
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -468,7 +450,7 @@ def findproductbykeyword(gtin,isedible):
 		ON p.brandid = b.brandid
 		WHERE p.productname LIKE %s AND p.isedible IN (%s)
 		GROUP BY 1,2,3,4,5,6
-	""" % ("'%" + gtin + "%'",formatisedible(isedible))
+	""" % ("'%" + gtin + "%'",validateisedible(isedible))
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -490,12 +472,12 @@ def findproductbygtin(gtin):
 
 	return records
 
-def findinventorybyuser(uid,isedible,ispartiallyconsumed):
+def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 	query1 = """
 		SELECT * FROM (
 			SELECT
 				i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
-				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemsremaining
+				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
 			JOIN products AS p
 			ON i.gtin = p.gtin
@@ -503,14 +485,15 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed):
 			ON p.brandid = b.brandid
 			WHERE i.userid = %s AND p.isedible IN (%s)
 			GROUP BY 1,2,3,4,5
-			ORDER BY 2
 		) as items
-		WHERE itemsremaining > 0
-	""" % (uid,formatisedible(isedible))
-	if formatispartiallyconsumed(ispartiallyconsumed) == 1:
-		query1 += " AND MOD(itemsremaining*2,2) != 0"
-	elif formatispartiallyconsumed(ispartiallyconsumed) == 0:
-		query1 += " AND MOD(itemsremaining*2,2) = 0"
+		WHERE itemstotal > 0
+	""" % (uid,validateisedible(isedible))
+	if validateispartiallyconsumed(ispartiallyconsumed) == 1:
+		query1 += " AND MOD(itemstotal*2,2) != 0"
+	elif validateispartiallyconsumed(ispartiallyconsumed) == 0:
+		query1 += " AND MOD(itemstotal*2,2) = 0"
+	query1 += " ORDER BY %s" % validatesortby(sortby)
+
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -623,7 +606,7 @@ def resolveretailer(retailername):
 	else:
 		return "",retailername
 
-def isbrandvalid(brandid,brandname):
+def validatebrand(brandid,brandname):
 	query1 = """
     	SELECT
         	brandid, brandname
@@ -644,13 +627,19 @@ def isbrandvalid(brandid,brandname):
 	else:
 		return defaultbrandid,defaultbrandname,"INVALID"
 
-def isuservalid(uid):
+def validatesortby(sortby):
+	if sortby == "dateexpiry" or sortby == "itemstotal" or sortby == "productname":
+		return sortby
+	else:
+		return "productname"
+
+def validateuser(uid):
 	if uid is not None and uid != "":
 		return True
 	else:
 		return False
 
-def isgtinvalid(gtin):
+def validategtin(gtin):
 	if gtin is not None and gtin != "" and len(gtin) == 13:
 		query1 = """
 	    	SELECT
@@ -669,11 +658,32 @@ def isgtinvalid(gtin):
 	else:
 		return gtin,"","INVALID"
 
-def isitemstatusvalid(itemstatus):
+def validateitemstatus(itemstatus):
 	if itemstatus == "IN" or itemstatus == "OUT":
 		return True
 	else:
 		return False
+
+def validateisedible(isedible):
+	try:
+		isedible = str(isedible)
+		if isedible is None or isedible == "":
+			return "0,1"
+		elif isedible == "0" or isedible == "1":
+			return str(isedible)
+		else:
+			return "1"
+	except:
+		return "1"
+
+def validateispartiallyconsumed(ispartiallyconsumed):
+	try:
+		if int(ispartiallyconsumed) == 1 or int(ispartiallyconsumed) == 0 or int(ispartiallyconsumed) == 2:
+			return int(ispartiallyconsumed)
+		else:
+			return 0
+	except:
+		return 0
 
 def isfloat(quantity):
     try:

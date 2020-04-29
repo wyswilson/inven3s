@@ -1,15 +1,12 @@
 import flask
-import re
-import bs4
 import datetime
-import urllib
 import func
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
 
 @app.route("/")
-@func.requires_auth
+@func.requiresauth
 def main():
 	status = "invalid endpoint"
 	statuscode = 501#Not Implemented
@@ -17,13 +14,13 @@ def main():
 	return jsonifyoutput(statuscode,status,[])
 
 @app.route('/products/<gtin>', methods=['DELETE'])
-@func.requires_auth
+@func.requiresauth
 def productdelete(gtin):
 	status = ""
 	statuscode = 200
 	records = []
 
-	gtin,productname,gtinstatus = func.isgtinvalid(gtin)
+	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 		try:
 			func.removeproduct(gtin)
@@ -39,7 +36,7 @@ def productdelete(gtin):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products', methods=['POST'])
-@func.requires_auth
+@func.requiresauth
 def productupsert():
 	status = ""
 	statuscode = 200
@@ -52,7 +49,7 @@ def productupsert():
 	isperishable 	= flask.request.args.get("isperishable")#DEFAULT '0'
 	isedible 		= flask.request.args.get("isedible")#DEFAULT '1'
 	
-	gtin,productname_old,gtinstatus = func.isgtinvalid(gtin)
+	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 		if productname != '':
 			func.updateproductname(gtin,productname)
@@ -67,7 +64,7 @@ def productupsert():
 			func.updateproductimage(gtin,productimage)
 			status = status + "productimage "
 		if brandname != '':
-			brandid,brandname,brandstatus = func.isbrandvalid("",brandname.strip())
+			brandid,brandname,brandstatus = func.validatebrand("",brandname.strip())
 			if brandstatus == 'NEW':
 				brandid = func.addnewbrand(brandid,brandname,"","","")
 			func.updateproductbrand(gtin,brandid)
@@ -80,7 +77,7 @@ def productupsert():
 
 		records = func.findproductbygtin(gtin)
 	elif gtinstatus == "NEW" and productname != "":
-		brandid,brandname,brandstatus = func.isbrandvalid("",brandname)
+		brandid,brandname,brandstatus = func.validatebrand("",brandname)
 		if brandstatus == 'NEW':
 			brandid = func.addnewbrand(brandid,brandname,"","","")
 		gtin = func.addnewproduct(gtin,productname,productimage,brandid,0,1)	
@@ -109,7 +106,7 @@ def productupsert():
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products/<gtin>', methods=['GET'])
-@func.requires_auth
+@func.requiresauth
 def productselect(gtin):
 	status = ""
 	statuscode = 200
@@ -117,7 +114,7 @@ def productselect(gtin):
 
 	isedible = flask.request.args.get("isedible")
 
-	gtin,productname,gtinstatus = func.isgtinvalid(gtin)
+	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 		records = func.findproductbygtin(gtin)
 	elif gtinstatus == "NEW":
@@ -137,25 +134,26 @@ def productselect(gtin):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products', methods=['GET'])
-@func.requires_auth
+@func.requiresauth
 def productselectall():
 	status = "all products returned"
 	statuscode = 200
 
 	isedible = flask.request.args.get("isedible")
+	sortby = flask.request.args.get("sortby")
 	
-	records = func.findallproducts(isedible)
+	records = func.findallproducts(isedible,sortby)
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/brands/<brandid>', methods=['DELETE'])
-@func.requires_auth
+@func.requiresauth
 def branddelete(brandid):
 	status = "brand deleted"
 	statuscode = 200
 	records = []
 
-	brandid,brandname,brandstatus = func.isbrandvalid(brandid,"")
+	brandid,brandname,brandstatus = func.validatebrand(brandid,"")
 	if brandstatus == "EXISTS":
 		try:
 			func.removebrand(brandid)
@@ -171,7 +169,7 @@ def branddelete(brandid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands', methods=['POST'])
-@func.requires_auth
+@func.requiresauth
 def brandupsert():
 	status = ""
 	statuscode = 200
@@ -183,7 +181,7 @@ def brandupsert():
 	brandurl 	= flask.request.args.get("brandurl").strip()
 	brandowner 	= flask.request.args.get("brandowner").strip()
 
-	brandid, brandname, brandstatus = func.isbrandvalid(brandid,brandname)
+	brandid, brandname, brandstatus = func.validatebrand(brandid,brandname)
 	if brandstatus == "EXISTS":
 		if brandname != "":
 			func.updatebrandname(brandid,brandname)
@@ -216,7 +214,7 @@ def brandupsert():
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands/<brandid>', methods=['GET'])
-@func.requires_auth
+@func.requiresauth
 def brandselect(brandid):
 	status = ""
 	statuscode = 200
@@ -236,7 +234,7 @@ def brandselect(brandid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands', methods=['GET'])
-@func.requires_auth
+@func.requiresauth
 def brandselectall():
 	status = "all brands returned"
 	statuscode = 200
@@ -246,7 +244,7 @@ def brandselectall():
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/inventories/<uid>', methods=['POST'])
-@func.requires_auth
+@func.requiresauth
 def inventoryupsert(uid):
 	status = ""
 	statuscode = 200
@@ -259,8 +257,8 @@ def inventoryupsert(uid):
 	itemstatus	= flask.request.args.get("itemstatus")#DEFAULT 'IN'
 	receiptno	= flask.request.args.get("receiptno")
 
-	gtin,productname,gtinstatus = func.isgtinvalid(gtin)
-	if gtinstatus != "INVALID" and func.isuservalid(uid) and func.isfloat(quantity) and func.isitemstatusvalid(itemstatus):
+	gtin,productname,gtinstatus = func.validategtin(gtin)
+	if gtinstatus != "INVALID" and func.validateuser(uid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
 		if productname == "":
 			productname,brandid = func.discovernewproduct(gtin,1)
 			if productname == "ERR":
@@ -295,16 +293,16 @@ def inventoryupsert(uid):
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-			records,inventorycount = func.findinventorybyuser(uid,"0,1",0)
+			records,inventorycount = func.findinventorybyuser(uid,"0,1",0,"productname")
 			status += " - %s" % inventorycount
 
-	elif not func.isuservalid(uid):
+	elif not func.validateuser(uid):
 		status = "invalid uid"
 		statuscode = 412#Precondition Failed
 	elif not func.isfloat(quantity):
 		status = "invalid quantity"
 		statuscode = 412#Precondition Failed
-	elif not func.isitemstatusvalid(itemstatus):
+	elif not func.validateitemstatus(itemstatus):
 		status = "invalid itemstatus"
 		statuscode = 412#Precondition Failed		
 	else:
@@ -315,7 +313,7 @@ def inventoryupsert(uid):
 
 @app.route("/inventories/", methods=['GET','POST'])
 @app.route("/inventories", methods=['GET','POST'])
-@func.requires_auth
+@func.requiresauth
 def inventoryselectall():
 	status = "invalid uid"
 	statuscode = 412#Precondition Failed
@@ -323,17 +321,18 @@ def inventoryselectall():
 	return func.jsonifyoutput(statuscode,status,[])
 
 @app.route('/inventories/<uid>', methods=['GET'])
-@func.requires_auth
+@func.requiresauth
 def inventoryselect(uid):
 	status = ""
 	statuscode = 200
 	records = []
 
-	if func.isuservalid(uid):
+	if func.validateuser(uid):
 		isedible = flask.request.args.get("isedible")
 		ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
+		sortby = flask.request.args.get("sortby")
 
-		records,inventorycount = func.findinventorybyuser(uid,isedible,ispartiallyconsumed)
+		records,inventorycount = func.findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby)
 
 		status = "all inventory items for the user returned - %s" % inventorycount
 
