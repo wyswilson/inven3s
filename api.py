@@ -359,8 +359,9 @@ def discovernewproduct(gtin,attempt):
 					#<td class="attrLabels">Brand:</td><td width="50.0%"><h2 itemprop="brand" itemscope="itemscope" itemtype="http://schema.org/Brand"><span itemprop="name">Sirena</span></h2></td>
 				else:
 					brandcell = soup.find('div', text = re.compile('BRAND'))
-					brandname = brandcell.find_next_sibling('div').text.strip()
-					#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
+					if brandcell is not None:
+						brandname = brandcell.find_next_sibling('div').text.strip()
+						#<div class="s-name">BRAND</div><div class="s-value">Heinz</div>
 			elif re.match(r'^https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org',selectedurl):
 				productname = soup.find('title').text
 				productname = re.sub(r"\|.+$", "", productname).strip()
@@ -585,7 +586,8 @@ def isbrandvalid(brandid,brandname):
 	records = cursor.fetchall()
 	if records:
 		brandid = records[0][0]
-		brandname = records[0][1]
+		if brandname == "":#DO NOT OVERRIDE IF NAME IS PROVIDED
+			brandname = records[0][1]
 		return brandid,brandname,"EXISTS"
 	elif brandname != "":
 		brandidlong = hashlib.md5(brandname.encode('utf-8')).hexdigest()
