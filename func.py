@@ -1,4 +1,5 @@
 import datetime
+import flask
 
 import functools
 import mysql.connector
@@ -60,6 +61,12 @@ def requiresauth(f):
         return f(*args, **kwargs)
 
     return decorated
+
+def addnewuser(email,passwordhashed):
+	userid = hashlib.md5(email.encode('utf-8')).hexdigest()
+	query1 = "INSERT INTO users (userid,email,passwordhashed) VALUES (%s,%s,%s)"
+	cursor.execute(query1,(userid,email,passwordhashed))
+	db.commit()
 
 def updatebrandurl(brandid,brandurl):
 	query2 = "UPDATE brands SET brandurl = %s WHERE brandid = %s"
@@ -608,8 +615,33 @@ def validatesortby(sortby):
 	else:
 		return "productname"
 
-def validateuser(uid):
-	if uid is not None and uid != "":
+def finduserbyid(email):
+	query1 = """
+    	SELECT
+        	userid,passwordhashed
+    	FROM users
+    	WHERE email = %s
+	"""
+	cursor.execute(query1,(userid,))
+	records = cursor.fetchall()
+	if records:
+		userid = records[0][0]
+		passwordhashed = records[0][1]
+		return userid, passwordhashed
+	else:
+		return "",""
+
+def validateuser(userid):
+	query1 = """
+    	SELECT
+        	email
+    	FROM users
+    	WHERE userid = %s
+	"""
+	cursor.execute(query1,(userid,))
+	records = cursor.fetchall()
+	if records:
+		email = records[0][0]
 		return True
 	else:
 		return False

@@ -1,10 +1,51 @@
 import datetime
-
 import flask
+
 import func
+import werkzeug.security
+import uuid
+import validate_email
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
+
+#403#Forbidden
+#404#Not Found
+#412#Precondition Failed
+#503#Service Unavailable
+#501#Not Implemented
+
+@app.route('/login', methods=['POST'])
+def userlogin():
+	auth = flask.request.authorization
+
+	if not auth or not auth.email or not auth.password:
+		return flask.make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})
+
+	userid,passwordhashed = finduserbyid(auth.email)
+
+	if check_password_hash(user.password, auth.password):
+		token = jwt.encode({'public_id': userid, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
+		return flask.jsonify({'token' : token.decode('UTF-8')})
+
+	return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
+
+@app.route('/register', methods=['POST'])
+def usersadd():
+	email 		= flask.request.args.get('email')
+	password 	= flask.request.args.get('password')
+
+	#check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
+	if validate_email.validate_email(email_address=email, check_regex=True):
+		try:
+			passwordhashed = werkzeug.security.generate_password_hash(password, method='sha256')
+			func.addnewuser(email,passwordhashed)
+			return func.jsonifyoutput(200,"user registered successfully",[])
+		except:
+			return func.jsonifyoutput(403,"user is already registered",[])
+	else:
+		return func.jsonifyoutput(412,"invalid user email - try again",[])
+	
 
 @app.route("/")
 @func.requiresauth
@@ -350,9 +391,3 @@ if __name__ == "__main__":
 	app.run(debug=True,host='0.0.0.0',port=8989)
     #from waitress import serve
     #serve(app, host="0.0.0.0", port=8989)
-
-#403#Forbidden
-#404#Not Found
-#412#Precondition Failed
-#503#Service Unavailable
-#501#Not Implemented

@@ -1,4 +1,5 @@
 import datetime
+import flask
 
 import functools
 import mysql.connector
@@ -17,11 +18,11 @@ config.read('config.ini')
 
 apiuser 		= config['api']['user']
 apipassword		= config['api']['password']
-mysqlhost 		= config['mysqll']['host']
-mysqlport 		= config['mysqll']['port']
-mysqluser 		= config['mysqll']['user']
-mysqlpassword 	= config['mysqll']['password']
-mysqldb 		= config['mysqll']['db']
+mysqlhost 		= config['mysql']['host']
+mysqlport 		= config['mysql']['port']
+mysqluser 		= config['mysql']['user']
+mysqlpassword 	= config['mysql']['password']
+mysqldb 		= config['mysql']['db']
 defaultbrandid 		= config['default']['brandid']
 defaultbrandname 	= config['default']['brandname']
 defaultretailercity = config['default']['retailercity']
@@ -33,7 +34,6 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
-print(mysqlhost)
 
 logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
 
@@ -41,8 +41,6 @@ def savelisting(listinglink,listingdate,listingtitle,listinghtml,userlink,source
 	query1 = "REPLACE INTO deals_listings (listingurl,listingdate,listingtitle,listinghtml,userurl,sourcename,sourceurl) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 	cursor.execute(query1,(listinglink,listingdate,listingtitle,listinghtml,userlink,sourcename,sourcelink))
 	db.commit()
-
-	print("[%s][%s][%s]" % (listinglink,listingdate,listingtitle))
 
 #def saveproductpage(producturl,producthtml,sourcelink):
 #	query1 = "REPLACE INTO deals_listingorigins (productpageurl,productpagehtml,sourceurl) VALUES (%s,%s,%s)"
@@ -189,11 +187,11 @@ while continuescrape == 1:
 
 							status = 'IS-NEW'
 							listingdateobj = datetime.datetime.strptime(listingdate, '%Y-%m-%d %H:%M:%S')
-							if listingdateobj < mostrecentlistingdate:
-								status = "ALREADY-EXISTS"
-								continuescrape = 0
-							else:
-								extractandsavemetadata(listinglink,listinghtml)
+							#if listingdateobj < mostrecentlistingdate:
+								#status = "ALREADY-EXISTS"
+								#continuescrape = 0
+							#else:
+							extractandsavemetadata(listinglink,listinghtml)
 								#saveproductpage(producturl,producthtml,sourcelink)
 
 							print("status: %s" % status)						
