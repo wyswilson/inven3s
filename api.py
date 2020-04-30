@@ -1,5 +1,6 @@
-import flask
 import datetime
+
+import flask
 import func
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
