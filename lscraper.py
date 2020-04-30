@@ -17,11 +17,11 @@ config.read('config.ini')
 
 apiuser 		= config['api']['user']
 apipassword		= config['api']['password']
-mysqlhost 		= config['mysql']['host']
-mysqlport 		= config['mysql']['port']
-mysqluser 		= config['mysql']['user']
-mysqlpassword 	= config['mysql']['password']
-mysqldb 		= config['mysql']['db']
+mysqlhost 		= config['mysqll']['host']
+mysqlport 		= config['mysqll']['port']
+mysqluser 		= config['mysqll']['user']
+mysqlpassword 	= config['mysqll']['password']
+mysqldb 		= config['mysqll']['db']
 defaultbrandid 		= config['default']['brandid']
 defaultbrandname 	= config['default']['brandname']
 defaultretailercity = config['default']['retailercity']
@@ -33,6 +33,7 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
+print(mysqlhost)
 
 logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
 
@@ -40,6 +41,8 @@ def savelisting(listinglink,listingdate,listingtitle,listinghtml,userlink,source
 	query1 = "REPLACE INTO deals_listings (listingurl,listingdate,listingtitle,listinghtml,userurl,sourcename,sourceurl) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 	cursor.execute(query1,(listinglink,listingdate,listingtitle,listinghtml,userlink,sourcename,sourcelink))
 	db.commit()
+
+	print("[%s][%s][%s]" % (listinglink,listingdate,listingtitle))
 
 #def saveproductpage(producturl,producthtml,sourcelink):
 #	query1 = "REPLACE INTO deals_listingorigins (productpageurl,productpagehtml,sourceurl) VALUES (%s,%s,%s)"
