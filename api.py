@@ -2,8 +2,6 @@ import datetime
 import flask
 
 import func
-import werkzeug.security
-import uuid
 import validate_email
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
@@ -14,41 +12,41 @@ app.config['JSON_SORT_KEYS'] = False
 #412#Precondition Failed
 #503#Service Unavailable
 #501#Not Implemented
+#401#Unauthorized
 
 @app.route('/login', methods=['POST'])
 def userlogin():
 	auth = flask.request.authorization
 
-	if not auth or not auth.email or not auth.password:
-		return flask.make_response('could not verify', 401, {'WWW.Authentication': 'Basic realm: "login required"'})
+	if not auth or not auth.username or not auth.password:
+		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 
-	userid,passwordhashed = finduserbyid(auth.email)
-
-	if check_password_hash(user.password, auth.password):
-		token = jwt.encode({'public_id': userid, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY'])
-		return flask.jsonify({'token' : token.decode('UTF-8')})
-
-	return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
+	userid,passwordhashed = func.finduserbyid(auth.username)
+	if func.checkpassword(passwordhashed,auth.password):
+		token = func.generatejwt(userid)
+		tokenstr = token.decode('UTF-8')
+		return func.jsonifyoutput(200,tokenstr,[])
+	else:
+		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
+		#return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
 
 @app.route('/register', methods=['POST'])
 def usersadd():
 	email 		= flask.request.args.get('email')
 	password 	= flask.request.args.get('password')
 
-	#check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
+	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
 	if validate_email.validate_email(email_address=email, check_regex=True):
 		try:
-			passwordhashed = werkzeug.security.generate_password_hash(password, method='sha256')
-			func.addnewuser(email,passwordhashed)
+			func.addnewuser(email,func.generatehash(password))
 			return func.jsonifyoutput(200,"user registered successfully",[])
 		except:
 			return func.jsonifyoutput(403,"user is already registered",[])
 	else:
 		return func.jsonifyoutput(412,"invalid user email - try again",[])
 	
-
 @app.route("/")
-@func.requiresauth
+@func.requiretoken
 def main():
 	status = "invalid endpoint"
 	statuscode = 501#Not Implemented
@@ -56,8 +54,8 @@ def main():
 	return jsonifyoutput(statuscode,status,[])
 
 @app.route('/products/<gtin>', methods=['DELETE'])
-@func.requiresauth
-def productdelete(gtin):
+@func.requiretoken
+def productdelete(userid,gtin):
 	status = ""
 	statuscode = 200
 	records = []
@@ -78,8 +76,8 @@ def productdelete(gtin):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products', methods=['POST'])
-@func.requiresauth
-def productupsert():
+@func.requiretoken
+def productupsert(userid):
 	status = ""
 	statuscode = 200
 	records = []
@@ -148,8 +146,8 @@ def productupsert():
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products/<gtin>', methods=['GET'])
-@func.requiresauth
-def productselect(gtin):
+@func.requiretoken
+def productselect(userid,gtin):
 	status = ""
 	statuscode = 200
 	records = []
@@ -176,8 +174,8 @@ def productselect(gtin):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/products', methods=['GET'])
-@func.requiresauth
-def productselectall():
+@func.requiretoken
+def productselectall(userid):
 	status = "all products returned"
 	statuscode = 200
 
@@ -189,8 +187,8 @@ def productselectall():
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/brands/<brandid>', methods=['DELETE'])
-@func.requiresauth
-def branddelete(brandid):
+@func.requiretoken
+def branddelete(userid,brandid):
 	status = "brand deleted"
 	statuscode = 200
 	records = []
@@ -211,8 +209,8 @@ def branddelete(brandid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands', methods=['POST'])
-@func.requiresauth
-def brandupsert():
+@func.requiretoken
+def brandupsert(userid):
 	status = ""
 	statuscode = 200
 	records = []
@@ -256,8 +254,8 @@ def brandupsert():
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands/<brandid>', methods=['GET'])
-@func.requiresauth
-def brandselect(brandid):
+@func.requiretoken
+def brandselect(userid,brandid):
 	status = ""
 	statuscode = 200
 
@@ -276,8 +274,8 @@ def brandselect(brandid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
 @app.route('/brands', methods=['GET'])
-@func.requiresauth
-def brandselectall():
+@func.requiretoken
+def brandselectall(userid):
 	status = "all brands returned"
 	statuscode = 200
 
@@ -285,9 +283,9 @@ def brandselectall():
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/inventories/<uid>', methods=['POST'])
-@func.requiresauth
-def inventoryupsert(uid):
+@app.route('/inventories', methods=['POST'])
+@func.requiretoken
+def inventoryupsert(userid):
 	status = ""
 	statuscode = 200
 	records = []
@@ -300,7 +298,7 @@ def inventoryupsert(uid):
 	receiptno	= flask.request.args.get("receiptno")
 
 	gtin,productname,gtinstatus = func.validategtin(gtin)
-	if gtinstatus != "INVALID" and func.validateuser(uid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
+	if gtinstatus != "INVALID" and func.validateuser(userid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
 		if productname == "":
 			productname,brandid = func.discovernewproduct(gtin,1)
 			if productname == "ERR":
@@ -321,25 +319,25 @@ def inventoryupsert(uid):
 			statuscode = 412#Precondition Failed
 
 		if productname != "" and ((itemstatus == "IN" and retailerid != "") or itemstatus == "OUT"):
-			inventorycount = func.countinventoryitems(uid,gtin)
+			inventorycount = func.countinventoryitems(userid,gtin)
 			if itemstatus == "OUT" and inventorycount-float(quantity) < 0:
 				status = "unable to register items consumed - inadequate stock in inventory"
 				statuscode = 403#Forbidden
 			else:
 				if itemstatus == "OUT" and (dateexpiry is None or dateexpiry == ""):
-					retailerid,dateexpiry = func.findproductexpiry(uid,gtin)
+					retailerid,dateexpiry = func.findproductexpiry(userid,gtin)
 				dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-				func.addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno)
+				func.addinventoryitem(userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno)
 				if itemstatus == "IN":
 					status = "product item added to inventory"
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-			records,inventorycount = func.findinventorybyuser(uid,"0,1",0,"productname")
+			records,inventorycount = func.findinventorybyuser(userid,"0,1",0,"productname")
 			status += " - %s" % inventorycount
 
-	elif not func.validateuser(uid):
-		status = "invalid uid"
+	elif not func.validateuser(userid):
+		status = "invalid user"
 		statuscode = 412#Precondition Failed
 	elif not func.isfloat(quantity):
 		status = "invalid quantity"
@@ -353,36 +351,27 @@ def inventoryupsert(uid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
 
-@app.route("/inventories/", methods=['GET','POST'])
-@app.route("/inventories", methods=['GET','POST'])
-@func.requiresauth
-def inventoryselectall():
-	status = "invalid uid"
-	statuscode = 412#Precondition Failed
-
-	return func.jsonifyoutput(statuscode,status,[])
-
-@app.route('/inventories/<uid>', methods=['GET'])
-@func.requiresauth
-def inventoryselect(uid):
+@app.route('/inventories', methods=['GET'])
+@func.requiretoken
+def inventoryselect(userid):
 	status = ""
 	statuscode = 200
 	records = []
 
-	if func.validateuser(uid):
+	if func.validateuser(userid):
 		isedible = flask.request.args.get("isedible")
 		ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
 		sortby = flask.request.args.get("sortby")
 
-		records,inventorycount = func.findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby)
+		records,inventorycount = func.findinventorybyuser(userid,isedible,ispartiallyconsumed,sortby)
 
 		status = "all inventory items for the user returned - %s" % inventorycount
 
 		if not records:
-			status = "uid does not have an inventory"
+			status = "user does not have an inventory"
 			statuscode = 404#Not Found
 	else:
-		status = "invalid uid"
+		status = "invalid user"
 		statuscode = 412#Precondition Failed
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))

@@ -12,12 +12,15 @@ import random
 import bs4
 import re
 import configparser
+import werkzeug.security
+import jwt
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-apiuser 		= config['api']['user']
-apipassword		= config['api']['password']
+apiuser 		= config['auth']['user']
+apipassword		= config['auth']['password']
+apisecretkey	= config['auth']['secretkey']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -37,10 +40,40 @@ cursor = db.cursor()
 
 logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
 
-def checkauth(username, password):
-    return username == apiuser and password == apipassword
+def generatehash(password):
+	return werkzeug.security.generate_password_hash(password, method='sha256')
 
-def authenticate():
+def checkpassword(passwordhashed,passwordfromauth):
+	return werkzeug.security.check_password_hash(passwordhashed, passwordfromauth)
+
+def generatejwt(userid):
+	token = jwt.encode(
+			{'identifier': userid,
+			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+			apisecretkey)
+	return token
+
+def requiretoken(f):
+	@functools.wraps(f)
+	def decorator(*args, **kwargs):
+		token = None
+
+		if 'x-access-token' in flask.request.headers:
+			token = flask.request.headers['x-access-token']
+
+		if not token:
+			return jsonifyoutput(401,"unauthorised access - token missing",[])
+
+		try:
+			data = jwt.decode(token, apisecretkey)
+			userid = data['identifier']
+		except:
+			return jsonifyoutput(401,"unauthorised access - invalid token",[])
+
+		return f(userid, *args, **kwargs)
+	return decorator
+
+def basicauth():
     message = {'message': "authentication required"}
     resp = flask.jsonify(message)
 
@@ -49,17 +82,17 @@ def authenticate():
 
     return resp
 
-def requiresauth(f):
+def requiresbasicauth(f):
     @functools.wraps(f)
     def decorated(*args, **kwargs):
         auth = flask.request.authorization
         if not auth: 
-            return authenticate()
+            return basicauth()
 
-        elif not checkauth(auth.username, auth.password):
-            return authenticate()
+        elif auth.username != apiuser and auth.password != apipassword:
+            return basicauth()
+
         return f(*args, **kwargs)
-
     return decorated
 
 def addnewuser(email,passwordhashed):
@@ -189,15 +222,19 @@ def jsonifyinventory(records):
 
 	return inventory
 
-def jsonifyoutput(statuscode,status,records):
+def jsonifyoutput(statuscode,status,records,special=None):
 	messages = []
 	message = {}
 	message['message'] = status
-	message['count'] = len(records)
-	message['results'] = records
+	if len(records) > 0:
+		message['count'] = len(records)
+		message['results'] = records
 	messages.append(message)
 
-	return flask.jsonify(messages),statuscode
+	if special:
+		return flask.jsonify(messages),statuscode,special
+	else:
+		return flask.jsonify(messages),statuscode
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
@@ -465,7 +502,7 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 			ON i.gtin = p.gtin
 			JOIN brands AS b
 			ON p.brandid = b.brandid
-			WHERE i.userid = %s AND p.isedible IN (%s)
+			WHERE i.userid = '%s' AND p.isedible IN (%s)
 			GROUP BY 1,2,3,4,5
 		) as items
 		WHERE itemstotal > 0
@@ -475,7 +512,6 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 	elif validateispartiallyconsumed(ispartiallyconsumed) == 0:
 		query1 += " AND MOD(itemstotal*2,2) = 0"
 	query1 += " ORDER BY %s" % validatesortby(sortby)
-
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
@@ -492,7 +528,7 @@ def findproductexpiry(uid,gtin):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE i.userid = %s AND p.gtin = %s
+		WHERE i.userid = '%s' AND p.gtin = %s
 		ORDER BY i.dateexpiry asc
 		LIMIT 1
 	""" % (uid,gtin)
@@ -516,7 +552,7 @@ def countinventoryitems(uid,gtin):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE i.userid = %s AND p.gtin = %s
+		WHERE i.userid = '%s' AND p.gtin = %s
 	""" % (uid,gtin)
 	cursor.execute(query1)
 	records = cursor.fetchall()
@@ -622,7 +658,7 @@ def finduserbyid(email):
     	FROM users
     	WHERE email = %s
 	"""
-	cursor.execute(query1,(userid,))
+	cursor.execute(query1,(email,))
 	records = cursor.fetchall()
 	if records:
 		userid = records[0][0]
