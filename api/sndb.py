@@ -38,3 +38,5 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
+
+print("test again")
