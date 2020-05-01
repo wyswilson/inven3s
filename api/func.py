@@ -16,11 +16,10 @@ import werkzeug.security
 import jwt
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('conf.ini')
 
-apiuser 		= config['auth']['user']
-apipassword		= config['auth']['password']
 apisecretkey	= config['auth']['secretkey']
+logfile 		= config['log']['file']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -38,7 +37,7 @@ db = mysql.connector.connect(
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
 
-logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
+logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
 def generatehash(password):
 	return werkzeug.security.generate_password_hash(password, method='sha256')

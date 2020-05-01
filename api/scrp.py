@@ -12,12 +12,14 @@ import random
 import bs4
 import re
 import configparser
+import werkzeug.security
+import jwt
 
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('conf.ini')
 
-apiuser 		= config['api']['user']
-apipassword		= config['api']['password']
+apisecretkey	= config['auth']['secretkey']
+logfile 		= config['log']['file']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -35,7 +37,7 @@ db = mysql.connector.connect(
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
 
-logging.basicConfig(filename="inven3s.log",level=logging.DEBUG)
+logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
 def savelisting(listinglink,listingdate,listingtitle,listinghtml,userlink,sourcename,sourcelink):
 	query1 = "REPLACE INTO deals_listings (listingurl,listingdate,listingtitle,listinghtml,userurl,sourcename,sourceurl) VALUES (%s,%s,%s,%s,%s,%s,%s)"
