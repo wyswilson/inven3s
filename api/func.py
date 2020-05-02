@@ -48,7 +48,7 @@ def checkpassword(passwordhashed,passwordfromauth):
 def generatejwt(userid):
 	token = jwt.encode(
 			{'identifier': userid,
-			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)},
 			apisecretkey)
 	return token
 
@@ -391,12 +391,13 @@ def discovernewproduct(gtin,attempt):
 			brandname = ""
 			brandowner = ""
 			if re.match(r'^https:\/\/www\.buycott\.com',selectedurl):
-				productname = soup.find('h2').text.strip()
-
-				brandcell = soup.find('td', text = re.compile('Brand'))
-				brandname = brandcell.find_next_sibling('td').find('a').text.strip()
-				manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
-				brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
+				productcell = soup.find('h2')
+				if productcell:
+					productname = productcell.text.strip()
+					brandcell = soup.find('td', text = re.compile('Brand'))
+					brandname = brandcell.find_next_sibling('td').find('a').text.strip()
+					manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
+					brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
 			elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
 				productname = soup.find('title').text
 				productname = re.sub(r"\|.+$", "", productname).strip()
@@ -432,7 +433,10 @@ def discovernewproduct(gtin,attempt):
 				brandid = addnewbrand(brandid,brandname,brandowner,"","")
 			gtin = addnewproduct(gtin,productname,"",brandid,0,1)
 
-			return productname,brandid
+			if productname != "" and brandid != "":
+				return productname,brandid
+			else:
+				return "WARN",""
 		else:
 			return "ERR",""
 

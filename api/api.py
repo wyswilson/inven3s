@@ -333,8 +333,8 @@ def inventoryupsert(userid):
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-			records,inventorycount = func.findinventorybyuser(userid,"0,1",0,"productname")
-			status += " - %s" % inventorycount
+		records,inventorycount = func.findinventorybyuser(userid,"0,1",2,"productname")
+		status += " - %s" % inventorycount
 
 	elif not func.validateuser(userid):
 		status = "invalid user"
