@@ -14,6 +14,7 @@ import re
 import configparser
 import werkzeug.security
 import jwt
+import string
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -112,12 +113,12 @@ def updatebrandimage(brandid,brandimage):
 
 def updatebrandowner(brandid,brandowner):
 	query2 = "UPDATE brands SET brandowner = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandowner.title(),brandid))
+	cursor.execute(query2,(string.capwords(brandowner),brandid))
 	db.commit()
 
 def updatebrandname(brandid,brandname):
 	query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandname.title(),brandid))
+	cursor.execute(query2,(string.capwords(brandname),brandid))
 	db.commit()
 
 def updateproductbrand(gtin,brandid):
@@ -147,12 +148,12 @@ def updateisperishable(gtin,isperishable):
 
 def updateproductname(gtin,productname):
 	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-	cursor.execute(query2,(productname.strip().title(),gtin))
+	cursor.execute(query2,(string.capwords(productname.strip()),gtin))
 	db.commit()
 
 def updateproductname(gtin,productname):
 	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-	cursor.execute(query2,(productname.strip().title(),gtin))
+	cursor.execute(query2,(string.capwords(productname.strip()),gtin))
 	db.commit()
 
 def jsonifybrands(records):
@@ -244,7 +245,7 @@ def addproductcandidate(source,gtin,title,url,rank):
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 	if brandname != "":
 		query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(brandid,brandname.title(),brandowner.title(),brandimage,brandurl))
+		cursor.execute(query2,(brandid,string.capwords(brandname),string.capwords(brandowner),brandimage,brandurl))
 		db.commit()
 
 		return brandid
@@ -260,7 +261,7 @@ def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantit
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
 		query2 = "INSERT INTO products (gtin,productname,productimage,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(gtin,productname.title(),productimage,brandid,isperishable,isedible))
+		cursor.execute(query2,(gtin,string.capwords(productname),productimage,brandid,isperishable,isedible))
 		db.commit()
 	
 		return gtin
@@ -276,7 +277,7 @@ def addnewretailer(retailername,retailercity):
 
 		retailerid = hashlib.md5(retailermash.encode('utf-8')).hexdigest()
 		query2 = "INSERT INTO retailers (retailerid,retailername,retailercity) VALUES (%s,%s,%s)"
-		cursor.execute(query2,(retailerid,retailername.title(),retailercity))
+		cursor.execute(query2,(retailerid,string.capwords(retailername),retailercity))
 		db.commit()
 
 		return retailerid

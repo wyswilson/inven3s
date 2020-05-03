@@ -14,6 +14,7 @@ import re
 import configparser
 import werkzeug.security
 import jwt
+import string
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -39,4 +40,5 @@ cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
-print("test again 1")
+strng = "anna's secret"
+print(string.capwords(strng))
