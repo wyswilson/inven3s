@@ -1,4 +1,3 @@
-import config from 'config';
 import { authHeader } from './auth.header.js';
 
 export const userService = {
@@ -14,7 +13,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch('http://127.0.0.1:8989/login', requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a user in the response
@@ -40,7 +39,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch('', requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
