@@ -232,9 +232,11 @@ def jsonifyoutput(statuscode,status,records,special=None):
 	messages.append(message)
 
 	if special:
-		return flask.jsonify(messages),statuscode,special
+		response = flask.jsonify(messages),statuscode,special
+		return response
 	else:
-		return flask.jsonify(messages),statuscode
+		response = flask.jsonify(messages),statuscode
+		return response
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()

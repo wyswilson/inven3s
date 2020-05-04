@@ -3,9 +3,11 @@ import flask
 
 import func
 import validate_email
+import flask_cors
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
+flask_cors.CORS(app, resources={r"/*": {"origins": "*"}})
 
 #403#Forbidden
 #404#Not Found
@@ -17,10 +19,11 @@ app.config['JSON_SORT_KEYS'] = False
 @app.route('/login', methods=['POST'])
 def userlogin():
 	auth = flask.request.authorization
+	print("login attempt [%s]" % auth.username)
+	print("password [%s]" % auth.password)
 
 	if not auth or not auth.username or not auth.password:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
-
 	userid,passwordhashed = func.finduserbyid(auth.username)
 	if func.checkpassword(passwordhashed,auth.password):
 		token = func.generatejwt(userid)
