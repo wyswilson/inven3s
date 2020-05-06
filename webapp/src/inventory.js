@@ -1,6 +1,6 @@
 import React from 'react';
-import { getUser, removeUserSession } from './Utils/Common';
-import "./Field.css";
+import { getUser, removeUserSession } from './utils/common';
+import "./field.css";
 
 class Input extends React.Component {
   constructor(props) {
@@ -57,18 +57,8 @@ class Input extends React.Component {
 }
 
 function Inventory(props) {
-  const user = getUser();
-
-  // handle click event of logout button
-  const handleLogout = () => {
-    removeUserSession();
-    props.history.push('/login');
-  }
-
   return (
     <div>
-      Welcome {user}!<br /><br />
-      <input type="button" onClick={handleLogout} value="Logout" />
       <form>
       
       <Input

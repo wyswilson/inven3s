@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-import Login from './Login';
-import Inventory from './Inventory';
-import Home from './Home';
+import Login from './login';
+import Inventory from './inventory';
+import Home from './home';
 
-import PrivateRoute from './Utils/PrivateRoute';
-import PublicRoute from './Utils/PublicRoute';
-import { getToken, removeUserSession, setUserSession } from './Utils/Common';
+import PrivateRoute from './utils/private-route';
+import PublicRoute from './utils/public-route';
+import { getToken, removeUserSession, setUserSession } from './utils/common';
 
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   if (authLoading && getToken()) {
-    return <div className="content">Checking Authentication...</div>
+    return <div className="content">checking authentication...</div>
   }
 
   return (
