@@ -11,7 +11,7 @@ function Login(props) {
   const handleLogin = () => {
     setError(null);
     setLoading(true);
-    axios.post('http://127.0.0.1:8989/login', {},{
+    axios.post('http://127.0.0.1:8989/user/login', {},{
        auth: {
         username: username.value,
         password: password.value
@@ -19,19 +19,33 @@ function Login(props) {
     })
     .then(response => { 
       setLoading(false);
-      setUserSession(response.data.message);
-      console.log(response.data.message)
-      props.history.push('/dashboard');
+      if(response.status === 200){
+        setUserSession(response.headers['access-token'],response.headers['identifier']);
+        setError("login successful");
+        props.history.push('/inventory');
+      }
     })
     .catch(error => {
       setLoading(false);
-      console.log(error.response)
+      const err_response = error.response
+      if(err_response){
+        if(err_response.status === 401){
+          setError("login failed");
+        }
+        else{
+          setError(err_response);
+        }
+      }
+      else{
+        setError('internal server error');
+      }
     });
   }
 
   return (
     <div>
       Login<br /><br />
+      
       <div>
         Username<br />
         <input type="text" {...username} autoComplete="new-password" />

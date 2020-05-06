@@ -7,7 +7,9 @@ import flask_cors
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
-flask_cors.CORS(app, resources={r"/*": {"origins": "*"}})
+flask_cors.CORS(app, 
+	origins='*',
+	expose_headers=['Access-Token','Identifier'])
 
 #403#Forbidden
 #404#Not Found
@@ -16,24 +18,32 @@ flask_cors.CORS(app, resources={r"/*": {"origins": "*"}})
 #501#Not Implemented
 #401#Unauthorized
 
-@app.route('/login', methods=['POST'])
+@app.route('/user/validate/<token>', methods=['GET'])
+def uservalidate(token):
+	valid, userid = func.validatetoken(token)
+	if valid:
+		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Identifier': userid})
+	else:
+		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})			
+
+@app.route('/user/login', methods=['POST'])
 def userlogin():
 	auth = flask.request.authorization
-	print("login attempt [%s]" % auth.username)
-	print("password [%s]" % auth.password)
+	email = auth.username
+	password = auth.password
 
-	if not auth or not auth.username or not auth.password:
+	if not auth or not email or not password:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
-	userid,passwordhashed = func.finduserbyid(auth.username)
-	if func.checkpassword(passwordhashed,auth.password):
+	userid,fullname,passwordhashed = func.finduserbyid(email)
+	if userid != "" and func.checkpassword(passwordhashed,password):
 		token = func.generatejwt(userid)
 		tokenstr = token.decode('UTF-8')
-		return func.jsonifyoutput(200,tokenstr,[])
+		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': tokenstr, 'Identifier': fullname})
 	else:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 		#return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
 
-@app.route('/register', methods=['POST'])
+@app.route('/user/register', methods=['POST'])
 def usersadd():
 	email 		= flask.request.args.get('email')
 	password 	= flask.request.args.get('password')
@@ -56,7 +66,7 @@ def main():
 
 	return jsonifyoutput(statuscode,status,[])
 
-@app.route('/products/<gtin>', methods=['DELETE'])
+@app.route('/product/<gtin>', methods=['DELETE'])
 @func.requiretoken
 def productdelete(userid,gtin):
 	status = ""
@@ -78,7 +88,7 @@ def productdelete(userid,gtin):
 	records = func.findproductbygtin(gtin)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/products', methods=['POST'])
+@app.route('/product', methods=['POST'])
 @func.requiretoken
 def productupsert(userid):
 	status = ""
@@ -148,7 +158,7 @@ def productupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/products/<gtin>', methods=['GET'])
+@app.route('/product/<gtin>', methods=['GET'])
 @func.requiretoken
 def productselect(userid,gtin):
 	status = ""
@@ -176,7 +186,7 @@ def productselect(userid,gtin):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/products', methods=['GET'])
+@app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):
 	status = "all products returned"
@@ -189,7 +199,7 @@ def productselectall(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/brands/<brandid>', methods=['DELETE'])
+@app.route('/brand/<brandid>', methods=['DELETE'])
 @func.requiretoken
 def branddelete(userid,brandid):
 	status = "brand deleted"
@@ -211,7 +221,7 @@ def branddelete(userid,brandid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/brands', methods=['POST'])
+@app.route('/brand', methods=['POST'])
 @func.requiretoken
 def brandupsert(userid):
 	status = ""
@@ -256,7 +266,7 @@ def brandupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/brands/<brandid>', methods=['GET'])
+@app.route('/brand/<brandid>', methods=['GET'])
 @func.requiretoken
 def brandselect(userid,brandid):
 	status = ""
@@ -276,7 +286,7 @@ def brandselect(userid,brandid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/brands', methods=['GET'])
+@app.route('/brand', methods=['GET'])
 @func.requiretoken
 def brandselectall(userid):
 	status = "all brands returned"
@@ -286,7 +296,7 @@ def brandselectall(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/inventories', methods=['POST'])
+@app.route('/inventory', methods=['POST'])
 @func.requiretoken
 def inventoryupsert(userid):
 	status = ""
@@ -354,7 +364,7 @@ def inventoryupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
 
-@app.route('/inventories', methods=['GET'])
+@app.route('/inventory', methods=['GET'])
 @func.requiretoken
 def inventoryselect(userid):
 	status = ""

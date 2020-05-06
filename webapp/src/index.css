@@ -18,21 +18,21 @@ code {
 
 .header {
   padding: 10px;
-  background: #edf2f4;
+  background: #273745;
   border-bottom: 1px solid #999;
 }
 .header a {
-  color: #0072ff;
-  text-decoration: none;
+  color: #8fa2b3;
+  text-decoration: unset;
   margin-left: 20px;
   margin-right: 5px;
 }
 .header a:hover {
-  color: #8a0f53;
+  color: #495a69;
+}
+.header .active {
+  color: #c1cbd4;
 }
 .header small {
   color: #666;
-}
-.header .active {
-  color: #2c7613;
 }

@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './Login';
-import Dashboard from './Dashboard';
+import Inventory from './Inventory';
 import Home from './Home';
 
 import PrivateRoute from './Utils/PrivateRoute';
@@ -19,8 +19,9 @@ function App() {
       return;
     }
 
-    axios.get(`http://localhost:4000/verifyToken?token=${token}`).then(response => {
-      setUserSession(response.data.token, response.data.user);
+    axios.get(`http://127.0.0.1:8989/user/validate/${token}`)
+    .then(response => {
+      setUserSession(response.headers['access-token'],response.headers['identifier']);
       setAuthLoading(false);
     }).catch(error => {
       removeUserSession();
@@ -37,15 +38,14 @@ function App() {
       <BrowserRouter>
         <div>
           <div className="header">
-            <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <NavLink activeClassName="active" to="/login">Login</NavLink><small>(Access without token only)</small>
-            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink><small>(Access with token only)</small>
+            <NavLink exact activeClassName="active" to="/">home</NavLink>
+            <NavLink activeClassName="active" to="/inventory">inventory</NavLink><small></small>
           </div>
           <div className="content">
             <Switch>
               <Route exact path="/" component={Home} />
               <PublicRoute path="/login" component={Login} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <PrivateRoute path="/inventory" component={Inventory} />
             </Switch>
           </div>
         </div>

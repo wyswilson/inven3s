@@ -53,24 +53,30 @@ def generatejwt(userid):
 			apisecretkey)
 	return token
 
+def validatetoken(token):
+	userid = None
+	
+	try:
+		data = jwt.decode(token, apisecretkey)
+		userid = data['identifier']
+
+		return True,userid
+	except:
+		return False,userid
+
 def requiretoken(f):
 	@functools.wraps(f)
 	def decorator(*args, **kwargs):
-		token = None
+		if 'access-token' in headers:
+			token = headers['access-token']
+			valid,userid = validatetoken(token)
+			if valid:
+				return f(userid, *args, **kwargs)
+			else:
+				return jsonifyoutput(401,"unauthorised access - invalid token",[])
+		else:
+			return jsonifyoutput(401,"unauthorised access - missing token",[])
 
-		if 'x-access-token' in flask.request.headers:
-			token = flask.request.headers['x-access-token']
-
-		if not token:
-			return jsonifyoutput(401,"unauthorised access - token missing",[])
-
-		try:
-			data = jwt.decode(token, apisecretkey)
-			userid = data['identifier']
-		except:
-			return jsonifyoutput(401,"unauthorised access - invalid token",[])
-
-		return f(userid, *args, **kwargs)
 	return decorator
 
 def basicauth():
@@ -660,7 +666,7 @@ def validatesortby(sortby):
 def finduserbyid(email):
 	query1 = """
     	SELECT
-        	userid,passwordhashed
+        	userid,fullname,passwordhashed
     	FROM users
     	WHERE email = %s
 	"""
@@ -668,10 +674,11 @@ def finduserbyid(email):
 	records = cursor.fetchall()
 	if records:
 		userid = records[0][0]
-		passwordhashed = records[0][1]
-		return userid, passwordhashed
+		fullname = records[0][1]
+		passwordhashed = records[0][2]
+		return userid,fullname, passwordhashed
 	else:
-		return "",""
+		return "","",""
 
 def validateuser(userid):
 	query1 = """
