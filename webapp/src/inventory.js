@@ -1,5 +1,4 @@
 import React from 'react';
-import { getUser, removeUserSession } from './utils/common';
 import "./field.css";
 
 class Input extends React.Component {

@@ -20,9 +20,9 @@ flask_cors.CORS(app,
 
 @app.route('/user/validate/<token>', methods=['GET'])
 def uservalidate(token):
-	valid, userid = func.validatetoken(token)
+	valid, fullname = func.validatetoken(token)
 	if valid:
-		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Identifier': userid})
+		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Identifier': fullname})
 	else:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})			
 

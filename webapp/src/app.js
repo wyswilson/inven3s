@@ -4,14 +4,20 @@ import axios from 'axios';
 
 import Login from './login';
 import Inventory from './inventory';
-import Home from './home';
+import Insights from './insights';
 
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
 
-function App() {
+function App(props) {
   const [authLoading, setAuthLoading] = useState(true);
+  let isauth = 'false';
+  let authaction;
+
+  const handleLogout = () => {
+    removeUserSession();
+  }
 
   useEffect(() => {
     const token = getToken();
@@ -21,6 +27,7 @@ function App() {
 
     axios.get(`http://127.0.0.1:8989/user/validate/${token}`)
     .then(response => {
+      isauth = 'true';
       setUserSession(response.headers['access-token'],response.headers['identifier']);
       setAuthLoading(false);
     }).catch(error => {
@@ -33,19 +40,29 @@ function App() {
     return <div className="content">checking authentication...</div>
   }
 
+  if (isauth == 'true'){
+    authaction = <NavLink activeClassName="active" to="/login" onClick={handleLogout}>logout</NavLink>;
+  }
+  else{
+    authaction = <NavLink activeClassName="active" to="/login">login</NavLink>;
+  }
+
+
   return (
     <div className="App">
       <BrowserRouter>
         <div>
           <div className="header">
-            <NavLink exact activeClassName="active" to="/">home</NavLink>
+            <NavLink exact activeClassName="active" to="/insights">insights</NavLink>
             <NavLink activeClassName="active" to="/inventory">inventory</NavLink><small></small>
+            {authaction}
+            {isauth}
           </div>
           <div className="content">
             <Switch>
-              <Route exact path="/" component={Home} />
-              <PublicRoute path="/login" component={Login} />
+              <PrivateRoute exact path="/insights" component={Insights} />
               <PrivateRoute path="/inventory" component={Inventory} />
+              <PublicRoute path="/login" component={Login} />
             </Switch>
           </div>
         </div>

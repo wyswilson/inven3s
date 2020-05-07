@@ -7,7 +7,8 @@ function Login(props) {
   const username = useFormInput('');
   const password = useFormInput('');
   const [error, setError] = useState(null);
-  // handle button click of login form
+
+
   const handleLogin = () => {
     setError(null);
     setLoading(true);
@@ -22,7 +23,7 @@ function Login(props) {
       if(response.status === 200){
         setUserSession(response.headers['access-token'],response.headers['identifier']);
         setError("login successful");
-        props.history.push('/inventory');
+        props.history.push('/insights');
       }
     })
     .catch(error => {
