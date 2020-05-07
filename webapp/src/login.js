@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Input from './input.js';
 import axios from 'axios';
 import { setUserSession } from './utils/common';
 
@@ -48,12 +49,26 @@ function Login(props) {
       Login<br /><br />
       
       <div>
-        Username<br />
-        <input type="text" {...username} autoComplete="new-password" />
+        <input type="text" {...username} />
+        <Input
+        id={1}
+        type="text"
+        label="email"
+        predicted=""
+        locked={false}
+        active={false}
+        />
       </div>
       <div style={{ marginTop: 10 }}>
-        Password<br />
-        <input type="password" {...password} autoComplete="new-password" />
+        <input type="password" {...password} />
+        <Input
+        id={1}
+        type="password"
+        label="password"
+        predicted=""
+        locked={false}
+        active={false}
+        />
       </div>
       {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
       <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />

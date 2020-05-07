@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './login';
@@ -12,7 +12,6 @@ import { getToken, removeUserSession, setUserSession } from './utils/common';
 
 function App(props) {
   const [authLoading, setAuthLoading] = useState(true);
-  let isauth = 'false';
   let authaction;
 
   const handleLogout = () => {
@@ -21,13 +20,13 @@ function App(props) {
 
   useEffect(() => {
     const token = getToken();
+    
     if (!token) {
       return;
     }
 
     axios.get(`http://127.0.0.1:8989/user/validate/${token}`)
     .then(response => {
-      isauth = 'true';
       setUserSession(response.headers['access-token'],response.headers['identifier']);
       setAuthLoading(false);
     }).catch(error => {
@@ -40,11 +39,11 @@ function App(props) {
     return <div className="content">checking authentication...</div>
   }
 
-  if (isauth == 'true'){
-    authaction = <NavLink activeClassName="active" to="/login" onClick={handleLogout}>logout</NavLink>;
+  if (authLoading){
+    authaction = <NavLink to="/login">login</NavLink>;
   }
   else{
-    authaction = <NavLink activeClassName="active" to="/login">login</NavLink>;
+    authaction = <NavLink to="/login" onClick={handleLogout}>logout</NavLink>;
   }
 
 
@@ -56,7 +55,6 @@ function App(props) {
             <NavLink exact activeClassName="active" to="/insights">insights</NavLink>
             <NavLink activeClassName="active" to="/inventory">inventory</NavLink><small></small>
             {authaction}
-            {isauth}
           </div>
           <div className="content">
             <Switch>
