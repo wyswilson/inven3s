@@ -66,6 +66,7 @@ def validatetoken(token):
 def requiretoken(f):
 	@functools.wraps(f)
 	def decorator(*args, **kwargs):
+		headers = flask.request.headers
 		if 'access-token' in headers:
 			token = headers['access-token']
 			valid,userid = validatetoken(token)
