@@ -1,35 +1,23 @@
-import React from 'react';
-import Input from './input.js';
+import React from "react";
+import Field from './field.js';
 
-function Inventory(props) {
-
-  return (
-    <div>
-      <form>
+class Inventory extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  
+  handleChange(e) {
+    e.preventDefault()
+  }
+  
+  render() {
+    return (
       <div>
-        <Input
-          id={1}
-          type="text"
-          label="GTIN"
-          predicted=""
-          locked={false}
-          active={false}
-        />
+        <Field label="gtin" type="text" active={false} />
+        <Field label="retailer" type="text" active={false} />
+        <div></div>
       </div>
-      <div style={{ marginTop: 10 }}>
-        <Input
-          id={2}
-          type="text"
-          label="Retailer"
-          predicted=""
-          locked={false}
-          active={false}
-        />
-      </div>
-    </form>
-    </div>
-     
-  );
+    )
+  }
 }
-
 export default Inventory;

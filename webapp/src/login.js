@@ -1,74 +1,71 @@
-import React, { useState } from 'react';
-import Input from './input.js';
+import React from "react";
+import Field from './field.js';
+import './field.css';
+import { Button } from 'semantic-ui-react'
 import axios from 'axios';
 import { setUserSession } from './utils/common';
-import "./input.css";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: props.active || false,
-      password: props.password || "",
-      email: props.email || ""
+      email: '',
+      password: ''
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+  updatecredentials(field,value) {
+    console.log('parent:'+field + ':' + value);
+    if(field === 'email'){
+      this.setState({ email:value });
+    }
+    if(field === 'password'){
+      this.setState({ password:value });
+    }
+  }
 
-    console.log(`Input name ${name}. Input value ${value}.`);
-
-    this.setState({
-      [name]: value
+  authenticate(event){
+    const { email, password } = this.state;
+    console.log('authenticating... with [' + email + ':' + password + ']');  
+    axios.post('http://127.0.0.1:8989/user/login', {},{
+       auth: {
+        username: email,
+        password: password
+      }
+    })
+    .then(response => { 
+      if(response.status === 200){
+        setUserSession(response.headers['access-token'],response.headers['identifier']);
+        //props.history.push('/insights');
+        console.log('successful! ' + response.headers['access-token']);
+      }
+    })
+    .catch(error => {
+      const err_response = error.response
+      if(err_response){
+        if(err_response.status === 401){
+          console.log("login failed");
+        }
+        else{
+          console.log(err_response);
+        }
+      }
+      else{
+        console.log('internal server error');
+      }
     });
   }
-
+  
   render() {
-    const { active, email, password } = this.state;
-    const fieldClassName = `field ${active ? 'active' : ''}`
-
     return (
       <div>
-        Login<br /><br />
-        
-        <div className={fieldClassName}>
-          <input
-          name="email"
-          type="text"
-          label="email"
-          value={this.state.email}
-          active={false}
-          onChange={this.handleChange}
-          onFocus={() => this.setState({ active: true })}
-          onBlur={() => this.setState({ active: false })}
-          />
-          <label htmlFor="email">
-          email
-          </label>
-        </div>
-        
-        <div className={fieldClassName}>
-          <input
-          type="password"
-          label="password"
-          value={this.state.password}
-          active={false}
-          onChange={this.handleChange}
-          onFocus={() => this.setState({ active: true })}
-          onBlur={() => this.setState({ active: false })}
-          />
-          <label htmlFor="password">
-          password
-          </label>
-        </div>
-       </div>
-    );
+        <Field label="email" type="text" active={false}
+        parentCallback={this.updatecredentials.bind(this)}/>
+        <Field label="password" type="password" active={false}
+        parentCallback ={this.updatecredentials.bind(this)}/>
+        <Button onClick={this.authenticate.bind(this)}>login</Button>
+      </div>
+    )
   }
 }
-
 export default Login;
