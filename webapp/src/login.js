@@ -2,89 +2,72 @@ import React, { useState } from 'react';
 import Input from './input.js';
 import axios from 'axios';
 import { setUserSession } from './utils/common';
+import "./input.css";
 
-function Login(props) {
-  const [loading, setLoading] = useState(false);
-  const username = useFormInput('');
-  const password = useFormInput('');
-  const [error, setError] = useState(null);
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: props.active || false,
+      password: props.password || "",
+      email: props.email || ""
+    };
 
+    this.handleChange = this.handleChange.bind(this);
+  }
+  
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-  const handleLogin = () => {
-    setError(null);
-    setLoading(true);
-    axios.post('http://127.0.0.1:8989/user/login', {},{
-       auth: {
-        username: username.value,
-        password: password.value
-      }
-    })
-    .then(response => { 
-      setLoading(false);
-      if(response.status === 200){
-        setUserSession(response.headers['access-token'],response.headers['identifier']);
-        setError("login successful");
-        props.history.push('/insights');
-      }
-    })
-    .catch(error => {
-      setLoading(false);
-      const err_response = error.response
-      if(err_response){
-        if(err_response.status === 401){
-          setError("login failed");
-        }
-        else{
-          setError(err_response);
-        }
-      }
-      else{
-        setError('internal server error');
-      }
+    console.log(`Input name ${name}. Input value ${value}.`);
+
+    this.setState({
+      [name]: value
     });
   }
 
-  return (
-    <div>
-      Login<br /><br />
-      
+  render() {
+    const { active, email, password } = this.state;
+    const fieldClassName = `field ${active ? 'active' : ''}`
+
+    return (
       <div>
-        <input type="text" {...username} />
-        <Input
-        id={1}
-        type="text"
-        label="email"
-        predicted=""
-        locked={false}
-        active={false}
-        />
-      </div>
-      <div style={{ marginTop: 10 }}>
-        <input type="password" {...password} />
-        <Input
-        id={1}
-        type="password"
-        label="password"
-        predicted=""
-        locked={false}
-        active={false}
-        />
-      </div>
-      {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-      <input type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} /><br />
-    </div>
-  );
-}
-
-const useFormInput = initialValue => {
-  const [value, setValue] = useState(initialValue);
-
-  const handleChange = e => {
-    setValue(e.target.value);
-  }
-  return {
-    value,
-    onChange: handleChange
+        Login<br /><br />
+        
+        <div className={fieldClassName}>
+          <input
+          name="email"
+          type="text"
+          label="email"
+          value={this.state.email}
+          active={false}
+          onChange={this.handleChange}
+          onFocus={() => this.setState({ active: true })}
+          onBlur={() => this.setState({ active: false })}
+          />
+          <label htmlFor="email">
+          email
+          </label>
+        </div>
+        
+        <div className={fieldClassName}>
+          <input
+          type="password"
+          label="password"
+          value={this.state.password}
+          active={false}
+          onChange={this.handleChange}
+          onFocus={() => this.setState({ active: true })}
+          onBlur={() => this.setState({ active: false })}
+          />
+          <label htmlFor="password">
+          password
+          </label>
+        </div>
+       </div>
+    );
   }
 }
 
