@@ -16,7 +16,7 @@ class Field extends React.Component {
     const label = event.target.placeholder;
     const value = event.target.value;
     this.setState({ value });
-    console.log(label + ':' + value);
+    //console.log(label + ':' + value);
     this.props.parentCallback(label,value);
   }
 

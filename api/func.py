@@ -46,8 +46,8 @@ def generatehash(password):
 def checkpassword(passwordhashed,passwordfromauth):
 	return werkzeug.security.check_password_hash(passwordhashed, passwordfromauth)
 
-def generatejwt(userid):
-	params = {'identifier': userid,
+def generatejwt(fullname):
+	params = {'identifier': fullname,
 			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}
 	token = jwt.encode(params, apisecretkey, algorithm='HS256')
 	return token

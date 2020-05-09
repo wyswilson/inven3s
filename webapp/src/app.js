@@ -36,13 +36,10 @@ function App(props) {
   }, []);
 
   if (authLoading && getToken()) {
-    return <div className="content">checking authentication...</div>
+    return <div className="error">checking authentication...</div>
   }
 
-  if (authLoading){
-    authaction = <NavLink to="/login">login</NavLink>;
-  }
-  else{
+  if (!authLoading){
     authaction = <NavLink to="/login" onClick={handleLogout}>logout</NavLink>;
   }
 

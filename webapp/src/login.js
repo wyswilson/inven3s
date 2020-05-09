@@ -1,21 +1,23 @@
 import React from "react";
 import Field from './field.js';
-import './field.css';
-import { Button } from 'semantic-ui-react'
+import { Button, Message } from 'semantic-ui-react'
 import axios from 'axios';
-import { setUserSession } from './utils/common';
+import { getUser, setUserSession } from './utils/common';
+import './field.css';
+import './index.css';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      message: ''
     };
   }
   
   updatecredentials(field,value) {
-    console.log('parent:'+field + ':' + value);
+    //console.log('parent:'+field + ':' + value);
     if(field === 'email'){
       this.setState({ email:value });
     }
@@ -25,7 +27,7 @@ class Login extends React.Component {
   }
 
   authenticate(event){
-    const { email, password } = this.state;
+    const { email, password, message } = this.state;
     console.log('authenticating... with [' + email + ':' + password + ']');  
     axios.post('http://127.0.0.1:8989/user/login', {},{
        auth: {
@@ -36,34 +38,35 @@ class Login extends React.Component {
     .then(response => { 
       if(response.status === 200){
         setUserSession(response.headers['access-token'],response.headers['identifier']);
-        //props.history.push('/insights');
-        console.log('successful! ' + response.headers['access-token']);
+        this.props.history.push('/insights');
       }
     })
     .catch(error => {
       const err_response = error.response
       if(err_response){
         if(err_response.status === 401){
-          console.log("login failed");
+          this.setState({ message:'incorrect username and/or password' });
         }
         else{
-          console.log(err_response);
+          this.setState({ message:err_response });
         }
       }
       else{
-        console.log('internal server error');
+        this.setState({ message:'internal server error' });
       }
     });
   }
   
   render() {
+    const { email, password, message } = this.state;
     return (
       <div>
         <Field label="email" type="text" active={false}
         parentCallback={this.updatecredentials.bind(this)}/>
         <Field label="password" type="password" active={false}
         parentCallback ={this.updatecredentials.bind(this)}/>
-        <Button onClick={this.authenticate.bind(this)}>login</Button>
+        <Button secondary onClick={this.authenticate.bind(this)}>login</Button>
+        <span className='error'>{message}</span>
       </div>
     )
   }

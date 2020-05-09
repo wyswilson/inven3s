@@ -1,9 +1,8 @@
-LIGHTEST 	c1cbd4
-LIGHT    	8fa2b3
-DARK	 	495a69
-DARKEST	 	273745
-ERR-DARK 	822626
-ERR-LIGHT	a66565
+LIGHTEST 	d0dff5
+LIGHT    	a7b7cf
+DARK	 	889ab5
+DARKEST	 	0f141c
+ERR			c75061
 
 https://codesandbox.io/s/yqlz84rnyv?file=/src/index.js:654-705
 https://gist.github.com/aerrity/07ca40d42af5a8db48e0e3d974466ed1

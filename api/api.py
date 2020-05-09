@@ -36,7 +36,7 @@ def userlogin():
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 	userid,fullname,passwordhashed = func.finduserbyid(email)
 	if userid != "" and func.checkpassword(passwordhashed,password):
-		token = func.generatejwt(userid)
+		token = func.generatejwt(fullname)
 		tokenstr = token.decode('UTF-8')
 		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': tokenstr, 'Identifier': fullname})
 	else:
