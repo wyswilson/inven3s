@@ -37,7 +37,7 @@ class Login extends React.Component {
     })
     .then(response => { 
       if(response.status === 200){
-        setUserSession(response.headers['access-token'],response.headers['identifier']);
+        setUserSession(response.headers['access-token'],response.headers['name']);
         this.props.history.push('/insights');
       }
     })

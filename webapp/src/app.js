@@ -27,7 +27,7 @@ function App(props) {
 
     axios.get(`http://127.0.0.1:8989/user/validate/${token}`)
     .then(response => {
-      setUserSession(response.headers['access-token'],response.headers['identifier']);
+      setUserSession(response.headers['access-token'],response.headers['name']);
       setAuthLoading(false);
     }).catch(error => {
       removeUserSession();

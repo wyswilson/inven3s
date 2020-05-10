@@ -46,22 +46,22 @@ def generatehash(password):
 def checkpassword(passwordhashed,passwordfromauth):
 	return werkzeug.security.check_password_hash(passwordhashed, passwordfromauth)
 
-def generatejwt(fullname):
-	params = {'identifier': fullname,
+def generatejwt(userid):
+	params = {'userid': userid,
 			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}
 	token = jwt.encode(params, apisecretkey, algorithm='HS256')
 	return token
 
 def validatetoken(token):
-	fullname = None
+	userid = None
 	
 	try:
 		data = jwt.decode(token, apisecretkey)
-		fullname = data['identifier']
+		userid = data['userid']
 
-		return True,fullname
+		return True,userid
 	except:
-		return False,fullname
+		return False,userid
 
 def requiretoken(f):
 	@functools.wraps(f)
