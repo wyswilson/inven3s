@@ -46,22 +46,23 @@ def generatehash(password):
 def checkpassword(passwordhashed,passwordfromauth):
 	return werkzeug.security.check_password_hash(passwordhashed, passwordfromauth)
 
-def generatejwt(userid):
+def generatejwt(userid,username):
 	params = {'userid': userid,
+				'username': username,
 			'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}
 	token = jwt.encode(params, apisecretkey, algorithm='HS256')
 	return token
 
 def validatetoken(token):
 	userid = None
-	
+	username = None
 	try:
 		data = jwt.decode(token, apisecretkey)
 		userid = data['userid']
-
-		return True,userid
+		username = data['username']
+		return True,userid,username
 	except:
-		return False,userid
+		return False,userid,username
 
 def requiretoken(f):
 	@functools.wraps(f)
@@ -69,7 +70,7 @@ def requiretoken(f):
 		headers = flask.request.headers
 		if 'access-token' in headers:
 			token = headers['access-token']
-			valid,userid = validatetoken(token)
+			valid,userid,username = validatetoken(token)
 			if valid:
 				return f(userid, *args, **kwargs)
 			else:

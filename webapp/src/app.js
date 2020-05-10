@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Login from './login';
 import Inventory from './inventory';
-import Insights from './insights';
+import Home from './home';
 
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
@@ -12,11 +12,6 @@ import { getToken, removeUserSession, setUserSession } from './utils/common';
 
 function App(props) {
   const [authLoading, setAuthLoading] = useState(true);
-  let authaction;
-
-  const handleLogout = () => {
-    removeUserSession();
-  }
 
   useEffect(() => {
     const token = getToken();
@@ -36,26 +31,20 @@ function App(props) {
   }, []);
 
   if (authLoading && getToken()) {
-    return <div className="error">checking authentication...</div>
+    return <div className="error">authenticating</div>
   }
-
-  if (!authLoading){
-    authaction = <NavLink to="/login" onClick={handleLogout}>logout</NavLink>;
-  }
-
 
   return (
     <div className="App">
       <BrowserRouter>
         <div>
           <div className="header">
-            <NavLink exact activeClassName="active" to="/insights">insights</NavLink>
-            <NavLink activeClassName="active" to="/inventory">inventory</NavLink><small></small>
-            {authaction}
+            <NavLink activeClassName="active" to="/home">home</NavLink>
+            <NavLink activeClassName="active" to="/inventory">inventory</NavLink>
           </div>
           <div className="content">
             <Switch>
-              <PrivateRoute exact path="/insights" component={Insights} />
+              <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/inventory" component={Inventory} />
               <PublicRoute path="/login" component={Login} />
             </Switch>

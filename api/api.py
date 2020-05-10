@@ -20,9 +20,9 @@ flask_cors.CORS(app,
 
 @app.route('/user/validate/<token>', methods=['GET'])
 def uservalidate(token):
-	valid, fullname = func.validatetoken(token)
+	valid, userid, username = func.validatetoken(token)
 	if valid:
-		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Name': fullname})
+		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Name': username})
 	else:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})			
 
@@ -34,11 +34,11 @@ def userlogin():
 
 	if not auth or not email or not password:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
-	userid,fullname,passwordhashed = func.finduserbyid(email)
+	userid,username,passwordhashed = func.finduserbyid(email)
 	if userid != "" and func.checkpassword(passwordhashed,password):
-		token = func.generatejwt(userid)
+		token = func.generatejwt(userid,username)
 		tokenstr = token.decode('UTF-8')
-		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': tokenstr, 'Name': fullname})
+		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': tokenstr, 'Name': username})
 	else:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 		#return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})

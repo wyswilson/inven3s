@@ -8,7 +8,7 @@ class Field extends React.Component {
       value: props.value || "",
       label: props.label || "",
       type: props.type || "",
-      active: props.active || false,
+      active: (props.locked && props.active) || false,
     };
   }
 
@@ -32,7 +32,7 @@ class Field extends React.Component {
           value={value}
           placeholder={label}
           type={type}
-          locked="false"
+          locked={locked}
           onChange={this.updatevalue.bind(this)}
           onFocus={() => this.setState({ active: true })}
           onBlur={() => this.setState({ active: false })}

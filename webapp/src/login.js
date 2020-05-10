@@ -28,7 +28,7 @@ class Login extends React.Component {
 
   authenticate(event){
     const { email, password, message } = this.state;
-    console.log('authenticating... with [' + email + ':' + password + ']');  
+    this.setState({ message:'authenticating' });
     axios.post('http://127.0.0.1:8989/user/login', {},{
        auth: {
         username: email,
@@ -38,17 +38,17 @@ class Login extends React.Component {
     .then(response => { 
       if(response.status === 200){
         setUserSession(response.headers['access-token'],response.headers['name']);
-        this.props.history.push('/insights');
+        this.props.history.push('/home');
       }
     })
     .catch(error => {
-      const err_response = error.response
-      if(err_response){
-        if(err_response.status === 401){
+      const errresponse = error.response
+      if(errresponse){
+        if(errresponse.status === 401){
           this.setState({ message:'incorrect username and/or password' });
         }
         else{
-          this.setState({ message:err_response });
+          this.setState({ message:errresponse });
         }
       }
       else{
