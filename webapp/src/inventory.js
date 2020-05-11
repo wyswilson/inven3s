@@ -5,35 +5,7 @@ import axios from 'axios';
 import { getToken } from './utils/common';
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Button, Icon, Label, Card, Image  } from 'semantic-ui-react'
-
-const cards = [
-  {
-    avatar: '/images/avatar/large/helen.jpg',
-    date: 'Joined in 2013',
-    header: 'Helen',
-    description: 'Primary Contact',
-  },
-  {
-    avatar: '/images/avatar/large/matthew.png',
-    date: 'Joined in 2013',
-    header: 'Matthew',
-    description: 'Primary Contact',
-  },
-  {
-    avatar: '/images/avatar/large/molly.png',
-    date: 'Joined in 2013',
-    header: 'Molly',
-    description: 'Primary Contact',
-  },
-  {
-    avatar: '/images/avatar/large/molly.png',
-    date: 'Joined in 2013',
-    header: 'Theia',
-    description: 'Primary Contact',
-  }
-]
-
+import { Button, Icon, Label, Card, Image, Header  } from 'semantic-ui-react'
 
 const renderproducts = ({ gtin, productname }) => (
   <div>
@@ -225,13 +197,13 @@ class Inventory extends React.Component {
 
   render() {
     const { token, gtin, productname, retailerid, retailername, productsuggests, retailersuggests, inventory } = this.state;
-    const itemgrid = _.map(inventory, (item) => (
+    const griditems = _.map(inventory, (item) => (
             <Card raised key={item.gtin}>
               <Image rounded centered src={item.productimage} size="tiny"/>
               <Card.Content>
                 <Label color='grey' ribbon>{item.itemcount}</Label>
                 <Fragment>
-                  <Card.Header className="cardy">{item.productname}</Card.Header>
+                  <Card.Description className="cardy"><Header size='tiny'>{item.productname}</Header></Card.Description>
                   <Card.Meta>{item.brandname}</Card.Meta>
                 </Fragment>
               </Card.Content>
@@ -244,29 +216,43 @@ class Inventory extends React.Component {
           ))
     return (
       <div>
-         <Search className="searchsuggest"
-          fluid
-          icon="search"
-          placeholder="product name or gtin"
-          resultRenderer={renderproducts}
-          results={productsuggests}
-          onSearchChange={this.updateproductsuggests.bind(this)}
-          onResultSelect={this.selectproduct.bind(this)}
-          size="small"
-        />
-        <Search className="searchsuggest"
-          fluid
-          icon="search"
-          placeholder="retailer"
-          resultRenderer={renderretailers}
-          results={retailersuggests}
-          onSearchChange={this.updateretailersuggests.bind(this)}
-          onResultSelect={this.selectretailer.bind(this)}
-          size="small"
-        />
-
+         
         <Card.Group doubling itemsPerRow={6} stackable>
-            {itemgrid}
+          <Card raised key="1">
+            <Image rounded centered src="https://react.semantic-ui.com/images/wireframe/image.png" size="tiny"/>
+            <Card.Content>
+              <Label color='grey' ribbon>0</Label>
+              <Fragment>
+                <Card.Meta>
+                  <Search className="searchsuggest"
+                    fluid
+                    icon="search"
+                    placeholder="product name or gtin"
+                    resultRenderer={renderproducts}
+                    results={productsuggests}
+                    onSearchChange={this.updateproductsuggests.bind(this)}
+                    onResultSelect={this.selectproduct.bind(this)}
+                    size="small"
+                  />
+                  <Search className="searchsuggest"
+                    fluid
+                    icon="search"
+                    placeholder="retailer"
+                    resultRenderer={renderretailers}
+                    results={retailersuggests}
+                    onSearchChange={this.updateretailersuggests.bind(this)}
+                    onResultSelect={this.selectretailer.bind(this)}
+                    size="small"
+                  />
+                  </Card.Meta>
+              </Fragment>
+            </Card.Content>
+
+            <Card.Content extra textAlign="center">
+              <Button icon="plus" />
+            </Card.Content>
+          </Card>
+          {griditems}
         </Card.Group>
       </div>
     )
