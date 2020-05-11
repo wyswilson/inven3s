@@ -1,10 +1,8 @@
 import React from "react";
-import Field from './field.js';
-import { Button, Message } from 'semantic-ui-react'
-import axios from 'axios';
-import { getUser, removeUserSession, setUserSession } from './utils/common';
-import './field.css';
 import './index.css';
+import { Button } from 'semantic-ui-react'
+import { getUser, removeUserSession } from './utils/common';
+
 
 class Insights extends React.Component {
   constructor(props) {

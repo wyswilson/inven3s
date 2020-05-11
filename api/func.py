@@ -36,7 +36,7 @@ db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
@@ -185,6 +185,21 @@ def jsonifybrands(records):
 
 	return brands
 
+def jsonifyretailers(records):
+	retailers = []
+	for record in records:
+		retailerid	  	= record[0]
+		retailername  	= record[1]
+
+		retailer = {}
+		retailer['key'] 			= retailerid#FOR REACT SEARCH COMPONENT
+		retailer['title'] 			= retailername#FOR REACT SEARCH COMPONENT
+		retailer['retailerid'] 		= retailerid
+		retailer['retailername']	= retailername
+		retailers.append(retailer)
+
+	return retailers
+
 def jsonifyproducts(records):
 	products = []
 	for record in records:
@@ -196,6 +211,8 @@ def jsonifyproducts(records):
 		isedible	   	= record[5]
 
 		product = {}
+		product['key'] 				= gtin#FOR REACT SEARCH COMPONENT
+		product['title'] 			= productname#FOR REACT SEARCH COMPONENT
 		product['gtin'] 			= gtin
 		product['productname']		= productname
 		product['productimage'] 	= productimage
@@ -465,10 +482,13 @@ def findallproducts(isedible):
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE isedible IN (%s)
-		GROUP BY 1,2,3,4,5,6
-	""" % validateisedible(isedible)
-	cursor.execute(query1)
+	"""
+	if validateisedible(isedible) == "2":
+		query1 += "WHERE p.isedible != %s"
+	else:
+		query1 += "WHERE p.isedible = %s"
+	query1 += " GROUP BY 1,2,3,4,5,6"
+	cursor.execute(query1,(validateisedible(isedible),))
 	records = cursor.fetchall()
 
 	return records
@@ -476,14 +496,28 @@ def findallproducts(isedible):
 def findproductbykeyword(gtin,isedible):
 	query1 = """
 		SELECT
-			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
+			p.gtin,p.productname,p.productimage,
+			b.brandname,p.isperishable,p.isedible,
+			count(*),
+			MATCH (p.productname,p.gtin)
+	    		AGAINST (%s IN BOOLEAN MODE) as score
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE p.productname LIKE %s AND p.isedible IN (%s)
+		WHERE 
+			MATCH (p.productname,p.gtin)
+	    		AGAINST (%s IN BOOLEAN MODE)
+	"""
+	if validateisedible(isedible) == "2":
+		query1 += " AND p.isedible != %s"
+	else:
+		query1 += " AND p.isedible = %s"
+	query1 += """
 		GROUP BY 1,2,3,4,5,6
-	""" % ("'%" + gtin + "%'",validateisedible(isedible))
-	cursor.execute(query1)
+		ORDER BY score DESC
+		LIMIT 5
+	"""
+	cursor.execute(query1,(gtin+'*',gtin+'*',validateisedible(isedible)))
 	records = cursor.fetchall()
 
 	return records
@@ -515,19 +549,24 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 			ON i.gtin = p.gtin
 			JOIN brands AS b
 			ON p.brandid = b.brandid
-			WHERE i.userid = '%s' AND p.isedible IN (%s)
+			WHERE i.userid = %s
+			"""
+	if validateisedible(isedible) == "2":
+		query1 += " AND p.isedible != %s"
+	else:
+		query1 += " AND p.isedible = %s"
+	query1 += """
 			GROUP BY 1,2,3,4,5
 		) as items
 		WHERE itemstotal > 0
-	""" % (uid,validateisedible(isedible))
+	"""
 	if validateispartiallyconsumed(ispartiallyconsumed) == 1:
 		query1 += " AND MOD(itemstotal*2,2) != 0"
 	elif validateispartiallyconsumed(ispartiallyconsumed) == 0:
 		query1 += " AND MOD(itemstotal*2,2) = 0"
-	query1 += " ORDER BY %s" % validatesortby(sortby)
-	cursor.execute(query1)
+	query1 += " ORDER BY %s"
+	cursor.execute(query1,(uid,validateisedible(isedible),validatesortby(sortby)))
 	records = cursor.fetchall()
-
 	itemsremainingtotal = sum(row[5] for row in records)
 
 	return records, itemsremainingtotal
@@ -541,11 +580,11 @@ def findproductexpiry(uid,gtin):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE i.userid = '%s' AND p.gtin = %s
-		ORDER BY i.dateexpiry asc
+		WHERE i.userid = %s AND p.gtin = %s
+		ORDER BY i.dateexpiry ASC
 		LIMIT 1
-	""" % (uid,gtin)
-	cursor.execute(query1)
+	"""
+	cursor.execute(query1,(uid,gtin))
 	records = cursor.fetchall()
 	if records:
 		retailerid = records[0][0]
@@ -565,9 +604,9 @@ def countinventoryitems(uid,gtin):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE i.userid = '%s' AND p.gtin = %s
-	""" % (uid,gtin)
-	cursor.execute(query1)
+		WHERE i.userid = %s AND p.gtin = %s
+	"""
+	cursor.execute(query1,(uid,gtin))
 	records = cursor.fetchall()
 	count = records[0][0]
 	if count:
@@ -589,17 +628,36 @@ def findallbrands():
 
 	return records
 
+
+def findretailerbykeyword(retailer):
+	query1 = """
+		SELECT
+			retailerid, retailername,
+			MATCH(retailername) AGAINST (%s IN BOOLEAN MODE) as score
+		FROM retailers
+		WHERE MATCH(retailername) AGAINST (%s IN BOOLEAN MODE)
+		ORDER BY score DESC
+	"""
+	cursor.execute(query1,(retailer+'*',retailer+'*'))
+	records = cursor.fetchall()
+
+	return records
+
 def findbrandbykeyword(brandid):
 	query1 = """
 		SELECT
-			b.brandid, b.brandname, b.brandimage, b.brandurl, b.brandowner, count(distinct(p.gtin))
+			b.brandid, b.brandname, b.brandimage,
+			b.brandurl, b.brandowner,
+			count(distinct(p.gtin)),
+			MATCH(b.brandname) AGAINST (%s IN BOOLEAN MODE) as score
 		FROM brands AS b
 		LEFT JOIN products as p
 		ON b.brandid = p.brandid
-		WHERE b.brandname LIKE %s
+		WHERE MATCH(b.brandname) AGAINST (%s IN BOOLEAN MODE)
 		GROUP BY 1,2,3,4,5
+		ORDER BY score DESC
 	"""
-	cursor.execute(query1,("%" + brandid + "%",))
+	cursor.execute(query1,(brandid+'*',brandid+'*'))
 	records = cursor.fetchall()
 
 	return records
@@ -725,13 +783,13 @@ def validateisedible(isedible):
 	try:
 		isedible = str(isedible)
 		if isedible is None or isedible == "":
-			return "0,1"
+			return "2"
 		elif isedible == "0" or isedible == "1":
 			return str(isedible)
 		else:
-			return "1"
+			return "2"
 	except:
-		return "1"
+		return "2"
 
 def validateispartiallyconsumed(ispartiallyconsumed):
 	try:

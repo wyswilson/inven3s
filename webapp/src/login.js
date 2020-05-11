@@ -1,10 +1,10 @@
 import React from "react";
-import Field from './field.js';
-import { Button, Message } from 'semantic-ui-react'
-import axios from 'axios';
-import { getUser, setUserSession } from './utils/common';
-import './field.css';
 import './index.css';
+import { Button } from 'semantic-ui-react'
+import axios from 'axios';
+import { setUserSession } from './utils/common';
+import Field from './field.js';
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Login extends React.Component {
   }
 
   authenticate(event){
-    const { email, password, message } = this.state;
+    const { email, password } = this.state;
     this.setState({ message:'authenticating' });
     axios.post('http://127.0.0.1:8989/user/login', {},{
        auth: {
@@ -58,7 +58,7 @@ class Login extends React.Component {
   }
   
   render() {
-    const { email, password, message } = this.state;
+    const { message } = this.state;
     return (
       <div>
         <Field label="email" type="text" active={false}

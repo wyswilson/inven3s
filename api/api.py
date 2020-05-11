@@ -193,9 +193,8 @@ def productselectall(userid):
 	statuscode = 200
 
 	isedible = flask.request.args.get("isedible")
-	sortby = flask.request.args.get("sortby")
 	
-	records = func.findallproducts(isedible,sortby)
+	records = func.findallproducts(isedible)
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
@@ -388,6 +387,21 @@ def inventoryselect(userid):
 		statuscode = 412#Precondition Failed
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+
+@app.route('/retailer/<retailer>', methods=['GET'])
+@func.requiretoken
+def retailerselect(userid,retailer):
+	status = ""
+	statuscode = 200
+
+	records = func.findretailerbykeyword(retailer)
+	if not records:
+		status = "retailer does not exists"
+		statuscode = 404#Not Found
+	else:
+		status = "retailers found with keyword search"
+	
+	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
 	app.run(debug=True,host='0.0.0.0',port=8989)

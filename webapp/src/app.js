@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Login from './login';
@@ -47,6 +47,9 @@ function App(props) {
               <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/inventory" component={Inventory} />
               <PublicRoute path="/login" component={Login} />
+              <PublicRoute exact path="/">
+                <Redirect to="/login" />
+              </PublicRoute>
             </Switch>
           </div>
         </div>

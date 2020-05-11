@@ -1,5 +1,5 @@
 import React from 'react';
-import "./field.css";
+import "./index.css";
 
 class Field extends React.Component {
   constructor(props) {
