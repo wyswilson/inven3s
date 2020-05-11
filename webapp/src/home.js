@@ -28,7 +28,7 @@ class Insights extends React.Component {
      <div>
       Insights for {username}!<br /><br />
       
-      <Button secondary onClick={this.handlelogout.bind(this)}>logout</Button>
+      <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
     </div>
     )
   }

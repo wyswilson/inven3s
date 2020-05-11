@@ -38,7 +38,7 @@ function App(props) {
     <div className="App">
       <BrowserRouter>
         <div>
-          <div className="header">
+          <div className="header nav">
             <NavLink activeClassName="active" to="/home">home</NavLink>
             <NavLink activeClassName="active" to="/inventory">inventory</NavLink>
           </div>

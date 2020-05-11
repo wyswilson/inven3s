@@ -65,7 +65,7 @@ class Login extends React.Component {
         parentCallback={this.updatecredentials.bind(this)}/>
         <Field label="password" type="password" active={false}
         parentCallback ={this.updatecredentials.bind(this)}/>
-        <Button secondary onClick={this.authenticate.bind(this)}>login</Button>
+        <Button color="black" onClick={this.authenticate.bind(this)}>login</Button>
         <span className='error'>{message}</span>
       </div>
     )

@@ -17,24 +17,24 @@ code {
   padding: 12px;
 }
 
-.header {
+.nav.header {
   padding: 12px;
   background: #0f141c;
   border-bottom: 1px solid #999;
 }
-.header a {
-  color: #96a3b5;
+.nav.header a {
+  color: #808b9c;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 5px;
 }
-.header a:hover {
+.nav.header a:hover {
+  color: #d3dae6;
+}
+.nav.header .active {
   color: #bac5d6;
 }
-.header .active {
-  color: #dfe8f5;
-}
-.header small {
+.nav.header small {
   color: #666;
 }
 
@@ -61,12 +61,12 @@ code {
   height: 56px;
   border-radius: 4px;
   position: relative;
-  background-color: #bac5d6;
+  background-color: #d3dae6;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 }
 
 .field:hover {
-  background-color: #96a3b5;
+  background-color: #bac5d6;
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -82,7 +82,7 @@ code {
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #0f141c;
+  color: #808b9c;
 }
 
 .field.locked {

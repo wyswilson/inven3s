@@ -1,9 +1,39 @@
-import React from "react";
+import React, {Fragment} from "react";
 import "./index.css";
 import { Search } from 'semantic-ui-react'
 import axios from 'axios';
 import { getToken } from './utils/common';
 import PropTypes from 'prop-types'
+import _ from 'lodash'
+import { Button, Icon, Label, Card, Image  } from 'semantic-ui-react'
+
+const cards = [
+  {
+    avatar: '/images/avatar/large/helen.jpg',
+    date: 'Joined in 2013',
+    header: 'Helen',
+    description: 'Primary Contact',
+  },
+  {
+    avatar: '/images/avatar/large/matthew.png',
+    date: 'Joined in 2013',
+    header: 'Matthew',
+    description: 'Primary Contact',
+  },
+  {
+    avatar: '/images/avatar/large/molly.png',
+    date: 'Joined in 2013',
+    header: 'Molly',
+    description: 'Primary Contact',
+  },
+  {
+    avatar: '/images/avatar/large/molly.png',
+    date: 'Joined in 2013',
+    header: 'Theia',
+    description: 'Primary Contact',
+  }
+]
+
 
 const renderproducts = ({ gtin, productname }) => (
   <div>
@@ -54,9 +84,44 @@ class Inventory extends React.Component {
       productname: '',
       retailerid:'',
       retailername:'',
+      inventory:[],
       productsuggests: defaultproduct,
       retailersuggests: defaultretailer
     }
+  }
+
+  componentDidMount() {
+    const { token } = this.state;
+    
+    if (!token) {
+      return;
+    }
+
+    axios.get('http://127.0.0.1:8989/inventory',
+      { headers: { "content-type": "application/json", "access-token": token } }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        const inventoryitems = response.data[0]['results'];
+        this.setState({ inventory:inventoryitems });
+        console.log(inventoryitems);
+      }
+    })
+    .catch(error => {
+      const errresponse = error.response
+      if(errresponse){
+        if(errresponse.status === 412){
+          const message = errresponse.data[0]['message'];
+          console.log(message);
+        }
+        else{
+          console.log(errresponse);
+        }
+      }
+      else{
+        console.log('internal server error');
+      }
+    });
   }
 
   lookupretailer(retailer){
@@ -159,33 +224,50 @@ class Inventory extends React.Component {
   }
 
   render() {
-    const { token, gtin, productname, retailerid, retailername, productsuggests, retailersuggests } = this.state;
-    
+    const { token, gtin, productname, retailerid, retailername, productsuggests, retailersuggests, inventory } = this.state;
+    const itemgrid = _.map(inventory, (item) => (
+            <Card raised key={item.gtin}>
+              <Image rounded centered src={item.productimage} size="tiny"/>
+              <Card.Content>
+                <Label color='grey' ribbon>{item.itemcount}</Label>
+                <Fragment>
+                  <Card.Header className="cardy">{item.productname}</Card.Header>
+                  <Card.Meta>{item.brandname}</Card.Meta>
+                </Fragment>
+              </Card.Content>
+
+              <Card.Content extra textAlign="center">
+                <Button icon="minus" />
+                <Button icon="plus" />
+              </Card.Content>
+            </Card>
+          ))
     return (
       <div>
+         <Search className="searchsuggest"
+          fluid
+          icon="search"
+          placeholder="product name or gtin"
+          resultRenderer={renderproducts}
+          results={productsuggests}
+          onSearchChange={this.updateproductsuggests.bind(this)}
+          onResultSelect={this.selectproduct.bind(this)}
+          size="small"
+        />
+        <Search className="searchsuggest"
+          fluid
+          icon="search"
+          placeholder="retailer"
+          resultRenderer={renderretailers}
+          results={retailersuggests}
+          onSearchChange={this.updateretailersuggests.bind(this)}
+          onResultSelect={this.selectretailer.bind(this)}
+          size="small"
+        />
 
-       <Search className="searchsuggest"
-        fluid
-        icon="search"
-        placeholder="product name or gtin"
-        resultRenderer={renderproducts}
-        results={productsuggests}
-        onSearchChange={this.updateproductsuggests.bind(this)}
-        onResultSelect={this.selectproduct.bind(this)}
-        size="small"
-      />
-
-       <Search className="searchsuggest"
-        fluid
-        icon="search"
-        placeholder="retailer"
-        resultRenderer={renderretailers}
-        results={retailersuggests}
-        onSearchChange={this.updateretailersuggests.bind(this)}
-        onResultSelect={this.selectretailer.bind(this)}
-        size="small"
-      />
-
+        <Card.Group doubling itemsPerRow={6} stackable>
+            {itemgrid}
+        </Card.Group>
       </div>
     )
   }

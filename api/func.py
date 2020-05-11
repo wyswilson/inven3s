@@ -231,15 +231,15 @@ def jsonifyinventory(records):
 		productname  	= record[1]
 		productimage	= record[2]
 		brandname   	= record[3]
-		dateexpiry   	= record[4]
-		itemcount		= record[5]
+		#dateexpiry   	= record[4]
+		itemcount		= record[4]
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
 		itemgroup['productname']	= productname
 		itemgroup['productimage'] 	= productimage
 		itemgroup['brandname'] 		= brandname
-		itemgroup['dateexpiry'] 	= dateexpiry
+		#itemgroup['dateexpiry'] 	= dateexpiry
 		itemgroup['itemcount'] 		= itemcount
 
 		inventory.append(itemgroup)
@@ -542,7 +542,7 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 	query1 = """
 		SELECT * FROM (
 			SELECT
-				i.gtin,p.productname,p.productimage,b.brandname,i.dateexpiry,
+				i.gtin,p.productname,p.productimage,b.brandname,
 				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
 			JOIN products AS p
@@ -556,7 +556,7 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 	else:
 		query1 += " AND p.isedible = %s"
 	query1 += """
-			GROUP BY 1,2,3,4,5
+			GROUP BY 1,2,3,4
 		) as items
 		WHERE itemstotal > 0
 	"""
@@ -567,7 +567,7 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 	query1 += " ORDER BY %s"
 	cursor.execute(query1,(uid,validateisedible(isedible),validatesortby(sortby)))
 	records = cursor.fetchall()
-	itemsremainingtotal = sum(row[5] for row in records)
+	itemsremainingtotal = sum(row[4] for row in records)
 
 	return records, itemsremainingtotal
 
