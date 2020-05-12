@@ -174,6 +174,8 @@ def jsonifybrands(records):
 		productcount	= record[5]
 
 		brand = {}
+		brand['key'] 			= brandid
+		brand['title']			= brandname
 		brand['brandid'] 		= brandid
 		brand['brandname']		= brandname
 		brand['brandimage']		= brandimage

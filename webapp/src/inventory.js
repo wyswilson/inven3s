@@ -5,46 +5,7 @@ import axios from 'axios';
 import { getToken } from './utils/common';
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import { Button, Icon, Label, Card, Image, Header  } from 'semantic-ui-react'
-
-const renderproducts = ({ gtin, productname }) => (
-  <div>
-  {productname}
-  </div>
-)
-
-renderproducts.propTypes = {
-  gtin: PropTypes.string,
-  productname: PropTypes.string,
-}
-
-const renderretailers = ({ retailername }) => (
-  <div>
-  {retailername}
-  </div>
-)
-
-renderretailers.propTypes = {
-  retailername: PropTypes.string
-}
-
-const defaultproduct = [{
-          "key":"",
-          "title":"",
-          "gtin": "new-entry",
-          "productname": "create new entry",
-          "productimage": "",
-          "brandname": "",
-          "isperishable": 0,
-          "isedible": 1
-        }]
-
-const defaultretailer = [{
-          "key":"",
-          "title":"",
-          "retailerid": "new-entry",
-          "retailername": "create new entry"
-        }]
+import { Dropdown, Modal, Button, Icon, Input, Label, Card, Image, Header  } from 'semantic-ui-react'
 
 class Inventory extends React.Component {
 
@@ -54,15 +15,23 @@ class Inventory extends React.Component {
       token: getToken(),
       gtin: '',
       productname: '',
+      productimage: '',
       retailerid:'',
       retailername:'',
       inventory:[],
-      productsuggests: defaultproduct,
-      retailersuggests: defaultretailer
+      productsuggests: [],
+      retailersuggests: [],
+      brandsuggests: [],
+      tempgtin:'',
+      tempproductname: '',
+      tempproductimage: '',
+      tempbrandid:'',
+      tempbrandname: '',
+      modalOpen: false
     }
   }
 
-  componentDidMount() {
+  fetchinventory(){
     const { token } = this.state;
     
     if (!token) {
@@ -96,8 +65,13 @@ class Inventory extends React.Component {
     });
   }
 
-  lookupretailer(retailer){
+  componentDidMount() {
+    this.fetchinventory();
+  }
+
+  lookupretailer(event, data){
     const { token } = this.state;
+    const retailer = data.searchQuery
 
     if(retailer.length > 3){
       axios.get('http://127.0.0.1:8989/retailer/' + retailer,
@@ -106,7 +80,38 @@ class Inventory extends React.Component {
       .then(response => { 
         if(response.status === 200){
           const suggestions = response.data[0]['results'];
-          this.setState({ retailersuggests:suggestions });
+          this.updateretailersuggests(suggestions);
+        }
+      })
+      .catch(error => {
+        const errresponse = error.response
+        if(errresponse){
+          if(errresponse.status === 412){
+            const message = errresponse.data[0]['message'];
+            console.log(message);
+          }
+          else{
+            console.log(errresponse);
+          }
+        }
+        else{
+          console.log('internal server error');
+        }
+      });
+    }
+  }
+
+  lookupbrand(brand){
+    const { token } = this.state;
+
+    if(brand.length > 3){
+      axios.get('http://127.0.0.1:8989/brand/' + brand,
+        { headers: { "content-type": "application/json", "access-token": token } }
+      )
+      .then(response => { 
+        if(response.status === 200){
+          const suggestions = response.data[0]['results'];
+          this.setState({ brandsuggests:suggestions });
           console.log(suggestions);
         }
       })
@@ -127,8 +132,10 @@ class Inventory extends React.Component {
       });
     }
   }
-  lookupproduct(gtinorproduct){
+
+  lookupproduct(event, data){
     const { token } = this.state;
+    const gtinorproduct = data.searchQuery
 
     if(gtinorproduct.length > 3){
       axios.get('http://127.0.0.1:8989/product/' + gtinorproduct,
@@ -137,8 +144,7 @@ class Inventory extends React.Component {
       .then(response => { 
         if(response.status === 200){
           const suggestions = response.data[0]['results'];
-          this.setState({ productsuggests:suggestions });
-          console.log(suggestions);
+          this.updateproductsuggests(suggestions);
         }
       })
       .catch(error => {
@@ -158,6 +164,7 @@ class Inventory extends React.Component {
       });
     }
   }
+
   updateinventory(field,value) {
     console.log('parent:'+field + ':' + value);
 
@@ -168,14 +175,50 @@ class Inventory extends React.Component {
 
     }
   }
-  updateproductsuggests(event){
-    const gtin = event.target.value;
-    this.lookupproduct(gtin);
+
+  updateproductmetadata(event, data){
+    console.log(data);
+    //const { tempgtin, tempproductname, tempproductimage, tempbrandname } = this.state;
+    //console.log('update with=>' + tempgtin + ':' + tempproductname + ':' + tempproductimage + ':' + tempbrandname);
   }
-  updateretailersuggests(event){
-    const retailername = event.target.value;
-    this.lookupretailer(retailername);
+
+  updateproductsuggests(suggestions){
+    const updatedsuggest = _.map(suggestions, (item) => (
+        {
+          key: item.gtin,
+          text: item.productname,
+          value: item.productname,
+        }
+      ));
+    console.log(updatedsuggest);
+    this.setState({ productsuggests: updatedsuggest });
   }
+
+  updateretailersuggests(suggestions){
+    const updatedsuggest = _.map(suggestions, (item) => (
+        {
+          key: item.retailerid,
+          text: item.retailername,
+          value: item.retailername,
+        }
+      ));
+    console.log(updatedsuggest);
+    this.setState({ retailersuggests: updatedsuggest });
+  }
+
+  addnewproduct(event,data){
+    console.log(data.value);
+  }
+
+  addnewretailer(event,data){
+    console.log(data.value);
+  }
+
+  updatebrandsuggests(event){
+    const brandname = event.target.value;
+    this.lookupbrand(brandname);
+  }
+
   selectproduct(event, { result }){
     if(result.gtin !== 'new-entry'){
       console.log("selected=>" + result.gtin + ":" + result.productname);
@@ -185,6 +228,17 @@ class Inventory extends React.Component {
       console.log('new-entry');
     }
   }
+
+  selectbrand(event, { result }){
+    if(result.brandid !== 'new-entry'){
+      console.log("selected=>" + result.brandid + ":" + result.brandname);
+      this.setState({ tempbrandid: result.brandid, tempbrandname: result.brandname });
+    }
+    else{
+      console.log('new-entry');
+    }
+  }
+
   selectretailer(event, { result }){
     if(result.retailerid !== 'new-entry'){
       console.log("selected=>" + result.retailerid + ":" + result.retailername);
@@ -195,25 +249,47 @@ class Inventory extends React.Component {
     }
   }
 
+  handleOpen = () => this.setState({ modalOpen: true })
+
+  handleClose = () => this.setState({ modalOpen: false })
+
   render() {
-    const { token, gtin, productname, retailerid, retailername, productsuggests, retailersuggests, inventory } = this.state;
+    const { gtin, productname, productimage, productsuggests, retailersuggests, brandsuggests, inventory } = this.state;
     const griditems = _.map(inventory, (item) => (
             <Card raised key={item.gtin}>
               <Image rounded centered src={item.productimage} size="tiny"/>
               <Card.Content>
                 <Label color='grey' ribbon>{item.itemcount}</Label>
                 <Fragment>
-                  <Card.Description className="cardy"><Header size='tiny'>{item.productname}</Header></Card.Description>
+                  <Card.Description className="cardy">
+                    <Header size='tiny'>{item.productname}</Header>
+                  </Card.Description>
                   <Card.Meta>{item.brandname}</Card.Meta>
                 </Fragment>
               </Card.Content>
 
               <Card.Content extra textAlign="center">
+                <Modal trigger={<Button icon="edit" />} centered>
+                  <Modal.Header>edit product and brand</Modal.Header>
+                  <Modal.Content image>
+                    <Image wrapped size='medium' src={item.productimage} />
+                    <Modal.Description>
+                      {item.productname}
+                      <Input className="fullwidth" onChange={e => this.setState({ tempgtin:item.gtin, tempproductname: e.target.value })}/>
+                      {item.productimage}
+                      <Input className="fullwidth" onChange={e => this.setState({ tempgtin:item.gtin, tempproductimage: e.target.value })}/>
+                      {item.brandname}
+                      
+                      <Button color="black" onClick={this.updateproductmetadata.bind(this)}>save</Button>
+                    </Modal.Description>
+                  </Modal.Content>
+                </Modal>
                 <Button icon="minus" />
                 <Button icon="plus" />
               </Card.Content>
             </Card>
           ))
+
     return (
       <div>
          
@@ -224,32 +300,51 @@ class Inventory extends React.Component {
               <Label color='grey' ribbon>0</Label>
               <Fragment>
                 <Card.Meta>
-                  <Search className="searchsuggest"
-                    fluid
-                    icon="search"
-                    placeholder="product name or gtin"
-                    resultRenderer={renderproducts}
-                    results={productsuggests}
-                    onSearchChange={this.updateproductsuggests.bind(this)}
-                    onResultSelect={this.selectproduct.bind(this)}
-                    size="small"
-                  />
-                  <Search className="searchsuggest"
-                    fluid
-                    icon="search"
-                    placeholder="retailer"
-                    resultRenderer={renderretailers}
-                    results={retailersuggests}
-                    onSearchChange={this.updateretailersuggests.bind(this)}
-                    onResultSelect={this.selectretailer.bind(this)}
-                    size="small"
-                  />
-                  </Card.Meta>
+                  
+                </Card.Meta>
               </Fragment>
             </Card.Content>
 
             <Card.Content extra textAlign="center">
-              <Button icon="plus" />
+              <Modal
+                trigger={<Button icon="plus" onClick={this.handleOpen} />}
+                open={this.state.modalOpen}
+                onClose={this.handleClose} centered
+              >
+                <Modal.Header>add item into inventory</Modal.Header>
+                <Modal.Content>
+                  <Dropdown className="fullwidth"
+                    text="product"
+                    search
+                    selection
+                    allowAdditions
+                    options={productsuggests}
+                    searchQuery={}
+                    additionLabel = "add new product "
+                    onSearchChange={this.lookupproduct.bind(this)}
+                    onAddItem={this.addnewproduct.bind(this)}
+                    onClick={this.updateproductmetadata.bind(this)}
+                  />
+                  
+                  <Dropdown className="fullwidth"
+                    text="retailer"
+                    search
+                    selection
+                    allowAdditions
+                    options={retailersuggests}
+                    additionLabel = "add new retailer "
+                    onSearchChange={this.lookupretailer.bind(this)}
+                    onAddItem={this.addnewretailer.bind(this)}
+                  />
+                  <Input placeholder='quantity'
+                  />
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button color='green' onClick={this.handleClose} inverted>
+                    <Icon name='checkmark' /> Got it
+                  </Button>
+                </Modal.Actions>
+              </Modal>
             </Card.Content>
           </Card>
           {griditems}
