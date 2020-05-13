@@ -36,7 +36,7 @@ db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
-cursor = db.cursor(buffered=True)
+cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
@@ -566,9 +566,10 @@ def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
 		query1 += " AND MOD(itemstotal*2,2) != 0"
 	elif validateispartiallyconsumed(ispartiallyconsumed) == 0:
 		query1 += " AND MOD(itemstotal*2,2) = 0"
-	query1 += " ORDER BY %s"
-	cursor.execute(query1,(uid,validateisedible(isedible),validatesortby(sortby)))
+	query1 += " ORDER BY %s" % validatesortby(sortby)
+	cursor.execute(query1,(uid,validateisedible(isedible)))
 	records = cursor.fetchall()
+
 	itemsremainingtotal = sum(row[4] for row in records)
 
 	return records, itemsremainingtotal
@@ -624,6 +625,7 @@ def findallbrands():
 		LEFT JOIN products as p
 		ON b.brandid = p.brandid
 		GROUP BY 1,2,3,4,5
+		ORDER BY b.brandname
 	"""
 	cursor.execute(query1)
 	records = cursor.fetchall()
@@ -673,7 +675,7 @@ def findbrandbyid(brandid):
 		ON b.brandid = p.brandid
 		WHERE b.brandid = %s
 		GROUP BY 1,2,3,4,5
-		ORDER BY 2
+		ORDER BY b.brandname
 	"""
 	cursor.execute(query,(brandid,))
 	records = cursor.fetchall()
@@ -719,7 +721,7 @@ def validatebrand(brandid,brandname):
 		return defaultbrandid,defaultbrandname,"INVALID"
 
 def validatesortby(sortby):
-	if sortby == "dateexpiry" or sortby == "itemstotal" or sortby == "productname":
+	if sortby == "itemstotal" or sortby == "productname":
 		return sortby
 	else:
 		return "productname"

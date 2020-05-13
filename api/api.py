@@ -4,10 +4,10 @@ import flask
 import func
 import validate_email
 import flask_cors
+import json
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
-app.config['CORS_HEADERS'] = 'content-type'
 flask_cors.CORS(app,
 	resources={r"*": {"origins": "*"}},
 	expose_headers=['Access-Token','Name'],
@@ -304,12 +304,13 @@ def inventoryupsert(userid):
 	statuscode = 200
 	records = []
 
-	gtin 		= flask.request.args.get("gtin")
-	retailername= flask.request.args.get("retailername")
-	dateexpiry	= flask.request.args.get("dateexpiry")#DEFAULT '0000-00-00'
-	quantity	= flask.request.args.get("quantity")#DEFAULT '1'
-	itemstatus	= flask.request.args.get("itemstatus")#DEFAULT 'IN'
-	receiptno	= flask.request.args.get("receiptno")
+	data = json.loads(flask.request.get_data().decode('UTF-8'))
+	gtin 		= data["gtin"]
+	retailername= data["retailername"]
+	dateexpiry	= data["dateexpiry"]#DEFAULT '0000-00-00'
+	quantity	= data["quantity"]#DEFAULT '1'
+	itemstatus	= data["itemstatus"]#DEFAULT 'IN'
+	receiptno	= data["receiptno"]
 
 	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus != "INVALID" and func.validateuser(userid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
@@ -347,7 +348,7 @@ def inventoryupsert(userid):
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-		records,inventorycount = func.findinventorybyuser(userid,"0,1",2,"productname")
+		records,inventorycount = func.findinventorybyuser(userid,2,2,"productname")
 		status += " - %s" % inventorycount
 
 	elif not func.validateuser(userid):
@@ -372,10 +373,11 @@ def inventoryselect(userid):
 	statuscode = 200
 	records = []
 
-	if func.validateuser(userid):
-		isedible = flask.request.args.get("isedible")
-		ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
-		sortby = flask.request.args.get("sortby")
+	isedible 			= flask.request.args.get("isedible")
+	ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
+	sortby 				= flask.request.args.get("sortby")
+
+	if func.validateuser(userid) and isedible and ispartiallyconsumed and sortby:
 
 		records,inventorycount = func.findinventorybyuser(userid,isedible,ispartiallyconsumed,sortby)
 
@@ -384,6 +386,9 @@ def inventoryselect(userid):
 		if not records:
 			status = "user does not have an inventory"
 			statuscode = 404#Not Found
+	elif isedible is None or ispartiallyconsumed is None or sortby is None:
+		status = "require isedible, ispartiallyconsumed and sortby flags"
+		statuscode = 412#Precondition Failed
 	else:
 		status = "invalid user"
 		statuscode = 412#Precondition Failed

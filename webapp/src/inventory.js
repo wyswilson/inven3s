@@ -41,7 +41,7 @@ class Inventory extends React.Component {
       return;
     }
 
-    axios.get('http://127.0.0.1:8989/inventory',
+    axios.get('http://127.0.0.1:8989/inventory?isedible=2&ispartiallyconsumed=2&sortby=productname',
       {
         headers: {
           "content-type": "application/json",
@@ -56,18 +56,11 @@ class Inventory extends React.Component {
       }
     })
     .catch(error => {
-      const errresponse = error.response
-      if(errresponse){
-        if(errresponse.status === 412){
-          const message = errresponse.data[0]['message'];
-          console.log(message);
-        }
-        else{
-          console.log(errresponse);
-        }
+      if(error.response.status === 412 || error.response.status === 404){
+        console.log(error.response.data[0]['message']);
       }
       else{
-        console.log('internal server error');
+        console.log('fatal: server unreachable');
       }
     });
   }
@@ -81,7 +74,7 @@ class Inventory extends React.Component {
     const gtinorproduct = data.searchQuery
 
     if(gtinorproduct.length > 3){
-      axios.get('http://127.0.0.1:8989/product/' + gtinorproduct,
+      axios.get('http://127.0.0.1:8989/product/' + gtinorproduct + '?isedible=2',
         {
           headers: {
             "content-type": "application/json",
@@ -96,18 +89,11 @@ class Inventory extends React.Component {
         }
       })
       .catch(error => {
-        const errresponse = error.response
-        if(errresponse){
-          if(errresponse.status === 412){
-            const message = errresponse.data[0]['message'];
-            console.log(message);
-          }
-          else{
-            console.log(errresponse);
-          }
+        if(error.response.status === 412 || error.response.status === 404){
+          console.log(error.response.data[0]['message']);
         }
         else{
-          console.log('internal server error');
+          console.log('fatal: server unreachable');
         }
       });
     }
@@ -133,18 +119,11 @@ class Inventory extends React.Component {
         }
       })
       .catch(error => {
-        const errresponse = error.response
-        if(errresponse){
-          if(errresponse.status === 412){
-            const message = errresponse.data[0]['message'];
-            console.log(message);
-          }
-          else{
-            console.log(errresponse);
-          }
+        if(error.response.status === 404){
+          console.log(error.response.data[0]['message']);
         }
         else{
-          console.log('internal server error');
+          console.log('fatal: server unreachable');
         }
       });
     }
@@ -218,25 +197,25 @@ class Inventory extends React.Component {
 
     axios.post('http://127.0.0.1:8989/inventory', 
       {
-        gtin:'',
-        retailername:'',
-        dateexpiry:'',
-        quantity:'',
-        itemstatus:'',
+        gtin:tempgtin,
+        retailername:tempretailername,
+        dateexpiry:tempdateexpiry,
+        quantity:tempquantity,
+        itemstatus:'IN',
         receiptno:''
       }, 
       {
         headers: {
           'crossDomain': true,
-          'Content-Type': 'text/plain;charset=utf-8',
-          //"content-type": "application/json",
+          "content-type": "application/json",
           "access-token": token
         }
       }
     )
     .then(response => { 
       if(response.status === 200){
-        console.log(response);        
+        console.log(response);
+        this.closemodal();      
       }
     })
     .catch(error => {
