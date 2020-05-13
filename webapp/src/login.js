@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-import { Button } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
 import axios from 'axios';
 import { setUserSession } from './utils/common';
 import Field from './field.js';
@@ -29,7 +29,8 @@ class Login extends React.Component {
   authenticate(event){
     const { email, password } = this.state;
     this.setState({ message:'authenticating' });
-    axios.post('http://127.0.0.1:8989/user/login', {},{
+    axios.post('http://127.0.0.1:8989/user/login', {},
+      {
        auth: {
         username: email,
         password: password
@@ -42,7 +43,7 @@ class Login extends React.Component {
       }
     })
     .catch(error => {
-      const errresponse = error.response
+      const errresponse = error.response;
       if(errresponse){
         if(errresponse.status === 401){
           this.setState({ message:'incorrect username and/or password' });
@@ -60,14 +61,14 @@ class Login extends React.Component {
   render() {
     const { message } = this.state;
     return (
-      <div>
+      <Container fluid>
         <Field label="email" type="text" active={false}
         parentCallback={this.updatecredentials.bind(this)}/>
         <Field label="password" type="password" active={false}
         parentCallback ={this.updatecredentials.bind(this)}/>
         <Button color="black" onClick={this.authenticate.bind(this)}>login</Button>
         <span className='error'>{message}</span>
-      </div>
+      </Container>
     )
   }
 }

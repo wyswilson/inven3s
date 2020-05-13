@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-import { Button } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
 import { getUser, removeUserSession } from './utils/common';
 
 
@@ -25,11 +25,11 @@ class Insights extends React.Component {
   	const { username } = this.state;
 
     return (
-     <div>
-      Insights for {username}!<br /><br />
-      
-      <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
-    </div>
+      <Container fluid>
+        Insights for {username}!<br /><br />
+        
+        <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
+      </Container>
     )
   }
 }

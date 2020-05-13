@@ -7,9 +7,11 @@ import flask_cors
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
-flask_cors.CORS(app, 
-	origins='*',
-	expose_headers=['Access-Token','Name'])
+app.config['CORS_HEADERS'] = 'content-type'
+flask_cors.CORS(app,
+	resources={r"*": {"origins": "*"}},
+	expose_headers=['Access-Token','Name'],
+	support_credentials=True)
 
 #403#Forbidden
 #404#Not Found
