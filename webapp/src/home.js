@@ -1,14 +1,18 @@
 import React from "react";
-import './index.css';
-import { Container, Button } from 'semantic-ui-react'
-import { getUser, removeUserSession } from './utils/common';
-
+import "./index.css";
+import axios from 'axios';
+import { getToken, getUser, removeUserSession } from './utils/common';
+import { Header, Container, Grid, Button, Statistic } from 'semantic-ui-react'
 
 class Insights extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: getUser()
+      username: getUser(),
+      token: getToken(),
+      itemcnt : {
+        distinctedible: 0
+      }
     };
   }
 
@@ -17,18 +21,67 @@ class Insights extends React.Component {
     this.props.history.push('/login');
   }
 
-  handleChange(e) {
-    e.preventDefault()
+  getinventorycount(){
+    axios.get('http://127.0.0.1:8989/inventory?isedible=1&ispartiallyconsumed=2&sortby=productname',
+      {
+        headers: {
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        const distinctedible = response.data[0]['count'];
+        this.setState({distinctedible: distinctedible});
+      }
+    })
+    .catch(error => {
+      const errstatus = error.response.status;
+      if(errstatus === 412 || errstatus === 404){
+        console.log(error.response.data[0]['message']);
+      }
+      else{
+        console.log('fatal: server unreachable');
+      }
+    });
   }
-  
-  render() {
-  	const { username } = this.state;
 
+  componentDidMount() {
+    this.getinventorycount();
+  }
+
+  render() {
     return (
       <Container fluid>
-        Insights for {username}!<br /><br />
-        
-        <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
+         <Grid columns={1} doubling stackable>
+          <Grid.Column>
+            <Header as='h1'>
+              Welcome to inventory for {this.state.username}
+            </Header>
+            <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
+          </Grid.Column>
+          <Grid.Row columns={3}>
+            <Grid.Column>
+              <Statistic>
+                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
+                <Statistic.Label>Edible Items</Statistic.Label>
+              </Statistic>
+            </Grid.Column>
+            <Grid.Column>
+              <Statistic>
+                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
+                <Statistic.Label>Edible Items</Statistic.Label>
+              </Statistic>            
+            </Grid.Column>
+            <Grid.Column>
+              <Statistic>
+                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
+                <Statistic.Label>Edible Items</Statistic.Label>
+              </Statistic>            
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     )
   }

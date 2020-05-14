@@ -2,9 +2,9 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
-import _ from 'lodash'
 import { Message, Container, Grid, Dropdown, Modal, Button, Icon, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
+import _ from 'lodash'
 
 class Inventory extends React.Component {
 
@@ -51,9 +51,8 @@ class Inventory extends React.Component {
       }
     })
     .catch(error => {
-      const errstatus = error.response.status;
-      if(errstatus === 412 || errstatus === 404){
-        console.log(error.response.data[0]['message']);
+      if(error.response){
+        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
       }
       else{
         console.log('fatal: server unreachable');
@@ -83,9 +82,8 @@ class Inventory extends React.Component {
         }
       })
       .catch(error => {
-        const errstatus = error.response.status;
-        if(errstatus === 412 || errstatus === 404){
-          console.log(error.response.data[0]['message']);
+        if(error.response){
+          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
         }
         else{
           console.log('fatal: server unreachable');
@@ -112,9 +110,8 @@ class Inventory extends React.Component {
         }
       })
       .catch(error => {
-        const errstatus = error.response.status;
-        if(errstatus === 404){
-          console.log(error.response.data[0]['message']);
+        if(error.response){
+          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
         }
         else{
           console.log('fatal: server unreachable');
@@ -139,9 +136,8 @@ class Inventory extends React.Component {
         }
       })
       .catch(error => {
-        const errstatus = error.response.status;
-        if(errstatus === 412){
-          console.log(error.response.data[0]['message']);
+        if(error.response){
+          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
         }
         else{
           console.log('fatal: server unreachable');
@@ -205,9 +201,8 @@ class Inventory extends React.Component {
       }
     })
     .catch(error => {
-      const errstatus = error.response.status;
-      if(errstatus === 412 || errstatus === 404 || errstatus === 403 || errstatus === 503){
-        console.log(error.response);
+      if(error.response){
+        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
         this.setState({ itemaddedmsg: error.response.data[0]['message'] });        
       }
       else{
@@ -249,8 +244,41 @@ class Inventory extends React.Component {
     console.log(data.value);
   }
 
-  inventoryremove(){
-    console.log("hi");  
+  inventoryconsume(gtin){
+    console.log(gtin);  
+    axios.post('http://127.0.0.1:8989/inventory', 
+      {
+        gtin:gtin,
+        retailername:'',
+        dateexpiry:'',
+        quantity:0.5,
+        itemstatus:'OUT',
+        receiptno:''
+      }, 
+      {
+        headers: {
+          'crossDomain': true,
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        console.log(response.data[0]['message']);
+        this.setState({ inventory: response.data[0]['results'] });
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+        //this.setState({ itemaddedmsg: error.response.data[0]['message'] });        
+      }
+      else{
+        console.log('fatal: server unreachable');
+        //this.setState({ itemaddedmsg: 'fatal: server unreachable' });
+      }
+    });    
   }
   
   openmodal = () => this.setState({ modalopen: true })
@@ -289,13 +317,12 @@ class Inventory extends React.Component {
             open={this.state.modalopen}
             onClose={this.closemodal} 
             centered={false}
-            basic
             size="fullscreen"
             dimmer="blurring"
             >
             <Modal.Header>add item into inventory</Modal.Header>
             <Modal.Content>
-              <Grid columns={1} container doubling stackable>
+              <Grid columns={1} doubling stackable>
                 <Grid.Column>
                   <Dropdown className="fullwidth"
                     placeholder="product"
@@ -397,7 +424,7 @@ class Inventory extends React.Component {
                       </Modal.Description>
                     </Modal.Content>
                   </Modal>
-                  <Button icon="minus" onClick={this.inventoryremove}/>
+                  <Button icon="minus" onClick={this.inventoryconsume.bind(this,item.gtin)}/>
                   <Button icon="plus" />
                 </div>
               </Card.Content>
