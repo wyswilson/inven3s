@@ -11,6 +11,7 @@ class Inventory extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      apihost: 'http://127.0.0.1:8989',
       token: getToken(),
       gtin: '',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
@@ -34,7 +35,7 @@ class Inventory extends React.Component {
   }
 
   fetchinventory(){
-    axios.get('http://127.0.0.1:8989/inventory?isedible=2&ispartiallyconsumed=2&sortby=productname',
+    axios.get(this.state.apihost + '/inventory?isedible=2&ispartiallyconsumed=2&sortby=productname',
       {
         headers: {
           "content-type": "application/json",
@@ -65,7 +66,7 @@ class Inventory extends React.Component {
     const gtinorproduct = data.searchQuery
 
     if(gtinorproduct.length > 3){
-      axios.get('http://127.0.0.1:8989/product/' + gtinorproduct + '?isedible=2',
+      axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
         {
           headers: {
             "content-type": "application/json",
@@ -93,7 +94,7 @@ class Inventory extends React.Component {
     const retailer = data.searchQuery
 
     if(retailer.length > 3){
-      axios.get('http://127.0.0.1:8989/retailer/' + retailer,
+      axios.get(this.state.apihost + '/retailer/' + retailer,
         {
           headers: {
             "content-type": "application/json",
@@ -119,7 +120,7 @@ class Inventory extends React.Component {
 
   lookupbrand(brand){
     if(brand.length > 3){
-      axios.get('http://127.0.0.1:8989/brand/' + brand,
+      axios.get(this.state.apihost + '/brand/' + brand,
         {
           headers: {
             "content-type": "application/json",
@@ -172,7 +173,7 @@ class Inventory extends React.Component {
     this.setState({ itemadded: false });
     this.setState({ loading: true });
 
-    axios.post('http://127.0.0.1:8989/inventory', 
+    axios.post(this.state.apihost + '/inventory', 
       {
         gtin:gtin,
         retailername:this.state.retailername,
@@ -251,7 +252,7 @@ class Inventory extends React.Component {
 
   consumeinventory(gtin){
     console.log(gtin);  
-    axios.post('http://127.0.0.1:8989/inventory', 
+    axios.post(this.state.apihost + '/inventory', 
       {
         gtin:gtin,
         retailername:'',

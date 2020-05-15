@@ -8,6 +8,7 @@ class Insights extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      apihost: 'http://13.229.67.229:8989',
       username: getUser(),
       token: getToken(),
       itemcnt : {
@@ -22,7 +23,7 @@ class Insights extends React.Component {
   }
 
   getinventorycount(){
-    axios.get('http://127.0.0.1:8989/inventory?isedible=1&ispartiallyconsumed=2&sortby=productname',
+    axios.get(this.state.apihost + '/inventory?isedible=1&ispartiallyconsumed=2&sortby=productname',
       {
         headers: {
           "content-type": "application/json",
