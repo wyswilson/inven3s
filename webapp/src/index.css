@@ -54,10 +54,8 @@ code {
 }
 
 .fullwidth{
-  
   width: 100% !important;
   height: 56px !important;
-  
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
