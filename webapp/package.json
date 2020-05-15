@@ -2,7 +2,7 @@
   "name": "webapp",
   "version": "0.1.0",
   "private": true,
-  "start": "http-server ./app -a 0.0.0.0 -p 8000 -c-1",
+  "start": "http-server ./app -a 13.229.67.229 -p 8888 -c-1",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
