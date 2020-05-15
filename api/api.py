@@ -47,8 +47,9 @@ def userlogin():
 
 @app.route('/user/register', methods=['POST'])
 def usersadd():
-	email 		= flask.request.args.get('email')
-	password 	= flask.request.args.get('password')
+	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
+	email 	= data["email"]
+	password 	= data["password"]
 
 	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
 	if validate_email.validate_email(email_address=email, check_regex=True):
@@ -97,13 +98,14 @@ def productupsert(userid):
 	statuscode = 200
 	records = []
 
-	gtin 			= flask.request.args.get("gtin")
-	productname 	= flask.request.args.get("productname")
-	productimage	= flask.request.args.get("productimage")
-	brandname		= flask.request.args.get("brandname")
-	isperishable 	= flask.request.args.get("isperishable")#DEFAULT '0'
-	isedible 		= flask.request.args.get("isedible")#DEFAULT '1'
-	
+	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
+	gtin 		= data["gtin"]
+	productname = data["productname"]
+	productimage= data["productimage"]
+	brandname	= data["brandname"]
+	isperishable= data["isperishable"]
+	isedible	= data["isedible"]
+
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 		if productname != '':
@@ -229,11 +231,12 @@ def brandupsert(userid):
 	statuscode = 200
 	records = []
 
-	brandid 	= flask.request.args.get("brandid").strip()
-	brandname 	= flask.request.args.get("brandname").strip()
-	brandimage 	= flask.request.args.get("brandimage").strip()
-	brandurl 	= flask.request.args.get("brandurl").strip()
-	brandowner 	= flask.request.args.get("brandowner").strip()
+	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
+	brandid 	= data["brandid"]
+	brandname 	= data["brandname"]
+	brandimage	= data["brandimage"]
+	brandurl	= data["brandurl"]
+	brandowner	= data["brandowner"]
 
 	brandid, brandname, brandstatus = func.validatebrand(brandid,brandname)
 	if brandstatus == "EXISTS":
@@ -350,7 +353,9 @@ def inventoryupsert(userid):
 
 		records,inventorycount = func.findinventorybyuser(userid,2,2,"productname")
 		status += " - %s" % inventorycount
-
+	elif gtinstatus == 'INVALID':
+		status = "invalid gtin"
+		statuscode = 412#Precondition Failed
 	elif not func.validateuser(userid):
 		status = "invalid user"
 		statuscode = 412#Precondition Failed
@@ -361,8 +366,9 @@ def inventoryupsert(userid):
 		status = "invalid itemstatus"
 		statuscode = 412#Precondition Failed		
 	else:
-		status = "invalid gtin"
-		statuscode = 412#Precondition Failed
+		status = "unknown error"
+		statuscode = 412
+		
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
 
@@ -411,6 +417,6 @@ def retailerselect(userid,retailer):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=8989)
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8989)
+	app.run(debug=True,host='0.0.0.0',port=8989)
+    #from waitress import serve
+    #serve(app, host="0.0.0.0", port=8989)

@@ -805,8 +805,11 @@ def validateispartiallyconsumed(ispartiallyconsumed):
 		return 0
 
 def isfloat(quantity):
-    try:
-        float(quantity)
-        return True
-    except ValueError:
-        return False
+	if quantity:
+	    try:
+	        float(quantity)
+	        return True
+	    except ValueError:
+	        return False
+	else:
+		return False
