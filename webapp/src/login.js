@@ -5,7 +5,6 @@ import axios from 'axios';
 import { setUserSession } from './utils/common';
 import Field from './field.js';
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +30,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     this.setState({ message: 'authenticating' });
     this.setState({ tried: true });
-    axios.post('http://127.0.0.1:8989/user/login', {},
+    axios.post('http://172.31.17.146:8989/user/login', {},
       {
        auth: {
         username: email,
