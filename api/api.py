@@ -48,7 +48,7 @@ def userlogin():
 @app.route('/user/register', methods=['POST'])
 def usersadd():
 	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
-	email 	= data["email"]
+	email 		= data["email"]
 	password 	= data["password"]
 
 	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
