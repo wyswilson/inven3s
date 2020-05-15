@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-import { Container, Button } from 'semantic-ui-react'
+import { Container, Button, Card, Message, Grid } from 'semantic-ui-react'
 import axios from 'axios';
 import { setUserSession } from './utils/common';
 import Field from './field.js';
@@ -12,12 +12,13 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      message: ''
+      message: '',
+      success: false,
+      tried: false,
     };
   }
   
   updatecredentials(field,value) {
-    //console.log('parent:'+field + ':' + value);
     if(field === 'email'){
       this.setState({ email:value });
     }
@@ -28,7 +29,8 @@ class Login extends React.Component {
 
   authenticate(event){
     const { email, password } = this.state;
-    this.setState({ message:'authenticating' });
+    this.setState({ message: 'authenticating' });
+    this.setState({ tried: true });
     axios.post('http://127.0.0.1:8989/user/login', {},
       {
        auth: {
@@ -38,11 +40,13 @@ class Login extends React.Component {
     })
     .then(response => { 
       if(response.status === 200){
+        this.setState({ success: true});
         setUserSession(response.headers['access-token'],response.headers['name']);
         this.props.history.push('/home');
       }
     })
     .catch(error => {
+      this.setState({ success: false});
       const errresponse = error.response;
       if(errresponse){
         if(errresponse.status === 401){
@@ -53,21 +57,43 @@ class Login extends React.Component {
         }
       }
       else{
-        this.setState({ message:'internal server error' });
+        this.setState({ message:'server unreachable' });
       }
     });
   }
   
+  updatemessage(){
+    if(this.state.tried){
+      return (<Card raised>
+                  <Message size='tiny' warning={this.state.tried && !this.state.success}
+                    header={this.state.message}
+                  />
+              </Card>
+              )
+      }
+  }
+
   render() {
-    const { message } = this.state;
     return (
       <Container fluid>
-        <Field label="email" type="text" active={false}
-        parentCallback={this.updatecredentials.bind(this)}/>
-        <Field label="password" type="password" active={false}
-        parentCallback ={this.updatecredentials.bind(this)}/>
-        <Button color="black" onClick={this.authenticate.bind(this)}>login</Button>
-        <span className='error'>{message}</span>
+         <Grid columns={1} doubling stackable>
+          <Grid.Column>
+            <Field label="email" type="text" active={false}
+              parentCallback={this.updatecredentials.bind(this)}/>
+          </Grid.Column>
+          <Grid.Column>
+            <Field label="password" type="password" active={false}
+              parentCallback ={this.updatecredentials.bind(this)}/>
+           </Grid.Column>
+           <Grid.Row columns={2}>
+            <Grid.Column>
+              <Button color="black" className="fullwidth" onClick={this.authenticate.bind(this)}>login</Button>
+            </Grid.Column>
+            <Grid.Column>
+              {this.updatemessage()}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </Container>
     )
   }

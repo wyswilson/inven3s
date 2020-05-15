@@ -37,9 +37,8 @@ class Insights extends React.Component {
       }
     })
     .catch(error => {
-      const errstatus = error.response.status;
-      if(errstatus === 412 || errstatus === 404){
-        console.log(error.response.data[0]['message']);
+      if(error.response){
+        console.log("("+ error.response.status + ") " + error.response.data[0]['message']);
       }
       else{
         console.log('fatal: server unreachable');

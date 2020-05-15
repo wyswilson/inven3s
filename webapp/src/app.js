@@ -31,7 +31,8 @@ function App(props) {
   }, []);
 
   if (authLoading && getToken()) {
-    return <div className="error">authenticating</div>
+    return '';
+    //<div className="error">authenticating</div>
   }
 
   return (
@@ -39,8 +40,8 @@ function App(props) {
       <BrowserRouter>
         <div>
           <div className="header nav">
-            <NavLink activeClassName="active" to="/home">home</NavLink>
-            <NavLink activeClassName="active" to="/inventory">inventory</NavLink>
+            <NavLink activeClassName="active" to="/home">Home</NavLink>
+            <NavLink activeClassName="active" to="/inventory">Inventory</NavLink>
           </div>
           <div className="content">
             <Switch>

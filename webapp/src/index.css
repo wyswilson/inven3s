@@ -30,7 +30,7 @@ code {
 .nav.header a:hover {
   color: #d3dae6;
 }
-.nav.header .active {
+.nav.header.active {
   color: #bac5d6;
 }
 .nav.header small {
@@ -54,24 +54,26 @@ code {
 }
 
 .fullwidth{
-  margin-top: 3px !important;
-  margin-bottom: 3px !important;
+  
   width: 100% !important;
   height: 56px !important;
-  padding-bottom: 4px;
-  padding-top: 4px;
+  
   font-size: 16px !important;
-  border-radius: 4px;
+  position: relative !important;
+  border-radius: 4px !important;
   background-color: #ffffff;
 }
 
 .field {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 100%;
-  height: 56px;
-  border-radius: 4px;
-  position: relative;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  width: 100% !important;
+  height: 56px !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  font-size: 16px !important;
+  position: relative !important;
+  border-radius: 4px !important;
   background-color: #d3dae6;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 }
