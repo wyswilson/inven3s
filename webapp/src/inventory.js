@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
-import { Message, Container, Grid, Dropdown, Modal, Button, Icon, Input, Label, Card, Image  } from 'semantic-ui-react'
+import { Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -13,8 +13,12 @@ class Inventory extends React.Component {
     this.state = {
       apihost: 'http://127.0.0.1:8989',
       token: getToken(),
-      gtin: '',
+      loading: false,
+      actionedmsg: '',
+      actioned: false,
+      modalopen: false,
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
+      gtin: '',
       productname: '',
       productimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       brandid:'',
@@ -26,12 +30,8 @@ class Inventory extends React.Component {
       quantity: 1,
       productsuggests: [],
       retailersuggests: [],
-      brandsuggests: [],
-      modalopen: false,
-      loading: false,
-      itemaddedmsg: '',
-      itemadded: false
-    }
+      brandsuggests: []
+    };
   }
 
   fetchinventory(){
@@ -118,7 +118,9 @@ class Inventory extends React.Component {
     }
   }
 
-  lookupbrand(brand){
+  lookupbrand(event, data){
+    const brand = data.searchQuery
+
     if(brand.length > 3){
       axios.get(this.state.apihost + '/brand/' + brand,
         {
@@ -130,7 +132,7 @@ class Inventory extends React.Component {
       )
       .then(response => { 
         if(response.status === 200){
-          this.setState({ brandsuggests: response.data[0]['results'] });
+          this.updatebrandsuggests(response.data[0]['results']);
         }
       })
       .catch(error => {
@@ -148,29 +150,47 @@ class Inventory extends React.Component {
     const field = data.placeholder;
     const value = data.value;
     console.log(field + ':' + value);
-    if(field === 'product'){
-      const array = this.state.productsuggests;
-      let selectedgtin = array.filter(prod => prod.value.includes(value))[0]['key'];
-      let selectedimg  = array.filter(prod => prod.value.includes(value))[0]['img'];
 
-      this.setState({ gtin: selectedgtin });
-      this.setState({ productname: value });
-      this.setState({ productimage: selectedimg });
+    if(field === 'Product name'){
+      const array = this.state.productsuggests;
+      let selectedarr = array.filter(prod => prod.value.includes(value))[0];
+
+      if(selectedarr){
+        const selectedgtin = selectedarr['key'];
+        const selectedimg = selectedarr['img'];
+
+        this.setState({ gtin: selectedgtin });
+        this.setState({ productname: value });
+        this.setState({ productimage: selectedimg });
+      }
+      else{
+        console.log('new product:' + value + ' => handled by addnewproduct')
+
+      }
     }
-    else if(field === 'retailer'){
-      this.setState({ retailername: value });
+    else if(field === 'Retailer name'){
+      const array = this.state.retailersuggests;
+      let selectedarr = array.filter(prod => prod.value.includes(value))[0];
+      if(selectedarr){
+        const selectedid = selectedarr['key'];
+        this.setState({ retailerid: selectedid });
+        this.setState({ retailername: value });
+      }
+      else{
+        console.log('new retailer:' + value + ' => handled by addnewretailer')
+      }
     }
-    else if(field === 'quantity'){
+    else if(field === 'Quantity'){
       this.setState({ quantity: value });
     }
-    else if(field === 'expiry'){
+    else if(field === 'Expiry date'){
       this.setState({ dateexpiry: value });
     }
   }
   
   addinventory(gtin){
-    this.setState({ itemaddedmsg: '' });
-    this.setState({ itemadded: false });
+    this.setState({ actionedmsg: '' });
+    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     axios.post(this.state.apihost + '/inventory', 
@@ -193,12 +213,13 @@ class Inventory extends React.Component {
     .then(response => {
       this.setState({ loading: false });
       if(response.status === 200){
-        this.setState({ itemaddedmsg: response.data[0]['message'] });
         this.setState({ inventory: response.data[0]['results'] });
-        this.setState({ itemadded: true });
+        this.setState({ actionedmsg: response.data[0]['message'] });
+        this.setState({ actioned: true });
         this.setState({ gtin: '' });
         this.setState({ productname: '' });
         this.setState({ productimage: 'https://react.semantic-ui.com/images/wireframe/image.png' });
+        this.setState({ retailerid: ''});
         this.setState({ retailername: ''});
         this.setState({ dateexpiry: ''});
         this.setState({ quantity: 1 });
@@ -208,11 +229,11 @@ class Inventory extends React.Component {
       this.setState({ loading: false });
       if(error.response){
         console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
-        this.setState({ itemaddedmsg: error.response.data[0]['message'] });        
+        this.setState({ actionedmsg: error.response.data[0]['message'] });        
       }
       else{
         console.log('server unreachable');
-        this.setState({ itemaddedmsg: 'server unreachable' });
+        this.setState({ actionedmsg: 'server unreachable' });
       }
     });
   }
@@ -242,12 +263,28 @@ class Inventory extends React.Component {
     this.setState({ retailersuggests: updatedsuggest });
   }
 
+  updatebrandsuggests(suggestions){
+    const updatedsuggest = _.map(suggestions, (item) => (
+        {
+          key: item.brandid,
+          text: item.brandname,
+          value: item.brandname,
+        }
+      ));
+    console.log(updatedsuggest);
+    this.setState({ brandsuggests: updatedsuggest });
+  }  
+
   addnewproduct(event,data){
-    console.log(data.value);
+    console.log('onAddItem for product:' +data.value);
   }
 
   addnewretailer(event,data){
-    console.log(data.value);
+    console.log('onAddItem for retailer:' + data.value);
+  }
+
+  addnewbrand(event,data){
+    console.log('onAddItem for brand:' + data.value);
   }
 
   consumeinventory(gtin){
@@ -278,11 +315,11 @@ class Inventory extends React.Component {
     .catch(error => {
       if(error.response){
         console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
-        //this.setState({ itemaddedmsg: error.response.data[0]['message'] });        
+        //this.setState({ actionedmsg: error.response.data[0]['message'] });        
       }
       else{
         console.log('server unreachable');
-        //this.setState({ itemaddedmsg: 'server unreachable' });
+        //this.setState({ actionedmsg: 'server unreachable' });
       }
     });    
   }
@@ -295,15 +332,22 @@ class Inventory extends React.Component {
     event.target.src = this.state.defaultimage;
   }
 
+  redirectoproduct(gtin){
+    console.log('redirect to product/gtin:' + gtin);
+    this.props.history.push({
+      pathname: '/product',
+      state: { gtin: gtin }
+    })
+  }
   generateitemadditionmsg(){
-      if(this.state.itemaddedmsg !== '' && this.state.itemadded){
+      if(this.state.actionedmsg !== '' && this.state.actioned){
         return (
-          <Message className="fullwidth" success><Message.Header>{this.state.itemaddedmsg}</Message.Header></Message>
+          <Message className="fullwidth" success><Message.Header>{this.state.actionedmsg}</Message.Header></Message>
         )
       }
-      else if(this.state.itemaddedmsg !== ''){
+      else if(this.state.actionedmsg !== ''){
         return (
-          <Message className="fullwidth" negative><Message.Header>{this.state.itemaddedmsg}</Message.Header></Message>        
+          <Message className="fullwidth" negative><Message.Header>{this.state.actionedmsg}</Message.Header></Message>        
         )
       }
   }
@@ -340,43 +384,39 @@ class Inventory extends React.Component {
                   <Grid columns={1} doubling stackable>
                     <Grid.Column>
                       <Dropdown className="fullwidth"
-                        placeholder="product"
+                        placeholder="Product name"
                         search
                         selection
-                        allowAdditions
+                        noResultsMessage="No product found"
                         value={this.state.productname}
                         options={this.state.productsuggests}
-                        additionLabel = "Add new product "
                         onSearchChange={this.lookupproduct.bind(this)}
-                        onAddItem={this.addnewproduct.bind(this)}
                         onChange={this.setinventorymetadata.bind(this)}
                       />
                     </Grid.Column>
                     <Grid.Column>
                       <Dropdown className="fullwidth"
-                        placeholder="retailer"
+                        placeholder="Retailer name"
                         search
                         selection
-                        allowAdditions
+                        noResultsMessage="No retailer found"
                         value={this.state.retailername}
                         options={this.state.retailersuggests}
-                        additionLabel = "Add new retailer "
                         onSearchChange={this.lookupretailer.bind(this)}
-                        onAddItem={this.addnewretailer.bind(this)}
                         onChange={this.setinventorymetadata.bind(this)}
                       />
                     </Grid.Column>
                     <Grid.Row columns={2}>
                       <Grid.Column>
                         <Input className="fullwidth"
-                          placeholder='quantity'
+                          placeholder='Quantity'
                           value={this.state.quantity}
                           onChange={this.setinventorymetadata.bind(this)}
                         />
                       </Grid.Column>
                       <Grid.Column>
                          <DateInput
-                          placeholder="expiry"
+                          placeholder="Expiry date"
                           dateFormat="YYYY-MM-DD"
                           value={this.state.dateexpiry}
                           onChange={this.setinventorymetadata.bind(this)}
@@ -390,8 +430,8 @@ class Inventory extends React.Component {
                 <Grid columns={2} container doubling stackable>
                   <Grid.Column>
                     <Button loading={this.state.loading || false} className="fullwidth" color='black' onClick={this.addinventory.bind(this,this.state.gtin)}>
-                      <Icon name='checkmark' />add
-                      </Button>
+                      add
+                    </Button>
                   </Grid.Column>
                   <Grid.Column>
                     {this.generateitemadditionmsg()}
@@ -422,12 +462,12 @@ class Inventory extends React.Component {
       return _.map(this.state.inventory, (item) => (
               <Card raised key={item.gtin}>
                 <Card.Content>
-                  <Image rounded
-                    centered src={item.productimage}
-                    floated='right'
-                    size='tiny'
-                    onError={this.setdefaultimage.bind(this)}
-                  />
+                    <Image rounded
+                      centered src={item.productimage}
+                      floated='right'
+                      size='tiny' style={{width: 'auto', height: '70px'}}
+                      onError={this.setdefaultimage.bind(this)}
+                    />
                   <Card.Header size='tiny'>{item.productname}</Card.Header>
                   <Card.Meta>{item.brandname}</Card.Meta>
                   <Label color='grey' attached='top right'>{item.itemcount}</Label>
@@ -435,35 +475,7 @@ class Inventory extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Modal
-                      trigger={<Button icon="edit" />}
-                      centered={false}
-                      size="fullscreen"
-                      dimmer="blurring"
-                    >
-                      <Modal.Header>Edit product and brand</Modal.Header>
-                      <Modal.Content image>
-                        <Image wrapped size='tiny' src={item.productimage} />
-                        <Modal.Description>
-                          <Grid columns={1} doubling stackable>
-                            <Grid.Column>
-                              {item.productname}
-                              <Input className="fullwidth" onChange={e => this.setState({ gtin:item.gtin, productname: e.target.value })}/>
-                            </Grid.Column>
-                            <Grid.Column>
-                              {item.productimage}
-                              <Input className="fullwidth" onChange={e => this.setState({ gtin:item.gtin, productimage: e.target.value })}/>
-                            </Grid.Column>
-                            <Grid.Column>
-                              {item.brandname}
-                            </Grid.Column>
-                          </Grid>
-                        </Modal.Description>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button color="black" className="fullwidth">save</Button>
-                      </Modal.Actions>
-                    </Modal>
+                    <Button icon="edit" onClick={this.redirectoproduct.bind(this,item.gtin)} />
                     <Button icon="minus" onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Modal
                       trigger={<Button icon="plus" />}
@@ -478,33 +490,32 @@ class Inventory extends React.Component {
                           <Grid columns={1} doubling stackable>
                             <Grid.Column>
                               <Dropdown className="fullwidth"
-                                placeholder="retailer"
+                                placeholder="Retailer name"
                                 search
                                 selection
-                                allowAdditions
                                 value={this.state.retailername}
                                 options={this.state.retailersuggests}
-                                additionLabel = "Add new retailer "
                                 onSearchChange={this.lookupretailer.bind(this)}
-                                onAddItem={this.addnewretailer.bind(this)}
                                 onChange={this.setinventorymetadata.bind(this)}
                               />
                             </Grid.Column>
-                            <Grid.Column>
-                              <Input className="fullwidth"
-                                placeholder='quantity'
-                                value={this.state.quantity}
-                                onChange={this.setinventorymetadata.bind(this)}
-                              />
-                            </Grid.Column>
-                            <Grid.Column>
-                               <DateInput
-                                placeholder="expiry"
-                                dateFormat="YYYY-MM-DD"
-                                value={this.state.dateexpiry}
-                                onChange={this.setinventorymetadata.bind(this)}
-                              />
-                            </Grid.Column>                      
+                            <Grid.Row columns={2}>
+                              <Grid.Column>
+                                <Input className="fullwidth"
+                                  placeholder='Quantity'
+                                  value={this.state.quantity}
+                                  onChange={this.setinventorymetadata.bind(this)}
+                                />
+                              </Grid.Column>
+                              <Grid.Column>
+                                 <DateInput
+                                  placeholder="Expiry date"
+                                  dateFormat="YYYY-MM-DD"
+                                  value={this.state.dateexpiry}
+                                  onChange={this.setinventorymetadata.bind(this)}
+                                />
+                              </Grid.Column>
+                            </Grid.Row>
                           </Grid>
                         </Modal.Description>
                       </Modal.Content>
@@ -512,7 +523,7 @@ class Inventory extends React.Component {
                         <Grid columns={2} container doubling stackable>
                           <Grid.Column>
                             <Button loading={this.state.loading || false} className="fullwidth" color="black" onClick={this.addinventory.bind(this,item.gtin)}>
-                              <Icon name='checkmark' />add
+                              add
                             </Button>
                           </Grid.Column>
                           <Grid.Column>

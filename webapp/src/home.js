@@ -2,17 +2,21 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Header, Container, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Message, Header, Container, Grid, Button, Statistic } from 'semantic-ui-react'
 
 class Insights extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apihost: 'http://13.229.67.229:8989',
+      apihost: 'http://127.0.0.1:8989',
       username: getUser(),
       token: getToken(),
+      insightsloaded: false,
       itemcnt : {
-        distinctedible: 0
+        ediblenewcnt: 0,
+        edibleopenedcnt: 0,
+        inediblenewcnt: 0,
+        inedibleopenedcnt: 0
       }
     };
   }
@@ -23,7 +27,7 @@ class Insights extends React.Component {
   }
 
   getinventorycount(){
-    axios.get(this.state.apihost + '/inventory?isedible=1&ispartiallyconsumed=2&sortby=productname',
+    axios.get(this.state.apihost + '/inventory/insights',
       {
         headers: {
           "content-type": "application/json",
@@ -33,8 +37,17 @@ class Insights extends React.Component {
     )
     .then(response => { 
       if(response.status === 200){
-        const distinctedible = response.data[0]['count'];
-        this.setState({distinctedible: distinctedible});
+        const ediblenewcnt = response.data[0]['counts']['ediblenew'];
+        const edibleopenedcnt = response.data[0]['counts']['edibleopened'];
+        const inediblenewcnt = response.data[0]['counts']['inediblenew'];
+        const inedibleopenedcnt = response.data[0]['counts']['inedibleopened'];
+
+        this.setState({ediblenewcnt: ediblenewcnt});
+        this.setState({edibleopenedcnt: edibleopenedcnt});
+        this.setState({inediblenewcnt: inediblenewcnt});
+        this.setState({inedibleopenedcnt: inedibleopenedcnt});
+
+        this.setState({insightsloaded: true});
       }
     })
     .catch(error => {
@@ -47,10 +60,59 @@ class Insights extends React.Component {
     });
   }
 
+  directtoinventory(){
+    this.props.history.push({
+      pathname: '/inventory',
+      state: { defaultimage: 'https://pbs.twimg.com/profile_images/2575672885/pyqx4pwyhh4g4zy0hazi_400x400.jpeg' }
+    })
+  }
+
   componentDidMount() {
     this.getinventorycount();
   }
 
+  generateinsights(){
+    if(this.state.insightsloaded){
+      return (
+            <Grid.Row columns={4}>
+              <Grid.Column>
+                <Statistic>
+                  <Statistic.Value onClick={this.directtoinventory.bind(this)}>{this.state.edibleopenedcnt}</Statistic.Value>
+                  <Statistic.Label># of opened food items</Statistic.Label>
+                </Statistic>
+              </Grid.Column>
+              <Grid.Column>
+                <Statistic>
+                  <Statistic.Value>{this.state.ediblenewcnt}</Statistic.Value>
+                  <Statistic.Label># of new food items</Statistic.Label>
+                </Statistic>            
+              </Grid.Column>
+              <Grid.Column>
+                <Statistic>
+                  <Statistic.Value>{this.state.inedibleopenedcnt}</Statistic.Value>
+                  <Statistic.Label># of opened non-food items</Statistic.Label>
+                </Statistic>
+              </Grid.Column>
+              <Grid.Column>
+                <Statistic>
+                  <Statistic.Value>{this.state.inediblenewcnt}</Statistic.Value>
+                  <Statistic.Label># of new non-food items</Statistic.Label>
+                </Statistic>            
+              </Grid.Column>
+            </Grid.Row>
+          )
+    }
+    else{
+      return (
+            <Grid.Column>
+              <Message warning size='tiny'
+                header="Problem generating insights"
+                content="Please try again later if it doesn't load"
+              />
+            </Grid.Column>
+          )
+    }
+  }
   render() {
     return (
       <Container fluid>
@@ -61,26 +123,7 @@ class Insights extends React.Component {
             </Header>
             <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
           </Grid.Column>
-          <Grid.Row columns={3}>
-            <Grid.Column>
-              <Statistic>
-                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
-                <Statistic.Label>Edible Items</Statistic.Label>
-              </Statistic>
-            </Grid.Column>
-            <Grid.Column>
-              <Statistic>
-                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
-                <Statistic.Label>Edible Items</Statistic.Label>
-              </Statistic>            
-            </Grid.Column>
-            <Grid.Column>
-              <Statistic>
-                <Statistic.Value>{this.state.distinctedible}</Statistic.Value>
-                <Statistic.Label>Edible Items</Statistic.Label>
-              </Statistic>            
-            </Grid.Column>
-          </Grid.Row>
+          {this.generateinsights()}
         </Grid>
       </Container>
     )

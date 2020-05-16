@@ -142,7 +142,7 @@ def productupsert(userid):
 		records = func.findproductbygtin(gtin)
 		status = "new product (and branded) added"
 	elif gtinstatus == "NEW" and productname == "":
-		productname,brandid = func.discovernewproduct(gtin,1)
+		productname,brandid,brandnamenotused = func.discovernewproduct(gtin,1)
 		if productname != "ERR" and productname != "WARN":
 			if productname != "" and brandid != '':
 				status = status + "new product and brand discovered and added"
@@ -161,6 +161,38 @@ def productupsert(userid):
 		statuscode = 412#Precondition Failed
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
+
+@app.route('/product/discover/<gtin>', methods=['GET'])
+@func.requiretoken
+def productdiscover(userid,gtin):
+	statuscode = 200
+
+	messages = {}
+	
+	gtin,productname_old,gtinstatus = func.validategtin(gtin)
+	if gtinstatus == 'NEW':
+		productname,brandid,brandname = func.discovernewproduct(gtin,1)
+		if productname != "ERR" and productname != "WARN":
+			messages['message'] = 'public search for product is successful'
+			messages['results'] = func.jsonifyproducts(func.findproductbygtin(gtin))
+		if productname == "ERR":
+			status = "public search for product errored - try again later"
+			statuscode = 503#Service Unavailable
+		elif productname == "WARN":
+			status = "public search for product returned no data - manual entry required"
+			statuscode = 404#Not found
+	elif gtinstatus == 'INVALID':
+		messages['message'] = 'invalid gtin'
+		statuscode = 412#Precondition Failed
+	else:
+		messages['message'] = 'product already exists'
+		messages['results'] = func.jsonifyproducts(func.findproductbygtin(gtin))
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response
 
 @app.route('/product/<gtin>', methods=['GET'])
 @func.requiretoken
@@ -318,7 +350,7 @@ def inventoryupsert(userid):
 	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus != "INVALID" and func.validateuser(userid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
 		if productname == "":
-			productname,brandid = func.discovernewproduct(gtin,1)
+			productname,brandid,brandnamenotused = func.discovernewproduct(gtin,1)
 			if productname == "ERR":
 				status = "public search for product errored - try again later"
 				statuscode = 503#Service Unavailable
@@ -352,7 +384,6 @@ def inventoryupsert(userid):
 					status = "product item removed (or marked as being consumed) in inventory"
 
 		records,inventorycount = func.findinventorybyuser(userid,2,2,"productname")
-		status += " - %s" % inventorycount
 	elif gtinstatus == 'INVALID':
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
@@ -387,7 +418,7 @@ def inventoryselect(userid):
 
 		records,inventorycount = func.findinventorybyuser(userid,isedible,ispartiallyconsumed,sortby)
 
-		status = "all inventory items for the user returned - %s" % inventorycount
+		status = "all inventory items for the user returned"
 
 		if not records:
 			status = "user does not have an inventory"
@@ -400,6 +431,30 @@ def inventoryselect(userid):
 		statuscode = 412#Precondition Failed
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+
+
+@app.route('/inventory/insights', methods=['GET'])
+@func.requiretoken
+def inventoryinsights(userid):
+	statuscode = 200
+	
+	ediblenewcnt,edibleopenedcnt,inediblenewcnt,inedibleopenedcnt = func.getinventorycounts(userid)
+
+	messages = {}
+	messages['message'] = 'insights'
+
+	message1 = {}
+	message1['ediblenew'] = ediblenewcnt
+	message1['edibleopened'] = edibleopenedcnt
+	message1['inediblenew'] = inediblenewcnt
+	message1['inedibleopened'] = inedibleopenedcnt
+	messages['counts'] = message1
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response
 
 @app.route('/retailer/<retailer>', methods=['GET'])
 @func.requiretoken

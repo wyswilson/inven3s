@@ -174,8 +174,6 @@ def jsonifybrands(records):
 		productcount	= record[5]
 
 		brand = {}
-		brand['key'] 			= brandid
-		brand['title']			= brandname
 		brand['brandid'] 		= brandid
 		brand['brandname']		= brandname
 		brand['brandimage']		= brandimage
@@ -194,8 +192,6 @@ def jsonifyretailers(records):
 		retailername  	= record[1]
 
 		retailer = {}
-		retailer['key'] 			= retailerid#FOR REACT SEARCH COMPONENT
-		retailer['title'] 			= retailername#FOR REACT SEARCH COMPONENT
 		retailer['retailerid'] 		= retailerid
 		retailer['retailername']	= retailername
 		retailers.append(retailer)
@@ -213,8 +209,6 @@ def jsonifyproducts(records):
 		isedible	   	= record[5]
 
 		product = {}
-		product['key'] 				= gtin#FOR REACT SEARCH COMPONENT
-		product['title'] 			= productname#FOR REACT SEARCH COMPONENT
 		product['gtin'] 			= gtin
 		product['productname']		= productname
 		product['productimage'] 	= productimage
@@ -282,9 +276,17 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 
 def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno):
 	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
-		query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
-		db.commit()
+		if quantity >= 1:
+			i = 0
+			while i < quantity:
+				query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,1,%s)"
+				cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,receiptno))
+				db.commit()
+				i += 1#VERY IMPORTANT
+		else:#IF quantity = 0.5 (FOR CONSUMPTION ITEMSTATUS=OUT)
+			query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+			cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
+			db.commit()
 
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
@@ -463,19 +465,19 @@ def discovernewproduct(gtin,attempt):
 			gtin = addnewproduct(gtin,productname,"",brandid,0,1)
 
 			if productname != "" and brandid != "":
-				return productname,brandid
+				return productname,brandid,brandname
 			else:
-				return "WARN",""
+				return "WARN","",""
 		else:
-			return "ERR",""
+			return "ERR","",""
 
 	elif selectedurl == "" and attempt == 2:
-		productname,brandid = discovernewproduct(gtin,attempt)
-		return productname,brandid
+		productname,brandid,brandname = discovernewproduct(gtin,attempt)
+		return productname,brandid,brandname
 	elif selectedurl == "":
-		return "WARN",""
+		return "WARN","",""
 	else:
-		return "ERR",""
+		return "ERR","",""
 
 def findallproducts(isedible):
 	query1 = """
@@ -597,6 +599,63 @@ def findproductexpiry(uid,gtin):
 		return retailerid,dateexpiry
 	else:
 		return "",defaultdateexpiry
+
+def getinventorycounts(uid):
+
+	query1 = """
+		SELECT 
+			gtin,
+			productname,
+			isedible,
+			CASE
+				when MOD(itemstotal*2,2) != 0 AND itemstotal = 0.5 then 'OPENED'
+				when MOD(itemstotal*2,2) != 0 AND itemstotal > 0.5 then 'OPENED+NEW'
+				when MOD(itemstotal*2,2) = 0 then 'NEW'
+			END AS itemstatus,
+			itemstotal
+		FROM (
+			SELECT
+			  i.gtin,p.productname,p.isedible,
+			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			WHERE i.userid = %s
+			GROUP BY 1,2,3
+		) AS X
+		WHERE itemstotal > 0
+	"""
+	cursor.execute(query1,(uid,))
+	records = cursor.fetchall()
+	ediblenewcnt = 0
+	edibleopenedcnt = 0 
+	inediblenewcnt = 0
+	inedibleopenedcnt = 0 
+	for record in records:
+		gtin 		= record[0]
+		productname = record[1]
+		isedible 	= record[2]
+		itemstatus 	= record[3]
+		itemstotal 	= record[4]
+
+		if(isedible == 1 and itemstatus == "NEW"):
+			ediblenewcnt += itemstotal
+		elif(isedible == 1 and itemstatus == "OPENED"):
+			edibleopenedcnt += 1
+		elif(isedible == 0 and itemstatus == "NEW"):
+			inediblenewcnt += itemstotal
+		elif(isedible == 0 and itemstatus == "OPENED"):
+			inedibleopenedcnt += 1
+		elif(isedible == 1):
+			itemstotal -= 0.5
+			ediblenewcnt += itemstotal
+			edibleopenedcnt +=1
+		elif(isedible == 0):
+			itemstotal -= 0.5
+			inediblenewcnt += itemstotal
+			inedibleopenedcnt +=1
+
+	return int(ediblenewcnt), int(edibleopenedcnt), int(inediblenewcnt), int(inedibleopenedcnt)
 
 def countinventoryitems(uid,gtin):
 	query1 = """

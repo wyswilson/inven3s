@@ -5,6 +5,7 @@ import axios from 'axios';
 import Login from './login';
 import Inventory from './inventory';
 import Home from './home';
+import Product from './product';
 
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
@@ -42,11 +43,13 @@ function App(props) {
           <div className="header nav">
             <NavLink activeClassName="active" to="/home">Home</NavLink>
             <NavLink activeClassName="active" to="/inventory">Inventory</NavLink>
+            <NavLink activeClassName="active" to="/product">Product</NavLink>
           </div>
           <div className="content">
             <Switch>
               <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/inventory" component={Inventory} />
+              <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
               <PublicRoute exact path="/">
                 <Redirect to="/login" />
