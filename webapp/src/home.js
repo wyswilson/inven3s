@@ -60,10 +60,10 @@ class Insights extends React.Component {
     });
   }
 
-  directtoinventory(){
+  directtoinventory(isedible,ispartiallyconsumed){
     this.props.history.push({
       pathname: '/inventory',
-      state: { defaultimage: 'https://pbs.twimg.com/profile_images/2575672885/pyqx4pwyhh4g4zy0hazi_400x400.jpeg' }
+      state: { queryisedible: isedible, queryispartiallyconsumed: ispartiallyconsumed }
     })
   }
 
@@ -77,13 +77,13 @@ class Insights extends React.Component {
             <Grid.Row columns={4}>
               <Grid.Column>
                 <Statistic>
-                  <Statistic.Value onClick={this.directtoinventory.bind(this)}>{this.state.edibleopenedcnt}</Statistic.Value>
+                  <Statistic.Value onClick={this.directtoinventory.bind(this,1,1)}>{this.state.edibleopenedcnt}</Statistic.Value>
                   <Statistic.Label># of opened food items</Statistic.Label>
                 </Statistic>
               </Grid.Column>
               <Grid.Column>
                 <Statistic>
-                  <Statistic.Value>{this.state.ediblenewcnt}</Statistic.Value>
+                  <Statistic.Value  onClick={this.directtoinventory.bind(this,1,0)}>{this.state.ediblenewcnt}</Statistic.Value>
                   <Statistic.Label># of new food items</Statistic.Label>
                 </Statistic>            
               </Grid.Column>

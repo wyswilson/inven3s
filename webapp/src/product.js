@@ -17,10 +17,10 @@ class Product extends React.Component {
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       productsuggests: [],
       productdropdown: '',
-      gtin:'',
-      productname:'',
-      productimage:'https://react.semantic-ui.com/images/wireframe/image.png',
-      brandname:'',
+      gtin: this.props.location.state.gtin || '',
+      productname: this.props.location.state.productname || '',
+      productimage: this.props.location.state.productimage || 'https://react.semantic-ui.com/images/wireframe/image.png',
+      brandname:  this.props.location.state.brandname || '',
       isedible:1,
       isperishable:0
     };
@@ -163,7 +163,7 @@ class Product extends React.Component {
         if(response.status === 200){
           this.setState({ actionedmsg: response.data[0]['message'] });        
           this.setState({ actioned: true });
-          
+
           const newproductdata = response.data[0]['results'][0]
           this.setState({ productdropdown: newproductdata['productname'] });
           this.setState({ gtin: newproductdata['gtin'] });

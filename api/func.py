@@ -276,7 +276,8 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 
 def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno):
 	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
-		if quantity >= 1:
+		quantity = float(quantity)
+		if quantity >= 1.0:
 			i = 0
 			while i < quantity:
 				query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,1,%s)"

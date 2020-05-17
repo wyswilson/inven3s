@@ -17,6 +17,8 @@ class Inventory extends React.Component {
       actionedmsg: '',
       actioned: false,
       modalopen: false,
+      queryisedible: this.props.location.state.queryisedible || '2',
+      queryispartiallyconsumed: this.props.location.state.queryispartiallyconsumed || '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -35,7 +37,7 @@ class Inventory extends React.Component {
   }
 
   fetchinventory(){
-    axios.get(this.state.apihost + '/inventory?isedible=2&ispartiallyconsumed=2&sortby=productname',
+    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&ispartiallyconsumed=' + this.state.queryispartiallyconsumed + '&sortby=productname',
       {
         headers: {
           "content-type": "application/json",
@@ -332,11 +334,11 @@ class Inventory extends React.Component {
     event.target.src = this.state.defaultimage;
   }
 
-  redirectoproduct(gtin){
+  redirectoproduct(gtin, productname, productimage, brandname){
     console.log('redirect to product/gtin:' + gtin);
     this.props.history.push({
       pathname: '/product',
-      state: { gtin: gtin }
+      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname }
     })
   }
   generateitemadditionmsg(){
@@ -475,7 +477,7 @@ class Inventory extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" onClick={this.redirectoproduct.bind(this,item.gtin)} />
+                    <Button icon="edit" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname)} />
                     <Button icon="minus" onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Modal
                       trigger={<Button icon="plus" />}
