@@ -24,8 +24,8 @@ code {
 .nav.header a {
   color: #808b9c;
   text-decoration: unset;
-  margin-left: 16px;
-  margin-right: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 .nav.header a:hover {
   color: #d3dae6;
@@ -51,6 +51,15 @@ code {
   margin-left: 25px !important;
   height: calc(100% - 50px) !important;
   margin-top: 25px !important;
+}
+
+.halfwidth{
+  width: 50% !important;
+  height: 56px !important;
+  font-size: 16px !important;
+  position: relative !important;
+  border-radius: 4px !important;
+  background-color: #ffffff;
 }
 
 .fullwidth{

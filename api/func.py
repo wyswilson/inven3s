@@ -247,11 +247,14 @@ def jsonifyoutput(statuscode,status,records,special=None):
 	message = {}
 	message['message'] = status
 	if len(records) > 0:
-		message['count'] = len(records)
+		if isinstance(special, float) or isinstance(special, int):
+			message['count'] = special
+		else:
+			message['count'] = len(records)
 		message['results'] = records
 	messages.append(message)
 
-	if special:
+	if isinstance(special, dict):
 		response = flask.jsonify(messages),statuscode,special
 		return response
 	else:
@@ -543,40 +546,6 @@ def findproductbygtin(gtin):
 
 	return records
 
-def findinventorybyuser(uid,isedible,ispartiallyconsumed,sortby):
-	query1 = """
-		SELECT * FROM (
-			SELECT
-				i.gtin,p.productname,p.productimage,b.brandname,
-				SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
-			FROM inventories AS i
-			JOIN products AS p
-			ON i.gtin = p.gtin
-			JOIN brands AS b
-			ON p.brandid = b.brandid
-			WHERE i.userid = %s
-			"""
-	if validateisedible(isedible) == "2":
-		query1 += " AND p.isedible != %s"
-	else:
-		query1 += " AND p.isedible = %s"
-	query1 += """
-			GROUP BY 1,2,3,4
-		) as items
-		WHERE itemstotal > 0
-	"""
-	if validateispartiallyconsumed(ispartiallyconsumed) == 1:
-		query1 += " AND MOD(itemstotal*2,2) != 0"
-	elif validateispartiallyconsumed(ispartiallyconsumed) == 0:
-		query1 += " AND MOD(itemstotal*2,2) = 0"
-	query1 += " ORDER BY %s" % validatesortby(sortby)
-	cursor.execute(query1,(uid,validateisedible(isedible)))
-	records = cursor.fetchall()
-
-	itemsremainingtotal = sum(row[4] for row in records)
-
-	return records, itemsremainingtotal
-
 def findproductexpiry(uid,gtin):
 	query1 = """
 		SELECT
@@ -601,62 +570,107 @@ def findproductexpiry(uid,gtin):
 	else:
 		return "",defaultdateexpiry
 
-def getinventorycounts(uid):
-
+def fetchinventorybyuser(uid,isedible,ispartiallyconsumed=None):
 	query1 = """
 		SELECT 
 			gtin,
 			productname,
+			productimage,
+			brandname,
+			itemstotal,
 			isedible,
 			CASE
 				when MOD(itemstotal*2,2) != 0 AND itemstotal = 0.5 then 'OPENED'
 				when MOD(itemstotal*2,2) != 0 AND itemstotal > 0.5 then 'OPENED+NEW'
 				when MOD(itemstotal*2,2) = 0 then 'NEW'
-			END AS itemstatus,
-			itemstotal
+			END AS itemstatus
 		FROM (
 			SELECT
-			  i.gtin,p.productname,p.isedible,
+			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
 			JOIN products AS p
 			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
 			WHERE i.userid = %s
-			GROUP BY 1,2,3
+		"""
+	if validateisedible(isedible) == "2":
+		query1 += " AND p.isedible != %s"
+	else:
+		query1 += " AND p.isedible = %s"	
+	query1 += """
+			GROUP BY 1,2,3,4,5
+			ORDER BY 2 ASC
 		) AS X
 		WHERE itemstotal > 0
 	"""
-	cursor.execute(query1,(uid,))
+	cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
+
 	ediblenewcnt = 0
 	edibleopenedcnt = 0 
 	inediblenewcnt = 0
-	inedibleopenedcnt = 0 
+	inedibleopenedcnt = 0
+	ediblenewrecords = []
+	edibleopenedrecords = []
+	inediblenewrecords = []
+	inedibleopenedrecords = []
 	for record in records:
-		gtin 		= record[0]
-		productname = record[1]
-		isedible 	= record[2]
-		itemstatus 	= record[3]
-		itemstotal 	= record[4]
+		gtin 			= record[0]
+		productname 	= record[1]
+		productimage 	= record[2]
+		brandname 		= record[3]
+		itemstotal 		= record[4]
+		isedible 		= record[5]
+		itemstatus 		= record[6]
 
 		if(isedible == 1 and itemstatus == "NEW"):
 			ediblenewcnt += itemstotal
+			ediblenewrecords.append(record)
 		elif(isedible == 1 and itemstatus == "OPENED"):
 			edibleopenedcnt += 1
+			edibleopenedrecords.append(record)
 		elif(isedible == 0 and itemstatus == "NEW"):
 			inediblenewcnt += itemstotal
+			inediblenewrecords.append(record)
 		elif(isedible == 0 and itemstatus == "OPENED"):
 			inedibleopenedcnt += 1
+			inedibleopenedrecords.append(record)
 		elif(isedible == 1):
 			itemstotal -= 0.5
 			ediblenewcnt += itemstotal
 			edibleopenedcnt +=1
+			ediblenewrecords.append(record)
+			edibleopenedrecords.append(record)
 		elif(isedible == 0):
 			itemstotal -= 0.5
 			inediblenewcnt += itemstotal
 			inedibleopenedcnt +=1
+			inediblenewrecords.append(record)
+			inedibleopenedrecords.append(record)
 
-	return int(ediblenewcnt), int(edibleopenedcnt), int(inediblenewcnt), int(inedibleopenedcnt)
+	edible = {}
+	edible['opened'] = {'cnt': int(edibleopenedcnt), 'records': edibleopenedrecords}
+	edible['new'] = {'cnt': int(ediblenewcnt), 'records': ediblenewrecords}
+	inedible = {}
+	inedible['opened'] = {'cnt': int(inedibleopenedcnt), 'records': inedibleopenedrecords}
+	inedible['new'] = {'cnt': int(inediblenewcnt), 'records': inediblenewrecords}
+	
+	data = {}
+	data['edible'] = edible
+	data['inedible'] = inedible
+	if ispartiallyconsumed:
+		if validateispartiallyconsumed(ispartiallyconsumed) == 0:
+			data['all'] = {'cnt': int(ediblenewcnt) + int(inediblenewcnt), 'records': ediblenewrecords + inediblenewrecords }
+		elif validateispartiallyconsumed(ispartiallyconsumed) == 1:
+			data['all'] = {'cnt': int(edibleopenedcnt) + int(inedibleopenedcnt), 'records': edibleopenedrecords + inedibleopenedrecords }
+		else:
+			data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
+	else:
+		data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
+
+	return data
 
 def countinventoryitems(uid,gtin):
 	query1 = """

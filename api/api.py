@@ -225,7 +225,7 @@ def productselect(userid,gtin):
 @app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):
-	status = "all products returned"
+	status = "products returned"
 	statuscode = 200
 
 	isedible = flask.request.args.get("isedible")
@@ -325,7 +325,7 @@ def brandselect(userid,brandid):
 @app.route('/brand', methods=['GET'])
 @func.requiretoken
 def brandselectall(userid):
-	status = "all brands returned"
+	status = "brands returned"
 	statuscode = 200
 
 	records = func.findallbrands()
@@ -347,6 +347,7 @@ def inventoryupsert(userid):
 	itemstatus	= data["itemstatus"]#DEFAULT 'IN'
 	receiptno	= data["receiptno"]
 
+	inventorycnt = 0
 	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus != "INVALID" and func.validateuser(userid) and func.isfloat(quantity) and func.validateitemstatus(itemstatus):
 		if productname == "":
@@ -383,7 +384,9 @@ def inventoryupsert(userid):
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-		records,inventorycount = func.findinventorybyuser(userid,2,2,"productname")
+		data = func.fetchinventorybyuser(userid,2,2)
+		inventorycnt = data['all']['cnt']
+		records = data['all']['records']
 	elif gtinstatus == 'INVALID':
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
@@ -400,8 +403,10 @@ def inventoryupsert(userid):
 		status = "unknown error"
 		statuscode = 412
 		
+	if inventorycnt == 0:
+		inventorycnt = len(records)
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
@@ -412,13 +417,16 @@ def inventoryselect(userid):
 
 	isedible 			= flask.request.args.get("isedible")
 	ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
-	sortby 				= flask.request.args.get("sortby")
+	sortby 				= flask.request.args.get("sortby")#NOT IMPLEMENTED
 
+	inventorycnt = 0
 	if func.validateuser(userid) and isedible and ispartiallyconsumed and sortby:
 
-		records,inventorycount = func.findinventorybyuser(userid,isedible,ispartiallyconsumed,sortby)
+		data = func.fetchinventorybyuser(userid,isedible,ispartiallyconsumed)
+		inventorycnt = data['all']['cnt']
+		records = data['all']['records']
 
-		status = "all inventory items for the user returned"
+		status = "inventory items for the user returned"
 
 		if not records:
 			status = "user does not have an inventory"
@@ -430,24 +438,26 @@ def inventoryselect(userid):
 		status = "invalid user"
 		statuscode = 412#Precondition Failed
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+	if inventorycnt == 0:
+		inventorycnt = len(records)
 
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
 @app.route('/inventory/insights', methods=['GET'])
 @func.requiretoken
 def inventoryinsights(userid):
 	statuscode = 200
 	
-	ediblenewcnt,edibleopenedcnt,inediblenewcnt,inedibleopenedcnt = func.getinventorycounts(userid)
+	data = func.fetchinventorybyuser(userid,2)
 
 	messages = {}
 	messages['message'] = 'insights'
 
 	message1 = {}
-	message1['ediblenew'] = ediblenewcnt
-	message1['edibleopened'] = edibleopenedcnt
-	message1['inediblenew'] = inediblenewcnt
-	message1['inedibleopened'] = inedibleopenedcnt
+	message1['ediblenew'] = data['edible']['new']['cnt']
+	message1['edibleopened'] = data['edible']['opened']['cnt']
+	message1['inediblenew'] = data['inedible']['new']['cnt']
+	message1['inedibleopened'] = data['inedible']['opened']['cnt']
 	messages['counts'] = message1
 
 	messagestoplvl = []

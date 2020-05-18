@@ -2,7 +2,7 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
-import { Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
+import { Icon, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -10,6 +10,7 @@ class Inventory extends React.Component {
 
   constructor(props) {
     super(props)
+    const redirectstate = this.props.location.state;
     this.state = {
       apihost: 'http://127.0.0.1:8989',
       token: getToken(),
@@ -17,8 +18,10 @@ class Inventory extends React.Component {
       actionedmsg: '',
       actioned: false,
       modalopen: false,
-      queryisedible: this.props.location.state.queryisedible || '2',
-      queryispartiallyconsumed: this.props.location.state.queryispartiallyconsumed || '2',
+      inventoryfetched: false,
+      inventorymsg: '',
+      queryisedible: redirectstate ? redirectstate.queryisedible : '2',
+      queryispartiallyconsumed: redirectstate ? redirectstate.queryispartiallyconsumed : '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -47,15 +50,43 @@ class Inventory extends React.Component {
     )
     .then(response => { 
       if(response.status === 200){
+        let message = response.data[0]['count'];
+        if(this.state.queryisedible === 0 && this.state.queryispartiallyconsumed === 0){
+          message += ' new non-food items';
+        }
+        else if(this.state.queryisedible === 0 && this.state.queryispartiallyconsumed === 1){
+          message += ' opened non-food items';
+        }
+        else if(this.state.queryisedible === 1 && this.state.queryispartiallyconsumed === 0){
+          message += ' new food items';
+        }
+        else if(this.state.queryisedible === 1 && this.state.queryispartiallyconsumed === 1){
+          message += ' opened food items';
+        }
+        else{
+          message += ' items';
+        }
+
         this.setState({ inventory: response.data[0]['results'] });
+        this.setState({ inventoryfetched: true });
+        this.setState({ inventorymsg: message });
       }
     })
     .catch(error => {
+      this.setState({ inventoryfetched: false });
       if(error.response){
-        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+        if(error.response.status === 404){
+          this.setState({ inventoryfetched: true });
+          this.setState({ inventorymsg: 'no items matching the criteria' })
+        }
+        else{
+          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          this.setState({ inventorymsg: error.response.data[0]['message'] })
+        }
       }
       else{
         console.log('server unreachable');
+        this.setState({ inventorymsg: 'server unreachable' })
       }
     });
   }
@@ -151,7 +182,7 @@ class Inventory extends React.Component {
   setinventorymetadata(event, data){
     const field = data.placeholder;
     const value = data.value;
-    console.log(field + ':' + value);
+    console.log('setting inventory metadata [' + field + '][' + value + ']');
 
     if(field === 'Product name'){
       const array = this.state.productsuggests;
@@ -166,7 +197,7 @@ class Inventory extends React.Component {
         this.setState({ productimage: selectedimg });
       }
       else{
-        console.log('new product:' + value + ' => handled by addnewproduct')
+        console.log('add new product [' + value + '] => handled by addnewproduct')
 
       }
     }
@@ -179,7 +210,7 @@ class Inventory extends React.Component {
         this.setState({ retailername: value });
       }
       else{
-        console.log('new retailer:' + value + ' => handled by addnewretailer')
+        console.log('add new retailer [' + value + '] => handled by addnewretailer')
       }
     }
     else if(field === 'Quantity'){
@@ -249,7 +280,6 @@ class Inventory extends React.Component {
           img: item.productimage,
         }
       ));
-    console.log(updatedsuggest);
     this.setState({ productsuggests: updatedsuggest });
   }
 
@@ -261,7 +291,6 @@ class Inventory extends React.Component {
           value: item.retailername,
         }
       ));
-    console.log(updatedsuggest);
     this.setState({ retailersuggests: updatedsuggest });
   }
 
@@ -273,24 +302,22 @@ class Inventory extends React.Component {
           value: item.brandname,
         }
       ));
-    console.log(updatedsuggest);
     this.setState({ brandsuggests: updatedsuggest });
   }  
 
   addnewproduct(event,data){
-    console.log('onAddItem for product:' +data.value);
+    console.log('onAddItem for product [' + data.value + ']');
   }
 
   addnewretailer(event,data){
-    console.log('onAddItem for retailer:' + data.value);
+    console.log('onAddItem for retailer [' + data.value + ']');
   }
 
   addnewbrand(event,data){
-    console.log('onAddItem for brand:' + data.value);
+    console.log('onAddItem for brand [' + data.value + ']');
   }
 
   consumeinventory(gtin){
-    console.log(gtin);  
     axios.post(this.state.apihost + '/inventory', 
       {
         gtin:gtin,
@@ -355,8 +382,7 @@ class Inventory extends React.Component {
   }
   
   generategriddefault(){
-    if(this.state.inventory.length !== 0){
-      
+    if(this.state.inventoryfetched){
       return (
         <Card raised key="1">
           <Card.Content>
@@ -365,21 +391,24 @@ class Inventory extends React.Component {
               floated='right'
               size='tiny'
             />
-            <Card.Header size='tiny'>Add new item</Card.Header>
+            <Card.Header size='tiny'>{this.state.inventorymsg}</Card.Header>
             <Card.Meta></Card.Meta>
             <Label color='grey' attached='top right'>0</Label>
           </Card.Content>
-
           <Card.Content extra textAlign="center">
             <Modal
-              trigger={<Button icon="plus" onClick={this.openmodal} />}
+              trigger={
+                <Button icon onClick={this.openmodal} labelPosition='left'>
+                  <Icon name='plus' />Add new items
+                </Button>
+              }
               open={this.state.modalopen}
               onClose={this.closemodal} 
               centered={false}
               size="fullscreen"
               dimmer="blurring"
               >
-              <Modal.Header>Add item to inventory</Modal.Header>
+              <Modal.Header>Add new items</Modal.Header>
               <Modal.Content image>
                 <Image wrapped size='tiny' src={this.state.productimage} />
                 <Modal.Description>
@@ -432,7 +461,7 @@ class Inventory extends React.Component {
                 <Grid columns={2} container doubling stackable>
                   <Grid.Column>
                     <Button loading={this.state.loading || false} className="fullwidth" color='black' onClick={this.addinventory.bind(this,this.state.gtin)}>
-                      add
+                      Add
                     </Button>
                   </Grid.Column>
                   <Grid.Column>
@@ -451,7 +480,7 @@ class Inventory extends React.Component {
   }
 
   generategriditems(){
-    if(this.state.inventory.length === 0){
+    if(!this.state.inventoryfetched){
       return (<Card raised>
                 <Message warning size='tiny'
                   header="Fetching your inventory"
@@ -485,7 +514,7 @@ class Inventory extends React.Component {
                       size="fullscreen"
                       dimmer="blurring"
                     >
-                      <Modal.Header>Specify retailer, quantity and expiry</Modal.Header>
+                      <Modal.Header>Add more items</Modal.Header>
                       <Modal.Content image>
                         <Image wrapped size='tiny' src={item.productimage} />
                         <Modal.Description>
@@ -525,7 +554,7 @@ class Inventory extends React.Component {
                         <Grid columns={2} container doubling stackable>
                           <Grid.Column>
                             <Button loading={this.state.loading || false} className="fullwidth" color="black" onClick={this.addinventory.bind(this,item.gtin)}>
-                              add
+                              Add
                             </Button>
                           </Grid.Column>
                           <Grid.Column>
@@ -544,7 +573,7 @@ class Inventory extends React.Component {
   render() {
     return (
       <Container fluid>
-        <Card.Group doubling itemsPerRow={6} stackable>
+        <Card.Group doubling itemsPerRow={5} stackable>
           {this.generategriddefault()}
           {this.generategriditems()}
         </Card.Group>

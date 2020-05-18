@@ -83,19 +83,19 @@ class Insights extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <Statistic>
-                  <Statistic.Value  onClick={this.directtoinventory.bind(this,1,0)}>{this.state.ediblenewcnt}</Statistic.Value>
+                  <Statistic.Value onClick={this.directtoinventory.bind(this,1,0)}>{this.state.ediblenewcnt}</Statistic.Value>
                   <Statistic.Label># of new food items</Statistic.Label>
                 </Statistic>            
               </Grid.Column>
               <Grid.Column>
                 <Statistic>
-                  <Statistic.Value>{this.state.inedibleopenedcnt}</Statistic.Value>
+                  <Statistic.Value onClick={this.directtoinventory.bind(this,0,1)}>{this.state.inedibleopenedcnt}</Statistic.Value>
                   <Statistic.Label># of opened non-food items</Statistic.Label>
                 </Statistic>
               </Grid.Column>
               <Grid.Column>
                 <Statistic>
-                  <Statistic.Value>{this.state.inediblenewcnt}</Statistic.Value>
+                  <Statistic.Value onClick={this.directtoinventory.bind(this,0,0)}>{this.state.inediblenewcnt}</Statistic.Value>
                   <Statistic.Label># of new non-food items</Statistic.Label>
                 </Statistic>            
               </Grid.Column>

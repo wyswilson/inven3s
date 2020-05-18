@@ -2,12 +2,13 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
-import { Message, Divider, Input, Dropdown, Container, Grid, Button, Image } from 'semantic-ui-react'
+import { Card, Label, Message, Divider, Input, Dropdown, Container, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class Product extends React.Component {
   constructor(props) {
     super(props)
+    const redirectstate = this.props.location.state;
     this.state = {
       apihost: 'http://127.0.0.1:8989',
       token: getToken(),
@@ -17,10 +18,10 @@ class Product extends React.Component {
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       productsuggests: [],
       productdropdown: '',
-      gtin: this.props.location.state.gtin || '',
-      productname: this.props.location.state.productname || '',
-      productimage: this.props.location.state.productimage || 'https://react.semantic-ui.com/images/wireframe/image.png',
-      brandname:  this.props.location.state.brandname || '',
+      gtin: redirectstate ? redirectstate.gtin : '',
+      productname: redirectstate ? redirectstate.productname : '',
+      productimage: redirectstate ? redirectstate.productimage : 'https://react.semantic-ui.com/images/wireframe/image.png',
+      brandname: redirectstate ? redirectstate.brandname : '',
       isedible:1,
       isperishable:0
     };
@@ -117,7 +118,7 @@ class Product extends React.Component {
     const value = data.value;
     console.log(field + ':' + value);
 
-    if(field === 'productdropdown'){
+    if(field === 'Product name or GTIN'){
       const array = this.state.productsuggests;
       let selectedarr = array.filter(prod => prod.value.includes(value))[0];
 
@@ -212,64 +213,72 @@ class Product extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <Grid columns={1} doubling stackable>
-          <Grid.Row columns={2}>
-            <Grid.Column width={2}>
-              <Image floated='left' size='tiny'
-              src={this.state.productimage}
-              onError={this.setdefaultimage.bind(this)}
+      <Card raised fluid>
+        <Card.Content>
+          <Card.Description>
+            <Grid columns={1} doubling stackable>
+              <Grid.Column>
+                 <Image rounded
+                centered src={this.state.productimage}
+                floated='right'
+                size='tiny' style={{width: 'auto', height: '140px'}}
+                onError={this.setdefaultimage.bind(this)}
               />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <Dropdown className="fullwidth"
-                placeholder="productdropdown"
-                search
-                selection
-                allowAdditions
-                value={this.state.productdropdown}
-                options={this.state.productsuggests}
-                additionLabel = "Add new product "
-                onSearchChange={this.lookupproduct.bind(this)}
-                onAddItem={this.addnewproduct.bind(this)}
-                onChange={this.setproductmetadata.bind(this)}
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Divider />
-          <Grid.Column>
-            <Input placeholder='gtin' disabled value={this.state.gtin} className="fullwidth" />
-          </Grid.Column>
-          <Grid.Column>
-            <Input placeholder='productname' value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
-          </Grid.Column>
-          <Grid.Column>
-            <Input placeholder='productimage' value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
-          </Grid.Column>
-          <Grid.Column>
-            <Input placeholder='brandname' value={this.state.brandname} className="fullwidth" onChange={e => this.setState({ brandname: e.target.value })}/>                     
-          </Grid.Column>
-          <Grid.Row columns={2}>
-            <Grid.Column>
-              
-            </Grid.Column>
-            <Grid.Column>
-                      
-            </Grid.Column>
-          </Grid.Row>
-          <Divider />
-          <Grid.Row columns={2}>
+              <Dropdown className="halfwidth"
+                  placeholder="Product name or GTIN"
+                  search
+                  selection
+                  allowAdditions
+                  value={this.state.productdropdown}
+                  options={this.state.productsuggests}
+                  additionLabel = "Add new product "
+                  noResultsMessage = "No product found"
+                  onSearchChange={this.lookupproduct.bind(this)}
+                  onAddItem={this.addnewproduct.bind(this)}
+                  onChange={this.setproductmetadata.bind(this)}
+                />
+                <Input placeholder='GTIN' className="halfwidth" disabled value={this.state.gtin}/>
+              </Grid.Column>
+            </Grid>
+          </Card.Description>
+          <Divider/>
+          <Card.Meta>
+            <Grid columns={1} doubling stackable>
+              <Grid.Column>
+                <Input placeholder='Product name' value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
+              </Grid.Column>
+              <Grid.Column>
+                <Input placeholder='Product image' value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
+              </Grid.Column>
+              <Grid.Column>
+                <Input placeholder='Brand' value={this.state.brandname} className="fullwidth" onChange={e => this.setState({ brandname: e.target.value })}/>                     
+              </Grid.Column>
+              <Grid.Row columns={2}>
+                <Grid.Column>
+                  
+                </Grid.Column>
+                <Grid.Column>
+                          
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Card.Meta>
+          <Label color='grey' attached='top right'>0</Label>
+        </Card.Content>
+        <Card.Content extra textAlign="center">
+          <Grid columns={2} doubling stackable>
             <Grid.Column>
               <Button loading={this.state.loading || false} className="fullwidth" color='black' onClick={this.upsertproduct.bind(this)}>
-                add
+                Add or update
               </Button>
             </Grid.Column>
             <Grid.Column>
               {this.generateitemadditionmsg()}
             </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
+          </Grid>
+        </Card.Content>
+      </Card>
+
     )
   }
 }
