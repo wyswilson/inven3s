@@ -4,17 +4,21 @@ import axios from 'axios';
 import { getToken } from './utils/common';
 import { Card, Label, Message, Divider, Input, Dropdown, Container, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
+import queryString from 'query-string'
 
 class Product extends React.Component {
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
+    const querystr = queryString.parse(this.props.location.search);
     this.state = {
       apihost: 'http://127.0.0.1:8989',
       token: getToken(),
       loading: false,
       actionedmsg: '',
       actioned: false,
+      queryisedible: querystr ? querystr.isedible : '2',
+      queryisopened: querystr ? querystr.isopened : '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       productsuggests: [],
       productdropdown: '',

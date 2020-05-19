@@ -5,12 +5,14 @@ import { getToken } from './utils/common';
 import { Icon, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
+import queryString from 'query-string'
 
 class Inventory extends React.Component {
 
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
+    const querystr = queryString.parse(this.props.location.search);
     this.state = {
       apihost: 'http://127.0.0.1:8989',
       token: getToken(),
@@ -21,7 +23,9 @@ class Inventory extends React.Component {
       inventoryfetched: false,
       inventorymsg: '',
       queryisedible: redirectstate ? redirectstate.queryisedible : '2',
-      queryispartiallyconsumed: redirectstate ? redirectstate.queryispartiallyconsumed : '2',
+      //queryisedible: querystr ? querystr.isedible : '2',
+      queryisopened: redirectstate ? redirectstate.queryisopened : '2',
+      //queryisopened: querystr ? querystr.isopened : '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -40,7 +44,7 @@ class Inventory extends React.Component {
   }
 
   fetchinventory(){
-    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&ispartiallyconsumed=' + this.state.queryispartiallyconsumed + '&sortby=productname',
+    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&sortby=productname',
       {
         headers: {
           "content-type": "application/json",
@@ -51,16 +55,16 @@ class Inventory extends React.Component {
     .then(response => { 
       if(response.status === 200){
         let message = response.data[0]['count'];
-        if(this.state.queryisedible === 0 && this.state.queryispartiallyconsumed === 0){
+        if(this.state.queryisedible === 0 && this.state.queryisopened === 0){
           message += ' new non-food items';
         }
-        else if(this.state.queryisedible === 0 && this.state.queryispartiallyconsumed === 1){
+        else if(this.state.queryisedible === 0 && this.state.queryisopened === 1){
           message += ' opened non-food items';
         }
-        else if(this.state.queryisedible === 1 && this.state.queryispartiallyconsumed === 0){
+        else if(this.state.queryisedible === 1 && this.state.queryisopened === 0){
           message += ' new food items';
         }
-        else if(this.state.queryisedible === 1 && this.state.queryispartiallyconsumed === 1){
+        else if(this.state.queryisedible === 1 && this.state.queryisopened === 1){
           message += ' opened food items';
         }
         else{
@@ -365,6 +369,7 @@ class Inventory extends React.Component {
     console.log('redirect to product/gtin:' + gtin);
     this.props.history.push({
       pathname: '/product',
+      search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
       state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname }
     })
   }

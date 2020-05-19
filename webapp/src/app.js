@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { Container } from 'semantic-ui-react'
 
 import Login from './login';
 import Inventory from './inventory';
@@ -11,55 +12,59 @@ import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
 
-function App(props) {
-  const [authLoading, setAuthLoading] = useState(true);
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      apihost: 'http://127.0.0.1:8989',
+      token: getToken(),
+      authloading: true
+    };
+  }
 
-  useEffect(() => {
-    const token = getToken();
-    
-    if (!token) {
+  componentDidMount() {
+    if (!this.state.token) {
       return;
     }
 
-    axios.get(`http://127.0.0.1:8989/user/validate/${token}`)
+    axios.get(this.state.apihost + '/user/validate/' + this.state.token)
     .then(response => {
       setUserSession(response.headers['access-token'],response.headers['name']);
-      setAuthLoading(false);
+      this.setState({ authloading: false });
     }).catch(error => {
       removeUserSession();
-      setAuthLoading(false);
+      this.setState({ authloading: false });
     });
-  }, []);
-
-  if (authLoading && getToken()) {
-    return '';
-    //<div className="error">authenticating</div>
   }
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <div>
-          <div className="header nav">
-            <NavLink activeClassName="active" to="/home">Home</NavLink>
-            <NavLink activeClassName="active" to="/inventory">Inventory</NavLink>
-            <NavLink activeClassName="active" to="/product">Product</NavLink>
-          </div>
-          <div className="content">
-            <Switch>
-              <PrivateRoute path="/home" component={Home} />
-              <PrivateRoute path="/inventory" component={Inventory} />
-              <PrivateRoute path="/product" component={Product} />
-              <PublicRoute path="/login" component={Login} />
-              <PublicRoute exact path="/">
-                <Redirect to="/login" />
-              </PublicRoute>
-            </Switch>
-          </div>
-        </div>
-      </BrowserRouter>
-    </div>
-  );
-}
 
+  render() {
+    return (
+      <Container textAlign="left" className="App" fluid>
+        <BrowserRouter>
+          <div>
+            <div className="header nav">
+              <NavLink activeClassName="active" to="/home">Home</NavLink>
+              <NavLink activeClassName="active" to="/inventory">Inventory</NavLink>
+              <NavLink activeClassName="active" to="/product">Product</NavLink>
+            </div>
+            <div className="content">
+              <Switch>
+                <PrivateRoute path="/home" component={Home} />
+                <PrivateRoute path="/inventory" component={Inventory} />
+                <PrivateRoute path="/product" component={Product} />
+                <PublicRoute path="/login" component={Login} />
+                <PublicRoute exact path="/">
+                  <Redirect to="/login" />
+                </PublicRoute>
+              </Switch>
+            </div>
+          </div>
+        </BrowserRouter>
+      </Container>
+
+    )
+  }
+}
 export default App;
+

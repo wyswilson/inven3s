@@ -166,15 +166,15 @@ def productupsert(userid):
 @func.requiretoken
 def productdiscover(userid,gtin):
 	statuscode = 200
-
-	messages = {}
+	status = ""
+	records = []
 	
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == 'NEW':
 		productname,brandid,brandname = func.discovernewproduct(gtin,1)
 		if productname != "ERR" and productname != "WARN":
-			messages['message'] = 'public search for product is successful'
-			messages['results'] = func.jsonifyproducts(func.findproductbygtin(gtin))
+			status = 'public search for product is successful'
+			records = func.jsonifyproducts(func.findproductbygtin(gtin))
 		if productname == "ERR":
 			status = "public search for product errored - try again later"
 			statuscode = 503#Service Unavailable
@@ -182,11 +182,16 @@ def productdiscover(userid,gtin):
 			status = "public search for product returned no data - manual entry required"
 			statuscode = 404#Not found
 	elif gtinstatus == 'INVALID':
-		messages['message'] = 'invalid gtin'
+		status = 'invalid gtin'
 		statuscode = 412#Precondition Failed
 	else:
-		messages['message'] = 'product already exists'
-		messages['results'] = func.jsonifyproducts(func.findproductbygtin(gtin))
+		status = 'product already exists'
+		records = func.jsonifyproducts(func.findproductbygtin(gtin))
+
+	messages = {}
+	messages['message'] = status
+	if len(records) > 0:
+		messages['results'] = records
 
 	messagestoplvl = []
 	messagestoplvl.append(messages)
@@ -415,14 +420,14 @@ def inventoryselect(userid):
 	statuscode = 200
 	records = []
 
-	isedible 			= flask.request.args.get("isedible")
-	ispartiallyconsumed = flask.request.args.get("ispartiallyconsumed")
-	sortby 				= flask.request.args.get("sortby")#NOT IMPLEMENTED
+	isedible = flask.request.args.get("isedible")
+	isopened = flask.request.args.get("isopened")
+	sortby 	 = flask.request.args.get("sortby")#NOT IMPLEMENTED
 
 	inventorycnt = 0
-	if func.validateuser(userid) and isedible and ispartiallyconsumed and sortby:
+	if func.validateuser(userid) and isedible and isopened and sortby:
 
-		data = func.fetchinventorybyuser(userid,isedible,ispartiallyconsumed)
+		data = func.fetchinventorybyuser(userid,isedible,isopened)
 		inventorycnt = data['all']['cnt']
 		records = data['all']['records']
 
@@ -431,8 +436,8 @@ def inventoryselect(userid):
 		if not records:
 			status = "user does not have an inventory"
 			statuscode = 404#Not Found
-	elif isedible is None or ispartiallyconsumed is None or sortby is None:
-		status = "require isedible, ispartiallyconsumed and sortby flags"
+	elif isedible is None or isopened is None or sortby is None:
+		status = "require isedible, isopened and sortby flags"
 		statuscode = 412#Precondition Failed
 	else:
 		status = "invalid user"
@@ -448,16 +453,19 @@ def inventoryselect(userid):
 def inventoryinsights(userid):
 	statuscode = 200
 	
-	data = func.fetchinventorybyuser(userid,2)
+	data1 = func.fetchinventorybyuser(userid,2)
+	data2 = func.fetchinventoryexpireditems(userid)
 
 	messages = {}
 	messages['message'] = 'insights'
 
 	message1 = {}
-	message1['ediblenew'] = data['edible']['new']['cnt']
-	message1['edibleopened'] = data['edible']['opened']['cnt']
-	message1['inediblenew'] = data['inedible']['new']['cnt']
-	message1['inedibleopened'] = data['inedible']['opened']['cnt']
+	message1['expiring'] = data2['expiring']['cnt']
+	message1['expired'] = data2['expired']['cnt']
+	message1['ediblenew'] = data1['edible']['new']['cnt']
+	message1['edibleopened'] = data1['edible']['opened']['cnt']
+	message1['inediblenew'] = data1['inedible']['new']['cnt']
+	message1['inedibleopened'] = data1['inedible']['opened']['cnt']
 	messages['counts'] = message1
 
 	messagestoplvl = []

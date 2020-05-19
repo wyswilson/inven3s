@@ -15,6 +15,7 @@ import configparser
 import werkzeug.security
 import jwt
 import string
+import math
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -570,7 +571,60 @@ def findproductexpiry(uid,gtin):
 	else:
 		return "",defaultdateexpiry
 
-def fetchinventorybyuser(uid,isedible,ispartiallyconsumed=None):
+def fetchinventoryexpireditems(uid):
+	query1 = """
+		SELECT
+			gtin, productname, productimage, brandname, itemstotal, dateexpiry, itemgoodness
+		FROM
+		(
+			SELECT
+			  i.gtin,p.productname,p.productimage,b.brandname,
+			  i.dateexpiry,
+			  case
+					when dateexpiry <= NOW() then 'EXPIRED'
+					when NOW() < dateexpiry AND dateexpiry <= NOW() + INTERVAL 30 DAY then 'EXPIRING'
+					ELSE 'CAN-KEEP'
+				END AS itemgoodness,
+			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
+			WHERE
+				i.userid = %s AND p.isedible = '1'
+				AND dateexpiry IS NOT NULL AND dateexpiry != '0000-00-00'
+			GROUP BY 1,2,3,4,5,6
+		) AS tmp
+		WHERE itemstotal > 0 AND itemgoodness IN ('EXPIRED','EXPIRING')
+		ORDER BY 5 asc
+	"""
+	cursor.execute(query1,(uid,))
+	records = cursor.fetchall()
+	expiringcnt = 0
+	expiredcnt = 0
+	expiringrecords = []
+	expiredrecords = []
+	for record in records:
+		name = record[1]
+		goodness = record[6]
+		itemstotal = record[4]
+		print(goodness + ':' + name + ':' + str(record[4]))
+		if goodness == 'EXPIRING':
+			expiringrecords.append(record)
+			expiringcnt += float(itemstotal)
+		elif goodness == 'EXPIRED':
+			expiredrecords.append(record)
+			expiredcnt += float(itemstotal)
+		print(expiringcnt)
+		print(expiredcnt)
+
+	data = {}
+	data['expiring'] = {'cnt': math.ceil(expiringcnt), 'records': expiringrecords}
+	data['expired'] = {'cnt': math.ceil(expiredcnt), 'records': expiredrecords}		
+	return data
+
+def fetchinventorybyuser(uid,isedible,isopened=None):
 	query1 = """
 		SELECT 
 			gtin,
@@ -660,10 +714,10 @@ def fetchinventorybyuser(uid,isedible,ispartiallyconsumed=None):
 	data = {}
 	data['edible'] = edible
 	data['inedible'] = inedible
-	if ispartiallyconsumed:
-		if validateispartiallyconsumed(ispartiallyconsumed) == 0:
+	if isopened:
+		if validateisopened(isopened) == 0:
 			data['all'] = {'cnt': int(ediblenewcnt) + int(inediblenewcnt), 'records': ediblenewrecords + inediblenewrecords }
-		elif validateispartiallyconsumed(ispartiallyconsumed) == 1:
+		elif validateisopened(isopened) == 1:
 			data['all'] = {'cnt': int(edibleopenedcnt) + int(inedibleopenedcnt), 'records': edibleopenedrecords + inedibleopenedrecords }
 		else:
 			data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
@@ -869,10 +923,10 @@ def validateisedible(isedible):
 	except:
 		return "2"
 
-def validateispartiallyconsumed(ispartiallyconsumed):
+def validateisopened(isopened):
 	try:
-		if int(ispartiallyconsumed) == 1 or int(ispartiallyconsumed) == 0 or int(ispartiallyconsumed) == 2:
-			return int(ispartiallyconsumed)
+		if int(isopened) == 1 or int(isopened) == 0 or int(isopened) == 2:
+			return int(isopened)
 		else:
 			return 0
 	except:

@@ -16,7 +16,9 @@ class Insights extends React.Component {
         ediblenewcnt: 0,
         edibleopenedcnt: 0,
         inediblenewcnt: 0,
-        inedibleopenedcnt: 0
+        inedibleopenedcnt: 0,
+        expiredcnt: 0,
+        expiringcnt: 0
       }
     };
   }
@@ -41,7 +43,11 @@ class Insights extends React.Component {
         const edibleopenedcnt = response.data[0]['counts']['edibleopened'];
         const inediblenewcnt = response.data[0]['counts']['inediblenew'];
         const inedibleopenedcnt = response.data[0]['counts']['inedibleopened'];
+        const expiringcnt = response.data[0]['counts']['expiring'];
+        const expiredcnt = response.data[0]['counts']['expired'];
 
+        this.setState({expiringcnt: expiringcnt});
+        this.setState({expiredcnt: expiredcnt});
         this.setState({ediblenewcnt: ediblenewcnt});
         this.setState({edibleopenedcnt: edibleopenedcnt});
         this.setState({inediblenewcnt: inediblenewcnt});
@@ -60,10 +66,11 @@ class Insights extends React.Component {
     });
   }
 
-  directtoinventory(isedible,ispartiallyconsumed){
+  directtoinventory(isedible,isopened){
     this.props.history.push({
       pathname: '/inventory',
-      state: { queryisedible: isedible, queryispartiallyconsumed: ispartiallyconsumed }
+      search: '?isedible=' + isedible + '&isopened=' + isopened,
+      state: { queryisedible: isedible, queryisopened: isopened }
     })
   }
 
@@ -74,26 +81,38 @@ class Insights extends React.Component {
   generateinsights(){
     if(this.state.insightsloaded){
       return (
-            <Grid.Row columns={4}>
-              <Grid.Column>
+            <Grid.Row columns={2}>
+              <Grid.Column textAlign="center">
                 <Statistic>
                   <Statistic.Value onClick={this.directtoinventory.bind(this,1,1)}>{this.state.edibleopenedcnt}</Statistic.Value>
                   <Statistic.Label># of opened food items</Statistic.Label>
                 </Statistic>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column textAlign="center">
                 <Statistic>
                   <Statistic.Value onClick={this.directtoinventory.bind(this,1,0)}>{this.state.ediblenewcnt}</Statistic.Value>
                   <Statistic.Label># of new food items</Statistic.Label>
                 </Statistic>            
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column textAlign="center">
+                <Statistic>
+                  <Statistic.Value>{this.state.expiringcnt}</Statistic.Value>
+                  <Statistic.Label># of expiring food items</Statistic.Label>
+                </Statistic>
+              </Grid.Column>
+              <Grid.Column textAlign="center">
+                <Statistic>
+                  <Statistic.Value>{this.state.expiredcnt}</Statistic.Value>
+                  <Statistic.Label># of expired food items</Statistic.Label>
+                </Statistic>            
+              </Grid.Column>
+              <Grid.Column textAlign="center">
                 <Statistic>
                   <Statistic.Value onClick={this.directtoinventory.bind(this,0,1)}>{this.state.inedibleopenedcnt}</Statistic.Value>
                   <Statistic.Label># of opened non-food items</Statistic.Label>
                 </Statistic>
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column textAlign="center">
                 <Statistic>
                   <Statistic.Value onClick={this.directtoinventory.bind(this,0,0)}>{this.state.inediblenewcnt}</Statistic.Value>
                   <Statistic.Label># of new non-food items</Statistic.Label>
@@ -104,7 +123,7 @@ class Insights extends React.Component {
     }
     else{
       return (
-            <Grid.Column>
+            <Grid.Column textAlign="center">
               <Message warning size='tiny'
                 header="Problem generating insights"
                 content="Please try again later if it doesn't load"
@@ -115,11 +134,11 @@ class Insights extends React.Component {
   }
   render() {
     return (
-      <Container fluid>
+      <Container textAlign="left" fluid>
          <Grid columns={1} doubling stackable>
-          <Grid.Column>
+          <Grid.Column textAlign="left">
             <Header as='h1'>
-              Welcome to inventory for {this.state.username}
+              {this.state.username}'s inventory
             </Header>
             <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
           </Grid.Column>
