@@ -8,7 +8,7 @@ class Insights extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apihost: 'http://13.229.67.229:8989',
+      apihost: 'http://127.0.0.1:8989',
       username: getUser(),
       token: getToken(),
       insightsloaded: false,
@@ -69,7 +69,7 @@ class Insights extends React.Component {
   directtoinventory(isedible,isopened){
     this.props.history.push({
       pathname: '/inventory',
-      search: '?isedible=' + isedible + '&isopened=' + isopened,
+      //search: '?isedible=' + isedible + '&isopened=' + isopened,
       state: { queryisedible: isedible, queryisopened: isopened }
     })
   }

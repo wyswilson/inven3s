@@ -40,7 +40,7 @@ db = mysql.connector.connect(
     pool_name='sqlpool',
     pool_size = 10, pool_reset_session = True
    	)
-    
+
 cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
@@ -234,6 +234,7 @@ def jsonifyinventory(records):
 		brandname   	= record[3]
 		#dateexpiry   	= record[4]
 		itemcount		= record[4]
+		isedible		= record[5]
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
@@ -242,6 +243,7 @@ def jsonifyinventory(records):
 		itemgroup['brandname'] 		= brandname
 		#itemgroup['dateexpiry'] 	= dateexpiry
 		itemgroup['itemcount'] 		= itemcount
+		itemgroup['isedible'] 		= isedible
 
 		inventory.append(itemgroup)
 

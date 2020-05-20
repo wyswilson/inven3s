@@ -14,7 +14,7 @@ class Inventory extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      apihost: 'http://13.229.67.229:8989',
+      apihost: 'http://127.0.0.1:8989',
       token: getToken(),
       loading: false,
       actionedmsg: '',
@@ -39,8 +39,7 @@ class Inventory extends React.Component {
       dateexpiry:'',
       quantity: 1,
       productsuggests: [],
-      retailersuggests: [],
-      brandsuggests: []
+      retailersuggests: []
     };
   }
 
@@ -104,7 +103,12 @@ class Inventory extends React.Component {
     const gtinorproduct = data.searchQuery
 
     if(gtinorproduct.length > 3){
-      axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
+      this.searchproducts(gtinorproduct);
+    }
+  }
+
+  searchproducts(gtinorproduct){
+    axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
         {
           headers: {
             "content-type": "application/json",
@@ -125,14 +129,18 @@ class Inventory extends React.Component {
           console.log('server unreachable');
         }
       });
-    }
   }
 
   lookupretailer(event, data){
     const retailer = data.searchQuery
 
     if(retailer.length > 3){
-      axios.get(this.state.apihost + '/retailer/' + retailer,
+      this.searchretailers(retailer);
+    }
+  }
+
+  searchretailers(retailer){
+    axios.get(this.state.apihost + '/retailer/' + retailer,
         {
           headers: {
             "content-type": "application/json",
@@ -153,43 +161,14 @@ class Inventory extends React.Component {
           console.log('server unreachable');
         }
       });
-    }
-  }
-
-  lookupbrand(event, data){
-    const brand = data.searchQuery
-
-    if(brand.length > 3){
-      axios.get(this.state.apihost + '/brand/' + brand,
-        {
-          headers: {
-            "content-type": "application/json",
-            "access-token": this.state.token
-          }
-        }
-      )
-      .then(response => { 
-        if(response.status === 200){
-          this.updatebrandsuggests(response.data[0]['results']);
-        }
-      })
-      .catch(error => {
-        if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
-        }
-        else{
-          console.log('server unreachable');
-        }
-      });
-    }
   }
 
   setinventorymetadata(event, data){
-    const field = data.placeholder;
+    const field = data.name;
     const value = data.value;
     console.log('setting inventory metadata [' + field + '][' + value + ']');
 
-    if(field === 'Product name'){
+    if(field === 'productname'){
       const array = this.state.productsuggests;
       let selectedarr = array.filter(prod => prod.value.includes(value))[0];
 
@@ -206,7 +185,7 @@ class Inventory extends React.Component {
 
       }
     }
-    else if(field === 'Retailer name'){
+    else if(field === 'retailername'){
       const array = this.state.retailersuggests;
       let selectedarr = array.filter(prod => prod.value.includes(value))[0];
       if(selectedarr){
@@ -218,10 +197,10 @@ class Inventory extends React.Component {
         console.log('add new retailer [' + value + '] => handled by addnewretailer')
       }
     }
-    else if(field === 'Quantity'){
+    else if(field === 'quantity'){
       this.setState({ quantity: value });
     }
-    else if(field === 'Expiry date'){
+    else if(field === 'expirydate'){
       this.setState({ dateexpiry: value });
     }
   }
@@ -299,17 +278,6 @@ class Inventory extends React.Component {
     this.setState({ retailersuggests: updatedsuggest });
   }
 
-  updatebrandsuggests(suggestions){
-    const updatedsuggest = _.map(suggestions, (item) => (
-        {
-          key: item.brandid,
-          text: item.brandname,
-          value: item.brandname,
-        }
-      ));
-    this.setState({ brandsuggests: updatedsuggest });
-  }  
-
   addnewproduct(event,data){
     console.log('onAddItem for product [' + data.value + ']');
   }
@@ -372,12 +340,12 @@ class Inventory extends React.Component {
 
   openconfirm = () => this.setState({ confirmopen: true })
 
-  redirectoproduct(gtin, productname, productimage, brandname){
-    console.log('redirect to product/gtin:' + gtin);
+  redirectoproduct(gtin, productname, productimage, brandname, isedible){
+    console.log('redirect to product/gtin:' + gtin + ':isedible[' + isedible + ']');
     this.props.history.push({
       pathname: '/product',
-      search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
-      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname }
+      //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
+      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible }
     })
   }
   generateitemadditionmsg(){
@@ -426,8 +394,9 @@ class Inventory extends React.Component {
                 <Modal.Description>
                   <Grid columns={1} doubling stackable>
                     <Grid.Column>
-                      <Dropdown className="fullwidth"
-                        placeholder="Product name"
+                      <label className="fullwidth">Product</label>
+                      <Dropdown className="fullwidth" name="productname"
+                        placeholder="Oreo Cookie Original 133G"
                         search
                         selection
                         noResultsMessage="No product found"
@@ -438,8 +407,9 @@ class Inventory extends React.Component {
                       />
                     </Grid.Column>
                     <Grid.Column>
-                      <Dropdown className="fullwidth"
-                        placeholder="Retailer name"
+                      <label className="fullwidth">Retailer</label>                    
+                      <Dropdown className="fullwidth" name="retailername"
+                        placeholder="Woolworths Docklands"
                         search
                         selection
                         noResultsMessage="No retailer found"
@@ -451,15 +421,16 @@ class Inventory extends React.Component {
                     </Grid.Column>
                     <Grid.Row columns={2}>
                       <Grid.Column>
-                        <Input className="fullwidth"
-                          placeholder='Quantity'
+                       <label className="fullwidth">Quantity</label>                    
+                       <Input className="fullwidth" name="quantity"
                           value={this.state.quantity}
                           onChange={this.setinventorymetadata.bind(this)}
                         />
                       </Grid.Column>
                       <Grid.Column>
-                         <DateInput
-                          placeholder="Expiry date"
+                        <label className="fullwidth">Expiry</label>                    
+                        <DateInput name="expirydate"
+                          placeholder="2020-07-01"
                           dateFormat="YYYY-MM-DD"
                           value={this.state.dateexpiry}
                           onChange={this.setinventorymetadata.bind(this)}
@@ -518,7 +489,7 @@ class Inventory extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname)} />
+                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible)} />
                     <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Confirm
                       open={this.state.confirmopen}
@@ -537,8 +508,9 @@ class Inventory extends React.Component {
                         <Modal.Description>
                           <Grid columns={1} doubling stackable>
                             <Grid.Column>
-                              <Dropdown className="fullwidth"
-                                placeholder="Retailer name"
+                             <label className="fullwidth">Retailer</label>                    
+                              <Dropdown className="fullwidth" name="retailername"
+                                placeholder="Woolworths Docklands"
                                 search
                                 selection
                                 value={this.state.retailername}
@@ -549,15 +521,16 @@ class Inventory extends React.Component {
                             </Grid.Column>
                             <Grid.Row columns={2}>
                               <Grid.Column>
-                                <Input className="fullwidth"
-                                  placeholder='Quantity'
+                                <label className="fullwidth">Quantity</label>                    
+                                <Input className="fullwidth" name="quantity"
                                   value={this.state.quantity}
                                   onChange={this.setinventorymetadata.bind(this)}
                                 />
                               </Grid.Column>
                               <Grid.Column>
-                                 <DateInput
-                                  placeholder="Expiry date"
+                                <label className="fullwidth">Expiry</label>                    
+                                <DateInput name="dateexpiry"
+                                  placeholder="2020-07-01"
                                   dateFormat="YYYY-MM-DD"
                                   value={this.state.dateexpiry}
                                   onChange={this.setinventorymetadata.bind(this)}

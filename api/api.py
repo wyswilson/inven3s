@@ -455,7 +455,7 @@ def inventoryselect(userid):
 	sortby 	 = flask.request.args.get("sortby")#NOT IMPLEMENTED
 
 	inventorycnt = 0
-	if func.validateuser(userid) and isedible and isopened and sortby:
+	if func.validateuser(userid) and isedible and isopened:
 
 		data = func.fetchinventorybyuser(userid,isedible,isopened)
 		inventorycnt = data['all']['cnt']
@@ -466,8 +466,8 @@ def inventoryselect(userid):
 		if not records:
 			status = "user does not have an inventory"
 			statuscode = 404#Not Found
-	elif isedible is None or isopened is None or sortby is None:
-		status = "require isedible, isopened and sortby flags"
+	elif isedible is None or isopened is None:
+		status = "require isedible, isopened flags"
 		statuscode = 412#Precondition Failed
 	else:
 		status = "invalid user"
