@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Container } from 'semantic-ui-react'
 
 import Login from './login';
 import Inventory from './inventory';
@@ -40,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Container textAlign="left" className="App" fluid>
+      <div className="App">
         <BrowserRouter>
           <div>
             <div className="header nav">
@@ -61,8 +60,7 @@ class App extends React.Component {
             </div>
           </div>
         </BrowserRouter>
-      </Container>
-
+      </div>
     )
   }
 }

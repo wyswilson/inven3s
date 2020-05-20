@@ -140,7 +140,7 @@ class Insights extends React.Component {
             <Header as='h1'>
               {this.state.username}'s inventory
             </Header>
-            <Button color="black" onClick={this.handlelogout.bind(this)}>logout</Button>
+            <Button color="grey" onClick={this.handlelogout.bind(this)}>logout</Button>
           </Grid.Column>
           {this.generateinsights()}
         </Grid>

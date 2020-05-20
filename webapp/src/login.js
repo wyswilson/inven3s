@@ -88,7 +88,7 @@ class Login extends React.Component {
            </Grid.Column>
            <Grid.Row columns={2}>
             <Grid.Column>
-              <Button color="black" className="fullwidth" onClick={this.authenticate.bind(this)}>login</Button>
+              <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>login</Button>
             </Grid.Column>
             <Grid.Column>
               {this.updatemessage()}

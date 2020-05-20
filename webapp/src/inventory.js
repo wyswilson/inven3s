@@ -2,17 +2,17 @@ import React from "react";
 import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
-import { Icon, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
+import { Icon, Confirm, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
-import queryString from 'query-string'
+//import queryString from 'query-string'
 
 class Inventory extends React.Component {
 
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
-    const querystr = queryString.parse(this.props.location.search);
+    //const querystr = queryString.parse(this.props.location.search);
     this.state = {
       apihost: 'http://13.229.67.229:8989',
       token: getToken(),
@@ -20,6 +20,7 @@ class Inventory extends React.Component {
       actionedmsg: '',
       actioned: false,
       modalopen: false,
+      confirmopen: false,
       inventoryfetched: false,
       inventorymsg: '',
       queryisedible: redirectstate ? redirectstate.queryisedible : '2',
@@ -365,6 +366,12 @@ class Inventory extends React.Component {
     event.target.src = this.state.defaultimage;
   }
 
+  hihi = () => console.log('confirmed')
+
+  closeconfirm = () => this.setState({ confirmopen: false })
+
+  openconfirm = () => this.setState({ confirmopen: true })
+
   redirectoproduct(gtin, productname, productimage, brandname){
     console.log('redirect to product/gtin:' + gtin);
     this.props.history.push({
@@ -403,7 +410,7 @@ class Inventory extends React.Component {
           <Card.Content extra textAlign="center">
             <Modal
               trigger={
-                <Button icon onClick={this.openmodal} labelPosition='left'>
+                <Button icon onClick={this.openmodal} labelPosition='left' color="grey">
                   <Icon name='plus' />Add new items
                 </Button>
               }
@@ -465,7 +472,7 @@ class Inventory extends React.Component {
               <Modal.Actions>
                 <Grid columns={2} container doubling stackable>
                   <Grid.Column>
-                    <Button loading={this.state.loading || false} className="fullwidth" color='black' onClick={this.addinventory.bind(this,this.state.gtin)}>
+                    <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.addinventory.bind(this,this.state.gtin)}>
                       Add
                     </Button>
                   </Grid.Column>
@@ -511,10 +518,15 @@ class Inventory extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname)} />
-                    <Button icon="minus" onClick={this.consumeinventory.bind(this,item.gtin)}/>
+                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname)} />
+                    <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
+                    <Confirm
+                      open={this.state.confirmopen}
+                      onCancel={this.closeconfirm}
+                      onConfirm={this.hihi}
+                    />
                     <Modal
-                      trigger={<Button icon="plus" />}
+                      trigger={<Button icon="plus" color="grey"/>}
                       centered={false}
                       size="fullscreen"
                       dimmer="blurring"
@@ -558,7 +570,7 @@ class Inventory extends React.Component {
                       <Modal.Actions>
                         <Grid columns={2} container doubling stackable>
                           <Grid.Column>
-                            <Button loading={this.state.loading || false} className="fullwidth" color="black" onClick={this.addinventory.bind(this,item.gtin)}>
+                            <Button loading={this.state.loading || false} className="fullwidth" color="grey" onClick={this.addinventory.bind(this,item.gtin)}>
                               Add
                             </Button>
                           </Grid.Column>
