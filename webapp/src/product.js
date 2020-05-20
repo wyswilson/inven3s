@@ -241,13 +241,15 @@ class Product extends React.Component {
                   onAddItem={this.addnewproduct.bind(this)}
                   onChange={this.setproductmetadata.bind(this)}
                 />
-                <Input placeholder='GTIN' className="halfwidth" disabled value={this.state.gtin}/>
               </Grid.Column>
             </Grid>
           </Card.Description>
           <Divider/>
           <Card.Meta>
             <Grid columns={1} doubling stackable>
+              <Grid.Column>
+                <Input placeholder='GTIN' className="halfwidth" disabled value={this.state.gtin}/>
+              </Grid.Column>
               <Grid.Column>
                 <Input placeholder='Product name' value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
               </Grid.Column>

@@ -22,6 +22,8 @@ flask_cors.CORS(app,
 
 @app.route('/user/validate/<token>', methods=['GET'])
 def uservalidate(token):
+	print('hit [uservalidate] with [%s]' % (token))
+
 	valid, userid, username = func.validatetoken(token)
 	if valid:
 		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Name': username})
@@ -30,6 +32,8 @@ def uservalidate(token):
 
 @app.route('/user/login', methods=['POST'])
 def userlogin():
+	print('hit [userlogin]')
+
 	auth = flask.request.authorization
 	email = auth.username
 	password = auth.password
@@ -47,6 +51,8 @@ def userlogin():
 
 @app.route('/user/register', methods=['POST'])
 def usersadd():
+	print('hit [usersadd]')
+
 	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
 	email 		= data["email"]
 	password 	= data["password"]
@@ -64,6 +70,8 @@ def usersadd():
 @app.route("/")
 @func.requiretoken
 def main():
+	print('hit [main]')
+
 	status = "invalid endpoint"
 	statuscode = 501#Not Implemented
 
@@ -72,6 +80,8 @@ def main():
 @app.route('/product/<gtin>', methods=['DELETE'])
 @func.requiretoken
 def productdelete(userid,gtin):
+	print('hit [productdelete] with [%s,%s]' % (userid,gtin))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -94,6 +104,8 @@ def productdelete(userid,gtin):
 @app.route('/product', methods=['POST'])
 @func.requiretoken
 def productupsert(userid):
+	print('hit [productupsert] with [%s]' % (userid))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -165,6 +177,8 @@ def productupsert(userid):
 @app.route('/product/discover/<gtin>', methods=['GET'])
 @func.requiretoken
 def productdiscover(userid,gtin):
+	print('hit [productdiscover] with [%s,%s]' % (userid,gtin))
+
 	statuscode = 200
 	status = ""
 	records = []
@@ -202,6 +216,8 @@ def productdiscover(userid,gtin):
 @app.route('/product/<gtin>', methods=['GET'])
 @func.requiretoken
 def productselect(userid,gtin):
+	print('hit [productselect] with [%s,%s]' % (userid,gtin))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -230,6 +246,8 @@ def productselect(userid,gtin):
 @app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):
+	print('hit [productselectall] with [%s]' % (userid))
+
 	status = "products returned"
 	statuscode = 200
 
@@ -242,6 +260,8 @@ def productselectall(userid):
 @app.route('/brand/<brandid>', methods=['DELETE'])
 @func.requiretoken
 def branddelete(userid,brandid):
+	print('hit [branddelete] with [%s,%s]' % (userid,brandid))
+
 	status = "brand deleted"
 	statuscode = 200
 	records = []
@@ -264,6 +284,8 @@ def branddelete(userid,brandid):
 @app.route('/brand', methods=['POST'])
 @func.requiretoken
 def brandupsert(userid):
+	print('hit [brandupsert] with [%s]' % (userid))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -310,6 +332,8 @@ def brandupsert(userid):
 @app.route('/brand/<brandid>', methods=['GET'])
 @func.requiretoken
 def brandselect(userid,brandid):
+	print('hit [brandselect] with [%s,%s]' % (userid,brandid))
+
 	status = ""
 	statuscode = 200
 
@@ -330,6 +354,8 @@ def brandselect(userid,brandid):
 @app.route('/brand', methods=['GET'])
 @func.requiretoken
 def brandselectall(userid):
+	print('hit [brandselectall] with [%s]' % (userid))
+
 	status = "brands returned"
 	statuscode = 200
 
@@ -340,6 +366,8 @@ def brandselectall(userid):
 @app.route('/inventory', methods=['POST'])
 @func.requiretoken
 def inventoryupsert(userid):
+	print('hit [inventoryupsert] with [%s]' % (userid))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -416,6 +444,8 @@ def inventoryupsert(userid):
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
 def inventoryselect(userid):
+	print('hit [inventoryselect] with [%s]' % (userid))
+
 	status = ""
 	statuscode = 200
 	records = []
@@ -451,6 +481,7 @@ def inventoryselect(userid):
 @app.route('/inventory/insights', methods=['GET'])
 @func.requiretoken
 def inventoryinsights(userid):
+	print('hit [inventoryinsights] with [%s]' % (userid))
 	statuscode = 200
 	
 	data1 = func.fetchinventorybyuser(userid,2)
@@ -477,6 +508,8 @@ def inventoryinsights(userid):
 @app.route('/retailer/<retailer>', methods=['GET'])
 @func.requiretoken
 def retailerselect(userid,retailer):
+	print('hit [retailerselect] with [%s,%s]' % (userid,retailer))
+
 	status = ""
 	statuscode = 200
 

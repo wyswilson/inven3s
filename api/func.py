@@ -36,7 +36,11 @@ useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
-	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
+	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
+    pool_name='sqlpool',
+    pool_size = 10, pool_reset_session = True
+   	)
+    
 cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
@@ -609,15 +613,12 @@ def fetchinventoryexpireditems(uid):
 		name = record[1]
 		goodness = record[6]
 		itemstotal = record[4]
-		print(goodness + ':' + name + ':' + str(record[4]))
 		if goodness == 'EXPIRING':
 			expiringrecords.append(record)
 			expiringcnt += float(itemstotal)
 		elif goodness == 'EXPIRED':
 			expiredrecords.append(record)
 			expiredcnt += float(itemstotal)
-		print(expiringcnt)
-		print(expiredcnt)
 
 	data = {}
 	data['expiring'] = {'cnt': math.ceil(expiringcnt), 'records': expiringrecords}
