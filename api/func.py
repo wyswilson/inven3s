@@ -38,7 +38,7 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
     pool_name='sqlpool',
-    pool_size = 10, pool_reset_session = True
+    pool_size = 5, pool_reset_session = True
    	)
 
 cursor = db.cursor()
@@ -309,8 +309,8 @@ def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	else:
 		return ""
 
-def addnewretailer(retailername,retailercity):
-	if retailercity == "":
+def addnewretailer(retailername,retailercity=None):
+	if retailercity == "" or retailercity is None:
 		retailercity = defaultretailercity
 
 	if retailername != "":
@@ -509,19 +509,17 @@ def findallproducts(isedible):
 	return records
 
 def findproductbykeyword(gtin,isedible):
+	gtinfuzzy = "%" + gtin + "%"
 	query1 = """
 		SELECT
 			p.gtin,p.productname,p.productimage,
 			b.brandname,p.isperishable,p.isedible,
-			count(*),
-			MATCH (p.productname,p.gtin)
-	    		AGAINST (%s IN BOOLEAN MODE) as score
+			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE 
-			MATCH (p.productname,p.gtin)
-	    		AGAINST (%s IN BOOLEAN MODE)
+		WHERE p.productname LIKE %s OR
+			p.gtin LIKE %s
 	"""
 	if validateisedible(isedible) == "2":
 		query1 += " AND p.isedible != %s"
@@ -529,10 +527,9 @@ def findproductbykeyword(gtin,isedible):
 		query1 += " AND p.isedible = %s"
 	query1 += """
 		GROUP BY 1,2,3,4,5,6
-		ORDER BY score DESC
 		LIMIT 5
 	"""
-	cursor.execute(query1,(gtin+'*',gtin+'*',validateisedible(isedible)))
+	cursor.execute(query1,(gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
 	records = cursor.fetchall()
 
 	return records
@@ -765,34 +762,32 @@ def findallbrands():
 
 
 def findretailerbykeyword(retailer):
+	retailerfuzzy = "%" + retailer + "%"
 	query1 = """
 		SELECT
-			retailerid, retailername,
-			MATCH(retailername) AGAINST (%s IN BOOLEAN MODE) as score
+			retailerid, retailername
 		FROM retailers
-		WHERE MATCH(retailername) AGAINST (%s IN BOOLEAN MODE)
-		ORDER BY score DESC
+		WHERE retailername LIKE %s
 	"""
-	cursor.execute(query1,(retailer+'*',retailer+'*'))
+	cursor.execute(query1,(retailerfuzzy,))
 	records = cursor.fetchall()
 
 	return records
 
 def findbrandbykeyword(brandid):
+	brandfuzzy = "%" + brandid + "%"
 	query1 = """
 		SELECT
 			b.brandid, b.brandname, b.brandimage,
 			b.brandurl, b.brandowner,
-			count(distinct(p.gtin)),
-			MATCH(b.brandname) AGAINST (%s IN BOOLEAN MODE) as score
+			count(distinct(p.gtin))
 		FROM brands AS b
 		LEFT JOIN products as p
 		ON b.brandid = p.brandid
-		WHERE MATCH(b.brandname) AGAINST (%s IN BOOLEAN MODE)
+		WHERE b.brandname LIKE %s
 		GROUP BY 1,2,3,4,5
-		ORDER BY score DESC
 	"""
-	cursor.execute(query1,(brandid+'*',brandid+'*'))
+	cursor.execute(query1,(brandfuzzy,))
 	records = cursor.fetchall()
 
 	return records

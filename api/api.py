@@ -522,6 +522,27 @@ def retailerselect(userid,retailer):
 	
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
+@app.route('/retailer', methods=['POST'])
+@func.requiretoken
+def retaileradd(userid):
+	print('hit [retaileradd] with [%s]' % (userid))
+
+	status = ""
+	statuscode = 200
+
+	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
+	newretailer = data["retailername"]
+
+	retailerid, retailername = func.resolveretailer(newretailer)
+	if retailerid == '':
+		retailerid = func.addnewretailer(retailername)
+		records= func.findretailerbykeyword(retailername)
+		status = "new retailer added"
+	else:
+		status = "retailer already exists"
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
+
 if __name__ == "__main__":
 	app.run(debug=True,host='0.0.0.0',port=8989)
     #from waitress import serve

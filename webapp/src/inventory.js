@@ -14,7 +14,7 @@ class Inventory extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      apihost: 'http://127.0.0.1:8989',
+      apihost: 'http://13.229.67.229:8989',
       token: getToken(),
       loading: false,
       actionedmsg: '',
@@ -44,6 +44,8 @@ class Inventory extends React.Component {
   }
 
   fetchinventory(){
+    console.log('fetchinventory');
+   
     axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&sortby=productname',
       {
         headers: {
@@ -70,26 +72,28 @@ class Inventory extends React.Component {
         else{
           message += ' items';
         }
-
-        this.setState({ inventory: response.data[0]['results'] });
-        this.setState({ inventoryfetched: true });
+        console.log('fetchinventory [' + response.data[0]['message'] + ']');
         this.setState({ inventorymsg: message });
+        this.setState({ inventoryfetched: true });
+        
+        this.setState({ inventory: response.data[0]['results'] });
       }
     })
     .catch(error => {
       this.setState({ inventoryfetched: false });
       if(error.response){
         if(error.response.status === 404){
-          this.setState({ inventoryfetched: true });
+          console.log('fetchinventory [' + error.response.data[0]['message'] + ']');        
           this.setState({ inventorymsg: 'no items matching the criteria' })
+          this.setState({ inventoryfetched: true });
         }
         else{
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('fetchinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
           this.setState({ inventorymsg: error.response.data[0]['message'] })
         }
       }
       else{
-        console.log('server unreachable');
+        console.log('fetchinventory [server unreachable]');
         this.setState({ inventorymsg: 'server unreachable' })
       }
     });
@@ -108,6 +112,8 @@ class Inventory extends React.Component {
   }
 
   searchproducts(gtinorproduct){
+    console.log('searchproducts [' + gtinorproduct + ']');
+
     axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
         {
           headers: {
@@ -118,15 +124,16 @@ class Inventory extends React.Component {
       )
       .then(response => { 
         if(response.status === 200){
+          console.log('searchproducts [' + response.data[0]['message'] + ']');
           this.updateproductsuggests(response.data[0]['results']);
         }
       })
       .catch(error => {
         if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         }
         else{
-          console.log('server unreachable');
+          console.log('searchproducts [server unreachable]');
         }
       });
   }
@@ -140,6 +147,8 @@ class Inventory extends React.Component {
   }
 
   searchretailers(retailer){
+    console.log('searchretailers [' + retailer + ']');
+   
     axios.get(this.state.apihost + '/retailer/' + retailer,
         {
           headers: {
@@ -150,15 +159,17 @@ class Inventory extends React.Component {
       )
       .then(response => { 
         if(response.status === 200){
+          console.log('searchretailers [' + response.data[0]['message'] + ']');
+          
           this.updateretailersuggests(response.data[0]['results']);
         }
       })
       .catch(error => {
         if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('searchretailers [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         }
         else{
-          console.log('server unreachable');
+          console.log('searchretailers [server unreachable]');
         }
       });
   }
@@ -166,7 +177,7 @@ class Inventory extends React.Component {
   setinventorymetadata(event, data){
     const field = data.name;
     const value = data.value;
-    console.log('setting inventory metadata [' + field + '][' + value + ']');
+    console.log('setinventorymetadata [' + field + ':' + value + ']');
 
     if(field === 'productname'){
       const array = this.state.productsuggests;
@@ -181,8 +192,7 @@ class Inventory extends React.Component {
         this.setState({ productimage: selectedimg });
       }
       else{
-        console.log('add new product [' + value + '] => handled by addnewproduct')
-
+        //NEW PRODCU
       }
     }
     else if(field === 'retailername'){
@@ -194,13 +204,13 @@ class Inventory extends React.Component {
         this.setState({ retailername: value });
       }
       else{
-        console.log('add new retailer [' + value + '] => handled by addnewretailer')
+        //NEw RETAILER
       }
     }
     else if(field === 'quantity'){
       this.setState({ quantity: value });
     }
-    else if(field === 'expirydate'){
+    else if(field === 'dateexpiry'){
       this.setState({ dateexpiry: value });
     }
   }
@@ -209,6 +219,8 @@ class Inventory extends React.Component {
     this.setState({ actionedmsg: '' });
     this.setState({ actioned: false });
     this.setState({ loading: true });
+
+    console.log('addinventory [' + gtin + ']');
 
     axios.post(this.state.apihost + '/inventory', 
       {
@@ -230,9 +242,11 @@ class Inventory extends React.Component {
     .then(response => {
       this.setState({ loading: false });
       if(response.status === 200){
-        this.setState({ inventory: response.data[0]['results'] });
+        console.log('addinventory [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });
         this.setState({ actioned: true });
+
+        this.setState({ inventory: response.data[0]['results'] });
         this.setState({ gtin: '' });
         this.setState({ productname: '' });
         this.setState({ productimage: 'https://react.semantic-ui.com/images/wireframe/image.png' });
@@ -245,11 +259,11 @@ class Inventory extends React.Component {
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+        console.log('addinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         this.setState({ actionedmsg: error.response.data[0]['message'] });        
       }
       else{
-        console.log('server unreachable');
+        console.log('addinventory [server unreachable]');
         this.setState({ actionedmsg: 'server unreachable' });
       }
     });
@@ -278,19 +292,54 @@ class Inventory extends React.Component {
     this.setState({ retailersuggests: updatedsuggest });
   }
 
-  addnewproduct(event,data){
-    console.log('onAddItem for product [' + data.value + ']');
-  }
-
   addnewretailer(event,data){
-    console.log('onAddItem for retailer [' + data.value + ']');
-  }
+    this.setState({ actionedmsg: '' });
+    this.setState({ actioned: false });
+    this.setState({ loading: true });
 
-  addnewbrand(event,data){
-    console.log('onAddItem for brand [' + data.value + ']');
+    const newretailer = data.value;
+    console.log('addnewretailer [' + newretailer + ']');
+
+    axios.post(this.state.apihost + '/retailer', 
+      {
+        retailername: newretailer
+      }, 
+      {
+        headers: {
+          'crossDomain': true,
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      this.setState({ loading: false });
+      if(response.status === 200){
+        console.log('addnewretailer [' + response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: response.data[0]['message'] });
+        this.setState({ actioned: true });
+
+        this.setState({ retailerid: response.data[0]['results'][0]['retailerid'] });
+        this.setState({ retailername: response.data[0]['results'][0]['retailername']  });
+        this.updateretailersuggests(response.data[0]['results']);
+      }
+    })
+    .catch(error => {
+      this.setState({ loading: false });
+      if(error.response){
+        console.log('addnewretailer [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: error.response.data[0]['message'] });        
+      }
+      else{
+        console.log('addnewretailer [server unreachable]');
+        this.setState({ actionedmsg: 'server unreachable' });
+      }
+    });        
   }
 
   consumeinventory(gtin){
+    console.log('consumeinventory [' + gtin + ']');
+
     axios.post(this.state.apihost + '/inventory', 
       {
         gtin:gtin,
@@ -310,18 +359,16 @@ class Inventory extends React.Component {
     )
     .then(response => { 
       if(response.status === 200){
-        console.log(response.data[0]['message']);
+        console.log('consumeinventory [' + response.data[0]['message'] + ']');
         this.setState({ inventory: response.data[0]['results'] });
       }
     })
     .catch(error => {
       if(error.response){
-        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
-        //this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        console.log('consumeinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
       }
       else{
-        console.log('server unreachable');
-        //this.setState({ actionedmsg: 'server unreachable' });
+        console.log('consumeinventory [server unreachable]');
       }
     });    
   }
@@ -341,7 +388,6 @@ class Inventory extends React.Component {
   openconfirm = () => this.setState({ confirmopen: true })
 
   redirectoproduct(gtin, productname, productimage, brandname, isedible){
-    console.log('redirect to product/gtin:' + gtin + ':isedible[' + isedible + ']');
     this.props.history.push({
       pathname: '/product',
       //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
@@ -412,10 +458,12 @@ class Inventory extends React.Component {
                         placeholder="Woolworths Docklands"
                         search
                         selection
+                        allowAdditions
                         noResultsMessage="No retailer found"
                         value={this.state.retailername}
                         options={this.state.retailersuggests}
                         onSearchChange={this.lookupretailer.bind(this)}
+                        onAddItem={this.addnewretailer.bind(this)}
                         onChange={this.setinventorymetadata.bind(this)}
                       />
                     </Grid.Column>
@@ -429,7 +477,7 @@ class Inventory extends React.Component {
                       </Grid.Column>
                       <Grid.Column>
                         <label className="fullwidth">Expiry</label>                    
-                        <DateInput name="expirydate"
+                        <DateInput name="dateexpiry"
                           placeholder="2020-07-01"
                           dateFormat="YYYY-MM-DD"
                           value={this.state.dateexpiry}
@@ -513,9 +561,12 @@ class Inventory extends React.Component {
                                 placeholder="Woolworths Docklands"
                                 search
                                 selection
+                                allowAdditions
                                 value={this.state.retailername}
+                                noResultsMessage="No retailer found"
                                 options={this.state.retailersuggests}
                                 onSearchChange={this.lookupretailer.bind(this)}
+                                onAddItem={this.addnewretailer.bind(this)}
                                 onChange={this.setinventorymetadata.bind(this)}
                               />
                             </Grid.Column>

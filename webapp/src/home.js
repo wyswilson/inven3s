@@ -8,7 +8,7 @@ class Insights extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apihost: 'http://127.0.0.1:8989',
+      apihost: 'http://13.229.67.229:8989',
       username: getUser(),
       token: getToken(),
       insightsloaded: false,
@@ -29,6 +29,8 @@ class Insights extends React.Component {
   }
 
   getinventorycount(){
+    console.log('getinventorycount');
+
     axios.get(this.state.apihost + '/inventory/insights',
       {
         headers: {
@@ -39,6 +41,8 @@ class Insights extends React.Component {
     )
     .then(response => { 
       if(response.status === 200){
+        console.log('getinventorycount [' + response.data[0]['message'] + ']');
+
         const ediblenewcnt = response.data[0]['counts']['ediblenew'];
         const edibleopenedcnt = response.data[0]['counts']['edibleopened'];
         const inediblenewcnt = response.data[0]['counts']['inediblenew'];
@@ -58,10 +62,10 @@ class Insights extends React.Component {
     })
     .catch(error => {
       if(error.response){
-        console.log("("+ error.response.status + ") " + error.response.data[0]['message']);
+        console.log("getinventorycount ["+ error.response.status + ":" + error.response.data[0]['message'] + ']');
       }
       else{
-        console.log('fatal: server unreachable');
+        console.log('getinventorycount [server unreachable]');
       }
     });
   }

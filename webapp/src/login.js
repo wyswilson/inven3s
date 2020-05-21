@@ -9,7 +9,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      apihost: 'http://127.0.0.1:8989',
+      apihost: 'http://13.229.67.229:8989',
       email: '',
       password: '',
       message: '',
@@ -28,15 +28,16 @@ class Login extends React.Component {
   }
 
   authenticate(event){
-    const { email, password } = this.state;
     this.setState({ message: 'authenticating' });
     this.setState({ tried: true });
-    console.log('email:' + email)
+
+    console.log('authenticate [' + this.state.email + ']');
+
     axios.post(this.state.apihost + '/user/login', {},
       {
        auth: {
-        username: email,
-        password: password
+        username: this.state.email,
+        password: this.state.password
       }
     })
     .then(response => { 

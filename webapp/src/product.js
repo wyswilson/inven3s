@@ -12,7 +12,7 @@ class Product extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      apihost: 'http://127.0.0.1:8989',
+      apihost: 'http://13.229.67.229:8989',
       token: getToken(),
       loading: false,
       actionedmsg: '',
@@ -37,6 +37,8 @@ class Product extends React.Component {
     this.setState({ actioned: false });
     this.setState({ loading: true });
 
+    console.log('upsertproduct');
+
     axios.post(this.state.apihost + '/product', 
       {
         gtin:this.state.gtin,
@@ -58,19 +60,21 @@ class Product extends React.Component {
     .then(response => {
       this.setState({ loading: false });
       if(response.status === 200){
-        this.setState({ inventory: response.data[0]['results'] });
+        console.log('upsertproduct [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });
         this.setState({ actioned: true });
+
+        this.setState({ inventory: response.data[0]['results'] });
       }
     })
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+        console.log('upsertproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         this.setState({ actionedmsg: error.response.data[0]['message'] });        
       }
       else{
-        console.log('server unreachable');
+        console.log('upsertproduct [server unreachable]');
         this.setState({ actionedmsg: 'server unreachable' });
       }
     });
@@ -85,6 +89,8 @@ class Product extends React.Component {
   }
 
   searchproducts(gtinorproduct){
+    console.log('searchproducts [' + gtinorproduct + ']');
+
     axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
         {
           headers: {
@@ -95,15 +101,17 @@ class Product extends React.Component {
       )
       .then(response => { 
         if(response.status === 200){
+          console.log('searchproducts [' + response.data[0]['message'] + ']');
+          
           this.updateproductsuggests(response.data[0]['results']);
         }
       })
       .catch(error => {
         if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         }
         else{
-          console.log('server unreachable');
+          console.log('searchproducts [server unreachable]');
         }
       });
   }
@@ -115,7 +123,8 @@ class Product extends React.Component {
           text: item.productname,
           value: item.productname,
           img: item.productimage,
-          brand: item.brandname
+          brand: item.brandname,
+          isedible: item.isedible
         }
       ));
     console.log(updatedsuggest);
@@ -125,7 +134,7 @@ class Product extends React.Component {
   setproductmetadata(event, data){
     const field = data.name;
     const value = data.value;
-    console.log(field + ':' + value);
+    console.log('setproductmetadata [' + field + ':' + value + ']');
 
     if(field === 'productname'){
       const array = this.state.productsuggests;
@@ -135,20 +144,19 @@ class Product extends React.Component {
         const selectedgtin = selectedarr['key'];
         const selectedimg = selectedarr['img'];
         const selectedbrand = selectedarr['brand'];
+        const selectedisedible = selectedarr['isedible'];
 
         this.setState({ productdropdown: value });
         this.setState({ gtin: selectedgtin });
         this.setState({ productname: value });
         this.setState({ productimage: selectedimg });
         this.setState({ brandname: selectedbrand });
-
-        console.log(selectedgtin + ':' + value + ':' + selectedimg + ':' + selectedbrand);
+        this.setState({ isedible: selectedisedible });
         
         this.searchbrands(selectedbrand);
       }
       else{
-        console.log('new product:' + value + ' => handled by addnewproduct')
-
+        //NEW PRODUCT
       }
     }
     else if(field === 'brandname'){
@@ -159,25 +167,25 @@ class Product extends React.Component {
 
         this.setState({ brandid: brandid });
         this.setState({ brandname: value });
-
-        console.log(brandid + ':' + value);
       }
       else{
-        console.log('new product:' + value + ' => handled by addnewproduct')
-
+        //NEW BRAND
       }
     }
   }
 
   addnewbrand(event,data){
-    const brandname = data.value;
-    console.log('onAddItem for brand:' + brandname);
-    this.setState({ brandname: brandname });
+    this.setState({ actionedmsg: '' });
+    this.setState({ actioned: false });
+    this.setState({ loading: true });
+
+    const newbrand = data.value;
+    console.log('addnewbrand [' + newbrand + ']');
 
     axios.post(this.state.apihost + '/brand', 
       {
         brandid:'',
-        brandname:brandname,
+        brandname:newbrand,
         brandimage:'',
         brandurl:'',
         brandowner:''
@@ -193,20 +201,22 @@ class Product extends React.Component {
     .then(response => {
       this.setState({ loading: false });
       if(response.status === 200){
+        console.log('addnewbrand [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });        
         this.setState({ actioned: true });
 
         this.setState({ brandid: response.data[0]['results'][0]['brandid'] });
+        this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
       }
     })
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+        console.log('addnewbrand [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         this.setState({ actionedmsg: error.response.data[0]['message'] });        
       }
       else{
-        console.log('server unreachable');
+        console.log('addnewbrand [server unreachable]');
         this.setState({ actionedmsg: 'server unreachable' });        
       }
     });    
@@ -218,8 +228,7 @@ class Product extends React.Component {
     this.setState({ loading: true });
 
     const gtincandidate = data.value;
-    console.log('onAddItem for product:' + gtincandidate);
-    this.setState({ gtin: gtincandidate });
+    console.log('addnewproduct [' + gtincandidate + ']');
     
     axios.get(this.state.apihost + '/product/discover/' + gtincandidate,
         {
@@ -232,6 +241,7 @@ class Product extends React.Component {
       .then(response => { 
         this.setState({ loading: false });
         if(response.status === 200){
+          console.log('addnewproduct [' + response.data[0]['message'] + ']');
           this.setState({ actionedmsg: response.data[0]['message'] });        
           this.setState({ actioned: true });
 
@@ -246,11 +256,11 @@ class Product extends React.Component {
       .catch(error => {
         this.setState({ loading: false });
         if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('addnewproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
           this.setState({ actionedmsg: error.response.data[0]['message'] });        
         }
         else{
-          console.log('server unreachable');
+          console.log('addnewproduct [server unreachable]');
           this.setState({ actionedmsg: 'server unreachable' });        
         }
       });
@@ -276,6 +286,8 @@ class Product extends React.Component {
   }
 
   searchbrands(brand){
+    console.log('searchbrands [' + brand + ']');
+
     axios.get(this.state.apihost + '/brand/' + brand,
         {
           headers: {
@@ -286,15 +298,16 @@ class Product extends React.Component {
       )
       .then(response => { 
         if(response.status === 200){
+          console.log('searchbrands [' + response.data[0]['message'] + ']');
           this.updatebrandsuggests(response.data[0]['results']);
         }
       })
       .catch(error => {
         if(error.response){
-          console.log('(' + error.response.status + ') ' + error.response.data[0]['message']);
+          console.log('searchbrands [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         }
         else{
-          console.log('server unreachable');
+          console.log('searchbrands [server unreachable]');
         }
       });
   }
@@ -304,7 +317,6 @@ class Product extends React.Component {
   }
 
   updateedibletoggle(event,data){
-    console.log(data.checked);
     if(data.checked){
       this.setState({ isedible: 1 });
     }
