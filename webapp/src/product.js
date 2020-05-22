@@ -1,5 +1,4 @@
 import React from "react";
-import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
@@ -369,7 +368,7 @@ class Product extends React.Component {
                   onError={this.setdefaultimage.bind(this)}
                 />
                 <Dropdown className="halfwidth" name="productname" 
-                    placeholder="Oreo Cookie Original 133G or 9300650450363"
+                    placeholder="Oreo Cookie Original 133G"
                     search
                     selection
                     allowAdditions

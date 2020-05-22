@@ -452,12 +452,12 @@ def inventoryselect(userid):
 
 	isedible = flask.request.args.get("isedible")
 	isopened = flask.request.args.get("isopened")
-	sortby 	 = flask.request.args.get("sortby")#NOT IMPLEMENTED
+	expirystatus = flask.request.args.get("expirystatus")
 
 	inventorycnt = 0
 	if func.validateuser(userid) and isedible and isopened:
 
-		data = func.fetchinventorybyuser(userid,isedible,isopened)
+		data = func.fetchinventorybyuser(userid,isedible,isopened,expirystatus)
 		inventorycnt = data['all']['cnt']
 		records = data['all']['records']
 
@@ -484,7 +484,7 @@ def inventoryinsights(userid):
 	print('hit [inventoryinsights] with [%s]' % (userid))
 	statuscode = 200
 	
-	data1 = func.fetchinventorybyuser(userid,2)
+	data1 = func.fetchinventorybyuser(userid,2,2)
 	data2 = func.fetchinventoryexpireditems(userid)
 
 	messages = {}

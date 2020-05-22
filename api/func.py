@@ -624,7 +624,7 @@ def fetchinventoryexpireditems(uid):
 	data['expired'] = {'cnt': math.ceil(expiredcnt), 'records': expiredrecords}		
 	return data
 
-def fetchinventorybyuser(uid,isedible,isopened=None):
+def fetchinventorybyuser(uid,isedible,isopened,expirystatus=None):
 	query1 = """
 		SELECT 
 			gtin,
@@ -714,13 +714,11 @@ def fetchinventorybyuser(uid,isedible,isopened=None):
 	data = {}
 	data['edible'] = edible
 	data['inedible'] = inedible
-	if isopened:
-		if validateisopened(isopened) == 0:
-			data['all'] = {'cnt': int(ediblenewcnt) + int(inediblenewcnt), 'records': ediblenewrecords + inediblenewrecords }
-		elif validateisopened(isopened) == 1:
-			data['all'] = {'cnt': int(edibleopenedcnt) + int(inedibleopenedcnt), 'records': edibleopenedrecords + inedibleopenedrecords }
-		else:
-			data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
+
+	if validateisopened(isopened) == 0:
+		data['all'] = {'cnt': int(ediblenewcnt) + int(inediblenewcnt), 'records': ediblenewrecords + inediblenewrecords }
+	elif validateisopened(isopened) == 1:
+		data['all'] = {'cnt': int(edibleopenedcnt) + int(inedibleopenedcnt), 'records': edibleopenedrecords + inedibleopenedrecords }
 	else:
 		data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
 

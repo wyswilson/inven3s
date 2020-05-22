@@ -1,8 +1,7 @@
 import React from "react";
-import './index.css';
-import { Container, Button, Card, Message, Grid } from 'semantic-ui-react'
 import axios from 'axios';
 import { setUserSession } from './utils/common';
+import { Container, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 
 class Login extends React.Component {

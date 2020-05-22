@@ -1,5 +1,4 @@
 import React from "react";
-import "./index.css";
 import axios from 'axios';
 import { getToken } from './utils/common';
 import { Icon, Confirm, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
@@ -27,6 +26,7 @@ class Inventory extends React.Component {
       //queryisedible: querystr ? querystr.isedible : '2',
       queryisopened: redirectstate ? redirectstate.queryisopened : '2',
       //queryisopened: querystr ? querystr.isopened : '2',
+      queryexpirystatus: redirectstate ? redirectstate.queryexpirystatus : 'all',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -46,7 +46,7 @@ class Inventory extends React.Component {
   fetchinventory(){
     console.log('fetchinventory');
    
-    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&sortby=productname',
+    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus,
       {
         headers: {
           "content-type": "application/json",
@@ -521,7 +521,7 @@ class Inventory extends React.Component {
               )
     }
     else{
-      return _.map(this.state.inventory, (item) => (
+      return this.state.inventory.map( (item) => (
               <Card raised key={item.gtin}>
                 <Card.Content>
                     <Image rounded
@@ -607,7 +607,7 @@ class Inventory extends React.Component {
                   </div>
                 </Card.Content>
               </Card>
-            ))
+            ));
     }
   }
 

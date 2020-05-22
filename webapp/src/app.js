@@ -22,6 +22,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Inven3s';
+
     if (!this.state.token) {
       return;
     }

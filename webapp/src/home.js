@@ -1,8 +1,7 @@
 import React from "react";
-import "./index.css";
 import axios from 'axios';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Message, Header, Container, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Card, Message, Container, Grid, Button, Statistic } from 'semantic-ui-react'
 
 class Insights extends React.Component {
   constructor(props) {
@@ -70,11 +69,11 @@ class Insights extends React.Component {
     });
   }
 
-  directtoinventory(isedible,isopened){
+  directtoinventory(isedible,isopened,expirystatus){
     this.props.history.push({
       pathname: '/inventory',
       //search: '?isedible=' + isedible + '&isopened=' + isopened,
-      state: { queryisedible: isedible, queryisopened: isopened }
+      state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus }
     })
   }
 
@@ -83,47 +82,53 @@ class Insights extends React.Component {
   }
 
   generateinsights(){
+    const stats = [
+      {
+        'number': this.state.edibleopenedcnt,
+        'label': '# of opened food items',
+        'isedible':1,'isopened':1,'expirystatus':'all'
+      },
+      {
+        'number': this.state.ediblenewcnt,
+        'label': '# of new food items',
+        'isedible':1,'isopened':0,'expirystatus':'all'
+      },
+      {
+        'number': this.state.expiringcnt,
+        'label': '# of expiring food items',
+        'isedible':2,'isopened':2,'expirystatus':'expiring'
+      },
+      {
+        'number': this.state.expiredcnt,
+        'label': '# of expired food items',
+        'isedible':2,'isopened':2,'expirystatus':'expired'
+      },
+      {
+        'number': this.state.inedibleopenedcnt,
+        'label': '# of opened non-food items',
+        'isedible':0,'isopened':1,'expirystatus':'all'
+      },
+      {
+        'number': this.state.inediblenewcnt,
+        'label': '# of new non-food items',
+        'isedible':0,'isopened':0,'expirystatus':'all'
+      }
+    ];
+
     if(this.state.insightsloaded){
-      return (
-            <Grid.Row columns={2}>
+      return stats.map( (stat) => (
               <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value onClick={this.directtoinventory.bind(this,1,1)}>{this.state.edibleopenedcnt}</Statistic.Value>
-                  <Statistic.Label># of opened food items</Statistic.Label>
-                </Statistic>
+                <Card raised key="1" fluid onClick={this.directtoinventory.bind(this,stat.isedible,stat.isopened,stat.expirystatus)}>
+                  <Card.Content>
+                    <Statistic size="small">
+                      <Statistic.Value>
+                      {stat.number}</Statistic.Value>
+                      <Statistic.Label>{stat.label}</Statistic.Label>
+                    </Statistic>
+                  </Card.Content>
+                </Card> 
               </Grid.Column>
-              <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value onClick={this.directtoinventory.bind(this,1,0)}>{this.state.ediblenewcnt}</Statistic.Value>
-                  <Statistic.Label># of new food items</Statistic.Label>
-                </Statistic>            
-              </Grid.Column>
-              <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value>{this.state.expiringcnt}</Statistic.Value>
-                  <Statistic.Label># of expiring food items</Statistic.Label>
-                </Statistic>
-              </Grid.Column>
-              <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value>{this.state.expiredcnt}</Statistic.Value>
-                  <Statistic.Label># of expired food items</Statistic.Label>
-                </Statistic>            
-              </Grid.Column>
-              <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value onClick={this.directtoinventory.bind(this,0,1)}>{this.state.inedibleopenedcnt}</Statistic.Value>
-                  <Statistic.Label># of opened non-food items</Statistic.Label>
-                </Statistic>
-              </Grid.Column>
-              <Grid.Column textAlign="center">
-                <Statistic>
-                  <Statistic.Value onClick={this.directtoinventory.bind(this,0,0)}>{this.state.inediblenewcnt}</Statistic.Value>
-                  <Statistic.Label># of new non-food items</Statistic.Label>
-                </Statistic>            
-              </Grid.Column>
-            </Grid.Row>
-          )
+          ));
     }
     else{
       return (
@@ -139,12 +144,16 @@ class Insights extends React.Component {
   render() {
     return (
       <Container textAlign="left" fluid>
-         <Grid columns={1} doubling stackable>
-          <Grid.Column textAlign="left">
-            <Header as='h1'>
-              {this.state.username}'s inventory
-            </Header>
-            <Button color="grey" onClick={this.handlelogout.bind(this)}>logout</Button>
+         <Grid columns={5} doubling stackable>
+          <Grid.Column textAlign="center">
+            <Card raised key="1" fluid>
+              <Card.Content>
+                <Card.Header>{this.state.username}'s inventory</Card.Header>
+              </Card.Content>
+              <Card.Content extra>
+                <Button color="grey" onClick={this.handlelogout.bind(this)}>logout</Button>
+              </Card.Content>
+            </Card> 
           </Grid.Column>
           {this.generateinsights()}
         </Grid>
