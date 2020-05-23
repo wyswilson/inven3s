@@ -624,6 +624,32 @@ def fetchinventoryexpireditems(uid):
 	data['expired'] = {'cnt': math.ceil(expiredcnt), 'records': expiredrecords}		
 	return data
 
+def findproductimage(productname):
+
+	productimage = ""
+
+	url = "https://www.google.com/search?q=%s&tbm=isch" % productname 
+	try:
+		randagent = random.choice(useragents)
+		headers = {'User-Agent': randagent}
+		#r = requests.get(url, headers=headers, timeout=10)
+		#html = r.content
+		#logging.debug("webcrawl-image: [%s] [%s]" % (url,productname))
+
+		#soup = bs4.BeautifulSoup(html, 'html.parser')
+		#results = soup.find_all('div',{'class':'r'})
+
+	except requests.ConnectionError as e:
+		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))
+	except requests.Timeout as e:
+		logging.debug("error: timeout for [%s] [%s]" % (url,str(e)))
+	except requests.RequestException as e:
+		logging.debug("error: [%s] [%s]" % (url,str(e)))
+	except:
+		logging.debug("error: unknown [%s]" % url)	
+
+	return productimage
+
 def fetchinventorybyuser(uid,isedible,isopened,expirystatus=None):
 	query1 = """
 		SELECT 
@@ -661,6 +687,8 @@ def fetchinventorybyuser(uid,isedible,isopened,expirystatus=None):
 	"""
 	cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
+
+	print("NEED WORK HERE - FILTER INVENTORY BY EXPIRED/EXPIRING")
 
 	ediblenewcnt = 0
 	edibleopenedcnt = 0 

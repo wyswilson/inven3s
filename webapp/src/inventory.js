@@ -428,6 +428,7 @@ class Inventory extends React.Component {
                   <Icon name='plus' />Add new items
                 </Button>
               }
+              closeIcon
               open={this.state.modalopen}
               onClose={this.closemodal} 
               centered={false}
@@ -549,6 +550,7 @@ class Inventory extends React.Component {
                       centered={false}
                       size="fullscreen"
                       dimmer="blurring"
+                      closeIcon
                     >
                       <Modal.Header>Add more items</Modal.Header>
                       <Modal.Content image>

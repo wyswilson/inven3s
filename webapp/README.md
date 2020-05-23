@@ -2,6 +2,7 @@ PACKAGE DEPENDENCY
 npm i semantic-ui-calendar-react
 npm i semantic-ui-react
 npm i react
+npm i react-favicon
 npx create-react-app my-app
 
 --------------

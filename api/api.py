@@ -120,6 +120,12 @@ def productupsert(userid):
 
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
+
+		#TRY TO FETCH IMAGE URL IF PRODUCTNAME EXIsTS BUT NOT PRODUCTIMG
+		if productname != '' and productimage == '':
+			productimage = func.findproductimage(productname)
+			print("NEED WORK HERE - SCRAPE PRODUCT IMG")
+
 		if productname != '':
 			func.updateproductname(gtin,productname)
 			status = status + "productname "

@@ -367,7 +367,7 @@ class Product extends React.Component {
                   size='tiny' style={{width: 'auto', height: '140px'}}
                   onError={this.setdefaultimage.bind(this)}
                 />
-                <Dropdown className="halfwidth" name="productname" 
+                <Dropdown className="fullwidth" name="productname" 
                     placeholder="Oreo Cookie Original 133G"
                     search
                     selection
