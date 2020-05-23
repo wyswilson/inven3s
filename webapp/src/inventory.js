@@ -275,7 +275,7 @@ class Inventory extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimage,
+          img: item.productimage === '' ? this.state.defaultimage : item.productimage,
         }
       ));
     this.setState({ productsuggests: updatedsuggest });
@@ -443,7 +443,6 @@ class Inventory extends React.Component {
                     <Grid.Column>
                       <label className="fullwidth">Product</label>
                       <Dropdown className="fullwidth" name="productname"
-                        placeholder="Oreo Cookie Original 133G"
                         search
                         selection
                         noResultsMessage="No product found"
@@ -456,7 +455,6 @@ class Inventory extends React.Component {
                     <Grid.Column>
                       <label className="fullwidth">Retailer</label>                    
                       <Dropdown className="fullwidth" name="retailername"
-                        placeholder="Woolworths Docklands"
                         search
                         selection
                         allowAdditions
@@ -478,8 +476,7 @@ class Inventory extends React.Component {
                       </Grid.Column>
                       <Grid.Column>
                         <label className="fullwidth">Expiry</label>                    
-                        <DateInput name="dateexpiry"
-                          placeholder="2020-07-01"
+                        <DateInput name="dateexpiry" className="fullwidth"
                           dateFormat="YYYY-MM-DD"
                           value={this.state.dateexpiry}
                           onChange={this.setinventorymetadata.bind(this)}
@@ -560,7 +557,6 @@ class Inventory extends React.Component {
                             <Grid.Column>
                              <label className="fullwidth">Retailer</label>                    
                               <Dropdown className="fullwidth" name="retailername"
-                                placeholder="Woolworths Docklands"
                                 search
                                 selection
                                 allowAdditions
@@ -582,8 +578,7 @@ class Inventory extends React.Component {
                               </Grid.Column>
                               <Grid.Column>
                                 <label className="fullwidth">Expiry</label>                    
-                                <DateInput name="dateexpiry"
-                                  placeholder="2020-07-01"
+                                <DateInput name="dateexpiry" className="fullwidth"
                                   dateFormat="YYYY-MM-DD"
                                   value={this.state.dateexpiry}
                                   onChange={this.setinventorymetadata.bind(this)}

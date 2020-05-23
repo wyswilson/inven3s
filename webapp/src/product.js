@@ -121,7 +121,7 @@ class Product extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimage,
+          img: item.productimage === '' ? this.state.defaultimage : item.productimage,
           brand: item.brandname,
           isedible: item.isedible
         }
@@ -367,8 +367,7 @@ class Product extends React.Component {
                   size='tiny' style={{width: 'auto', height: '140px'}}
                   onError={this.setdefaultimage.bind(this)}
                 />
-                <Dropdown className="fullwidth" name="productname" 
-                    placeholder="Oreo Cookie Original 133G"
+                <Dropdown className="fullwidth" name="productname"
                     search
                     selection
                     allowAdditions
@@ -392,16 +391,15 @@ class Product extends React.Component {
               </Grid.Column>
               <Grid.Column>
                 <label className="fullwidth">Product</label>
-                <Input placeholder='Oreo Cookie Original 133G' value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
+                <Input value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
               </Grid.Column>
               <Grid.Column>
                 <label className="fullwidth">Image</label>
-                <Input placeholder='Product image' value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
+                <Input value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
               </Grid.Column>
               <Grid.Column>
                 <label className="fullwidth">Brand</label>
                 <Dropdown className="fullwidth" name="brandname" 
-                  placeholder="Oreo"
                   search
                   selection
                   allowAdditions
