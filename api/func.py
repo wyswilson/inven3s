@@ -124,13 +124,15 @@ def updatebrandimage(brandid,brandimage):
 	db.commit()
 
 def updatebrandowner(brandid,brandowner):
+	#string.capwords(brandowner.strip())
 	query2 = "UPDATE brands SET brandowner = %s WHERE brandid = %s"
-	cursor.execute(query2,(string.capwords(brandowner),brandid))
+	cursor.execute(query2,(brandowner.strip(),brandid))
 	db.commit()
 
 def updatebrandname(brandid,brandname):
+	#string.capwords(brandname.strip())
 	query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
-	cursor.execute(query2,(string.capwords(brandname),brandid))
+	cursor.execute(query2,(brandname.strip(),brandid))
 	db.commit()
 
 def updateproductbrand(gtin,brandid):
@@ -148,24 +150,15 @@ def updateisedible(gtin,isedible):
 	cursor.execute(query2,(isedible,gtin))
 	db.commit()
 
-def updateisedible(gtin,isedible):
-	query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
-	cursor.execute(query2,(isedible,gtin))
-	db.commit()
-
 def updateisperishable(gtin,isperishable):
 	query2 = "UPDATE products SET isperishable = %s WHERE gtin = %s"
 	cursor.execute(query2,(isperishable,gtin))
 	db.commit()
 
 def updateproductname(gtin,productname):
+	#string.capwords(productname.strip())
 	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-	cursor.execute(query2,(string.capwords(productname.strip()),gtin))
-	db.commit()
-
-def updateproductname(gtin,productname):
-	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-	cursor.execute(query2,(string.capwords(productname.strip()),gtin))
+	cursor.execute(query2,(productname.strip(),gtin))
 	db.commit()
 
 def jsonifybrands(records):
