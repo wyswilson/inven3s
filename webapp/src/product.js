@@ -254,6 +254,7 @@ class Product extends React.Component {
       })
       .catch(error => {
         this.setState({ loading: false });
+        this.setState({ gtin: gtincandidate});//STILL WANT TO ALLOW USERS TO ADD PRODUCT THAT CANT BE DISCOVEDED FROM WEB
         if(error.response){
           console.log('addnewproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
           this.setState({ actionedmsg: error.response.data[0]['message'] });        
