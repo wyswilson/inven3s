@@ -463,9 +463,14 @@ def inventoryselect(userid):
 	inventorycnt = 0
 	if func.validateuser(userid) and isedible and isopened:
 
-		data = func.fetchinventorybyuser(userid,isedible,isopened,expirystatus)
-		inventorycnt = data['all']['cnt']
-		records = data['all']['records']
+		if expirystatus == 'expired' or expirystatus == 'expiring':
+			data = func.fetchinventoryexpireditems(userid)
+			inventorycnt = data[expirystatus]['cnt']
+			records = data[expirystatus]['records']			
+		else:
+			data = func.fetchinventorybyuser(userid,isedible,isopened)
+			inventorycnt = data['all']['cnt']
+			records = data['all']['records']
 
 		status = "inventory items for the user returned"
 

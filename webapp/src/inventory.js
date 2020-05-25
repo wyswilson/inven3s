@@ -69,6 +69,9 @@ class Inventory extends React.Component {
         else if(this.state.queryisedible === 1 && this.state.queryisopened === 1){
           message += ' opened food items';
         }
+        else if(this.state.queryexpirystatus !== 'all'){
+          message += ' ' + this.state.queryexpirystatus + ' items';          
+        }
         else{
           message += ' items';
         }

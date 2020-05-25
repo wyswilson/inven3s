@@ -1,6 +1,7 @@
 import datetime
 import flask
 
+import func
 import functools
 import mysql.connector
 import hashlib
@@ -38,7 +39,15 @@ db = mysql.connector.connect(
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb)
 cursor = db.cursor()
 
-logging.basicConfig(filename=logfile,level=logging.DEBUG)
-
-strng = "anna's secret"
-print(string.capwords(strng))
+query1 = """
+	SELECT
+		productname
+	FROM products
+"""
+cursor.execute(query1)
+records = cursor.fetchall()
+category = ""
+for record in records:
+	productname = record[0]
+	cat = func.determineproductcat(productname)
+	print(cat + '=' + productname)

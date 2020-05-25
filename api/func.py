@@ -567,6 +567,41 @@ def findproductexpiry(uid,gtin):
 	else:
 		return "",defaultdateexpiry
 
+def determineproductcat(productname):
+	query1 = """
+		SELECT
+			metadataname,
+			COUNT(*) AS freq
+		FROM (
+			SELECT
+				dl.listingurl,
+				dl.listingtitle,
+				dm.metadataname,
+				dm.metadatatype,
+				MATCH(listingtitle) AGAINST (%s IN BOOLEAN MODE) AS score
+			FROM deals_listings AS dl
+			JOIN deals_listingmetadata AS dlm
+			ON dl.listingurl = dlm.listingurl
+			JOIN deals_metadata AS dm
+			ON dlm.metadatauri = dm.metadatauri
+			WHERE
+				dm.metadatatype IN ('tag','cat') AND
+				MATCH(listingtitle) AGAINST (%s IN BOOLEAN MODE)
+			ORDER BY score DESC
+			LIMIT 50
+		) AS tmp
+		GROUP BY 1
+		ORDER BY 2 DESC
+		LIMIT 1
+	"""
+	cursor.execute(query1,(productname,productname))
+	records = cursor.fetchall()
+	category = ""
+	for record in records:
+		category = record[0]
+
+	return category
+
 def fetchinventoryexpireditems(uid):
 	query1 = """
 		SELECT
@@ -577,9 +612,9 @@ def fetchinventoryexpireditems(uid):
 			  i.gtin,p.productname,p.productimage,b.brandname,
 			  i.dateexpiry,
 			  case
-					when dateexpiry <= NOW() then 'EXPIRED'
-					when NOW() < dateexpiry AND dateexpiry <= NOW() + INTERVAL 30 DAY then 'EXPIRING'
-					ELSE 'CAN-KEEP'
+					when dateexpiry <= NOW() then 'expired'
+					when NOW() < dateexpiry AND dateexpiry <= NOW() + INTERVAL 30 DAY then 'expiring'
+					ELSE 'can-keep'
 				END AS itemgoodness,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
@@ -592,23 +627,23 @@ def fetchinventoryexpireditems(uid):
 				AND dateexpiry IS NOT NULL AND dateexpiry != '0000-00-00'
 			GROUP BY 1,2,3,4,5,6
 		) AS tmp
-		WHERE itemstotal > 0 AND itemgoodness IN ('EXPIRED','EXPIRING')
+		WHERE itemstotal > 0 AND itemgoodness IN ('expired','expiring')
 		ORDER BY 5 asc
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
-	expiringcnt = 0
-	expiredcnt = 0
+	expiringcnt 	= 0
+	expiredcnt 		= 0
 	expiringrecords = []
-	expiredrecords = []
+	expiredrecords 	= []
 	for record in records:
-		name = record[1]
-		goodness = record[6]
-		itemstotal = record[4]
-		if goodness == 'EXPIRING':
+		name 		= record[1]
+		goodness 	= record[6]
+		itemstotal 	= record[4]
+		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += float(itemstotal)
-		elif goodness == 'EXPIRED':
+		elif goodness == 'expired':
 			expiredrecords.append(record)
 			expiredcnt += float(itemstotal)
 
@@ -643,7 +678,7 @@ def findproductimage(productname):
 
 	return productimage
 
-def fetchinventorybyuser(uid,isedible,isopened,expirystatus=None):
+def fetchinventorybyuser(uid,isedible,isopened):
 	query1 = """
 		SELECT 
 			gtin,
