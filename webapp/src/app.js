@@ -53,8 +53,8 @@ class App extends React.Component {
               style={{
                 backgroundColor: 'white',
                 paddingTop: '2em',
-                paddingLeft: '5em',
-                paddingRight: '5em',
+                paddingLeft: '2em',
+                paddingRight: '2em',
                 paddingBottom: '10em'
               }}>
               <Switch>

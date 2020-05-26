@@ -86,8 +86,8 @@ class Login extends React.Component {
       <Container fluid
         style={{
           marginTop: '10em',
-          paddingLeft: '5em',
-          paddingRight: '5em'
+          paddingLeft: '2em',
+          paddingRight: '2em'
         }}
       >
         <Grid columns={2} doubling stackable>
