@@ -97,7 +97,7 @@ class Login extends React.Component {
               inverted
               style={{
                 color: 'black',
-                fontSize: '3em',
+                fontSize: '2.5em',
                 fontWeight: 'bold'
               }}
             />
@@ -106,7 +106,7 @@ class Login extends React.Component {
               inverted
               style={{
                 color: 'black',
-                fontSize: '1.7em',
+                fontSize: '1.8em',
                 fontWeight: 'normal',
                 marginTop: '1.5em',
               }}
