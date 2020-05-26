@@ -45,11 +45,18 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <div className="header nav">
-              <NavLink activeClassName="active" to="/home">Home</NavLink>
-              <NavLink activeClassName="active" to="/inventory">Inventory</NavLink>
-              <NavLink activeClassName="active" to="/product">Product</NavLink>
+              <NavLink to="/home">Home</NavLink>
+              <NavLink to="/inventory">Inventory</NavLink>
+              <NavLink to="/product">Product</NavLink>
             </div>
-            <div className="content">
+            <div
+              style={{
+                backgroundColor: 'white',
+                paddingTop: '2em',
+                paddingLeft: '5em',
+                paddingRight: '5em',
+                paddingBottom: '10em'
+              }}>
               <Switch>
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/inventory" component={Inventory} />

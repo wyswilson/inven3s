@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getToken, getUser, removeUserSession } from './utils/common';
 import { Card, Message, Container, Grid, Button, Statistic } from 'semantic-ui-react'
 
-class Insights extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -151,7 +151,8 @@ class Insights extends React.Component {
                 <Card.Header>{this.state.username}'s inventory</Card.Header>
               </Card.Content>
               <Card.Content extra>
-                <Button color="grey" onClick={this.handlelogout.bind(this)}>logout</Button>
+                <Button color="grey" onClick={this.handlelogout.bind(this)}>
+                Logout</Button>
               </Card.Content>
             </Card> 
           </Grid.Column>
@@ -161,5 +162,5 @@ class Insights extends React.Component {
     )
   }
 }
-export default Insights;
+export default Home;
 

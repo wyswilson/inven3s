@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import { setUserSession } from './utils/common';
-import { Container, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { Header, Container, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 
 class Login extends React.Component {
@@ -65,35 +65,74 @@ class Login extends React.Component {
   
   updatemessage(){
     if(this.state.tried){
-      return (<Card raised>
-                  <Message size='tiny' warning={this.state.tried && !this.state.success}
-                    header={this.state.message}
-                  />
-              </Card>
-              )
-      }
+      return (
+        <Card raised>
+            <Message size='tiny' warning={this.state.tried && !this.state.success}
+              header={this.state.message}
+            />
+        </Card>
+      )
+    }
+    else{
+      return (
+        <Button color="grey" className="fullwidth">
+        Sign up</Button>
+      )
+    }
   }
 
   render() {
     return (
-      <Container fluid>
-         <Grid columns={1} doubling stackable>
-          <Grid.Column>
-            <Field label="email" type="text" active={false}
-              parentCallback={this.updatecredentials.bind(this)}/>
+      <Container fluid
+        style={{
+          marginTop: '10em',
+          paddingLeft: '5em',
+          paddingRight: '5em'
+        }}
+      >
+        <Grid columns={2} doubling stackable>
+          <Grid.Column textAlign="center" verticalAlign="middle">
+            <Header
+              content='Helping you reduce waste at home with AI solutions'
+              inverted
+              style={{
+                color: 'black',
+                fontSize: '3em',
+                fontWeight: 'bold'
+              }}
+            />
+            <Header
+              content='...starting with your pantry'
+              inverted
+              style={{
+                color: 'black',
+                fontSize: '1.7em',
+                fontWeight: 'normal',
+                marginTop: '1.5em',
+              }}
+            />
           </Grid.Column>
-          <Grid.Column>
-            <Field label="password" type="password" active={false}
-              parentCallback ={this.updatecredentials.bind(this)}/>
-           </Grid.Column>
-           <Grid.Row columns={2}>
-            <Grid.Column>
-              <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>login</Button>
-            </Grid.Column>
-            <Grid.Column>
-              {this.updatemessage()}
-            </Grid.Column>
-          </Grid.Row>
+          <Grid.Column textAlign="center">
+            <Card raised key="1" fluid>
+              <Card.Content>
+                <Field label="email" type="text" active={false}
+                  parentCallback={this.updatecredentials.bind(this)}/>
+                <Field label="password" type="password" active={false}
+                parentCallback ={this.updatecredentials.bind(this)}/>
+              </Card.Content>
+              <Card.Content extra>
+                <Grid columns={2}>
+                  <Grid.Column>
+                    <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
+                    Login</Button>
+                  </Grid.Column>
+                  <Grid.Column>
+                    {this.updatemessage()}
+                  </Grid.Column>
+                </Grid>
+              </Card.Content>
+            </Card> 
+          </Grid.Column>
         </Grid>
       </Container>
     )

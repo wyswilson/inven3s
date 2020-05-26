@@ -7,7 +7,6 @@ import _ from 'lodash'
 //import queryString from 'query-string'
 
 class Inventory extends React.Component {
-
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
