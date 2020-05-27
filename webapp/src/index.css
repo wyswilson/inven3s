@@ -1,13 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
 body {
-  font-family: 'Muli';
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+  font-family: 'Muli' !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  font-size: 16px !important;
 }
 
 .pagebody{
+  background: url('/background4.1.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
   background-color: white !important;
   padding-top: 2em !important;
   padding-left: 10em !important;
@@ -32,6 +40,19 @@ body {
   padding-bottom: 1em !important;
 }
 
+.text.main{
+  color: #111721 !important;
+  font-size: 2.5em !important;
+  font-weight: bold !important;
+}
+
+.text.secondary{
+  color: #dcdfe3 !important;
+  font-size: 1.8em !important;
+  font-weight: normal !important;
+  margin-top: 1.5em !important;
+}
+
 .navheader {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -42,14 +63,14 @@ body {
 }
 
 .navheader a {
-  color: #808b9c;
+  color: #848b96;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader a:hover {
-  color: #d3dae6;
+  color: #dcdfe3;
 }
 
 .navheader.mobile {
@@ -62,14 +83,14 @@ body {
 }
 
 .navheader.mobile a {
-  color: #808b9c;
+  color: #848b96;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader.mobile a:hover {
-  color: #d3dae6;
+  color: #dcdfe3;
 }
 
 .error {
@@ -107,7 +128,7 @@ body {
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #d3dae6;
+  background-color: #dcdfe3;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -116,7 +137,7 @@ body {
 }
 
 .field:hover {
-  background-color: #bac5d6;
+  background-color: #b9bec7;
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 }
 

@@ -91,22 +91,11 @@ class Login extends React.Component {
           <Grid.Column textAlign="center" verticalAlign="middle">
             <Header
               content='Helping you reduce waste at home with AI solutions'
-              inverted
-              style={{
-                color: 'black',
-                fontSize: '2.5em',
-                fontWeight: 'bold'
-              }}
+              className="text main"
             />
             <Header
               content='...starting with your pantry'
-              inverted
-              style={{
-                color: 'black',
-                fontSize: '1.8em',
-                fontWeight: 'normal',
-                marginTop: '1.5em',
-              }}
+              className="text secondary"
             />
           </Grid.Column>
           <Grid.Column textAlign="center">

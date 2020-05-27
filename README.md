@@ -1,7 +1,7 @@
 ==============COLORSCHEME===========
-LIGHTEST 	d3dae6
-LIGHT    	bac5d6
-MEDIUM	 	808b9c
+LIGHTEST 	dcdfe3
+LIGHT    	b9bec7
+MEDIUM	 	848b96
 DARK 		374152 (NEW)
 DARKEST	 	111721
 ERR			c75061
