@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { getToken, removeUserSession, setUserSession } from './utils/common';
+import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
+import {isMobile} from 'react-device-detect';
 
 import Login from './login';
 import Inventory from './inventory';
@@ -9,8 +11,6 @@ import Product from './product';
 
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
-import { getToken, removeUserSession, setUserSession } from './utils/common';
-import {isMobile} from 'react-device-detect';
 
 class App extends React.Component {
   constructor(props) {

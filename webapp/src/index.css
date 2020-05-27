@@ -10,16 +10,26 @@ body {
 .pagebody{
   background-color: white !important;
   padding-top: 2em !important;
-  padding-left: 5em !important;
-  padding-right: 5em !important;
+  padding-left: 10em !important;
+  padding-right: 10em !important;
   padding-bottom: 10em !important;
 }
 
 .pagebody.mobile{
   padding-top: 2em !important;
-  padding-left: 0em !important;
-  padding-right: 0em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
   padding-bottom: 10em !important;
+}
+
+.maincontainer{
+  padding-top: 10em !important;
+  padding-bottom: 10em !important;
+}
+
+.maincontainer.mobile{
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
 }
 
 .navheader {
@@ -45,8 +55,8 @@ body {
 .navheader.mobile {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
-  padding-left: 0em !important;
-  padding-right: 0em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
   background: #111721;
   border-bottom: 1px solid #999;
 }

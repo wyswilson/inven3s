@@ -2,6 +2,7 @@ import React from "react";
 import axios from 'axios';
 import { setUserSession } from './utils/common';
 import { Header, Container, Button, Card, Message, Grid } from 'semantic-ui-react'
+import {isMobile} from 'react-device-detect';
 import Field from './field.js';
 
 class Login extends React.Component {
@@ -84,11 +85,7 @@ class Login extends React.Component {
   render() {
     return (
       <Container fluid
-        style={{
-          marginTop: '10em',
-          paddingLeft: '2em',
-          paddingRight: '2em'
-        }}
+        className={isMobile ? "maincontainer mobile" : "maincontainer"}
       >
         <Grid columns={2} doubling stackable>
           <Grid.Column textAlign="center" verticalAlign="middle">
