@@ -10,6 +10,7 @@ import Product from './product';
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
+import {isMobile} from 'react-device-detect';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends React.Component {
     }).catch(error => {
       removeUserSession();
       this.setState({ authloading: false });
+      this.props.history.push('/login');
     });
   }
 
@@ -49,14 +51,7 @@ class App extends React.Component {
               <NavLink to="/inventory">Inventory</NavLink>
               <NavLink to="/product">Product</NavLink>
             </div>
-            <div
-              style={{
-                backgroundColor: 'white',
-                paddingTop: '2em',
-                paddingLeft: '2em',
-                paddingRight: '2em',
-                paddingBottom: '10em'
-              }}>
+            <div className={isMobile ? "pagebody mobile" : "pagebody"}>
               <Switch>
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/inventory" component={Inventory} />

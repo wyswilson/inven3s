@@ -43,6 +43,7 @@ npm i semantic-ui-react
 npm i react
 npm i react-favicon
 npx create-react-app my-app
+npm i react-device-detect
 
 ==============NGINX=================
 sudo apt-get install nginx

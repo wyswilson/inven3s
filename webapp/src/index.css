@@ -7,6 +7,22 @@ body {
   font-size: 16px;
 }
 
+.pagebody{
+  background-color: red !important;
+  padding-top: 2em !important;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+  padding-bottom: 10em !important;
+}
+
+.pagebody.mobile{
+  background-color: blue !important;
+  padding-top: 2em !important;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+  padding-bottom: 10em !important;
+}
+
 .nav.header {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -15,18 +31,22 @@ body {
   background: #111721;
   border-bottom: 1px solid #999;
 }
+
 .nav.header a {
   color: #808b9c;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
+
 .nav.header a:hover {
   color: #d3dae6;
 }
+
 .nav.header.active {
   color: #bac5d6;
 }
+
 .nav.header small {
   color: #666;
 }
