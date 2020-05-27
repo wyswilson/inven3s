@@ -1,14 +1,30 @@
-@import url('https://fonts.googleapis.com/css?family=Muli');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
 
 body {
-  font-family: 'Muli' !important;
+  font-family: 'Rubik', sans-serif !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   font-size: 16px !important;
 }
 
 .pagebody{
-  background: url('/background4.1.jpg') !important;
+  background-color: white !important;
+  padding-top: 2em !important;
+  padding-left: 10em !important;
+  padding-right: 10em !important;
+  padding-bottom: 10em !important;
+}
+
+.pagebody.mobile{
+  background-color: white !important;
+  padding-top: 2em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+  padding-bottom: 10em !important;
+}
+
+.pagebody.public{
+  background: url('/background4.2.jpg') !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
@@ -23,7 +39,16 @@ body {
   padding-bottom: 10em !important;
 }
 
-.pagebody.mobile{
+.pagebody.mobile.public{
+  background: url('/background4.2.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-color: white !important;
   padding-top: 2em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
@@ -41,15 +66,15 @@ body {
 }
 
 .text.main{
-  color: #111721 !important;
+  color: #dcdfe3 !important;
   font-size: 2.5em !important;
-  font-weight: bold !important;
+  font-weight: 900 !important;
 }
 
 .text.secondary{
-  color: #374152 !important;
+  color: #dcdfe3 !important;
   font-size: 1.8em !important;
-  font-weight: normal !important;
+  font-weight: 900 !important;
   margin-top: 1.5em !important;
 }
 
