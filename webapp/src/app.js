@@ -46,7 +46,7 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <div>
-            <div className="header nav">
+            <div className={isMobile ? "navheader mobile" : "navheader"}>
               <NavLink to="/home">Home</NavLink>
               <NavLink to="/inventory">Inventory</NavLink>
               <NavLink to="/product">Product</NavLink>
