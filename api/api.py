@@ -5,7 +5,6 @@ import func
 import validate_email
 import flask_cors
 import json
-import ssl
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
@@ -556,6 +555,6 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0',port=80,ssl_context=('cert.pem', 'key.pem'))
+	app.run(host='0.0.0.0',port=88)
     #from waitress import serve
     #serve(app, host="0.0.0.0", port=8989)

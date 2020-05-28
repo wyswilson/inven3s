@@ -33,7 +33,7 @@ pip install waitress
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s
 WEBAPP 	ssh -i inven3s.pem ubuntu@13.229.67.229
-API 	ssh -i inven3s.pem ubuntu@13.229.135.211
+API 	ssh -i inven3s.pem ubuntu@52.221.217.97
 
 create new screen: screen -S <screenname>
 remove screen: screen -XS <screennumber> quit
@@ -73,13 +73,14 @@ server {
 sudo nano /etc/nginx/sites-enabled/default and change the default port 80 to something else. this file uses the default port 80 which needs to be changed. 
 sudo service nginx restart
 systemctl status nginx.service 
+gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:80 wsig:app
 
 ==============SSL/HTTPS================
 sudo service nginx stop
 pip install certbot-nginx
 sudo apt-get install python3-certbot-nginx
 sudo certbot --nginx -d inven3s.com -d www.inven3s.com
-sudo certbot --nginx -d 13.229.135.211
+sudo certbot --nginx -d inven3s.xyz
 sudo service nginx restart
 (https://medium.com/@poudel.01anuj/deploying-reactjs-project-on-the-linux-server-with-ssl-certificate-https-aa14bf2737aa)
 
