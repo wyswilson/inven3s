@@ -8,7 +8,7 @@ class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apihost: 'http://13.229.67.229:8989',
+      apihost: 'http://13.229.135.211:8989',
       username: getUser(),
       token: getToken(),
       insightsloaded: false,
