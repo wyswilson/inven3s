@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Container, Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
+import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 //import queryString from 'query-string'
 
@@ -358,7 +358,7 @@ class Product extends React.Component {
 
   render() {
     return (
-      <Container fluid
+      <div
         className={isMobile ? "pagebody mobile" : "pagebody"}
       >
         <Card raised fluid>
@@ -442,7 +442,7 @@ class Product extends React.Component {
             </Grid>
           </Card.Content>
         </Card>
-      </Container>
+      </div>
     )
   }
 }

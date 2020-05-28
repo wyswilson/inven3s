@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
+
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 
 import Login from './login';
@@ -43,26 +44,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        
+      <div className="container">
         <BrowserRouter>
+          <div className={isMobile ? "navheader mobile" : "navheader"}>
+            <NavLink to="/home">Home</NavLink>
+            <NavLink to="/inventory">Inventory</NavLink>
+            <NavLink to="/product">Product</NavLink>
+          </div>
           <div>
-            <div className={isMobile ? "navheader mobile" : "navheader"}>
-              <NavLink to="/home">Home</NavLink>
-              <NavLink to="/inventory">Inventory</NavLink>
-              <NavLink to="/product">Product</NavLink>
-            </div>
-            <div>
-              <Switch>
-                <PrivateRoute path="/home" component={Home} />
-                <PrivateRoute path="/inventory" component={Inventory} />
-                <PrivateRoute path="/product" component={Product} />
-                <PublicRoute path="/login" component={Login} />
-                <PublicRoute exact path="/">
-                  <Redirect to="/login" />
-                </PublicRoute>
-              </Switch>
-            </div>
+            <Switch>
+              <PrivateRoute path="/home" component={Home} />
+              <PrivateRoute path="/inventory" component={Inventory} />
+              <PrivateRoute path="/product" component={Product} />
+              <PublicRoute path="/login" component={Login} />
+              <PublicRoute exact path="/">
+                <Redirect to="/login" />
+              </PublicRoute>
+            </Switch>
           </div>
         </BrowserRouter>
       </div>

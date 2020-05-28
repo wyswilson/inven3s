@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
-import { List, Header, Container, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 
 class Login extends React.Component {
@@ -87,8 +87,8 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <Container fluid
+      <div>
+        <div
           className={isMobile ? "pagebody login mobile" : "pagebody login"}
         >
           <Grid columns={2} doubling stackable>
@@ -124,15 +124,15 @@ class Login extends React.Component {
               </Card> 
             </Grid.Column>
           </Grid>
-        </Container>
-        <Container fluid className={isMobile ? "navfooter mobile" : "navfooter"}>
+        </div>
+        <div className={isMobile ? "navfooter mobile" : "navfooter"}>
           <List link horizontal>
             <List.Item as='a' className="footheader">About Us</List.Item>
             <List.Item as='a' className="footheader">Contact Us</List.Item>
             <List.Item as='a' className="footheader">Products</List.Item>
           </List>
-        </Container>
-      </Container>
+        </div>
+      </div>
     )
   }
 }

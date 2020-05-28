@@ -7,6 +7,10 @@ body {
   font-size: 16px !important;
 }
 
+.container {
+  max-width: 100% !important;
+}
+
 .pagebody{
   background-color: white !important;
   padding-top: 1em !important;
@@ -103,7 +107,7 @@ body {
 
 .footheader {
   color: #0E0D0B;
-  padding-right: 5em !important;
+  padding-right: 0em !important;
 }
 
 .navheader {

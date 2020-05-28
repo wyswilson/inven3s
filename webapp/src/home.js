@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Card, Message, Container, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 
 class Home extends React.Component {
   constructor(props) {
@@ -151,7 +151,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Container fluid
+      <div
         className={isMobile ? "pagebody mobile" : "pagebody"}
       >
          <Grid columns={3} doubling stackable>
@@ -168,7 +168,7 @@ class Home extends React.Component {
           </Grid.Column>
           {this.generateinsights()}
         </Grid>
-      </Container>
+      </div>
     )
   }
 }

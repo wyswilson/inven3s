@@ -9,5 +9,6 @@ ReactDOM.render(
 	<div>
 		<Favicon url="./favicon.ico" />
 		<App />
-	</div>
-	, document.getElementById('root'));
+	</div>,
+	document.getElementById('root')
+	);

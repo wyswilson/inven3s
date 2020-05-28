@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Icon, Confirm, Message, Container, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
+import { Icon, Confirm, Message, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 //import queryString from 'query-string'
@@ -613,14 +613,14 @@ class Inventory extends React.Component {
 
   render() {
     return (
-      <Container fluid
+      <div
         className={isMobile ? "pagebody mobile" : "pagebody"}
       >
         <Card.Group doubling itemsPerRow={3} stackable>
           {this.generategriddefault()}
           {this.generategriditems()}
         </Card.Group>
-      </Container>
+      </div>
     )
   }
 }
