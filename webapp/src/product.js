@@ -12,7 +12,7 @@ class Product extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      apihost: 'http://13.229.135.211',
+      apihost: 'https://13.229.135.211',
       token: getToken(),
       loading: false,
       actionedmsg: '',

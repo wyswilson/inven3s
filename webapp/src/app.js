@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apihost: 'http://13.229.135.211',
+      apihost: 'https://13.229.135.211',
       token: getToken(),
       authloading: true
     };
