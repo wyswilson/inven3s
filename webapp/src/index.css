@@ -13,16 +13,16 @@ body {
 
 .pagebody{
   background-color: white !important;
-  padding-top: 1em !important;
-  padding-bottom: 1em !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
   padding-left: 7em !important;
   padding-right: 7em !important;
 }
 
 .pagebody.mobile{
   background-color: white !important;
-  padding-top: 1em !important;
-  padding-bottom: 1em !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
 }
@@ -53,8 +53,8 @@ body {
   -o-background-size: cover !important;
   background-size: cover !important;
   background-color: white !important;
-  padding-top: 1em !important;
-  padding-bottom: 1em !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
 }
