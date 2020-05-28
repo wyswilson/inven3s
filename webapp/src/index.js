@@ -5,6 +5,7 @@ import App from './app';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
+
 ReactDOM.render(
 	<div>
 		<Favicon url="./favicon.ico" />
