@@ -5,6 +5,7 @@ import { setUserSession } from './utils/common';
 import { List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +81,7 @@ class Login extends React.Component {
     else{
       return (
         <Button color="grey" className="fullwidth">
-        Sign up</Button>
+        Register interest</Button>
       )
     }
   }
@@ -111,12 +112,12 @@ class Login extends React.Component {
                   parentCallback ={this.updatecredentials.bind(this)}/>
                 </Card.Content>
                 <Card.Content extra>
-                  <Grid columns={2}>
-                    <Grid.Column>
+                  <Grid>
+                    <Grid.Column width={7}>
                       <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
                       Login</Button>
                     </Grid.Column>
-                    <Grid.Column>
+                    <Grid.Column width={8}>
                       {this.updatemessage()}
                     </Grid.Column>
                   </Grid>
@@ -127,9 +128,9 @@ class Login extends React.Component {
         </div>
         <div className={isMobile ? "navfooter mobile" : "navfooter"}>
           <List link horizontal>
-            <List.Item as='a' className="footheader">About Us</List.Item>
-            <List.Item as='a' className="footheader">Contact Us</List.Item>
-            <List.Item as='a' className="footheader">Products</List.Item>
+            <List.Item className="footheader">© 2020 Inven3s. All Rights Reserved</List.Item>
+            <List.Item as='a' className="footheader">|&nbsp;&nbsp;&nbsp;&nbsp;About Us</List.Item>
+            <List.Item as='a' className="footheader">|&nbsp;&nbsp;&nbsp;&nbsp;Contact Us</List.Item>
           </List>
         </div>
       </div>

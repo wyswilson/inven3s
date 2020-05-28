@@ -1,16 +1,11 @@
 ==============COLORSCHEME===========
 LIGHTEST 	e6e3e3
 LIGHT    	c9c9c9
-MEDIUM	 	7B797C 
+MEDIUM	 	989699  
 DARK 		444243
 DARKEST	 	0E0D0B
 ERR			c75061
 LOGIN BACKGROUNDIMG CREDIT "Photo by Muradi on Unsplash" (https://unsplash.com/photos/0b8NaL2CMaQ)
-
-==============NETWORKING============
-Original godaddy=>
-ns17.domaincontrol.com
-ns18.domaincontrol.com
 
 ==============PYTHON================
 python -m pip install --upgrade pip
