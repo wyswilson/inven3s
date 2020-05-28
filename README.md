@@ -20,15 +20,14 @@ mkvirtualenv <projectname> or virtualenv <projectname>
 workon <projectname> OR source /home/ubuntu/inven3s/api/inven3s/bin/activate
 rmvirtualenv <projectname>
 	
-pip install flask
-pip install mysql-connector-python
-pip install simplejson
-pip install requests
-pip install bs4
-pip install pyjwt
-pip install py3-validate-email
-pip install flask-cors
-pip install waitress
+pip3 install flask
+pip3 install mysql-connector-python
+pip3 install simplejson
+pip3 install requests
+pip3 install bs4
+pip3 install pyjwt
+pip3 install py3-validate-email
+pip3 install flask-cors
 
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s
@@ -61,7 +60,7 @@ server {
    server_name    localhost;
    root           /usr/share/nginx/html;
    location / {
-       proxy_pass http://127.0.0.1:3000;
+       proxy_pass http://127.0.0.1:3000; OR 88
        proxy_http_version 1.1;
        proxy_set_header Upgrade $http_upgrade;
        proxy_set_header Connection 'upgrade';
@@ -73,7 +72,6 @@ server {
 sudo nano /etc/nginx/sites-enabled/default and change the default port 80 to something else. this file uses the default port 80 which needs to be changed. 
 sudo service nginx restart
 systemctl status nginx.service 
-gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:80 wsig:app
 
 ==============SSL/HTTPS================
 sudo service nginx stop
