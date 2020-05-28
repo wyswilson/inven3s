@@ -1,10 +1,11 @@
 ==============COLORSCHEME===========
-LIGHTEST 	dcdfe3
-LIGHT    	b9bec7
-MEDIUM	 	848b96
-DARK 		374152 (NEW)
-DARKEST	 	111721
+LIGHTEST 	dcdfe3 -> e6e3e3
+LIGHT    	b9bec7 -> c9c9c9
+MEDIUM	 	848b96 -> 7B797C 
+DARK 		374152 (NEW) -> 444243
+DARKEST	 	111721 -> 0E0D0B
 ERR			c75061
+LOGIN BACKGROUNDIMG CREDIT "Photo by Muradi on Unsplash" (https://unsplash.com/photos/0b8NaL2CMaQ)
 
 ==============NETWORKING============
 Original godaddy=>

@@ -1,5 +1,6 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios';
+import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
 import { Card, Message, Container, Grid, Button, Statistic } from 'semantic-ui-react'
 
@@ -84,31 +85,37 @@ class Home extends React.Component {
   generateinsights(){
     const stats = [
       {
+        'id':1,
         'number': this.state.edibleopenedcnt,
         'label': '# of opened food items',
         'isedible':1,'isopened':1,'expirystatus':'all'
       },
       {
+        'id':2,
         'number': this.state.ediblenewcnt,
         'label': '# of new food items',
         'isedible':1,'isopened':0,'expirystatus':'all'
       },
       {
+        'id':3,
         'number': this.state.expiringcnt,
         'label': '# of expiring food items',
         'isedible':2,'isopened':2,'expirystatus':'expiring'
       },
       {
+        'id':4,
         'number': this.state.expiredcnt,
         'label': '# of expired food items',
         'isedible':2,'isopened':2,'expirystatus':'expired'
       },
       {
+        'id':5,
         'number': this.state.inedibleopenedcnt,
         'label': '# of opened non-food items',
         'isedible':0,'isopened':1,'expirystatus':'all'
       },
       {
+        'id':6,
         'number': this.state.inediblenewcnt,
         'label': '# of new non-food items',
         'isedible':0,'isopened':0,'expirystatus':'all'
@@ -117,8 +124,8 @@ class Home extends React.Component {
 
     if(this.state.insightsloaded){
       return stats.map( (stat) => (
-              <Grid.Column textAlign="center">
-                <Card raised key="1" fluid onClick={this.directtoinventory.bind(this,stat.isedible,stat.isopened,stat.expirystatus)}>
+              <Grid.Column key={stat.id} textAlign="center">
+                <Card raised key={stat.id} fluid onClick={this.directtoinventory.bind(this,stat.isedible,stat.isopened,stat.expirystatus)}>
                   <Card.Content>
                     <Statistic size="small">
                       <Statistic.Value>
@@ -141,12 +148,15 @@ class Home extends React.Component {
           )
     }
   }
+
   render() {
     return (
-      <Container textAlign="left" fluid>
-         <Grid columns={5} doubling stackable>
-          <Grid.Column textAlign="center">
-            <Card raised key="1" fluid>
+      <Container fluid
+        className={isMobile ? "pagebody mobile" : "pagebody"}
+      >
+         <Grid columns={3} doubling stackable>
+          <Grid.Column key="0" textAlign="center">
+            <Card raised key="0" fluid>
               <Card.Content>
                 <Card.Header>{this.state.username}'s inventory</Card.Header>
               </Card.Content>

@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios';
+import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
+import { Container, Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 //import queryString from 'query-string'
 
@@ -357,88 +358,91 @@ class Product extends React.Component {
 
   render() {
     return (
-      <Card raised fluid>
-        <Card.Content>
-          <Card.Description>
-            <Grid columns={1} doubling stackable>
-              <Grid.Column>
-                <Image rounded
-                  centered src={this.state.productimage}
-                  floated='right'
-                  size='tiny' style={{width: 'auto', height: '140px'}}
-                  onError={this.setdefaultimage.bind(this)}
-                />
-                <Dropdown className="fullwidth" name="productname"
+      <Container fluid
+        className={isMobile ? "pagebody mobile" : "pagebody"}
+      >
+        <Card raised fluid>
+          <Card.Content>
+            <Card.Description>
+              <Grid columns={1} doubling stackable>
+                <Grid.Column>
+                  <Image rounded
+                    centered src={this.state.productimage}
+                    floated='right'
+                    size='tiny' style={{width: 'auto', height: '140px'}}
+                    onError={this.setdefaultimage.bind(this)}
+                  />
+                  <Dropdown className="fullwidth" name="productname"
+                      search
+                      selection
+                      allowAdditions
+                      value={this.state.productdropdown}
+                      options={this.state.productsuggests}
+                      additionLabel = "Add new product "
+                      noResultsMessage = "No product found"
+                      onSearchChange={this.lookupproduct.bind(this)}
+                      onAddItem={this.addnewproduct.bind(this)}
+                      onChange={this.setproductmetadata.bind(this)}
+                  />
+                </Grid.Column>
+              </Grid>
+            </Card.Description>
+            <Divider/>
+            <Card.Meta>
+              <Grid columns={1} doubling stackable>
+                <Grid.Column>
+                  <label className="fullwidth">GTIN</label>
+                  <Input className="fullwidth" disabled value={this.state.gtin}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <label className="fullwidth">Product</label>
+                  <Input value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <label className="fullwidth">Image</label>
+                  <Input value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
+                </Grid.Column>
+                <Grid.Column>
+                  <label className="fullwidth">Brand</label>
+                  <Dropdown className="fullwidth" name="brandname" 
                     search
                     selection
                     allowAdditions
-                    value={this.state.productdropdown}
-                    options={this.state.productsuggests}
-                    additionLabel = "Add new product "
-                    noResultsMessage = "No product found"
-                    onSearchChange={this.lookupproduct.bind(this)}
-                    onAddItem={this.addnewproduct.bind(this)}
+                    value={this.state.brandname}
+                    options={this.state.brandsuggests}
+                    additionLabel = "Add new brand "
+                    noResultsMessage = "No brand found"
+                    onSearchChange={this.lookupbrand.bind(this)}
+                    onAddItem={this.addnewbrand.bind(this)}
                     onChange={this.setproductmetadata.bind(this)}
-                />
+                  />
+                </Grid.Column>
+                <Grid.Row columns={2}>
+                  <Grid.Column>
+                     <Checkbox toggle label='Is edible?' checked={this.checktoggle()} onChange={this.updateedibletoggle.bind(this)}/>
+                  </Grid.Column>
+                  <Grid.Column>
+                            
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Card.Meta>
+            <Label color='grey' attached='top right'>0</Label>
+          </Card.Content>
+          <Card.Content extra textAlign="center">
+            <Grid columns={2} doubling stackable>
+              <Grid.Column>
+                <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.upsertproduct.bind(this)}>
+                  Add or update
+                </Button>
+              </Grid.Column>
+              <Grid.Column>
+                {this.generateitemadditionmsg()}
               </Grid.Column>
             </Grid>
-          </Card.Description>
-          <Divider/>
-          <Card.Meta>
-            <Grid columns={1} doubling stackable>
-              <Grid.Column>
-                <label className="fullwidth">GTIN</label>
-                <Input className="fullwidth" disabled value={this.state.gtin}/>
-              </Grid.Column>
-              <Grid.Column>
-                <label className="fullwidth">Product</label>
-                <Input value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
-              </Grid.Column>
-              <Grid.Column>
-                <label className="fullwidth">Image</label>
-                <Input value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
-              </Grid.Column>
-              <Grid.Column>
-                <label className="fullwidth">Brand</label>
-                <Dropdown className="fullwidth" name="brandname" 
-                  search
-                  selection
-                  allowAdditions
-                  value={this.state.brandname}
-                  options={this.state.brandsuggests}
-                  additionLabel = "Add new brand "
-                  noResultsMessage = "No brand found"
-                  onSearchChange={this.lookupbrand.bind(this)}
-                  onAddItem={this.addnewbrand.bind(this)}
-                  onChange={this.setproductmetadata.bind(this)}
-                />
-              </Grid.Column>
-              <Grid.Row columns={2}>
-                <Grid.Column>
-                   <Checkbox toggle label='Is edible?' checked={this.checktoggle()} onChange={this.updateedibletoggle.bind(this)}/>
-                </Grid.Column>
-                <Grid.Column>
-                          
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Card.Meta>
-          <Label color='grey' attached='top right'>0</Label>
-        </Card.Content>
-        <Card.Content extra textAlign="center">
-          <Grid columns={2} doubling stackable>
-            <Grid.Column>
-              <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.upsertproduct.bind(this)}>
-                Add or update
-              </Button>
-            </Grid.Column>
-            <Grid.Column>
-              {this.generateitemadditionmsg()}
-            </Grid.Column>
-          </Grid>
-        </Card.Content>
-      </Card>
-
+          </Card.Content>
+        </Card>
+      </Container>
     )
   }
 }

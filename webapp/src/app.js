@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import {isMobile} from 'react-device-detect';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
-import {isMobile} from 'react-device-detect';
 
 import Login from './login';
 import Inventory from './inventory';
@@ -42,11 +42,6 @@ class App extends React.Component {
 
 
   render() {
-    let isPublic = false;
-    if(window.location.pathname === '/login'){
-      isPublic = true;
-    }
-
     return (
       <div className="App">
         
@@ -57,7 +52,7 @@ class App extends React.Component {
               <NavLink to="/inventory">Inventory</NavLink>
               <NavLink to="/product">Product</NavLink>
             </div>
-            <div className={(isMobile && isPublic) ? "pagebody mobile public" : "" || (isMobile && !isPublic) ? "pagebody mobile" : "" || (!isMobile && isPublic) ? "pagebody public" : "" || (!isMobile && !isPublic) ? "pagebody" : ""}>
+            <div>
               <Switch>
                 <PrivateRoute path="/home" component={Home} />
                 <PrivateRoute path="/inventory" component={Inventory} />

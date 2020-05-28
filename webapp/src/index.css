@@ -9,113 +9,141 @@ body {
 
 .pagebody{
   background-color: white !important;
-  padding-top: 2em !important;
-  padding-left: 10em !important;
-  padding-right: 10em !important;
-  padding-bottom: 10em !important;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+  padding-left: 7em !important;
+  padding-right: 7em !important;
 }
 
 .pagebody.mobile{
   background-color: white !important;
-  padding-top: 2em !important;
-  padding-left: 1em !important;
-  padding-right: 1em !important;
-  padding-bottom: 10em !important;
-}
-
-.pagebody.public{
-  background: url('/background4.2.jpg') !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  -webkit-background-size: cover !important;
-  -moz-background-size: cover !important;
-  -o-background-size: cover !important;
-  background-size: cover !important;
-  background-color: white !important;
-  padding-top: 2em !important;
-  padding-left: 10em !important;
-  padding-right: 10em !important;
-  padding-bottom: 10em !important;
-}
-
-.pagebody.mobile.public{
-  background: url('/background4.2.jpg') !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important;
-  background-position: center center !important;
-  -webkit-background-size: cover !important;
-  -moz-background-size: cover !important;
-  -o-background-size: cover !important;
-  background-size: cover !important;
-  background-color: white !important;
-  padding-top: 2em !important;
-  padding-left: 1em !important;
-  padding-right: 1em !important;
-  padding-bottom: 10em !important;
-}
-
-.maincontainer{
-  padding-top: 10em !important;
-  padding-bottom: 10em !important;
-}
-
-.maincontainer.mobile{
   padding-top: 1em !important;
   padding-bottom: 1em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+.pagebody.login{
+  background: url('/background.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-color: white !important;
+  padding-top: 10em !important;
+  padding-bottom: 10em !important;
+  padding-left: 7em !important;
+  padding-right: 7em !important;
+}
+
+.pagebody.login.mobile{
+  background: url('/background.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-color: white !important;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
 
 .text.main{
-  color: #dcdfe3 !important;
+  color: #e6e3e3 !important;
   font-size: 2.5em !important;
   font-weight: 900 !important;
 }
 
 .text.secondary{
-  color: #dcdfe3 !important;
+  color: #e6e3e3 !important;
   font-size: 1.8em !important;
   font-weight: 900 !important;
-  margin-top: 1.5em !important;
+  margin-top: 1.2em !important;
+}
+
+.text.main.mobile{
+  color: #e6e3e3 !important;
+  font-size: 2em !important;
+  font-weight: 900 !important;
+}
+
+.text.secondary.mobile{
+  color: #e6e3e3 !important;
+  font-size: 1.3em !important;
+  font-weight: 900 !important;
+  margin-top: 1.2em !important;
+}
+
+.navfooter {
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+  padding-left: 7em !important;
+  padding-right: 7em !important;
+  background: #e6e3e3;
+  border-bottom: 0px solid #ffffff;
+  color:#444243 !important;
+}
+
+.navfooter.mobile {
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+  background: #e6e3e3;
+  border-bottom: 0px solid #ffffff;
+  color:#444243 !important;
+}
+
+.footheader {
+  color: #0E0D0B;
+  padding-right: 5em !important;
 }
 
 .navheader {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
-  padding-left: 10em !important;
-  padding-right: 10em !important;
-  background: #111721;
-  border-bottom: 1px solid #999;
+  padding-left: 7em !important;
+  padding-right: 7em !important;
+  background: #0E0D0B;
+  border-bottom: 0px solid #ffffff;
 }
 
 .navheader a {
-  color: #848b96;
+  color: #817f82;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader a:hover {
-  color: #dcdfe3;
+  color: #e6e3e3;
 }
 
 .navheader.mobile {
-  padding-top: 2em !important;
-  padding-bottom: 2em !important;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #111721;
-  border-bottom: 1px solid #999;
+  background: #0E0D0B;
+  border-bottom: 0px solid #ffffff;
 }
 
 .navheader.mobile a {
-  color: #848b96;
+  color: #817f82;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader.mobile a:hover {
-  color: #dcdfe3;
+  color: #e6e3e3;
 }
 
 .error {
@@ -153,7 +181,7 @@ body {
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #dcdfe3;
+  background-color: #e6e3e3;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -162,7 +190,7 @@ body {
 }
 
 .field:hover {
-  background-color: #b9bec7;
+  background-color: #c9c9c9;
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -178,7 +206,7 @@ body {
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #374152;
+  color: #444243;
 }
 
 .field.locked {
@@ -196,7 +224,7 @@ body {
   font-weight: 400;
   line-height: normal;
   background-color: transparent;
-  color: #111721;
+  color: #0E0D0B;
   outline: none;
   box-shadow: 0px 4px 16px 0px transparent;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
