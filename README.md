@@ -50,7 +50,8 @@ npm i react-device-detect
 If we need NPM web server only running on HTTPS:
 export HTTPS=true
 
-==============NGINX/HTTPS=================
+==============NGINX=================
+RUNS ON WEBAPP
 sudo apt-get install nginx
 sudo nano /etc/nginx/nginx.conf
 
@@ -72,9 +73,14 @@ server {
 sudo nano /etc/nginx/sites-enabled/default and change the default port 80 to something else. this file uses the default port 80 which needs to be changed. 
 sudo service nginx restart
 systemctl status nginx.service 
+
+==============SSL/HTTPS================
+sudo service nginx stop
 pip install certbot-nginx
 sudo apt-get install python3-certbot-nginx
 sudo certbot --nginx -d inven3s.com -d www.inven3s.com
+sudo certbot --nginx -d 13.229.135.211
+sudo service nginx restart
 (https://medium.com/@poudel.01anuj/deploying-reactjs-project-on-the-linux-server-with-ssl-certificate-https-aa14bf2737aa)
 
  Congratulations! Your certificate and chain have been saved at:
