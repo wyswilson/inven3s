@@ -169,8 +169,13 @@ class Login extends React.Component {
           </Grid>
         </div>
         <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>
-          <List horizontal>
-            <List.Item className="footheader"><Image src='/logo.png' size='mini' inline verticalAlign="middle" />© 2020 Inven3s. All Rights Reserved</List.Item>
+          <List horizontal verticalAlign="middle">
+            <List.Item className="footheader">
+              <Image src='/logolonglight.png' size='tiny' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved
+            </List.Item>
+            <List.Item className="footheader">
+              <a href="https://www.instagram.com/inven3s/" target="_blank"><Icon name="instagram" size="large" /></a>
+            </List.Item>
           </List>
         </div>
       </div>
