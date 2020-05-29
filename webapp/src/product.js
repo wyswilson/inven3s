@@ -6,6 +6,7 @@ import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button,
 import _ from 'lodash'
 //import queryString from 'query-string'
 
+
 class Product extends React.Component {
   constructor(props) {
     super(props)
@@ -359,7 +360,7 @@ class Product extends React.Component {
   render() {
     return (
       <div
-        className={isMobile ? "pagebody mobile" : "pagebody"}
+        className={isMobile ? "bodymain mobile" : "bodymain"}
       >
         <Card raised fluid>
           <Card.Content>

@@ -4,6 +4,7 @@ import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
 import { Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 
+
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -72,7 +73,7 @@ class Home extends React.Component {
 
   directtoinventory(isedible,isopened,expirystatus){
     this.props.history.push({
-      pathname: '/inventory',
+      pathname: '/pan3',
       //search: '?isedible=' + isedible + '&isopened=' + isopened,
       state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus }
     })
@@ -152,7 +153,7 @@ class Home extends React.Component {
   render() {
     return (
       <div
-        className={isMobile ? "pagebody mobile" : "pagebody"}
+        className={isMobile ? "bodymain mobile" : "bodymain"}
       >
          <Grid columns={3} doubling stackable>
           <Grid.Column key="0" textAlign="center">

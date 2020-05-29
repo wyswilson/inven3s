@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
-import { List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { Icon, Image, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 
 
@@ -90,17 +90,13 @@ class Login extends React.Component {
     return (
       <div>
         <div
-          className={isMobile ? "pagebody login mobile" : "pagebody login"}
+          className={isMobile ? "bodymain login mobile" : "bodymain login"}
         >
           <Grid columns={2} doubling stackable>
-            <Grid.Column textAlign="center" verticalAlign="middle">
+            <Grid.Column textAlign="left" verticalAlign="middle">
               <Header
-                content='Helping you reduce waste at home with AI solutions'
+                content='Reducing food waste starts with your Pan3'
                 className={isMobile ? "text main mobile" : "text main"}
-              />
-              <Header
-                content='...starting with your pantry'
-                className={isMobile ? "text secondary mobile" : "text secondary"}
               />
             </Grid.Column>
             <Grid.Column textAlign="center">
@@ -126,11 +122,55 @@ class Login extends React.Component {
             </Grid.Column>
           </Grid>
         </div>
-        <div className={isMobile ? "navfooter mobile" : "navfooter"}>
-          <List link horizontal>
-            <List.Item className="footheader">© 2020 Inven3s. All Rights Reserved</List.Item>
-            <List.Item as='a' className="footheader">|&nbsp;&nbsp;&nbsp;&nbsp;About Us</List.Item>
-            <List.Item as='a' className="footheader">|&nbsp;&nbsp;&nbsp;&nbsp;Contact Us</List.Item>
+        <div 
+          className={isMobile ? "bodyrest1 login mobile" : "bodyrest1 login"}
+        >
+          <Grid celled='internally' columns='equal' stackable>
+            <Grid.Row textAlign='left'>
+              <Grid.Column className="fontdark">
+                <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
+                  What are we solving?
+                </Header>
+                <p style={{ fontSize: '1.1em' }} className="fontdark">
+                  Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank">3 average-size fridges</a> worth of food per household each year
+                </p>
+              </Grid.Column>
+              <Grid.Column verticalAlign="middle">
+                <List floated="left" className="fontdark">
+                  <List.Item icon='barcode' content="Mistakenly throwing out food before used-by date" />
+                  <List.Item icon='barcode' content="Buy more than what we need by not checking pantry before shopping and not sticking to shopping list" />
+                  <List.Item icon='barcode' content="Do not know how to use the food we do have at home" />
+                </List>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+        <div 
+          className={isMobile ? "bodyrest2 login mobile" : "bodyrest2 login"}
+        >
+          <Grid celled='internally' columns='equal' stackable>
+            <Grid.Row textAlign='left'>
+              <Grid.Column>
+                <Header as='h3' style={{ fontSize: '1.8em' }} className="fontlight">
+                  How are we solving it?
+                </Header>
+                <p style={{ fontSize: '1.1em' }} className="fontlight">
+                  By tracking the food we have at home and using AI to better manage them to minimise waste and save you time
+                </p>
+              </Grid.Column>
+              <Grid.Column verticalAlign="middle">
+                <List floated="left" className="fontlight">
+                  <List.Item icon='barcode' content="Constructs your shopping lists for you with food that are running out or that you likely need" />
+                  <List.Item icon='barcode' content="Reminds you of expiring food so that you can prioritise consuming them sooner" />
+                  <List.Item icon='barcode' content="Suggests dishes that you can make from the food that you have" />
+                </List>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
+        <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>
+          <List horizontal>
+            <List.Item className="footheader"><Image src='/logo.png' size='mini' inline verticalAlign="middle" />© 2020 Inven3s. All Rights Reserved</List.Item>
           </List>
         </div>
       </div>

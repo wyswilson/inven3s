@@ -6,12 +6,13 @@ import { getToken, removeUserSession, setUserSession } from './utils/common';
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 
 import Login from './login';
-import Inventory from './inventory';
+import Pan3 from './pan3';
 import Home from './home';
 import Product from './product';
 
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -48,13 +49,13 @@ class App extends React.Component {
         <BrowserRouter>
           <div className={isMobile ? "navheader mobile" : "navheader"}>
             <NavLink to="/home">Home</NavLink>
-            <NavLink to="/inventory">Inventory</NavLink>
+            <NavLink to="/pan3">Pan3</NavLink>
             <NavLink to="/product">Product</NavLink>
           </div>
           <div>
             <Switch>
               <PrivateRoute path="/home" component={Home} />
-              <PrivateRoute path="/inventory" component={Inventory} />
+              <PrivateRoute path="/pan3" component={Pan3} />
               <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
               <PublicRoute exact path="/">

@@ -7,19 +7,43 @@ body {
   font-size: 16px !important;
 }
 
+.fontdark{
+  color: #444243 !important;
+}
+
+.fontlight{
+  color: #e6e3e3 !important;
+}
+
 .container {
   max-width: 100% !important;
 }
 
-.pagebody{
-  background-color: white !important;
-  padding-top: 2em !important;
-  padding-bottom: 2em !important;
-  padding-left: 7em !important;
-  padding-right: 7em !important;
+.bodyrest2.login{
+  background-color: #444243 !important;
+  padding-top: 5em !important;
+  padding-bottom: 5em !important;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
 }
 
-.pagebody.mobile{
+.bodyrest2.login.mobile{
+  background-color: #444243 !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+.bodyrest1.login{
+  background-color: white !important;
+  padding-top: 5em !important;
+  padding-bottom: 5em !important;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
+}
+
+.bodyrest1.login.mobile{
   background-color: white !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -27,7 +51,23 @@ body {
   padding-right: 1em !important;
 }
 
-.pagebody.login{
+.bodymain.login{
+  background-color: white !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
+}
+
+.bodymain.login.mobile{
+  background-color: white !important;
+  padding-top: 2em !important;
+  padding-bottom: 2em !important;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+}
+
+.bodymain.login{
   background: url('/background.jpg') !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
@@ -39,11 +79,11 @@ body {
   background-color: white !important;
   padding-top: 10em !important;
   padding-bottom: 10em !important;
-  padding-left: 7em !important;
-  padding-right: 7em !important;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
 }
 
-.pagebody.login.mobile{
+.bodymain.login.mobile{
   background: url('/background.jpg') !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
@@ -85,49 +125,47 @@ body {
   margin-top: 1.2em !important;
 }
 
-.navfooter {
+.navfooter.login {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
-  padding-left: 7em !important;
-  padding-right: 7em !important;
-  background: #e6e3e3;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
+  background: #0E0D0B;
   border-bottom: 0px solid #ffffff;
-  color:#444243 !important;
 }
 
-.navfooter.mobile {
+.navfooter.login.mobile {
   padding-top: 1em !important;
   padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #e6e3e3;
+  background: #0E0D0B;
   border-bottom: 0px solid #ffffff;
-  color:#444243 !important;
 }
 
 .footheader {
-  color: #0E0D0B;
+  color: #e6e3e3 !important;
   padding-right: 0em !important;
 }
 
 .navheader {
   padding-top: 2em !important;
   padding-bottom: 2em !important;
-  padding-left: 7em !important;
-  padding-right: 7em !important;
+  padding-left: 12em !important;
+  padding-right: 12em !important;
   background: #0E0D0B;
   border-bottom: 0px solid #ffffff;
 }
 
 .navheader a {
-  color: #817f82;
+  color: #e6e3e3;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader a:hover {
-  color: #e6e3e3;
+  color: #989699;
 }
 
 .navheader.mobile {
@@ -140,7 +178,7 @@ body {
 }
 
 .navheader.mobile a {
-  color: #817f82;
+  color: #989699;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;

@@ -7,7 +7,8 @@ import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 //import queryString from 'query-string'
 
-class Inventory extends React.Component {
+
+class Pan3 extends React.Component {
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
@@ -614,7 +615,7 @@ class Inventory extends React.Component {
   render() {
     return (
       <div
-        className={isMobile ? "pagebody mobile" : "pagebody"}
+        className={isMobile ? "bodymain mobile" : "bodymain"}
       >
         <Card.Group doubling itemsPerRow={3} stackable>
           {this.generategriddefault()}
@@ -624,4 +625,4 @@ class Inventory extends React.Component {
     )
   }
 }
-export default Inventory;
+export default Pan3;
