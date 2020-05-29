@@ -137,9 +137,9 @@ class Login extends React.Component {
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
                 <List floated="left" className="fontdark">
-                  <List.Item icon='barcode' content="Mistakenly throwing out food before used-by date" />
-                  <List.Item icon='barcode' content="Buy more than what we need by not checking pantry before shopping and not sticking to shopping list" />
-                  <List.Item icon='barcode' content="Do not know how to use the food we do have at home" />
+                  <List.Item icon='barcode' content="Mistakenly throw out food due to confusion with the used-by date" />
+                  <List.Item icon='barcode' content="Buy more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
+                  <List.Item icon='barcode' content="Do not know how to use the food that we do have at home" />
                 </List>
               </Grid.Column>
             </Grid.Row>
@@ -160,8 +160,8 @@ class Login extends React.Component {
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
                 <List floated="left" className="fontlight">
-                  <List.Item icon='barcode' content="Constructs your shopping lists for you with food that are running out or that you likely need" />
                   <List.Item icon='barcode' content="Reminds you of expiring food so that you can prioritise consuming them sooner" />
+                  <List.Item icon='barcode' content="Constructs your shopping lists for you with food that are running out or that you likely need" />
                   <List.Item icon='barcode' content="Suggests dishes that you can make from the food that you have" />
                 </List>
               </Grid.Column>
