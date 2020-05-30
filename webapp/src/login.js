@@ -138,7 +138,6 @@ class Login extends React.Component {
               <Grid.Column verticalAlign="middle">
 
                 <List floated="left" className="fontdark">
-                  <List.Item>The reasons include</List.Item>
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
                   <List.Item icon='barcode' content="Not knowing how best to use and combine the food items that we do have at home" />

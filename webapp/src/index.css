@@ -51,7 +51,7 @@ body {
   padding-right: 1em !important;
 }
 
-.bodymain.login{
+.bodymain{
   background-color: white !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
@@ -59,7 +59,7 @@ body {
   padding-right: 12em !important;
 }
 
-.bodymain.login.mobile{
+.bodymain.mobile{
   background-color: white !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
