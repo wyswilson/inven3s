@@ -256,15 +256,9 @@ def jsonifyoutput(statuscode,status,records,special=None):
 
 	if isinstance(special, dict):
 		response = flask.jsonify(messages),statuscode,special
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate")
-		response.setHeader("Pragma", "no-cache")
-		response.setHeader("Expires", "0")
 		return response
 	else:
 		response = flask.jsonify(messages),statuscode
-		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate")
-		response.setHeader("Pragma", "no-cache")
-		response.setHeader("Expires", "0")
 		return response
 
 def addproductcandidate(source,gtin,title,url,rank):
