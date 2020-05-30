@@ -8,7 +8,7 @@ body {
 }
 
 .fontdark{
-  color: #4A5D23 !important;
+  color: #324015 !important;
 }
 
 .fontlight{
@@ -20,7 +20,7 @@ body {
 }
 
 .bodyrest2.login{
-  background-color: #4A5D23 !important;
+  background-color: #324015 !important;
   padding-top: 5em !important;
   padding-bottom: 5em !important;
   padding-left: 12em !important;
@@ -28,7 +28,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #4A5D23 !important;
+  background-color: #324015 !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -116,7 +116,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #004953;
+  background: #071a0d;
   border-bottom: 0px solid #ffffff;
 }
 
@@ -125,7 +125,7 @@ body {
   padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #004953;
+  background: #071a0d;
   border-bottom: 0px solid #ffffff;
 }
 
@@ -139,7 +139,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #004953;
+  background: #071a0d;
   border-bottom: 0px solid #ffffff;
 }
 
@@ -151,7 +151,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #A9BA9D;
+  color: #cbd6c3;
 }
 
 .navheader.mobile {
@@ -159,7 +159,7 @@ body {
   padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #004953;
+  background: #071a0d;
   border-bottom: 0px solid #ffffff;
 }
 
@@ -171,7 +171,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #A9BA9D;
+  color: #cbd6c3;
 }
 
 .error {
@@ -209,7 +209,7 @@ body {
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #A9BA9D;
+  background-color: #cbd6c3;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -218,7 +218,7 @@ body {
 }
 
 .field:hover {
-  background-color: #4A5D23;
+  background-color: #324015;
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -234,7 +234,7 @@ body {
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #004953;
+  color: #071a0d;
 }
 
 .field.locked {
@@ -252,7 +252,7 @@ body {
   font-weight: 400;
   line-height: normal;
   background-color: transparent;
-  color: #004953;
+  color: #071a0d;
   outline: none;
   box-shadow: 0px 4px 16px 0px transparent;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
