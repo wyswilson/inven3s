@@ -140,7 +140,7 @@ class Login extends React.Component {
                 <List floated="left" className="fontdark">
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
-                  <List.Item icon='barcode' content="Not knowing how best to use and combine the food items that we do have at home" />
+                  <List.Item icon='barcode' content="Not knowing how to make the best use of the food that we have at home" />
                 </List>
               </Grid.Column>
             </Grid.Row>
@@ -172,7 +172,7 @@ class Login extends React.Component {
         <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>
           <List horizontal verticalAlign="middle">
             <List.Item className="footheader">
-              <Image src='/logolonglight.png' size='tiny' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved
+              <Image src='/logolonglight.png' size='tiny' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved.
             </List.Item>
             <List.Item className="footheader">
               <a href="https://www.instagram.com/inven3s/" target="_blank" rel="noopener noreferrer"><Icon name="instagram" size="large" /></a>

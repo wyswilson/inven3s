@@ -8,11 +8,11 @@ body {
 }
 
 .fontdark{
-  color: #444243 !important;
+  color: #4A5D23 !important;
 }
 
 .fontlight{
-  color: #e6e3e3 !important;
+  color: #ffffff !important;
 }
 
 .container {
@@ -20,7 +20,7 @@ body {
 }
 
 .bodyrest2.login{
-  background-color: #444243 !important;
+  background-color: #4A5D23 !important;
   padding-top: 5em !important;
   padding-bottom: 5em !important;
   padding-left: 12em !important;
@@ -28,7 +28,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #444243 !important;
+  background-color: #4A5D23 !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -36,7 +36,7 @@ body {
 }
 
 .bodyrest1.login{
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 5em !important;
   padding-bottom: 5em !important;
   padding-left: 12em !important;
@@ -44,7 +44,7 @@ body {
 }
 
 .bodyrest1.login.mobile{
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -52,7 +52,7 @@ body {
 }
 
 .bodymain{
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 12em !important;
@@ -60,7 +60,7 @@ body {
 }
 
 .bodymain.mobile{
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -76,7 +76,7 @@ body {
   -moz-background-size: cover !important;
   -o-background-size: cover !important;
   background-size: cover !important;
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 10em !important;
   padding-bottom: 10em !important;
   padding-left: 12em !important;
@@ -92,7 +92,7 @@ body {
   -moz-background-size: cover !important;
   -o-background-size: cover !important;
   background-size: cover !important;
-  background-color: white !important;
+  background-color: #ffffff !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -100,29 +100,15 @@ body {
 }
 
 .text.main{
-  color: #e6e3e3 !important;
+  color: #ffffff !important;
   font-size: 2.5em !important;
   font-weight: 900 !important;
 }
 
-.text.secondary{
-  color: #e6e3e3 !important;
-  font-size: 1.8em !important;
-  font-weight: 900 !important;
-  margin-top: 1.2em !important;
-}
-
 .text.main.mobile{
-  color: #e6e3e3 !important;
+  color: #ffffff !important;
   font-size: 2em !important;
   font-weight: 900 !important;
-}
-
-.text.secondary.mobile{
-  color: #e6e3e3 !important;
-  font-size: 1.3em !important;
-  font-weight: 900 !important;
-  margin-top: 1.2em !important;
 }
 
 .navfooter.login {
@@ -130,7 +116,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #0E0D0B;
+  background: #004953;
   border-bottom: 0px solid #ffffff;
 }
 
@@ -139,12 +125,12 @@ body {
   padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #0E0D0B;
+  background: #004953;
   border-bottom: 0px solid #ffffff;
 }
 
 .footheader {
-  color: #e6e3e3 !important;
+  color: #ffffff !important;
   padding-right: 0em !important;
 }
 
@@ -153,19 +139,19 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #0E0D0B;
+  background: #004953;
   border-bottom: 0px solid #ffffff;
 }
 
 .navheader a {
-  color: #e6e3e3;
+  color: #ffffff;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader a:hover {
-  color: #989699;
+  color: #A9BA9D;
 }
 
 .navheader.mobile {
@@ -173,19 +159,19 @@ body {
   padding-bottom: 1em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #0E0D0B;
+  background: #004953;
   border-bottom: 0px solid #ffffff;
 }
 
 .navheader.mobile a {
-  color: #989699;
+  color: #ffffff;
   text-decoration: unset;
   margin-left: 16px;
   margin-right: 16px;
 }
 
 .navheader.mobile a:hover {
-  color: #e6e3e3;
+  color: #A9BA9D;
 }
 
 .error {
@@ -223,7 +209,7 @@ body {
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #e6e3e3;
+  background-color: #A9BA9D;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -232,7 +218,7 @@ body {
 }
 
 .field:hover {
-  background-color: #c9c9c9;
+  background-color: #4A5D23;
   box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -248,7 +234,7 @@ body {
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #444243;
+  color: #004953;
 }
 
 .field.locked {
@@ -266,7 +252,7 @@ body {
   font-weight: 400;
   line-height: normal;
   background-color: transparent;
-  color: #0E0D0B;
+  color: #004953;
   outline: none;
   box-shadow: 0px 4px 16px 0px transparent;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,

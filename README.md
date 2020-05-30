@@ -1,9 +1,7 @@
 ==============COLORSCHEME===========
-LIGHTEST 	e6e3e3
-LIGHT    	c9c9c9
-MEDIUM	 	989699  
-DARK 		444243
-DARKEST	 	0E0D0B
+LIGHT    	A9BA9D
+MEDIUM	 	4A5D23  
+DARK     	004953
 ERR			c75061
 LOGIN BACKGROUNDIMG CREDIT "Photo by Muradi on Unsplash" (https://unsplash.com/photos/0b8NaL2CMaQ)
 
