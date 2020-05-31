@@ -515,7 +515,7 @@ class Pan3 extends React.Component {
   generategriditems(){
     if(!this.state.inventoryfetched){
       return (<Card raised>
-                <Message warning size='tiny'
+                <Message negative size='tiny'
                   header="Fetching your inventory"
                   content="Please try again later if it doesn't load"
                 />

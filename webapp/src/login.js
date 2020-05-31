@@ -42,6 +42,7 @@ class Login extends React.Component {
       }
     })
     .then(response => {
+      console.log('here');
       if(response.status === 200){
         this.setState({ success: true});
         setUserSession(response.headers['access-token'],response.headers['name']);
@@ -50,8 +51,12 @@ class Login extends React.Component {
           state: { sessionid: 'xxxxxxxxxx' }
         });
       }
+      else{
+        this.setState({ message:'blabla' });
+      }
     })
     .catch(error => {
+      console.log('there');
       this.setState({ success: false});
       const errresponse = error.response;
       if(errresponse){
@@ -59,7 +64,7 @@ class Login extends React.Component {
           this.setState({ message:'incorrect username and/or password' });
         }
         else{
-          this.setState({ message:errresponse });
+          this.setState({ message: 'server unreachable' });
         }
       }
       else{
@@ -72,7 +77,7 @@ class Login extends React.Component {
     if(this.state.tried){
       return (
         <Card raised>
-            <Message size='tiny' warning={this.state.tried && !this.state.success}
+            <Message size='tiny' negative={this.state.tried && !this.state.success}
               header={this.state.message}
             />
         </Card>
