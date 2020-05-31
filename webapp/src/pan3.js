@@ -134,7 +134,12 @@ class Pan3 extends React.Component {
       })
       .catch(error => {
         if(error.response){
-          console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          if(error.response.data){
+            console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          }
+          else{
+            console.log('searchproducts [server unreachable]');
+          }
         }
         else{
           console.log('searchproducts [server unreachable]');
@@ -170,7 +175,12 @@ class Pan3 extends React.Component {
       })
       .catch(error => {
         if(error.response){
-          console.log('searchretailers [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          if(error.response.data){
+            console.log('searchretailers [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          }
+          else{
+            console.log('searchretailers [server unreachable]');   
+          }
         }
         else{
           console.log('searchretailers [server unreachable]');
@@ -263,8 +273,14 @@ class Pan3 extends React.Component {
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('addinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-        this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        if(error.response.data){
+          console.log('addinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('addinventory [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });
+        }
       }
       else{
         console.log('addinventory [server unreachable]');
@@ -331,8 +347,14 @@ class Pan3 extends React.Component {
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('addnewretailer [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-        this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        if(error.response.data){
+          console.log('addnewretailer [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('addnewretailer [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });
+        }
       }
       else{
         console.log('addnewretailer [server unreachable]');
@@ -369,7 +391,12 @@ class Pan3 extends React.Component {
     })
     .catch(error => {
       if(error.response){
-        console.log('consumeinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+        if(error.response.data){
+          console.log('consumeinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+        }
+        else{
+          console.log('consumeinventory [server unreachable]');
+        }
       }
       else{
         console.log('consumeinventory [server unreachable]');

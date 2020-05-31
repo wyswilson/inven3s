@@ -42,7 +42,6 @@ class Login extends React.Component {
       }
     })
     .then(response => {
-      console.log('here');
       if(response.status === 200){
         this.setState({ success: true});
         setUserSession(response.headers['access-token'],response.headers['name']);
@@ -56,7 +55,6 @@ class Login extends React.Component {
       }
     })
     .catch(error => {
-      console.log('there');
       this.setState({ success: false});
       const errresponse = error.response;
       if(errresponse){

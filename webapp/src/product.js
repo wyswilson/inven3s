@@ -71,8 +71,14 @@ class Product extends React.Component {
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('upsertproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-        this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        if(error.response.data){
+          console.log('upsertproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('upsertproduct [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });
+        }
       }
       else{
         console.log('upsertproduct [server unreachable]');
@@ -109,7 +115,12 @@ class Product extends React.Component {
       })
       .catch(error => {
         if(error.response){
-          console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          if(error.response.data){
+            console.log('searchproducts [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          }
+          else{
+            console.log('searchproducts [server unreachable]');
+          }
         }
         else{
           console.log('searchproducts [server unreachable]');
@@ -213,8 +224,14 @@ class Product extends React.Component {
     .catch(error => {
       this.setState({ loading: false });
       if(error.response){
-        console.log('addnewbrand [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-        this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        if(error.response.data){
+          console.log('addnewbrand [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('addnewbrand [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });        
+        }
       }
       else{
         console.log('addnewbrand [server unreachable]');
@@ -258,8 +275,14 @@ class Product extends React.Component {
         this.setState({ loading: false });
         this.setState({ gtin: gtincandidate});//STILL WANT TO ALLOW USERS TO ADD PRODUCT THAT CANT BE DISCOVEDED FROM WEB
         if(error.response){
-          console.log('addnewproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+          if(error.response.data){
+            console.log('addnewproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+            this.setState({ actionedmsg: error.response.data[0]['message'] });        
+          }
+          else{
+            console.log('addnewproduct [server unreachable]');
+            this.setState({ actionedmsg: 'server unreachable' });        
+          }
         }
         else{
           console.log('addnewproduct [server unreachable]');
@@ -306,7 +329,12 @@ class Product extends React.Component {
       })
       .catch(error => {
         if(error.response){
-          console.log('searchbrands [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          if(error.response.data){
+            console.log('searchbrands [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          }
+          else{
+            console.log('searchbrands [server unreachable]');
+          }
         }
         else{
           console.log('searchbrands [server unreachable]');
