@@ -1,8 +1,10 @@
 ==============COLORSCHEME===========
-LIGHT    	A9BA9D
-MEDIUM	 	4A5D23  
-DARK     	004953
-ERR			c75061
+WHITE		FCF4EC
+YELLOW		C8A058
+BROWN		544027
+BROWN-DARK	090100	
+
+ERR			c75061	
 LOGIN BACKGROUNDIMG CREDIT "Photo by Muradi on Unsplash" (https://unsplash.com/photos/0b8NaL2CMaQ)
 
 ==============PYTHON================
@@ -12,7 +14,7 @@ pip install virtualenvwrapper-win
 mkvirtualenv <projectname> or virtualenv <projectname>
 workon <projectname> OR source /home/ubuntu/inven3s/api/inven3s/bin/activate
 rmvirtualenv <projectname>
-	
+if python process running as "orphan", pkill -9 python
 pip3 install flask
 pip3 install mysql-connector-python
 pip3 install simplejson
