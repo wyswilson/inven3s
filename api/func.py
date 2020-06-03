@@ -255,7 +255,7 @@ def jsonifyoutput(statuscode,status,records,special=None):
 	messages.append(message)
 
 	if isinstance(special, dict):
-		response = flask.jsonify(messages),statuscode,specialREPLA
+		response = flask.jsonify(messages),statuscode,special
 		return response
 	else:
 		response = flask.jsonify(messages),statuscode
