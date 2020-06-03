@@ -555,6 +555,6 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0',port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
     #from waitress import serve
     #serve(app, host="0.0.0.0", port=8989)
