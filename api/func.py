@@ -255,7 +255,7 @@ def jsonifyoutput(statuscode,status,records,special=None):
 	messages.append(message)
 
 	if isinstance(special, dict):
-		response = flask.jsonify(messages),statuscode,special
+		response = flask.jsonify(messages),statuscode,specialREPLA
 		return response
 	else:
 		response = flask.jsonify(messages),statuscode
@@ -268,9 +268,10 @@ def addproductcandidate(source,gtin,title,url,rank):
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
+	#string.capwords(brandname)
 	if brandname != "":
 		query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(brandid,string.capwords(brandname),string.capwords(brandowner),brandimage,brandurl))
+		cursor.execute(query2,(brandid,brandname.strip(),brandowner.strip(),brandimage,brandurl))
 		db.commit()
 
 		return brandid
@@ -295,7 +296,7 @@ def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantit
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
 		query2 = "INSERT INTO products (gtin,productname,productimage,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(gtin,string.capwords(productname),productimage,brandid,isperishable,isedible))
+		cursor.execute(query2,(gtin,productname.strip(),productimage,brandid,isperishable,isedible))
 		db.commit()
 	
 		return gtin
@@ -311,7 +312,7 @@ def addnewretailer(retailername,retailercity=None):
 
 		retailerid = hashlib.md5(retailermash.encode('utf-8')).hexdigest()
 		query2 = "INSERT INTO retailers (retailerid,retailername,retailercity) VALUES (%s,%s,%s)"
-		cursor.execute(query2,(retailerid,string.capwords(retailername),retailercity))
+		cursor.execute(query2,(retailerid,retailername.strip(),retailercity))
 		db.commit()
 
 		return retailerid
@@ -430,9 +431,10 @@ def discovernewproduct(gtin,attempt):
 				if productcell:
 					productname = productcell.text.strip()
 					brandcell = soup.find('td', text = re.compile('Brand'))
-					brandname = brandcell.find_next_sibling('td').find('a').text.strip()
-					manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
-					brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
+					if brandcell:
+						brandname = brandcell.find_next_sibling('td').find('a').text.strip()
+						manufacturercell = soup.find('td', text = re.compile('Manufacturer'))
+						brandowner = manufacturercell.find_next_sibling('td').find('a').text.strip()
 			elif re.match(r'^https:\/\/www\.ebay\.com',selectedurl):
 				productname = soup.find('title').text
 				productname = re.sub(r"\|.+$", "", productname).strip()
