@@ -67,6 +67,10 @@ class Product extends React.Component {
 
         this.setState({ inventory: response.data[0]['results'] });
       }
+      else{
+        console.log('upsertproduct [' + response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: response.data[0]['message'] });        
+      }
     })
     .catch(error => {
       this.setState({ loading: false });
@@ -111,6 +115,9 @@ class Product extends React.Component {
           console.log('searchproducts [' + response.data[0]['message'] + ']');
           
           this.updateproductsuggests(response.data[0]['results']);
+        }
+        else{
+          console.log('searchproducts [' + response.data[0]['message'] + ']');          
         }
       })
       .catch(error => {
@@ -220,6 +227,10 @@ class Product extends React.Component {
         this.setState({ brandid: response.data[0]['results'][0]['brandid'] });
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
       }
+      else{
+        console.log('addnewbrand [' + response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: response.data[0]['message'] });                
+      }
     })
     .catch(error => {
       this.setState({ loading: false });
@@ -269,6 +280,10 @@ class Product extends React.Component {
           this.setState({ productname: newproductdata['productname'] });
           this.setState({ productimage: newproductdata['productimage'] });
           this.setState({ brandname: newproductdata['brandname'] });
+        }
+        else{
+          console.log('addnewproduct [' + response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: response.data[0]['message'] });                
         }
       })
       .catch(error => {
@@ -325,6 +340,9 @@ class Product extends React.Component {
         if(response.status === 200){
           console.log('searchbrands [' + response.data[0]['message'] + ']');
           this.updatebrandsuggests(response.data[0]['results']);
+        }
+        else{
+          console.log('searchbrands [' + response.data[0]['message'] + ']');
         }
       })
       .catch(error => {
