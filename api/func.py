@@ -643,15 +643,12 @@ def fetchinventoryexpireditems(uid):
 		name 		= record[1]
 		goodness 	= record[6]
 		itemstotal 	= record[4]
-		print(name + ' - ' + goodness + ' - ' + str(itemstotal))
 		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += math.ceil(itemstotal)
-			print('\texpiring -> ' + str(expiringcnt))
 		elif goodness == 'expired':
 			expiredrecords.append(record)
 			expiredcnt += math.ceil(itemstotal)
-			print('\texpired -> ' + str(expiredcnt))
 
 	data = {}
 	data['expiring'] = {'count': math.ceil(expiringcnt), 'results': expiringrecords}
