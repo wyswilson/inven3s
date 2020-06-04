@@ -638,7 +638,6 @@ def fetchinventoryexpireditems(uid):
 	expiredcnt 		= 0
 	expiringrecords = []
 	expiredrecords 	= []
-	print('-------------------')
 	for record in records:
 		name 		= record[1]
 		goodness 	= record[6]
