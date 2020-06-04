@@ -385,6 +385,9 @@ def inventoryupsert(userid):
 	quantity	= data["quantity"]#DEFAULT '1'
 	itemstatus	= data["itemstatus"]#DEFAULT 'IN'
 	receiptno	= data["receiptno"]
+	queryisedible		= data["queryisedible"]
+	queryisopened		= data["queryisopened"]
+	queryexpirystatus	= data["queryexpirystatus"]
 
 	inventorycnt = 0
 	gtin,productname,gtinstatus = func.validategtin(gtin)
@@ -423,9 +426,16 @@ def inventoryupsert(userid):
 				else:
 					status = "product item removed (or marked as being consumed) in inventory"
 
-		data = func.fetchinventorybyuser(userid,2,2)
-		inventorycnt = data['all']['cnt']
-		records = data['all']['records']
+		inventorycnt = 0
+		records = []
+		if queryexpirystatus == 'expiring' or queryexpirystatus == 'expired':
+			data = func.fetchinventoryexpireditems(userid)
+			inventorycnt = data[queryexpirystatus]['cnt']
+			records = data[queryexpirystatus]['records']
+		else:
+			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisedible(validateisopened))
+			inventorycnt = data['all']['cnt']
+			records = data['all']['records']		
 	elif gtinstatus == 'INVALID':
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
