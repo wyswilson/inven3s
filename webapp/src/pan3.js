@@ -57,27 +57,8 @@ class Pan3 extends React.Component {
     )
     .then(response => { 
       if(response.status === 200){
-        let message = response.data[0]['count'];
-        if(this.state.queryisedible === 0 && this.state.queryisopened === 0){
-          message += ' new non-food items';
-        }
-        else if(this.state.queryisedible === 0 && this.state.queryisopened === 1){
-          message += ' opened non-food items';
-        }
-        else if(this.state.queryisedible === 1 && this.state.queryisopened === 0){
-          message += ' new food items';
-        }
-        else if(this.state.queryisedible === 1 && this.state.queryisopened === 1){
-          message += ' opened food items';
-        }
-        else if(this.state.queryexpirystatus !== 'all'){
-          message += ' ' + this.state.queryexpirystatus + ' items';          
-        }
-        else{
-          message += ' items';
-        }
         console.log('fetchinventory [' + response.data[0]['message'] + ']');
-        this.setState({ inventorymsg: message });
+        this.setState({ inventorymsg: this.generatecountmsg(response.data[0]['count']) });
         this.setState({ inventoryfetched: true });
         
         this.setState({ inventory: response.data[0]['results'] });
@@ -101,6 +82,30 @@ class Pan3 extends React.Component {
         this.setState({ inventorymsg: 'server unreachable' })
       }
     });
+  }
+
+  generatecountmsg(itemcnt){
+    let message = itemcnt
+    if(this.state.queryisedible === 0 && this.state.queryisopened === 0){
+      message += ' new non-food items';
+    }
+    else if(this.state.queryisedible === 0 && this.state.queryisopened === 1){
+      message += ' opened non-food items';
+    }
+    else if(this.state.queryisedible === 1 && this.state.queryisopened === 0){
+      message += ' new food items';
+    }
+    else if(this.state.queryisedible === 1 && this.state.queryisopened === 1){
+      message += ' opened food items';
+    }
+    else if(this.state.queryexpirystatus !== 'all'){
+      message += ' ' + this.state.queryexpirystatus + ' items';          
+    }
+    else{
+      message += ' items';
+    }
+
+    return message
   }
 
   componentDidMount() {
@@ -373,7 +378,10 @@ class Pan3 extends React.Component {
         dateexpiry:'',
         quantity:0.5,
         itemstatus:'OUT',
-        receiptno:''
+        receiptno:'',
+        queryisedible:this.state.queryisedible,
+        queryisopened:this.state.queryisopened,
+        queryexpirystatus:this.state.queryexpirystatus
       }, 
       {
         headers: {
@@ -386,6 +394,9 @@ class Pan3 extends React.Component {
     .then(response => { 
       if(response.status === 200){
         console.log('consumeinventory [' + response.data[0]['message'] + ']');
+        this.setState({ inventorymsg: this.generatecountmsg(response.data[0]['count']) });
+        this.setState({ inventoryfetched: true });
+
         this.setState({ inventory: response.data[0]['results'] });
       }
     })

@@ -430,12 +430,12 @@ def inventoryupsert(userid):
 		records = []
 		if queryexpirystatus == 'expiring' or queryexpirystatus == 'expired':
 			data = func.fetchinventoryexpireditems(userid)
-			inventorycnt = data[queryexpirystatus]['cnt']
-			records = data[queryexpirystatus]['records']
+			inventorycnt = data[queryexpirystatus]['count']
+			records = data[queryexpirystatus]['results']
 		else:
-			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisedible(validateisopened))
-			inventorycnt = data['all']['cnt']
-			records = data['all']['records']		
+			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisopened(queryisopened))
+			inventorycnt = data['all']['count']
+			records = data['all']['results']		
 	elif gtinstatus == 'INVALID':
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
@@ -475,12 +475,12 @@ def inventoryselect(userid):
 
 		if expirystatus == 'expired' or expirystatus == 'expiring':
 			data = func.fetchinventoryexpireditems(userid)
-			inventorycnt = data[expirystatus]['cnt']
-			records = data[expirystatus]['records']			
+			inventorycnt = data[expirystatus]['count']
+			records = data[expirystatus]['results']			
 		else:
 			data = func.fetchinventorybyuser(userid,isedible,isopened)
-			inventorycnt = data['all']['cnt']
-			records = data['all']['records']
+			inventorycnt = data['all']['count']
+			records = data['all']['results']
 
 		status = "inventory items for the user returned"
 

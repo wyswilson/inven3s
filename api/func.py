@@ -650,8 +650,8 @@ def fetchinventoryexpireditems(uid):
 			expiredcnt += float(itemstotal)
 
 	data = {}
-	data['expiring'] = {'cnt': math.ceil(expiringcnt), 'records': expiringrecords}
-	data['expired'] = {'cnt': math.ceil(expiredcnt), 'records': expiredrecords}		
+	data['expiring'] = {'count': math.ceil(expiringcnt), 'results': expiringrecords}
+	data['expired'] = {'count': math.ceil(expiredcnt), 'results': expiredrecords}		
 	return data
 
 def findproductimage(productname):
@@ -761,22 +761,22 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			inedibleopenedrecords.append(record)
 
 	edible = {}
-	edible['opened'] = {'cnt': int(edibleopenedcnt), 'records': edibleopenedrecords}
-	edible['new'] = {'cnt': int(ediblenewcnt), 'records': ediblenewrecords}
+	edible['opened'] = {'count': int(edibleopenedcnt), 'results': edibleopenedrecords}
+	edible['new'] = {'count': int(ediblenewcnt), 'results': ediblenewrecords}
 	inedible = {}
-	inedible['opened'] = {'cnt': int(inedibleopenedcnt), 'records': inedibleopenedrecords}
-	inedible['new'] = {'cnt': int(inediblenewcnt), 'records': inediblenewrecords}
+	inedible['opened'] = {'count': int(inedibleopenedcnt), 'results': inedibleopenedrecords}
+	inedible['new'] = {'count': int(inediblenewcnt), 'results': inediblenewrecords}
 	
 	data = {}
 	data['edible'] = edible
 	data['inedible'] = inedible
 
 	if validateisopened(isopened) == 0:
-		data['all'] = {'cnt': int(ediblenewcnt) + int(inediblenewcnt), 'records': ediblenewrecords + inediblenewrecords }
+		data['all'] = {'count': int(ediblenewcnt) + int(inediblenewcnt), 'results': ediblenewrecords + inediblenewrecords }
 	elif validateisopened(isopened) == 1:
-		data['all'] = {'cnt': int(edibleopenedcnt) + int(inedibleopenedcnt), 'records': edibleopenedrecords + inedibleopenedrecords }
+		data['all'] = {'count': int(edibleopenedcnt) + int(inedibleopenedcnt), 'results': edibleopenedrecords + inedibleopenedrecords }
 	else:
-		data['all'] = {'cnt': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'records': records }
+		data['all'] = {'count': int(edibleopenedcnt) + int(ediblenewcnt) + int(inedibleopenedcnt) + int(inediblenewcnt), 'results': records }
 
 	return data
 
