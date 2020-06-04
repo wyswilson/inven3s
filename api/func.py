@@ -642,7 +642,7 @@ def fetchinventoryexpireditems(uid):
 		name 		= record[1]
 		goodness 	= record[6]
 		itemstotal 	= record[4]
-		print(name + '-' + itemstotal)
+		print(name + '-' + str(itemstotal))
 		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += float(itemstotal)
