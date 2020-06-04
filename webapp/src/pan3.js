@@ -248,7 +248,10 @@ class Pan3 extends React.Component {
         dateexpiry:this.state.dateexpiry,
         quantity:this.state.quantity,
         itemstatus:'IN',
-        receiptno:''
+        receiptno:'',
+        queryisedible:this.state.queryisedible,
+        queryisopened:this.state.queryisopened,
+        queryexpirystatus:this.state.queryexpirystatus
       }, 
       {
         headers: {
