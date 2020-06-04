@@ -646,11 +646,11 @@ def fetchinventoryexpireditems(uid):
 		print(name + ' - ' + goodness + ' - ' + str(itemstotal))
 		if goodness == 'expiring':
 			expiringrecords.append(record)
-			expiringcnt += float(itemstotal)
+			expiringcnt += int(itemstotal)
 			print('\texpiring -> ' + str(expiringcnt))
 		elif goodness == 'expired':
 			expiredrecords.append(record)
-			expiredcnt += float(itemstotal)
+			expiredcnt += int(itemstotal)
 			print('\texpired -> ' + str(expiredcnt))
 
 	data = {}
