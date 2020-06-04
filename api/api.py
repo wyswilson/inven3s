@@ -512,12 +512,12 @@ def inventoryinsights(userid):
 	messages['message'] = 'insights'
 
 	message1 = {}
-	message1['expiring'] = data2['expiring']['cnt']
-	message1['expired'] = data2['expired']['cnt']
-	message1['ediblenew'] = data1['edible']['new']['cnt']
-	message1['edibleopened'] = data1['edible']['opened']['cnt']
-	message1['inediblenew'] = data1['inedible']['new']['cnt']
-	message1['inedibleopened'] = data1['inedible']['opened']['cnt']
+	message1['expiring'] = data2['expiring']['count']
+	message1['expired'] = data2['expired']['count']
+	message1['ediblenew'] = data1['edible']['new']['count']
+	message1['edibleopened'] = data1['edible']['opened']['count']
+	message1['inediblenew'] = data1['inedible']['new']['count']
+	message1['inedibleopened'] = data1['inedible']['opened']['count']
 	messages['counts'] = message1
 
 	messagestoplvl = []
