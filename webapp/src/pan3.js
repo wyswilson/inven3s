@@ -575,8 +575,8 @@ class Pan3 extends React.Component {
                       onError={this.setdefaultimage.bind(this)}
                     />
                   <Card.Header className="item title">{item.productname}</Card.Header>
-                  <Card.Meta>{item.brandname}</Card.Meta>
-                  <Card.Description className="item small">{item.latestexpiry}</Card.Description>
+                  <Card.Meta className="item small">{item.brandname}</Card.Meta>
+                  <Card.Description className="item small" textAlign="left">{item.latestexpiry ? 'Best before ' + item.latestexpiry : ''}</Card.Description>
                   <Label color='grey' attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 
