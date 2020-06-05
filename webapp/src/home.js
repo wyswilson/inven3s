@@ -168,6 +168,13 @@ class Home extends React.Component {
               </Card.Content>
             </Card> 
           </Grid.Column>
+          <Grid.Column key="0" textAlign="center">
+            <Card raised key="0" fluid>
+              <Card.Content>
+                <Card.Header>Shopping list for {this.state.username}</Card.Header>
+              </Card.Content>
+            </Card> 
+          </Grid.Column>
           {this.generateinsights()}
         </Grid>
       </div>

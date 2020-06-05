@@ -21,7 +21,6 @@ class Pan3 extends React.Component {
       actionedmsg: '',
       actioned: false,
       modalopen: false,
-      confirmopen: false,
       inventoryfetched: false,
       inventorymsg: '',
       queryisedible: redirectstate ? redirectstate.queryisedible : '2',
@@ -47,6 +46,7 @@ class Pan3 extends React.Component {
 
   fetchinventory(){
     console.log('fetchinventory');
+    this.setState({ inventoryfetched: false });
    
     axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus,
       {
@@ -66,7 +66,6 @@ class Pan3 extends React.Component {
       }
     })
     .catch(error => {
-      this.setState({ inventoryfetched: false });
       if(error.response){
         if(error.response.status === 404){
           console.log('fetchinventory [' + error.response.data[0]['message'] + ']');        
@@ -374,6 +373,7 @@ class Pan3 extends React.Component {
 
   consumeinventory(gtin){
     console.log('consumeinventory [' + gtin + ']');
+    this.setState({ inventoryfetched: false });
 
     axios.post(this.state.apihost + '/inventory', 
       {
@@ -426,12 +426,6 @@ class Pan3 extends React.Component {
   setdefaultimage(event){
     event.target.src = this.state.defaultimage;
   }
-
-  hihi = () => console.log('confirmed')
-
-  closeconfirm = () => this.setState({ confirmopen: false })
-
-  openconfirm = () => this.setState({ confirmopen: true })
 
   redirectoproduct(gtin, productname, productimage, brandname, isedible){
     this.props.history.push({
@@ -584,11 +578,6 @@ class Pan3 extends React.Component {
                   <div className='ui three buttons'>
                     <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible)} />
                     <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
-                    <Confirm
-                      open={this.state.confirmopen}
-                      onCancel={this.closeconfirm}
-                      onConfirm={this.hihi}
-                    />
                     <Modal
                       trigger={<Button icon="plus" color="grey"/>}
                       centered={false}

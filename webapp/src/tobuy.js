@@ -54,19 +54,24 @@ class ToBuy extends React.Component {
     });
   }
   
+  additemtoinventory(){
+
+  }
 
   componentDidMount() {
     this.fetchshoppinglist();
-   
   }
 
   generateshoppinglist(){
     return this.state.slist.map( (item) => (
             <List.Item key={item.gtin}>
               <List.Content floated='right'>
-                <Button>Add</Button>
+                <Button icon="plus" color="grey" onClick={this.additemtoinventory.bind(this,item.gtin)} />
               </List.Content>
-              <Image avatar src={item.productimage} />
+              <List.Content floated='left'>
+                <Image size="tiny" src={item.productimage} />
+              </List.Content>
+              
               <List.Content>
                 <List.Header>{item.productname}</List.Header>
                 <List.Description as='a'>{item.retailers}</List.Description>
@@ -80,7 +85,7 @@ class ToBuy extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        <List divided relaxed>
+        <List divided celled floated="left">
           {this.generateshoppinglist()}
         </List>
       </div>

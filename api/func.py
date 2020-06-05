@@ -687,7 +687,7 @@ def fetchinventoryexpireditems(uid):
 	expiredrecords 	= []
 	for record in records:
 		goodness 	= record[8]
-		itemstotal 	= record[6]
+		itemstotal 	= record[5]
 		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += math.ceil(itemstotal)
