@@ -389,8 +389,8 @@ def downloadproductpages(gtin,engine,preferredsources):
 			selectedurl = firsturl
 			selectedtitle = firsttitle
 
+		selectedtitle = string.capwords(selectedtitle.strip())
 		return selectedurl,selectedtitle
-
 	except requests.ConnectionError as e:
 		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))
 	except requests.Timeout as e:
