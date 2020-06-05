@@ -19,6 +19,10 @@ body {
   max-width: 100% !important;
 }
 
+.item.titleheader{
+  font-size: 16px !important;
+}
+
 .bodyrest2.login{
   background-color: #544027 !important;
   padding-top: 5em !important;

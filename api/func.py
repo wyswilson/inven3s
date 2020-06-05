@@ -263,8 +263,9 @@ def jsonifyoutput(statuscode,status,records,special=None):
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
-    query1 = "REPLACE INTO productcandidates (gtin,source,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query1,(gtin,source,id,title,url,rank))
+    type = "productname"
+    query1 = "REPLACE INTO productcandidates (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+    cursor.execute(query1,(gtin,source,type,id,title,url,rank))
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
@@ -424,6 +425,7 @@ def discovernewproduct(gtin,attempt):
 
 			brandid = ""
 			productname = ""
+			productimage = ""
 			brandname = ""
 			brandowner = ""
 			if re.match(r'^https:\/\/www\.buycott\.com',selectedurl):
@@ -468,7 +470,10 @@ def discovernewproduct(gtin,attempt):
 			brandid,brandname,brandstatus = validatebrand("",brandname)
 			if brandstatus == 'NEW':
 				brandid = addnewbrand(brandid,brandname,brandowner,"","")
-			gtin = addnewproduct(gtin,productname,"",brandid,0,1)
+			if productname != "":
+				productimage = findproductimage(gtin,productname)
+
+			gtin = addnewproduct(gtin,productname,productimage,brandid,0,1)
 
 			if productname != "" and brandid != "":
 				return productname,brandid,brandname
@@ -654,20 +659,31 @@ def fetchinventoryexpireditems(uid):
 	data['expired'] = {'count': math.ceil(expiredcnt), 'results': expiredrecords}		
 	return data
 
-def findproductimage(productname):
+def findproductimage(gtin,productname):
 
 	productimage = ""
-
-	url = "https://www.google.com/search?q=%s&tbm=isch" % productname 
 	try:
+		source = "google"
+		url = "https://www.google.com/search?q=%s&tbm=isch" % productname 
 		randagent = random.choice(useragents)
 		headers = {'User-Agent': randagent}
-		#r = requests.get(url, headers=headers, timeout=10)
-		#html = r.content
-		#logging.debug("webcrawl-image: [%s] [%s]" % (url,productname))
+		r = requests.get(url, headers=headers, timeout=10)
+		html = r.content.decode('utf-8')
 
-		#soup = bs4.BeautifulSoup(html, 'html.parser')
-		#results = soup.find_all('div',{'class':'r'})
+		type = "productimage"
+		regex = r"\[\"(http.+?\.(?:jpg|jpeg|png))\","
+		images = re.findall(regex, html)
+		rank = 1
+		for imageurl in images:
+			id = hashlib.md5(imageurl.encode('utf-8')).hexdigest()
+			query1 = "REPLACE INTO productcandidates (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+			cursor.execute(query1,(gtin,source,type,id,productname,imageurl,rank))
+			db.commit()
+
+			rank += 1
+
+			if productimage == "":
+				productimage = imageurl
 
 	except requests.ConnectionError as e:
 		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))

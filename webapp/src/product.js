@@ -13,6 +13,7 @@ class Product extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
+      //apihost: 'http://127.0.0.1:88',
       apihost: 'https://inven3s.xyz',
       token: getToken(),
       loading: false,
@@ -40,6 +41,10 @@ class Product extends React.Component {
 
     console.log('upsertproduct');
 
+    if(this.state.productimage === this.state.defaultimage){
+      this.setState({ productimage: '' });
+    }
+
     axios.post(this.state.apihost + '/product', 
       {
         gtin:this.state.gtin,
@@ -65,7 +70,10 @@ class Product extends React.Component {
         this.setState({ actionedmsg: response.data[0]['message'] });
         this.setState({ actioned: true });
 
-        this.setState({ inventory: response.data[0]['results'] });
+        this.setState({ productname: response.data[0]['results'][0]['productname'] });
+        this.setState({ productimage: response.data[0]['results'][0]['productimage'] });
+        this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
+        this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
       }
       else{
         console.log('upsertproduct [' + response.data[0]['message'] + ']');

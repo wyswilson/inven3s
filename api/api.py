@@ -123,12 +123,11 @@ def productupsert(userid):
 
 		#TRY TO FETCH IMAGE URL IF PRODUCTNAME EXIsTS BUT NOT PRODUCTIMG
 		if productname != '' and productimage == '':
-			productimage = func.findproductimage(productname)
-			print("NEED WORK HERE - SCRAPE PRODUCT IMG")
+			productimage = func.findproductimage(gtin,productname)
 
 		if productname != '':
 			func.updateproductname(gtin,productname)
-			status = status + "productname "
+			status = status + "name "
 		if isperishable != '':
 			func.updateisperishable(gtin,isperishable)
 			status = status + "isperishable "
@@ -137,14 +136,14 @@ def productupsert(userid):
 			status = status + "isedible "
 		if productimage != '':
 			func.updateproductimage(gtin,productimage)
-			status = status + "productimage "
+			status = status + "image "
 		if brandname != '':
 			brandid,brandname,brandstatus = func.validatebrand("",brandname.strip())
 			if brandstatus == 'NEW':
 				brandid = func.addnewbrand(brandid,brandname,"","","")
 			func.updateproductbrand(gtin,brandid)
 
-			status = status + "brandname "
+			status = status + "brand "
 		if status != "":
 			status = status + "updated"
 		else:
@@ -179,6 +178,35 @@ def productupsert(userid):
 		statuscode = 412#Precondition Failed
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
+
+@app.route('/product/image/<gtin>', methods=['GET'])
+@func.requiretoken
+def productimage(userid,gtin):
+	print('hit [productimage] with [%s,%s]' % (userid,gtin))
+
+	statuscode = 200
+	status = "public search for product image is successful"
+
+	productimage = ""
+	gtin,productname,gtinstatus = func.validategtin(gtin)
+	if gtinstatus != 'INVALID':
+		productimage = func.findproductimage(gtin,productname)
+		if productimage == '':
+			status = "public search for product image returned no data or errored"
+			statuscode = 404
+	else:
+		status = "public search for product image returned no data or errored"
+		statuscode = 404
+
+	messages = {}
+	messages['message'] = status
+	messages['image'] = productimage
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response		
 
 @app.route('/product/discover/<gtin>', methods=['GET'])
 @func.requiretoken
@@ -307,16 +335,16 @@ def brandupsert(userid):
 	if brandstatus == "EXISTS":
 		if brandname != "":
 			func.updatebrandname(brandid,brandname)
-			status += "brandname "
+			status += "brand "
 		if brandowner != "":
 			func.updatebrandowner(brandid,brandowner)
-			status += "brandowner "
+			status += "owner "
 		if brandimage != "":
 			func.updatebrandimage(brandid,brandowner)
-			status += "brandimage "
+			status += "image "
 		if brandurl != "":
 			func.updatebrandurl(brandid,brandurl)
-			status += "brandurl "
+			status += "url "
 
 		if status != "":
 			status += "updated"
@@ -408,7 +436,7 @@ def inventoryupsert(userid):
 		if retailerid == "" and retailername != "":
 			retailerid = func.addnewretailer(retailername,"")
 		elif retailername == "" and itemstatus == "IN":
-			status = "invalid retailername"
+			status = "invalid retailer"
 			statuscode = 412#Precondition Failed
 
 		if productname != "" and ((itemstatus == "IN" and retailerid != "") or itemstatus == "OUT"):
