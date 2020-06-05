@@ -488,7 +488,7 @@ def inventoryupsert(userid):
 @app.route('/shoppinglist', methods=['GET'])
 @func.requiretoken
 def shoppinglist(userid):
-	print('hit [inventoryselect] with [%s]' % (userid))
+	print('hit [shoppinglist] with [%s]' % (userid))
 
 	status = ""
 	statuscode = 200
