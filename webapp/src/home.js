@@ -76,11 +76,19 @@ class Home extends React.Component {
   }
 
   directtoinventory(isedible,isopened,expirystatus){
-    this.props.history.push({
-      pathname: '/pan3',
-      //search: '?isedible=' + isedible + '&isopened=' + isopened,
-      state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus }
-    })
+    if(isedible >= 0 && isopened >= 0){
+      this.props.history.push({
+        pathname: '/pan3',
+        //search: '?isedible=' + isedible + '&isopened=' + isopened,
+        state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus }
+      })      
+    }
+    else{
+      this.props.history.push({
+        pathname: '/2buy'
+      }) 
+    }
+
   }
 
   componentDidMount() {
@@ -93,7 +101,7 @@ class Home extends React.Component {
         'id':1,
         'number': this.state.shoppinglistcnt,
         'label': 'items in 2Buy',
-        'isedible':1,'isopened':1,'expirystatus':'all'
+        'isedible':-1,'isopened':-1,'expirystatus':'all'
       },
       {
         'id':2,
@@ -174,13 +182,6 @@ class Home extends React.Component {
               <Card.Content extra>
                 <Button color="grey" onClick={this.handlelogout.bind(this)}>
                 Logout</Button>
-              </Card.Content>
-            </Card> 
-          </Grid.Column>
-          <Grid.Column key="0" textAlign="center">
-            <Card raised key="0" fluid>
-              <Card.Content>
-                <Card.Header>Shopping list for {this.state.username}</Card.Header>
               </Card.Content>
             </Card> 
           </Grid.Column>
