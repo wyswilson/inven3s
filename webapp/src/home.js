@@ -20,7 +20,8 @@ class Home extends React.Component {
         inediblenewcnt: 0,
         inedibleopenedcnt: 0,
         expiredcnt: 0,
-        expiringcnt: 0
+        expiringcnt: 0,
+        shoppinglistcnt: 0,
       }
     };
   }
@@ -51,6 +52,7 @@ class Home extends React.Component {
         const inedibleopenedcnt = response.data[0]['counts']['inedibleopened'];
         const expiringcnt = response.data[0]['counts']['expiring'];
         const expiredcnt = response.data[0]['counts']['expired'];
+        const shoppinglistcnt = response.data[0]['counts']['shoppinglist'];
 
         this.setState({expiringcnt: expiringcnt});
         this.setState({expiredcnt: expiredcnt});
@@ -58,6 +60,7 @@ class Home extends React.Component {
         this.setState({edibleopenedcnt: edibleopenedcnt});
         this.setState({inediblenewcnt: inediblenewcnt});
         this.setState({inedibleopenedcnt: inedibleopenedcnt});
+        this.setState({shoppinglistcnt: shoppinglistcnt});
 
         this.setState({insightsloaded: true});
       }
@@ -86,40 +89,46 @@ class Home extends React.Component {
 
   generateinsights(){
     const stats = [
-      {
+     {
         'id':1,
-        'number': this.state.edibleopenedcnt,
-        'label': '# of opened food items',
+        'number': this.state.shoppinglistcnt,
+        'label': 'items in 2Buy',
         'isedible':1,'isopened':1,'expirystatus':'all'
       },
       {
         'id':2,
-        'number': this.state.ediblenewcnt,
-        'label': '# of new food items',
-        'isedible':1,'isopened':0,'expirystatus':'all'
+        'number': this.state.edibleopenedcnt,
+        'label': 'opened food items',
+        'isedible':1,'isopened':1,'expirystatus':'all'
       },
       {
         'id':3,
-        'number': this.state.expiringcnt,
-        'label': '# of expiring food items',
-        'isedible':2,'isopened':2,'expirystatus':'expiring'
+        'number': this.state.ediblenewcnt,
+        'label': 'new food items',
+        'isedible':1,'isopened':0,'expirystatus':'all'
       },
       {
         'id':4,
-        'number': this.state.expiredcnt,
-        'label': '# of expired food items',
-        'isedible':2,'isopened':2,'expirystatus':'expired'
+        'number': this.state.expiringcnt,
+        'label': 'expiring food items',
+        'isedible':2,'isopened':2,'expirystatus':'expiring'
       },
       {
         'id':5,
-        'number': this.state.inedibleopenedcnt,
-        'label': '# of opened non-food items',
-        'isedible':0,'isopened':1,'expirystatus':'all'
+        'number': this.state.expiredcnt,
+        'label': 'expired food items',
+        'isedible':2,'isopened':2,'expirystatus':'expired'
       },
       {
         'id':6,
+        'number': this.state.inedibleopenedcnt,
+        'label': 'opened non-food items',
+        'isedible':0,'isopened':1,'expirystatus':'all'
+      },
+      {
+        'id':7,
         'number': this.state.inediblenewcnt,
-        'label': '# of new non-food items',
+        'label': 'new non-food items',
         'isedible':0,'isopened':0,'expirystatus':'all'
       }
     ];

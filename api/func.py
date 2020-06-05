@@ -537,8 +537,7 @@ def generateshoppinglist(userid):
 			GROUP BY 1,2,3,4,5
 			ORDER BY 9 DESC, 7 DESC
 		) AS tmp
-		WHERE itemstotal < 1
-		limit 10
+		WHERE itemstotal < 1 and historicaltotal > 1
 	"""
 	cursor.execute(query1,(userid,))
 	records = cursor.fetchall()	

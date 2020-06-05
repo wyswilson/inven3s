@@ -500,7 +500,7 @@ def shoppinglist(userid):
 	else:
 		status = "invalid user"
 		statuscode = 412#Precondition Failed		
-	
+
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
 
 @app.route('/inventory', methods=['GET'])
@@ -553,6 +553,7 @@ def inventoryinsights(userid):
 	
 	data1 = func.fetchinventorybyuser(userid,2,2)
 	data2 = func.fetchinventoryexpireditems(userid)
+	data3 = func.generateshoppinglist(userid)
 
 	messages = {}
 	messages['message'] = 'insights'
@@ -564,6 +565,7 @@ def inventoryinsights(userid):
 	message1['edibleopened'] = data1['edible']['opened']['count']
 	message1['inediblenew'] = data1['inedible']['new']['count']
 	message1['inedibleopened'] = data1['inedible']['opened']['count']
+	message1['shoppinglist'] = len(data3)
 	messages['counts'] = message1
 
 	messagestoplvl = []
