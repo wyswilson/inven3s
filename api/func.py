@@ -225,16 +225,16 @@ def jsonifyinventory(records):
 		productname  	= record[1]
 		productimage	= record[2]
 		brandname   	= record[3]
-		#dateexpiry   	= record[4]
 		itemcount		= record[4]
-		isedible		= record[5]
+		latestexpiry	= record[5]
+		isedible		= record[6]
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
 		itemgroup['productname']	= productname
 		itemgroup['productimage'] 	= productimage
 		itemgroup['brandname'] 		= brandname
-		#itemgroup['dateexpiry'] 	= dateexpiry
+		itemgroup['latestexpiry'] 	= latestexpiry
 		itemgroup['itemcount'] 		= itemcount
 		itemgroup['isedible'] 		= isedible
 
@@ -704,6 +704,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			productimage,
 			brandname,
 			itemstotal,
+			latestexpiry,
 			isedible,
 			CASE
 				when MOD(itemstotal*2,2) != 0 AND itemstotal = 0.5 then 'OPENED'
@@ -712,7 +713,8 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			END AS itemstatus
 		FROM (
 			SELECT
-			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			  i.gtin,p.productname,p.productimage,b.brandname,
+			  p.isedible,max(i.dateexpiry) as latestexpiry,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
 			JOIN products AS p
@@ -748,8 +750,9 @@ def fetchinventorybyuser(uid,isedible,isopened):
 		productimage 	= record[2]
 		brandname 		= record[3]
 		itemstotal 		= record[4]
-		isedible 		= record[5]
-		itemstatus 		= record[6]
+		latestexpiry	= record[5]
+		isedible 		= record[6]
+		itemstatus 		= record[7]
 
 		if(isedible == 1 and itemstatus == "NEW"):
 			ediblenewcnt += itemstotal

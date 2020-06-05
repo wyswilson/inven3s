@@ -45,7 +45,6 @@ query1 = """
 	SELECT
 		gtin,productimage
 	FROM products
-	limit 1
 """
 cursor.execute(query1)
 records = cursor.fetchall()
@@ -53,10 +52,10 @@ imagepath = "../webapp/public/products/"
 for record in records:
 	gtin = record[0]
 	productimage = record[1]
-
-	opener=urllib.request.build_opener()
-	opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
-	urllib.request.install_opener(opener)
-	imageloc = imagepath + gtin + '.jpg'
-	urllib.request.urlretrieve(productimage, imageloc)
+	if productimage != '':
+		opener=urllib.request.build_opener()
+		opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+		urllib.request.install_opener(opener)
+		imageloc = imagepath + gtin + '.jpg'
+		urllib.request.urlretrieve(productimage, imageloc)
 
