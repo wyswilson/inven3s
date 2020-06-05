@@ -105,27 +105,27 @@ class Home extends React.Component {
       },
       {
         'id':2,
-        'number': this.state.edibleopenedcnt,
-        'label': 'opened food items',
-        'isedible':1,'isopened':1,'expirystatus':'all'
-      },
-      {
-        'id':3,
-        'number': this.state.ediblenewcnt,
-        'label': 'new food items',
-        'isedible':1,'isopened':0,'expirystatus':'all'
-      },
-      {
-        'id':4,
         'number': this.state.expiringcnt,
         'label': 'expiring food items',
         'isedible':2,'isopened':2,'expirystatus':'expiring'
       },
       {
-        'id':5,
+        'id':3,
         'number': this.state.expiredcnt,
         'label': 'expired food items',
         'isedible':2,'isopened':2,'expirystatus':'expired'
+      },
+      {
+        'id':4,
+        'number': this.state.edibleopenedcnt,
+        'label': 'opened food items',
+        'isedible':1,'isopened':1,'expirystatus':'all'
+      },
+      {
+        'id':5,
+        'number': this.state.ediblenewcnt,
+        'label': 'new food items',
+        'isedible':1,'isopened':0,'expirystatus':'all'
       },
       {
         'id':6,
