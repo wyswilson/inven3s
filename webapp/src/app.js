@@ -52,15 +52,15 @@ class App extends React.Component {
           <div className={isMobile ? "navheader mobile" : "navheader"}>
             <NavLink to="/home">Home</NavLink>
             <NavLink to="/pan3">Pan3</NavLink>
-            <NavLink to="/product">Product</NavLink>
             <NavLink to="/2buy">2Buy</NavLink>
+            <NavLink to="/product">Product</NavLink>
           </div>
           <div>
             <Switch>
               <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/pan3" component={Pan3} />
-              <PrivateRoute path="/product" component={Product} />
               <PrivateRoute path="/2buy" component={ToBuy} />
+              <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
               <PublicRoute exact path="/">
                 <Redirect to="/login" />
