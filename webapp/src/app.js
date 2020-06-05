@@ -52,12 +52,14 @@ class App extends React.Component {
             <NavLink to="/home">Home</NavLink>
             <NavLink to="/pan3">Pan3</NavLink>
             <NavLink to="/product">Product</NavLink>
+            <NavLink to="/list">List</NavLink>
           </div>
           <div>
             <Switch>
               <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/pan3" component={Pan3} />
               <PrivateRoute path="/product" component={Product} />
+              <PrivateRoute path="/list" component={List} />
               <PublicRoute path="/login" component={Login} />
               <PublicRoute exact path="/">
                 <Redirect to="/login" />

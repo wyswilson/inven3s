@@ -485,6 +485,24 @@ def inventoryupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
+@app.route('/shoppinglist', methods=['GET'])
+@func.requiretoken
+def shoppinglist(userid):
+	print('hit [inventoryselect] with [%s]' % (userid))
+
+	status = ""
+	statuscode = 200
+	records = []
+
+	if func.validateuser(userid):
+		records = func.generateshoppinglist(userid)
+		status = "shopping list generated"
+	else:
+		status = "invalid user"
+		statuscode = 412#Precondition Failed		
+	
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
 def inventoryselect(userid):

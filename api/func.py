@@ -511,6 +511,30 @@ def findallproducts(isedible):
 
 	return records
 
+def generateshoppinglist(userid):
+	query1 = """
+		SELECT gtin,productname,productimage,brandname,availabletotal,latestexpiry,isedible FROM (
+			SELECT
+			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,max(i.dateexpiry) as latestexpiry, max(i.dateentry) AS recentpurchasedate,
+			  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal,
+			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS availabletotal
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
+			WHERE i.userid = %s AND p.isedible IN (0,1)
+			GROUP BY 1,2,3,4,5
+			ORDER BY 8 DESC, 7 DESC
+		) AS tmp
+		WHERE availabletotal < 1
+		limit 10
+	"""
+	cursor.execute(query1,(userid,))
+	records = cursor.fetchall()	
+
+	return records
+
 def findproductbykeyword(gtin,isedible):
 	gtinfuzzy = "%" + gtin + "%"
 	query1 = """
