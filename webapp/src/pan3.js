@@ -463,7 +463,7 @@ class Pan3 extends React.Component {
               floated='right'
               size='tiny'
             />
-            <Card.Header className="item titleheader">{this.state.inventorymsg}</Card.Header>
+            <Card.Header className="item title">{this.state.inventorymsg}</Card.Header>
             <Card.Meta></Card.Meta>
             <Label color='grey' attached='top right'>0</Label>
           </Card.Content>
@@ -574,8 +574,9 @@ class Pan3 extends React.Component {
                       size='tiny' style={{width: 'auto', height: '70px'}}
                       onError={this.setdefaultimage.bind(this)}
                     />
-                  <Card.Header className="item titleheader">{item.productname}</Card.Header>
+                  <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta>{item.brandname}</Card.Meta>
+                  <Card.Description className="item small">{item.latestexpiry}</Card.Description>
                   <Label color='grey' attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 

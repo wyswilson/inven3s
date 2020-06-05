@@ -229,6 +229,9 @@ def jsonifyinventory(records):
 		latestexpiry	= record[5]
 		isedible		= record[6]
 
+		if latestexpiry:
+			latestexpiry = latestexpiry.strftime('%Y-%m-%d')
+
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
 		itemgroup['productname']	= productname

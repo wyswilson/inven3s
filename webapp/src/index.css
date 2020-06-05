@@ -19,8 +19,12 @@ body {
   max-width: 100% !important;
 }
 
-.item.titleheader{
+.item.title{
   font-size: 16px !important;
+}
+
+.item.small{
+  font-size: 10px !important;
 }
 
 .bodyrest2.login{
