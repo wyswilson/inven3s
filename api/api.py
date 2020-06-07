@@ -25,8 +25,8 @@ def uservalidate(token):
 	print('hit [uservalidate] with [%s]' % (token))
 
 	valid, userid, username = func.validatetoken(token)
-	firstname = username.split(' ', 1)[0]
 	if valid:
+		firstname = username.split(' ', 1)[0]
 		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': token, 'Name': firstname})
 	else:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})			
@@ -42,8 +42,8 @@ def userlogin():
 	if not auth or not email or not password:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 	userid,username,passwordhashed = func.finduserbyid(email)
-	firstname = username.split(' ', 1)[0]
 	if userid != "" and func.checkpassword(passwordhashed,password):
+		firstname = username.split(' ', 1)[0]
 		token = func.generatejwt(userid,firstname)
 		tokenstr = token.decode('UTF-8')
 		return func.jsonifyoutput(200,"login successful",[],{'Access-Token': tokenstr, 'Name': firstname})
