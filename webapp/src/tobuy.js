@@ -15,6 +15,7 @@ class ToBuy extends React.Component {
       loading: false,
       actionedmsg: '',
       actioned: false,
+      defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       slist:[]
     };
   }
@@ -58,6 +59,10 @@ class ToBuy extends React.Component {
 
   }
 
+  setdefaultimage(event){
+    event.target.src = this.state.defaultimage;
+  }
+
   componentDidMount() {
     this.fetchshoppinglist();
   }
@@ -69,7 +74,9 @@ class ToBuy extends React.Component {
                 <Button icon="plus" color="grey" onClick={this.additemtoinventory.bind(this,item.gtin)} />
               </List.Content>
               <List.Content floated='left'>
-                <Image size="tiny" src={item.productimage} />
+                <Image size="tiny" src={item.productimage}
+                onError={this.setdefaultimage.bind(this)}
+                />
               </List.Content>
               
               <List.Content>

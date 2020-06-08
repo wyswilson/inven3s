@@ -421,12 +421,6 @@ class Product extends React.Component {
             <Card.Description>
               <Grid columns={1} doubling stackable>
                 <Grid.Column>
-                  <Image rounded
-                    centered src={this.state.productimage}
-                    floated='right'
-                    size='tiny' style={{width: 'auto', height: '140px'}}
-                    onError={this.setdefaultimage.bind(this)}
-                  />
                   <Dropdown className="fullwidth" name="productname"
                       search
                       selection
@@ -445,6 +439,11 @@ class Product extends React.Component {
             <Divider/>
             <Card.Meta>
               <Grid columns={1} doubling stackable>
+                <Image wrapped
+                  src={this.state.productimage}
+                  size='small'
+                  onError={this.setdefaultimage.bind(this)}
+                />
                 <Grid.Column>
                   <label className="fullwidth">GTIN</label>
                   <Input className="fullwidth" disabled value={this.state.gtin}/>

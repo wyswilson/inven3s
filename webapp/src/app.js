@@ -35,8 +35,15 @@ class App extends React.Component {
 
     axios.get(this.state.apihost + '/user/validate/' + this.state.token)
     .then(response => {
-      setUserSession(response.headers['access-token'],response.headers['name']);
-      this.setState({ authloading: false });
+      if(response.status === 200){
+        setUserSession(response.headers['access-token'],response.headers['name']);
+        this.setState({ authloading: false });
+      }
+      else{
+        removeUserSession();
+        this.setState({ authloading: false });
+        this.props.history.push('/login');
+      }
     }).catch(error => {
       removeUserSession();
       this.setState({ authloading: false });

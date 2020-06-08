@@ -58,6 +58,6 @@ for record in records:
 		opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
 		urllib.request.install_opener(opener)
 		imageloc = imagepath + gtin + '.jpg'
-		print('downloading [%s][%s]' + (productname,imageloc))
+		print('downloading [%s][%s]' % (productname,imageloc))
 		urllib.request.urlretrieve(productimage, imageloc)
 
