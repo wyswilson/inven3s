@@ -1,8 +1,8 @@
 ==============COLORSCHEME===========
 WHITE		FCF4EC
 YELLOW		C8A058
-BROWN		544027
-BROWN-DARK	090100	
+BLUE		544027
+BLUE-DARK	011524
 
 ERR			c75061	
 LOGIN BACKGROUNDIMG CREDIT "Photo by Annie Spratt on Unsplash" (https://unsplash.com/photos/nLHnx2-_sK4)
@@ -23,6 +23,7 @@ pip3 install bs4
 pip3 install pyjwt
 pip3 install py3-validate-email
 pip3 install flask-cors
+sudo pip3 install waitress
 
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s

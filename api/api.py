@@ -21,6 +21,30 @@ flask_cors.CORS(app,
 #501#Not Implemented
 #401#Unauthorized
 
+@app.route('/user/register/interest', methods=['POST'])
+def userregisterinterest():
+	print('hit [userregisterinterest]')
+
+	status = ""
+	statuscode = 200
+	records = []
+
+	data = json.loads(flask.request.get_data().decode('UTF-8'))
+	email = data["email"]
+
+	if validate_email.validate_email(email_address=email, check_regex=True):
+		registered = func.registeruserinterest(email)
+		if registered:
+			status = "Thank you for registering your interest. We'll be in touch."
+		else:
+			status = "You have already registered your interest. We'll be in touch."
+			statuscode = 403
+	else:
+		status = "Invalid email address. Please try again."
+		statuscode = 412
+
+	return func.jsonifyoutput(statuscode,status,[])	
+
 @app.route('/user/validate/<token>', methods=['GET'])
 def uservalidate(token):
 	print('hit [uservalidate] with [%s]' % (token))
@@ -616,5 +640,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

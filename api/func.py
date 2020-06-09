@@ -107,6 +107,24 @@ def requiresbasicauth(f):
         return f(*args, **kwargs)
     return decorated
 
+def registeruserinterest(email):
+	query1 = """
+    	SELECT
+        	email
+    	FROM usersinterest
+    	WHERE email = %s
+	"""
+	cursor.execute(query1,(email,))
+	records = cursor.fetchall()
+	if records:	
+		return False
+	else:
+		query1 = "INSERT INTO usersinterest (email) VALUES (%s)"
+		cursor.execute(query1,(email,))
+		db.commit()
+
+		return True
+
 def addnewuser(email,passwordhashed):
 	userid = hashlib.md5(email.encode('utf-8')).hexdigest()
 	query1 = "INSERT INTO users (userid,email,passwordhashed) VALUES (%s,%s,%s)"

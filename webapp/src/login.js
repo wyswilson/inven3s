@@ -2,92 +2,128 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
-import { Icon, Image, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { Popup, Icon, Image, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
+import scrollToComponent from 'react-scroll-to-component';
 
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //apihost: 'http://127.0.0.1:88',
-      apihost: 'https://inven3s.xyz',
+      apihost: 'http://127.0.0.1:88',
+      //apihost: 'https://inven3s.xyz',
       email: '',
       password: '',
+      interestemail: '',
       message: '',
-      success: false,
-      tried: false,
+      messageactive: false,
+      interestmessage: '',
     };
   }
   
   updatecredentials(field,value) {
-    if(field === 'email'){
+    if(field === 'Email'){
       this.setState({ email:value });
     }
-    if(field === 'password'){
+    if(field === 'Password'){
       this.setState({ password:value });
     }
   }
 
-  authenticate(event){
-    this.setState({ message: 'authenticating' });
-    this.setState({ tried: true });
+  updateinterest(field,value){
+    this.setState({ interestemail: value });
+  }
 
-    console.log('authenticate [' + this.state.email + ']');
+  registerinterest(event){
+    console.log(this.state.interestemail);
 
-    axios.post(this.state.apihost + '/user/login', {},
+    axios.post(this.state.apihost + '/user/register/interest', 
       {
-       auth: {
-        username: this.state.email,
-        password: this.state.password
+        email:this.state.interestemail
+      }, 
+      {
+        headers: {
+          'crossDomain': true,
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
       }
-    })
+    )
     .then(response => {
       if(response.status === 200){
-        this.setState({ success: true});
-        setUserSession(response.headers['access-token'],response.headers['name']);
-        this.props.history.push({
-          pathname: '/home',
-          state: { sessionid: 'xxxxxxxxxx' }
-        });
-      }
-      else{
-        this.setState({ message:'blabla' });
+        this.setState({ interestmessage: response.data[0]['message'] });
       }
     })
     .catch(error => {
-      this.setState({ success: false});
       const errresponse = error.response;
       if(errresponse){
-        if(errresponse.status === 401){
-          this.setState({ message:'incorrect username and/or password' });
-        }
-        else{
-          this.setState({ message: 'server unreachable' });
-        }
+        this.setState({ interestmessage: errresponse.data[0]['message'] });
       }
       else{
-        this.setState({ message:'server unreachable' });
+        this.setState({ interestmessage: 'Sorry, unable to reach server. Please try again later.' });
       }
     });
   }
-  
-  updatemessage(){
-    if(this.state.tried){
-      return (
-        <Card raised>
-            <Message size='tiny' negative={this.state.tried && !this.state.success}
-              header={this.state.message}
-            />
-        </Card>
-      )
+
+  generateinterestmessage(){
+    if(this.state.interestmessage !== ''){
+      return (<Message className="fullwidth" size="tiny">
+          {this.state.interestmessage}</Message>
+        );
     }
     else{
-      return (
-        <Button color="grey" className="fullwidth">
-        Register interest</Button>
-      )
+      return '';
     }
+  }
+  authenticate(event){
+    this.setState({ messageactive: true });
+    if(this.state.email !== '' && this.state.email !== ''){
+      this.setState({ message: 'authenticating' });
+
+      console.log('authenticate [' + this.state.email + ']');
+
+      axios.post(this.state.apihost + '/user/login', {},
+        {
+         auth: {
+          username: this.state.email,
+          password: this.state.password
+        }
+      })
+      .then(response => {
+        if(response.status === 200){
+          setUserSession(response.headers['access-token'],response.headers['name']);
+          this.props.history.push({
+            pathname: '/home',
+            state: { sessionid: 'xxxxxxxxxx' }
+          });
+        }
+        else{
+          this.setState({ message:'blabla' });
+        }
+      })
+      .catch(error => {
+        const errresponse = error.response;
+        if(errresponse){
+          if(errresponse.status === 401){
+            this.setState({ message:'incorrect username and/or password' });
+          }
+          else{
+            this.setState({ message: 'server unreachable' });
+          }
+        }
+        else{
+          this.setState({ message:'server unreachable' });
+        }
+      });
+    }
+    else{
+      this.setState({ message: 'require username and password' });
+    }
+  }
+  
+  scrollto(event){
+    scrollToComponent(this.registerinterestpanel);
   }
 
   render() {
@@ -106,19 +142,29 @@ class Login extends React.Component {
             <Grid.Column textAlign="center">
               <Card raised key="1" fluid>
                 <Card.Content>
-                  <Field label="email" type="text" active={false}
+                  <Field label="Email" type="text" active={false}
                     parentCallback={this.updatecredentials.bind(this)}/>
-                  <Field label="password" type="password" active={false}
+                  <Field label="Password" type="password" active={false}
                   parentCallback ={this.updatecredentials.bind(this)}/>
                 </Card.Content>
                 <Card.Content extra>
                   <Grid>
-                    <Grid.Column width={7}>
-                      <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
-                      Login</Button>
+                    <Grid.Column width={8}>
+                      <Popup
+                        content={this.state.message}
+                        mouseLeaveDelay={500}
+                        on='hover'
+                        disabled={!this.state.messageactive}
+                        trigger={
+                          <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
+                          Login</Button>
+                        }
+                      />
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      {this.updatemessage()}
+                      <Button color="grey" className="fullwidth"
+                      onClick={this.scrollto.bind(this)}>
+                      Register interest</Button>
                     </Grid.Column>
                   </Grid>
                 </Card.Content>
@@ -133,14 +179,13 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column className="fontdark">
                 <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
-                  What are we solving?
+                  Be the change you want to see
                 </Header>
                 <p style={{ fontSize: '1.1em' }} className="fontdark">
                   Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">3 average-size fridges</a> worth of food per household each year
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
-
                 <List floated="left" className="fontdark">
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
@@ -157,7 +202,7 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column>
                 <Header as='h3' style={{ fontSize: '1.8em' }} className="fontlight">
-                  How are we solving it?
+                  How does it work?
                 </Header>
                 <p style={{ fontSize: '1.1em' }} className="fontlight">
                   By tracking and better managing food items we have at home using AI to minimise waste and save you time
@@ -171,6 +216,38 @@ class Login extends React.Component {
                 </List>
               </Grid.Column>
             </Grid.Row>
+          </Grid>
+        </div>
+        <div 
+          className={isMobile ? "bodyrest1 login mobile" : "bodyrest1 login"}
+          ref={(div) => { this.registerinterestpanel = div; }}
+        >
+          <Grid celled='internally' columns='equal' stackable>
+            <Grid.Column className="fontdark">
+              <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
+                Want to find out more?
+              </Header>
+              <p style={{ fontSize: '1.1em' }} className="fontdark">
+                Still have questions or ready to get started? Register your interest now.
+              </p>
+            </Grid.Column>
+            <Grid.Column verticalAlign="middle">
+              <Grid columns={1} doubling stackable>
+                <Grid.Column>
+                  <Field label="Enter email address" type="text" active={false}
+                  parentCallback={this.updateinterest.bind(this)}/>
+                </Grid.Column>
+                <Grid.Row columns={2}>
+                  <Grid.Column width={5}>
+                    <Button color="grey" className="fullwidth" onClick={this.registerinterest.bind(this)}>
+                      Register now</Button>
+                  </Grid.Column>
+                  <Grid.Column width={11}>
+                    {this.generateinterestmessage()}
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
           </Grid>
         </div>
         <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>

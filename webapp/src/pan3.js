@@ -437,12 +437,12 @@ class Pan3 extends React.Component {
   generateitemadditionmsg(){
       if(this.state.actionedmsg !== '' && this.state.actioned){
         return (
-          <Message className="fullwidth" success><Message.Header>{this.state.actionedmsg}</Message.Header></Message>
+          <Message className="fullwidth" success size="tiny">{this.state.actionedmsg}</Message>
         )
       }
       else if(this.state.actionedmsg !== ''){
         return (
-          <Message className="fullwidth" negative><Message.Header>{this.state.actionedmsg}</Message.Header></Message>        
+          <Message className="fullwidth" negative size="tiny">{this.state.actionedmsg}</Message>        
         )
       }
   }
