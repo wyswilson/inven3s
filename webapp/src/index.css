@@ -159,7 +159,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #7bc98c;
+  color: #bddec4;
 }
 
 .navheader.mobile {
@@ -179,7 +179,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #7bc98c;
+  color: #bddec4;
 }
 
 .error {
@@ -217,7 +217,7 @@ body {
   font-size: 16px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #7bc98c;
+  background-color: #bddec4;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;

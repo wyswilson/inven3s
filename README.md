@@ -1,7 +1,7 @@
 ==============COLORSCHEME===========
 WHITE		FCF4EC
 YELLOW		C8A058
-BLUE		544027
+BLUE		0d4169
 BLUE-DARK	011524
 
 ERR			c75061	
@@ -41,6 +41,7 @@ npm i react
 npm i react-favicon
 npx create-react-app my-app
 npm i react-device-detect
+npm i react-scroll-to-component
 
 If we need NPM web server only running on HTTPS:
 export HTTPS=true
