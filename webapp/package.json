@@ -2,7 +2,7 @@
   "name": "webapp",
   "version": "0.1.0",
   "private": true,
-  "start": "http-server ./app -a 13.229.67.229 -p 8888 -c-1",
+  "start": "http-server ./app -a 0.0.0.0 -p 3000 -c-1",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -22,8 +22,7 @@
     "semantic-ui-calendar-react": "^0.15.3",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "styled-components": "^5.1.0",
-    "webpack": "^4.42.0"
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
