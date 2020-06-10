@@ -2,10 +2,10 @@ import datetime
 import flask
 
 import func
-import validate_email
 import flask_cors
 import json
 import waitress
+#import validate_email
 
 app = flask.Flask(__name__)#template_dir = os.path.abspath(flasktemplatedir) <=> static_url_path='',static_folder=template_dir,template_folder=template_dir
 app.config['JSON_SORT_KEYS'] = False
@@ -37,7 +37,8 @@ def userregisterinterest():
 	language = flask.request.user_agent.language
 	referrer = flask.request.referrer
 
-	if validate_email.validate_email(email_address=email):
+	#if validate_email.validate_email(email_address=email):
+	if func.validateemail(email):
 		registered = func.registeruserinterest(email,clientip,browser,platform,language,referrer)
 		if registered:
 			status = "Thanks for your interest. We'll be in touch."
@@ -90,7 +91,8 @@ def usersadd():
 	password 	= data["password"]
 
 	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
-	if validate_email.validate_email(email_address=email):
+	#if validate_email.validate_email(email_address=email):
+	if func.validateemail(email):
 		try:
 			func.addnewuser(email,func.generatehash(password))
 			return func.jsonifyoutput(200,"user registered successfully",[])
