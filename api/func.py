@@ -107,7 +107,7 @@ def requiresbasicauth(f):
         return f(*args, **kwargs)
     return decorated
 
-def registeruserinterest(email):
+def registeruserinterest(email, clientip, browser,platform,language,referrer):
 	query1 = """
     	SELECT
         	email
@@ -119,8 +119,10 @@ def registeruserinterest(email):
 	if records:	
 		return False
 	else:
-		query1 = "INSERT INTO usersinterest (email) VALUES (%s)"
-		cursor.execute(query1,(email,))
+		eventdate = datetime.datetime.today().strftime('%Y-%m-%d')
+
+		query1 = "INSERT INTO usersinterest (email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+		cursor.execute(query1,(email,clientip,browser,platform,language,eventdate,referrer))
 		db.commit()
 
 		return True

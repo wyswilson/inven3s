@@ -31,13 +31,18 @@ def userregisterinterest():
 
 	data = json.loads(flask.request.get_data().decode('UTF-8'))
 	email = data["email"]
+	clientip = flask.request.remote_addr
+	browser = flask.request.user_agent.browser
+	platform = flask.request.user_agent.platform
+	language = flask.request.user_agent.language
+	referrer = flask.request.referrer
 
 	if validate_email.validate_email(email_address=email, check_regex=True):
-		registered = func.registeruserinterest(email)
+		registered = func.registeruserinterest(email,clientip,browser,platform,language,referrer)
 		if registered:
-			status = "Thank you for registering your interest. We'll be in touch."
+			status = "Thanks for your interest. We'll be in touch."
 		else:
-			status = "You have already registered your interest. We'll be in touch."
+			status = "You are already registered. We'll be in touch."
 			statuscode = 403
 	else:
 		status = "Invalid email address. Please try again."
@@ -640,5 +645,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

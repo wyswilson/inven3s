@@ -11,8 +11,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //apihost: 'http://127.0.0.1:88',
-      apihost: 'https://inven3s.xyz',
+      apihost: 'http://127.0.0.1:88',
+      //apihost: 'https://inven3s.xyz',
       loading: false,
       email: '',
       password: '',
@@ -64,7 +64,7 @@ class Login extends React.Component {
         this.setState({ interestmessage: errresponse.data[0]['message'] });
       }
       else{
-        this.setState({ interestmessage: 'Sorry, unable to reach server. Please try again later.' });
+        this.setState({ interestmessage: 'Unable to reach server. Please try again later.' });
       }
     });
   }
@@ -179,10 +179,10 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column className="fontdark">
                 <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
-                  Be the change you want to see
+                  Food waste is a problem
                 </Header>
                 <p style={{ fontSize: '1.1em' }} className="fontdark">
-                  Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">3 average-size fridges</a> worth of food per household each year
+                  Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">3 average-size fridges</a> worth of food each year, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
@@ -202,10 +202,10 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column>
                 <Header as='h3' style={{ fontSize: '1.8em' }} className="fontlight">
-                  How does it work?
+                  How can our solution help?
                 </Header>
                 <p style={{ fontSize: '1.1em' }} className="fontlight">
-                  By tracking and better managing food items we have at home using AI to minimise waste and save you time
+                Our web app enables effortless tracking of food items at home and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
@@ -225,7 +225,7 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column className="fontdark">
               <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
-                Ready for the next step?
+                Ready to make a difference?
               </Header>
               <p style={{ fontSize: '1.1em' }} className="fontdark">
                 Want to find out more or interested in early access to the web app? Let us know and we'll get back to you
