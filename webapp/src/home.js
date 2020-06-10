@@ -159,8 +159,8 @@ class Home extends React.Component {
     else{
       return (
             <Grid.Column textAlign="center">
-              <Message negative size='tiny'
-                header="Problem generating insights"
+              <Message size='tiny'
+                header="Generating insights for you"
                 content="Please try again later if it doesn't load"
               />
             </Grid.Column>

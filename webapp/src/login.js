@@ -13,6 +13,7 @@ class Login extends React.Component {
     this.state = {
       //apihost: 'http://127.0.0.1:88',
       apihost: 'https://inven3s.xyz',
+      loading: false,
       email: '',
       password: '',
       interestemail: '',
@@ -36,7 +37,7 @@ class Login extends React.Component {
   }
 
   registerinterest(event){
-    console.log(this.state.interestemail);
+    this.setState({ loading: true });
 
     axios.post(this.state.apihost + '/user/register/interest', 
       {
@@ -51,11 +52,13 @@ class Login extends React.Component {
       }
     )
     .then(response => {
+      this.setState({ loading: false });
       if(response.status === 200){
         this.setState({ interestmessage: response.data[0]['message'] });
       }
     })
     .catch(error => {
+      this.setState({ loading: false });
       const errresponse = error.response;
       if(errresponse){
         this.setState({ interestmessage: errresponse.data[0]['message'] });
@@ -71,9 +74,6 @@ class Login extends React.Component {
       return (<Message className="fullwidth" size="tiny">
           {this.state.interestmessage}</Message>
         );
-    }
-    else{
-      return '';
     }
   }
   authenticate(event){
@@ -225,10 +225,10 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column className="fontdark">
               <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
-                Want to find out more?
+                Ready for the next step?
               </Header>
               <p style={{ fontSize: '1.1em' }} className="fontdark">
-                Still have questions or ready to get started? Register your interest now.
+                Want to find out more or interested in early access to the web app? Let us know and we'll get back to you
               </p>
             </Grid.Column>
             <Grid.Column verticalAlign="middle">
@@ -239,7 +239,9 @@ class Login extends React.Component {
                 </Grid.Column>
                 <Grid.Row columns={2}>
                   <Grid.Column width={5}>
-                    <Button color="grey" className="fullwidth" onClick={this.registerinterest.bind(this)}>
+                    <Button color="grey" className="fullwidth"
+                      loading={this.state.loading || false}
+                      onClick={this.registerinterest.bind(this)}>
                       Register now</Button>
                   </Grid.Column>
                   <Grid.Column width={11}>
@@ -253,10 +255,10 @@ class Login extends React.Component {
         <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>
           <List horizontal verticalAlign="middle">
             <List.Item className="footheader">
-              <Image src='/logo.png' size='mini' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved.
+              <Image src='/logowhite.png' size='mini' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved.
             </List.Item>
             <List.Item className="footheader">
-              <a href="https://www.instagram.com/inven3s/" target="_blank" rel="noopener noreferrer"><Icon name="instagram" size="large" /></a>
+              <a href="https://www.instagram.com/inven3s/" target="_blank" rel="noopener noreferrer" className="footheader"><Icon name="instagram" size="large" /></a>
             </List.Item>
           </List>
         </div>
