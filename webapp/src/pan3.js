@@ -19,7 +19,6 @@ class Pan3 extends React.Component {
       token: getToken(),
       loading: false,
       actionedmsg: '',
-      actioned: false,
       modalopen: false,
       inventoryfetched: false,
       inventorymsg: '',
@@ -236,7 +235,6 @@ class Pan3 extends React.Component {
   
   addinventory(gtin){
     this.setState({ actionedmsg: '' });
-    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     console.log('addinventory [' + gtin + ']');
@@ -266,7 +264,6 @@ class Pan3 extends React.Component {
       if(response.status === 200){
         console.log('addinventory [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });
-        this.setState({ actioned: true });
 
         this.setState({ inventory: response.data[0]['results'] });
         this.setState({ gtin: '' });
@@ -322,7 +319,6 @@ class Pan3 extends React.Component {
 
   addnewretailer(event,data){
     this.setState({ actionedmsg: '' });
-    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     const newretailer = data.value;
@@ -345,7 +341,6 @@ class Pan3 extends React.Component {
       if(response.status === 200){
         console.log('addnewretailer [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });
-        this.setState({ actioned: true });
 
         this.setState({ retailerid: response.data[0]['results'][0]['retailerid'] });
         this.setState({ retailername: response.data[0]['results'][0]['retailername']  });
@@ -435,14 +430,9 @@ class Pan3 extends React.Component {
     })
   }
   generateitemadditionmsg(){
-      if(this.state.actionedmsg !== '' && this.state.actioned){
+      if(this.state.actionedmsg !== ''){
         return (
-          <Message className="fullwidth" success size="tiny">{this.state.actionedmsg}</Message>
-        )
-      }
-      else if(this.state.actionedmsg !== ''){
-        return (
-          <Message className="fullwidth" negative size="tiny">{this.state.actionedmsg}</Message>        
+          <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
         )
       }
   }

@@ -18,7 +18,6 @@ class Product extends React.Component {
       token: getToken(),
       loading: false,
       actionedmsg: '',
-      actioned: false,
       //queryisedible: querystr ? querystr.isedible : '2',
       //queryisopened: querystr ? querystr.isopened : '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
@@ -36,7 +35,6 @@ class Product extends React.Component {
 
   upsertproduct(event){
     this.setState({ actionedmsg: '' });
-    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     console.log('upsertproduct');
@@ -68,7 +66,6 @@ class Product extends React.Component {
       if(response.status === 200){
         console.log('upsertproduct [' + response.data[0]['message'] + ']');
         this.setState({ actionedmsg: response.data[0]['message'] });
-        this.setState({ actioned: true });
 
         this.setState({ productname: response.data[0]['results'][0]['productname'] });
         this.setState({ productimage: response.data[0]['results'][0]['productimage'] });
@@ -203,7 +200,6 @@ class Product extends React.Component {
 
   addnewbrand(event,data){
     this.setState({ actionedmsg: '' });
-    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     const newbrand = data.value;
@@ -229,8 +225,7 @@ class Product extends React.Component {
       this.setState({ loading: false });
       if(response.status === 200){
         console.log('addnewbrand [' + response.data[0]['message'] + ']');
-        this.setState({ actionedmsg: response.data[0]['message'] });        
-        this.setState({ actioned: true });
+        this.setState({ actionedmsg: response.data[0]['message'] }); 
 
         this.setState({ brandid: response.data[0]['results'][0]['brandid'] });
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
@@ -261,7 +256,6 @@ class Product extends React.Component {
 
   addnewproduct(event,data){
     this.setState({ actionedmsg: '' });
-    this.setState({ actioned: false });
     this.setState({ loading: true });
 
     const gtincandidate = data.value;
@@ -279,8 +273,7 @@ class Product extends React.Component {
         this.setState({ loading: false });
         if(response.status === 200){
           console.log('addnewproduct [' + response.data[0]['message'] + ']');
-          this.setState({ actionedmsg: response.data[0]['message'] });        
-          this.setState({ actioned: true });
+          this.setState({ actionedmsg: response.data[0]['message'] });
 
           const newproductdata = response.data[0]['results'][0]
           this.setState({ productdropdown: newproductdata['productname'] });
@@ -382,14 +375,9 @@ class Product extends React.Component {
   }
 
   generateitemadditionmsg(){
-      if(this.state.actionedmsg !== '' && this.state.actioned){
+      if(this.state.actionedmsg !== ''){
         return (
-          <Message className="fullwidth" success size="tiny">{this.state.actionedmsg}</Message>
-        )
-      }
-      else if(this.state.actionedmsg !== ''){
-        return (
-          <Message className="fullwidth" negative size="tiny">{this.state.actionedmsg}</Message>        
+          <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
         )
       }
   }

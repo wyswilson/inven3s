@@ -1,8 +1,7 @@
 ==============COLORSCHEME===========
-WHITE		FCF4EC
-YELLOW		C8A058
-BLUE		0d4169
-BLUE-DARK	011524
+GREEN		9AA293  
+GREY		767676
+DARK-GREY	222222
 
 ERR			c75061	
 LOGIN BACKGROUNDIMG CREDIT "Photo by Annie Spratt on Unsplash" (https://unsplash.com/photos/nLHnx2-_sK4)
@@ -45,6 +44,10 @@ npm i react-scroll-to-component
 
 If we need NPM web server only running on HTTPS:
 export HTTPS=true
+
+IF NPM RUNNING ERROR
+- rm -rf node_modules package-lock.json
+- npm install
 
 ==============NGINX=================
 RUNS ON WEBAPP

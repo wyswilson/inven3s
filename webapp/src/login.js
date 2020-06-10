@@ -4,7 +4,7 @@ import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
 import { Popup, Icon, Image, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
-//import scrollToComponent from 'react-scroll-to-component';
+import scrollToComponent from 'react-scroll-to-component';
 
 
 class Login extends React.Component {
@@ -123,7 +123,7 @@ class Login extends React.Component {
   }
   
   scrollto(event){
-    //scrollToComponent(this.registerinterestpanel);
+    scrollToComponent(this.registerinterestpanel);
   }
 
   render() {
