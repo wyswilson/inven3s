@@ -455,7 +455,7 @@ class Pan3 extends React.Component {
             <Modal
               trigger={
                 <Button icon onClick={this.clearactionmessage.bind(this)} labelPosition='left' color="grey">
-                  <Icon name='plus' />Add items
+                  <Icon name='plus' />ADD ITEMS
                 </Button>
               }
               closeIcon
@@ -518,7 +518,7 @@ class Pan3 extends React.Component {
                 <Grid columns={2} container doubling stackable>
                   <Grid.Column>
                     <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.addinventory.bind(this,this.state.gtin)}>
-                      Add
+                      ADD
                     </Button>
                   </Grid.Column>
                   <Grid.Column>
@@ -617,7 +617,7 @@ class Pan3 extends React.Component {
                         <Grid columns={2} container doubling stackable>
                           <Grid.Column>
                             <Button loading={this.state.loading || false} className="fullwidth" color="grey" onClick={this.addinventory.bind(this,item.gtin)}>
-                              Add
+                              ADD
                             </Button>
                           </Grid.Column>
                           <Grid.Column>

@@ -43,7 +43,7 @@ def userregisterinterest():
 		if registered:
 			status = "Thanks for your interest. We'll be in touch."
 		else:
-			status = "You are already registered. We'll be in touch."
+			status = "You are registered. We'll be in touch."
 			statuscode = 403
 	else:
 		status = "Invalid email address. Please try again."

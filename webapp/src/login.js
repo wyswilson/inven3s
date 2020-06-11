@@ -157,14 +157,14 @@ class Login extends React.Component {
                         disabled={!this.state.messageactive}
                         trigger={
                           <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
-                          Login</Button>
+                          LOGIN</Button>
                         }
                       />
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Button color="grey" className="fullwidth"
                       onClick={this.scrollto.bind(this)}>
-                      Register interest</Button>
+                      REGISTER INTEREST</Button>
                     </Grid.Column>
                   </Grid>
                 </Card.Content>
@@ -238,13 +238,13 @@ class Login extends React.Component {
                   parentCallback={this.updateinterest.bind(this)}/>
                 </Grid.Column>
                 <Grid.Row columns={2}>
-                  <Grid.Column width={5}>
+                  <Grid.Column width={6}>
                     <Button color="grey" className="fullwidth"
                       loading={this.state.loading || false}
                       onClick={this.registerinterest.bind(this)}>
-                      Register now</Button>
+                      REGISTER NOW</Button>
                   </Grid.Column>
-                  <Grid.Column width={11}>
+                  <Grid.Column width={10}>
                     {this.generateinterestmessage()}
                   </Grid.Column>
                 </Grid.Row>

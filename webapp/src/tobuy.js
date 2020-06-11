@@ -323,7 +323,7 @@ class ToBuy extends React.Component {
                     <Grid columns={2} container doubling stackable>
                       <Grid.Column>
                         <Button loading={this.state.loading || false} className="fullwidth" color="grey" onClick={this.addinventory.bind(this,item.gtin)}>
-                          Add
+                          ADD
                         </Button>
                       </Grid.Column>
                       <Grid.Column>

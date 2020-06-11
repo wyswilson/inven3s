@@ -181,7 +181,7 @@ class Home extends React.Component {
               </Card.Content>
               <Card.Content extra>
                 <Button color="grey" onClick={this.handlelogout.bind(this)}>
-                Logout</Button>
+                LOGOUT</Button>
               </Card.Content>
             </Card> 
           </Grid.Column>
