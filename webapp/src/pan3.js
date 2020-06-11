@@ -412,7 +412,7 @@ class Pan3 extends React.Component {
       }
     });    
   }
-  
+
   setdefaultimage(event){
     event.target.src = this.state.defaultimage;
   }
@@ -455,7 +455,7 @@ class Pan3 extends React.Component {
             <Modal
               trigger={
                 <Button icon onClick={this.clearactionmessage.bind(this)} labelPosition='left' color="grey">
-                  <Icon name='plus' />Add new items
+                  <Icon name='plus' />Add items
                 </Button>
               }
               closeIcon
@@ -463,7 +463,7 @@ class Pan3 extends React.Component {
               size="fullscreen"
               dimmer="blurring"
               >
-              <Modal.Header>Add new items</Modal.Header>
+              <Modal.Header>Add items</Modal.Header>
               <Modal.Content image>
                 <Image wrapped size='tiny' src={this.state.productimage} />
                 <Modal.Description>
@@ -574,7 +574,7 @@ class Pan3 extends React.Component {
                       dimmer="blurring"
                       closeIcon
                     >
-                      <Modal.Header>Add more items</Modal.Header>
+                      <Modal.Header>Add items</Modal.Header>
                       <Modal.Content image>
                         <Image wrapped size='tiny' src={item.productimage} />
                         <Modal.Description>

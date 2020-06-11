@@ -280,7 +280,7 @@ class ToBuy extends React.Component {
                       dimmer="blurring"
                       closeIcon
                     >
-                  <Modal.Header>Add more items</Modal.Header>
+                  <Modal.Header>Add items</Modal.Header>
                   <Modal.Content image>
                     <Image wrapped size='tiny' src={item.productimage} />
                     <Modal.Description>
