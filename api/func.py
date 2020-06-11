@@ -112,7 +112,7 @@ def validateemail(email):
 		return True
 	else:
 		return False
-		
+
 def registeruserinterest(email, clientip, browser,platform,language,referrer):
 	query1 = """
     	SELECT
@@ -549,7 +549,7 @@ def generateshoppinglist(userid):
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  max(i.dateexpiry) as dateexpiry,
 			  max(i.dateentry) AS recentpurchasedate,
-	  		  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
+	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i

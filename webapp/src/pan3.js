@@ -19,7 +19,6 @@ class Pan3 extends React.Component {
       token: getToken(),
       loading: false,
       actionedmsg: '',
-      modalopen: false,
       inventoryfetched: false,
       inventorymsg: '',
       queryisedible: redirectstate ? redirectstate.queryisedible : '2',
@@ -414,12 +413,12 @@ class Pan3 extends React.Component {
     });    
   }
   
-  openmodal = () => this.setState({ modalopen: true })
-  
-  closemodal = () => this.setState({ modalopen: false })
-
   setdefaultimage(event){
     event.target.src = this.state.defaultimage;
+  }
+
+  clearactionmessage(){
+    this.setState({ actionedmsg: '' });
   }
 
   redirectoproduct(gtin, productname, productimage, brandname, isedible){
@@ -429,6 +428,7 @@ class Pan3 extends React.Component {
       state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible }
     })
   }
+  
   generateitemadditionmsg(){
       if(this.state.actionedmsg !== ''){
         return (
@@ -454,13 +454,11 @@ class Pan3 extends React.Component {
           <Card.Content extra textAlign="center">
             <Modal
               trigger={
-                <Button icon onClick={this.openmodal} labelPosition='left' color="grey">
+                <Button icon onClick={this.clearactionmessage.bind(this)} labelPosition='left' color="grey">
                   <Icon name='plus' />Add new items
                 </Button>
               }
               closeIcon
-              open={this.state.modalopen}
-              onClose={this.closemodal} 
               centered={false}
               size="fullscreen"
               dimmer="blurring"
@@ -569,7 +567,8 @@ class Pan3 extends React.Component {
                     <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible)} />
                     <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Modal
-                      trigger={<Button icon="plus" color="grey"/>}
+                      trigger={<Button icon="plus" color="grey"
+                      onClick={this.clearactionmessage.bind(this)} />}
                       centered={false}
                       size="fullscreen"
                       dimmer="blurring"

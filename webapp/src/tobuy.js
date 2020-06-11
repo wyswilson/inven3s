@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { List, Button, Image } from 'semantic-ui-react'
-
+import { Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { DateInput } from 'semantic-ui-calendar-react';
+import _ from 'lodash'
 
 class ToBuy extends React.Component {
   constructor(props) {
@@ -14,12 +15,208 @@ class ToBuy extends React.Component {
       token: getToken(),
       loading: false,
       actionedmsg: '',
-      actioned: false,
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
-      slist:[]
+      slist:[],
+      retailersuggests:[],
+      gtin:'',
+      retailerid:'',
+      retailername:'',
+      quantity:1,
+      dateexpiry:''
     };
   }
 
+  lookupretailer(event, data){
+    const retailer = data.searchQuery
+
+    if(retailer.length > 3){
+      this.searchretailers(retailer);
+    }
+  }
+
+  searchretailers(retailer){
+    console.log('searchretailers [' + retailer + ']');
+   
+    axios.get(this.state.apihost + '/retailer/' + retailer,
+        {
+          headers: {
+            "content-type": "application/json",
+            "access-token": this.state.token
+          }
+        }
+      )
+      .then(response => { 
+        if(response.status === 200){
+          console.log('searchretailers [' + response.data[0]['message'] + ']');
+          
+          this.updateretailersuggests(response.data[0]['results']);
+        }
+      })
+      .catch(error => {
+        if(error.response){
+          if(error.response.data){
+            console.log('searchretailers [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          }
+          else{
+            console.log('searchretailers [server unreachable]');   
+          }
+        }
+        else{
+          console.log('searchretailers [server unreachable]');
+        }
+      });
+  }
+
+  updateretailersuggests(suggestions){
+    const updatedsuggest = _.map(suggestions, (item) => (
+        {
+          key: item.retailerid,
+          text: item.retailername,
+          value: item.retailername,
+        }
+      ));
+    this.setState({ retailersuggests: updatedsuggest });
+  }
+
+  addnewretailer(event,data){
+    this.setState({ actionedmsg: '' });
+    this.setState({ loading: true });
+
+    const newretailer = data.value;
+    console.log('addnewretailer [' + newretailer + ']');
+
+    axios.post(this.state.apihost + '/retailer', 
+      {
+        retailername: newretailer
+      }, 
+      {
+        headers: {
+          'crossDomain': true,
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      this.setState({ loading: false });
+      if(response.status === 200){
+        console.log('addnewretailer [' + response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: response.data[0]['message'] });
+
+        this.setState({ retailerid: response.data[0]['results'][0]['retailerid'] });
+        this.setState({ retailername: response.data[0]['results'][0]['retailername']  });
+        this.updateretailersuggests(response.data[0]['results']);
+      }
+    })
+    .catch(error => {
+      this.setState({ loading: false });
+      if(error.response){
+        if(error.response.data){
+          console.log('addnewretailer [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('addnewretailer [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });
+        }
+      }
+      else{
+        console.log('addnewretailer [server unreachable]');
+        this.setState({ actionedmsg: 'server unreachable' });
+      }
+    });        
+  }
+
+  setproductmetadata(event, gtin){
+    this.setState({ gtin: gtin });
+    this.setState({ actionedmsg: ''});
+  }
+
+  setinventorymetadata(event, data){
+    const field = data.name;
+    const value = data.value;
+    console.log('setinventorymetadata [' + field + ':' + value + ']');
+
+    if(field === 'retailername'){
+      const array = this.state.retailersuggests;
+      let selectedarr = array.filter(prod => prod.value.includes(value))[0];
+      if(selectedarr){
+        const selectedid = selectedarr['key'];
+        this.setState({ retailerid: selectedid });
+        this.setState({ retailername: value });
+      }
+      else{
+        //NEw RETAILER
+      }
+    }
+    else if(field === 'quantity'){
+      this.setState({ quantity: value });
+    }
+    else if(field === 'dateexpiry'){
+      this.setState({ dateexpiry: value });
+    }
+  }
+
+  addinventory(gtin){
+    this.setState({ actionedmsg: '' });
+    this.setState({ loading: true });
+
+    console.log('addinventory [' + gtin + ']');
+
+    axios.post(this.state.apihost + '/inventory', 
+      {
+        gtin:gtin,
+        retailername:this.state.retailername,
+        dateexpiry:this.state.dateexpiry,
+        quantity:this.state.quantity,
+        itemstatus:'IN',
+        receiptno:'',
+        queryisedible:'2',
+        queryisopened:'2',
+        queryexpirystatus:'all'
+      }, 
+      {
+        headers: {
+          'crossDomain': true,
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => {
+      this.setState({ loading: false });
+      if(response.status === 200){
+        console.log('addinventory [' + response.data[0]['message'] + ']');
+        this.setState({ actionedmsg: response.data[0]['message'] });
+
+        this.setState({ gtin: '' });
+        this.setState({ retailerid: ''});
+        this.setState({ retailername: ''});
+        this.setState({ dateexpiry: ''});
+        this.setState({ quantity: 1 });
+
+        this.fetchshoppinglist();
+      }
+    })
+    .catch(error => {
+      this.setState({ loading: false });
+      if(error.response){
+        if(error.response.data){
+          console.log('addinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          this.setState({ actionedmsg: error.response.data[0]['message'] });        
+        }
+        else{
+          console.log('addinventory [server unreachable]');
+          this.setState({ actionedmsg: 'server unreachable' });
+        }
+      }
+      else{
+        console.log('addinventory [server unreachable]');
+        this.setState({ actionedmsg: 'server unreachable' });
+      }
+    });
+  }
+        
   fetchshoppinglist(){
     console.log('fetchshoppinglist');
    
@@ -54,9 +251,13 @@ class ToBuy extends React.Component {
       }
     });
   }
-  
-  additemtoinventory(){
 
+  generateitemadditionmsg(){
+      if(this.state.actionedmsg !== ''){
+        return (
+          <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
+        )
+      }
   }
 
   setdefaultimage(event){
@@ -71,7 +272,66 @@ class ToBuy extends React.Component {
     return this.state.slist.map( (item) => (
             <List.Item key={item.gtin}>
               <List.Content floated='right'>
-                <Button icon="plus" color="grey" onClick={this.additemtoinventory.bind(this,item.gtin)} />
+                <Modal
+                      trigger={<Button icon="plus" color="grey"
+                      onClick={this.setproductmetadata.bind(this,item.gtin)} />}
+                      centered={false}
+                      size="fullscreen"
+                      dimmer="blurring"
+                      closeIcon
+                    >
+                  <Modal.Header>Add more items</Modal.Header>
+                  <Modal.Content image>
+                    <Image wrapped size='tiny' src={item.productimage} />
+                    <Modal.Description>
+                      <Grid columns={1} doubling stackable>
+                        <Grid.Column>
+                         <label className="fullwidth">Retailer</label>                    
+                          <Dropdown className="fullwidth" name="retailername"
+                            search
+                            selection
+                            allowAdditions
+                            value={this.state.retailername}
+                            noResultsMessage="No retailer found"
+                            options={this.state.retailersuggests}
+                            onSearchChange={this.lookupretailer.bind(this)}
+                            onAddItem={this.addnewretailer.bind(this)}
+                            onChange={this.setinventorymetadata.bind(this)}
+                          />
+                        </Grid.Column>
+                        <Grid.Row columns={2}>
+                          <Grid.Column>
+                            <label className="fullwidth">Quantity</label>                    
+                            <Input className="fullwidth" name="quantity"
+                              value={this.state.quantity}
+                              onChange={this.setinventorymetadata.bind(this)}
+                            />
+                          </Grid.Column>
+                          <Grid.Column>
+                            <label className="fullwidth">Expiry</label>                    
+                            <DateInput name="dateexpiry" className="fullwidth"
+                              dateFormat="YYYY-MM-DD"
+                              value={this.state.dateexpiry}
+                              onChange={this.setinventorymetadata.bind(this)}
+                            />
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                    </Modal.Description>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Grid columns={2} container doubling stackable>
+                      <Grid.Column>
+                        <Button loading={this.state.loading || false} className="fullwidth" color="grey" onClick={this.addinventory.bind(this,item.gtin)}>
+                          Add
+                        </Button>
+                      </Grid.Column>
+                      <Grid.Column>
+                        {this.generateitemadditionmsg()}
+                      </Grid.Column>
+                    </Grid>
+                  </Modal.Actions>
+                </Modal>
               </List.Content>
               <List.Content floated='left'>
                 <Image size="tiny" src={item.productimage}
