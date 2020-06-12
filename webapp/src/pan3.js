@@ -548,7 +548,7 @@ class Pan3 extends React.Component {
     }
     else{
       return this.state.inventory.map( (item) => (
-              <Card color={item.isfavourite === 1 ? 'red' : 'grey'} raised key={item.gtin}>
+              <Card raised key={item.gtin}>
                 <Card.Content>
                     <Image rounded
                       centered src={item.productimage}
@@ -559,7 +559,7 @@ class Pan3 extends React.Component {
                   <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta className="item small">{item.brandname}</Card.Meta>
                   <Card.Description className="item small" textAlign="left">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Description>
-                  <Label color='grey' attached='top right'>{item.itemcount}</Label>
+                  <Label color={item.isfavourite === 1 ? 'red' : 'grey'} attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 
                 <Card.Content extra textAlign="center">
