@@ -132,7 +132,7 @@ def productdelete(userid,gtin):
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
 
-	records = func.findproductbygtin(gtin)
+	records = func.findproductbygtin(gtin,userid)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/product', methods=['POST'])
@@ -151,6 +151,7 @@ def productupsert(userid):
 	brandname	= data["brandname"]
 	isperishable= data["isperishable"]
 	isedible	= data["isedible"]
+	isfavourite	= data["isfavourite"]
 
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
@@ -165,6 +166,9 @@ def productupsert(userid):
 		if isperishable != '':
 			func.updateisperishable(gtin,isperishable)
 			status = status + "isperishable "
+		if isfavourite != '':
+			func.updateisfavourite(gtin,userid,isfavourite)
+			status = status + "isfavourite "
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
 			status = status + "isedible "
@@ -183,14 +187,14 @@ def productupsert(userid):
 		else:
 			status = "no updates"
 
-		records = func.findproductbygtin(gtin)
+		records = func.findproductbygtin(gtin,userid)
 	elif gtinstatus == "NEW" and productname != "":
 		brandid,brandname,brandstatus = func.validatebrand("",brandname)
 		if brandstatus == 'NEW':
 			brandid = func.addnewbrand(brandid,brandname,"","","")
 		gtin = func.addnewproduct(gtin,productname,productimage,brandid,0,1)	
 
-		records = func.findproductbygtin(gtin)
+		records = func.findproductbygtin(gtin,userid)
 		status = "new product (and branded) added"
 	elif gtinstatus == "NEW" and productname == "":
 		productname,brandid,brandnamenotused = func.discovernewproduct(gtin,1)
@@ -200,7 +204,7 @@ def productupsert(userid):
 			elif productname != "":
 				status = status + "new product discovered and added without brand"
 
-			records = func.findproductbygtin(gtin)
+			records = func.findproductbygtin(gtin,userid)
 		elif productname == "ERR":
 			status = "public search for product errored - try again later"
 			statuscode = 503#Service Unavailable
@@ -256,7 +260,7 @@ def productdiscover(userid,gtin):
 		productname,brandid,brandname = func.discovernewproduct(gtin,1)
 		if productname != "ERR" and productname != "WARN":
 			status = 'public search for product is successful'
-			records = func.jsonifyproducts(func.findproductbygtin(gtin))
+			records = func.jsonifyproducts(func.findproductbygtin(gtin,userid))
 		if productname == "ERR":
 			status = "public search for product errored - try again later"
 			statuscode = 503#Service Unavailable
@@ -268,7 +272,7 @@ def productdiscover(userid,gtin):
 		statuscode = 412#Precondition Failed
 	else:
 		status = 'product already exists'
-		records = func.jsonifyproducts(func.findproductbygtin(gtin))
+		records = func.jsonifyproducts(func.findproductbygtin(gtin,userid))
 
 	messages = {}
 	messages['message'] = status
@@ -299,7 +303,7 @@ def productselect(userid,gtin):
 		status = "product does not exists"
 		statuscode = 404#Not Found
 	else:
-		records = func.findproductbykeyword(gtin,isedible)
+		records = func.findproductbykeyword(gtin,userid,isedible)
 		if records:
 			status = "products searched by keyword"
 		elif gtinstatus == "INVALID":
@@ -321,7 +325,7 @@ def productselectall(userid):
 
 	isedible = flask.request.args.get("isedible")
 	
-	records = func.findallproducts(isedible)
+	records = func.findallproducts(userid,isedible)
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
@@ -647,5 +651,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

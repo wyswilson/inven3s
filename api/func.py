@@ -171,6 +171,15 @@ def updateproductimage(gtin,productimage):
 	cursor.execute(query2,(productimage,gtin))
 	db.commit()
 
+def updateisfavourite(gtin,userid,isfavourite):
+	query1 = "REPLACE INTO productsfavourite (gtin,userid) VALUES (%s,%s)"
+	cursor.execute(query1,(gtin,userid))
+	db.commit()
+
+	query2 = "UPDATE productsfavourite SET favourite = %s WHERE gtin = %s AND userid = %s"
+	cursor.execute(query2,(isfavourite,gtin,userid))
+	db.commit()
+
 def updateisedible(gtin,isedible):
 	query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
 	cursor.execute(query2,(isedible,gtin))
@@ -231,6 +240,7 @@ def jsonifyproducts(records):
 		brandname   	= record[3]
 		isperishable   	= record[4]
 		isedible	   	= record[5]
+		isfavourite	   	= record[6]
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -239,6 +249,7 @@ def jsonifyproducts(records):
 		product['brandname'] 		= brandname
 		product['isperishable'] 	= isperishable
 		product['isedible'] 		= isedible
+		product['isfavourite'] 		= isfavourite
 
 		products.append(product)
 
@@ -252,9 +263,10 @@ def jsonifyinventory(records):
 		productimage	= record[2]
 		brandname   	= record[3]
 		isedible		= record[4]
-		itemcount		= record[5]
-		dateexpiry		= record[6]
-		retailers		= record[7]
+		isfavourite		= record[5]
+		itemcount		= record[6]
+		dateexpiry		= record[7]
+		retailers		= record[8]
 
 		if dateexpiry:
 			dateexpiry = dateexpiry.strftime('%Y-%m-%d')
@@ -268,6 +280,7 @@ def jsonifyinventory(records):
 		itemgroup['retailers'] 		= retailers
 		itemgroup['itemcount'] 		= itemcount
 		itemgroup['isedible'] 		= isedible
+		itemgroup['isfavourite'] 		= isfavourite
 
 		inventory.append(itemgroup)
 
@@ -295,7 +308,7 @@ def jsonifyoutput(statuscode,status,records,special=None):
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
     type = "productname"
-    query1 = "REPLACE INTO productcandidates (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+    query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
     cursor.execute(query1,(gtin,source,type,id,title,url,rank))
     db.commit()
 
@@ -521,20 +534,25 @@ def discovernewproduct(gtin,attempt):
 	else:
 		return "ERR","",""
 
-def findallproducts(isedible):
+def findallproducts(userid,isedible):
 	query1 = """
 		SELECT
-			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
+			p.gtin,p.productname,p.productimage,b.brandname,
+			p.isperishable,p.isedible,
+			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		LEFT JOIN productsfavourite AS pf
+		ON p.gtin = pf.gtin AND pf.userid = %s
 	"""
 	if validateisedible(isedible) == "2":
 		query1 += "WHERE p.isedible != %s"
 	else:
 		query1 += "WHERE p.isedible = %s"
-	query1 += " GROUP BY 1,2,3,4,5,6"
-	cursor.execute(query1,(validateisedible(isedible),))
+	query1 += " GROUP BY 1,2,3,4,5,6,7"
+	cursor.execute(query1,(userid,validateisedible(isedible)))
 	records = cursor.fetchall()
 
 	return records
@@ -542,11 +560,12 @@ def findallproducts(isedible):
 def generateshoppinglist(userid):
 	query1 = """
 		SELECT
-			gtin, productname, productimage, brandname, isedible,
+			gtin, productname, productimage, brandname, isedible,isfavourite,
 			itemstotal, dateexpiry, retailers
 		FROM (
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			  	case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
 			  max(i.dateexpiry) as dateexpiry,
 			  max(i.dateentry) AS recentpurchasedate,
 	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
@@ -559,55 +578,65 @@ def generateshoppinglist(userid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productsfavourite AS pf
+			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s AND p.isedible IN (0,1)
-			GROUP BY 1,2,3,4,5
-			ORDER BY 9 DESC, 7 DESC
+			GROUP BY 1,2,3,4,5,6
+			ORDER BY 6 DESC, 10 DESC, 8 DESC
 		) AS tmp
-		WHERE itemstotal < 1 and historicaltotal > 1
+		WHERE (isfavourite = 0 and itemstotal < 1 and historicaltotal >= 2) OR (isfavourite = 1 and itemstotal < 2 and historicaltotal >= 1)
 	"""
 	cursor.execute(query1,(userid,))
 	records = cursor.fetchall()	
 
 	return records
 
-def findproductbykeyword(gtin,isedible):
+def findproductbykeyword(gtin,userid,isedible):
 	gtinfuzzy = "%" + gtin + "%"
 	query1 = """
 		SELECT
-			p.gtin,p.productname,p.productimage,
-			b.brandname,p.isperishable,p.isedible,
+			p.gtin,p.productname,p.productimage,b.brandname,
+			p.isperishable,p.isedible,
+			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE p.productname LIKE %s OR
-			p.gtin LIKE %s
+		LEFT JOIN productsfavourite AS pf
+		ON p.gtin = pf.gtin AND pf.userid = %s
+		WHERE (p.productname LIKE %s OR
+			p.gtin LIKE %s)
 	"""
 	if validateisedible(isedible) == "2":
 		query1 += " AND p.isedible != %s"
 	else:
 		query1 += " AND p.isedible = %s"
 	query1 += """
-		GROUP BY 1,2,3,4,5,6
-		LIMIT 5
+		GROUP BY 1,2,3,4,5,6,7
+		LIMIT 10
 	"""
-	cursor.execute(query1,(gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
+	cursor.execute(query1,(userid,gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
 	records = cursor.fetchall()
 
 	return records
 
-def findproductbygtin(gtin):
+def findproductbygtin(gtin,userid):
 	query = """
 		SELECT
-			p.gtin,p.productname,p.productimage,b.brandname,p.isperishable,p.isedible,count(*)
+			p.gtin,p.productname,p.productimage,b.brandname,
+			p.isperishable,p.isedible,
+			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		WHERE p.gtin = %s
-		GROUP by 1,2,3,4,5,6
+		LEFT JOIN productsfavourite as pf
+		ON p.gtin = pf.gtin AND pf.userid = %s
+		WHERE p.gtin = %s 
+		GROUP by 1,2,3,4,5,6,7
 		ORDER BY 2
 	"""
-	cursor.execute(query,(gtin,))
+	cursor.execute(query,(userid,gtin))
 	records = cursor.fetchall()
 
 	return records
@@ -674,13 +703,14 @@ def determineproductcat(productname):
 def fetchinventoryexpireditems(uid):
 	query1 = """
 		SELECT
-			gtin, productname, productimage, brandname, isedible,
+			gtin, productname, productimage, brandname, isedible, isfavourite,
 			itemstotal, dateexpiry, retailers,
 			itemgoodness
 		FROM
 		(
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
 			  i.dateexpiry,
 			  case
 					when dateexpiry <= NOW() then 'expired'
@@ -696,13 +726,15 @@ def fetchinventoryexpireditems(uid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productsfavourite as pf
+			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE
 				i.userid = %s AND p.isedible = '1'
 				AND dateexpiry IS NOT NULL AND dateexpiry != '0000-00-00'
-			GROUP BY 1,2,3,4,5,6,7
+			GROUP BY 1,2,3,4,5,6,7,8
 		) AS tmp
 		WHERE itemstotal > 0 AND itemgoodness IN ('expired','expiring')
-		ORDER BY 6 asc
+		ORDER BY 7 asc
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
@@ -711,8 +743,8 @@ def fetchinventoryexpireditems(uid):
 	expiringrecords = []
 	expiredrecords 	= []
 	for record in records:
-		goodness 	= record[8]
-		itemstotal 	= record[5]
+		goodness 	= record[9]
+		itemstotal 	= record[6]
 		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += math.ceil(itemstotal)
@@ -742,7 +774,7 @@ def findproductimage(gtin,productname):
 		rank = 1
 		for imageurl in images:
 			id = hashlib.md5(imageurl.encode('utf-8')).hexdigest()
-			query1 = "REPLACE INTO productcandidates (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
+			query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 			cursor.execute(query1,(gtin,source,type,id,productname,imageurl,rank))
 			db.commit()
 
@@ -765,7 +797,7 @@ def findproductimage(gtin,productname):
 def fetchinventorybyuser(uid,isedible,isopened):
 	query1 = """
 		SELECT 
-			gtin, productname, productimage, brandname, isedible,
+			gtin, productname, productimage, brandname, isedible, isfavourite,
 			itemstotal, dateexpiry, retailers,
 			CASE
 				when MOD(itemstotal*2,2) != 0 AND itemstotal = 0.5 then 'OPENED'
@@ -775,6 +807,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 		FROM (
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
 			  max(i.dateexpiry) as dateexpiry,
 			  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
@@ -785,6 +818,8 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productsfavourite as pf
+			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s
 		"""
 	if validateisedible(isedible) == "2":
@@ -792,7 +827,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 	else:
 		query1 += " AND p.isedible = %s"	
 	query1 += """
-			GROUP BY 1,2,3,4,5
+			GROUP BY 1,2,3,4,5,6
 			ORDER BY 2 ASC
 		) AS X
 		WHERE itemstotal > 0
@@ -814,10 +849,11 @@ def fetchinventorybyuser(uid,isedible,isopened):
 		productimage 	= record[2]
 		brandname 		= record[3]
 		isedible 		= record[4]
-		itemstotal 		= record[5]
-		dateexpiry		= record[6]
-		retailers		= record[7]
-		itemstatus 		= record[8]
+		isfavourite		= record[5]
+		itemstotal 		= record[6]
+		dateexpiry		= record[7]
+		retailers		= record[8]
+		itemstatus 		= record[9]
 
 		if(isedible == 1 and itemstatus == "NEW"):
 			ediblenewcnt += itemstotal

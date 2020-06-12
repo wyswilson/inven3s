@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
+import { Rating, Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 //import queryString from 'query-string'
 
@@ -13,8 +13,8 @@ class Product extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      //apihost: 'http://127.0.0.1:88',
-      apihost: 'https://inven3s.xyz',
+      apihost: 'http://127.0.0.1:88',
+      //apihost: 'https://inven3s.xyz',
       token: getToken(),
       loading: false,
       actionedmsg: '',
@@ -29,7 +29,8 @@ class Product extends React.Component {
       productimage: redirectstate ? redirectstate.productimage : 'https://react.semantic-ui.com/images/wireframe/image.png',
       brandname: redirectstate ? redirectstate.brandname : '',
       isedible: redirectstate ? redirectstate.isedible : 1,
-      isperishable:0
+      isperishable:0,
+      isfavourite: redirectstate ? redirectstate.isfavourite : 0
     };
   }
 
@@ -50,8 +51,8 @@ class Product extends React.Component {
         productimage:this.state.productimage,
         brandname:this.state.brandname,
         isedible:this.state.isedible,
-        isperishable:this.state.isperishable
-
+        isperishable:this.state.isperishable,
+        isfavourite:this.state.isfavourite
       }, 
       {
         headers: {
@@ -71,6 +72,7 @@ class Product extends React.Component {
         this.setState({ productimage: response.data[0]['results'][0]['productimage'] });
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
         this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
+        this.setState({ isfavourite: response.data[0]['results'][0]['isfavourite'] });
       }
       else{
         console.log('upsertproduct [' + response.data[0]['message'] + ']');
@@ -148,7 +150,8 @@ class Product extends React.Component {
           value: item.productname,
           img: item.productimage === '' ? this.state.defaultimage : item.productimage,
           brand: item.brandname,
-          isedible: item.isedible
+          isedible: item.isedible,
+          isfavourite: item.isfavourite
         }
       ));
     console.log(updatedsuggest);
@@ -169,6 +172,7 @@ class Product extends React.Component {
         const selectedimg = selectedarr['img'];
         const selectedbrand = selectedarr['brand'];
         const selectedisedible = selectedarr['isedible'];
+        const selectedisfavourite = selectedarr['isfavourite'];
 
         this.setState({ productdropdown: value });
         this.setState({ gtin: selectedgtin });
@@ -176,6 +180,7 @@ class Product extends React.Component {
         this.setState({ productimage: selectedimg });
         this.setState({ brandname: selectedbrand });
         this.setState({ isedible: selectedisedible });
+        this.setState({ isfavourite: selectedisfavourite });
         
         this.searchbrands(selectedbrand);
       }
@@ -374,6 +379,15 @@ class Product extends React.Component {
     }
   }
 
+  updatefavouritetoggle(event,data){
+    if(data.checked){
+      this.setState({ isfavourite: 1 });
+    }
+    else{
+      this.setState({ isfavourite: 0 });
+    }
+  }
+
   generateitemadditionmsg(){
       if(this.state.actionedmsg !== ''){
         return (
@@ -390,7 +404,16 @@ class Product extends React.Component {
    
   }
 
-  checktoggle(){
+  checkfavourite(){
+    if(this.state.isfavourite === 1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  checkedible(){
     if(this.state.isedible === 1){
       return true;
     }
@@ -459,14 +482,10 @@ class Product extends React.Component {
                     onChange={this.setproductmetadata.bind(this)}
                   />
                 </Grid.Column>
-                <Grid.Row columns={2}>
-                  <Grid.Column>
-                     <Checkbox toggle label='Is edible?' checked={this.checktoggle()} onChange={this.updateedibletoggle.bind(this)}/>
-                  </Grid.Column>
-                  <Grid.Column>
-                            
-                  </Grid.Column>
-                </Grid.Row>
+                <Grid.Column>
+                   <Checkbox toggle label='Is edible?' checked={this.checkedible()} onChange={this.updateedibletoggle.bind(this)}/>
+                   <Checkbox toggle label='Is favourite?' checked={this.checkfavourite()} onChange={this.updatefavouritetoggle.bind(this)}/>
+                </Grid.Column>
               </Grid>
             </Card.Meta>
             <Label color='grey' attached='top right'>0</Label>

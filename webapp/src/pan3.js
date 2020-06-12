@@ -14,8 +14,8 @@ class Pan3 extends React.Component {
     const redirectstate = this.props.location.state;
     //const querystr = queryString.parse(this.props.location.search);
     this.state = {
-      //apihost: 'http://127.0.0.1:88',
-      apihost: 'https://inven3s.xyz',
+      apihost: 'http://127.0.0.1:88',
+      //apihost: 'https://inven3s.xyz',
       token: getToken(),
       loading: false,
       actionedmsg: '',
@@ -421,11 +421,11 @@ class Pan3 extends React.Component {
     this.setState({ actionedmsg: '' });
   }
 
-  redirectoproduct(gtin, productname, productimage, brandname, isedible){
+  redirectoproduct(gtin, productname, productimage, brandname, isedible, isfavourite){
     this.props.history.push({
       pathname: '/product',
       //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
-      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible }
+      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
     })
   }
   
@@ -548,7 +548,7 @@ class Pan3 extends React.Component {
     }
     else{
       return this.state.inventory.map( (item) => (
-              <Card raised key={item.gtin}>
+              <Card color={item.isfavourite === 1 ? 'red' : 'grey'} raised key={item.gtin}>
                 <Card.Content>
                     <Image rounded
                       centered src={item.productimage}
@@ -564,7 +564,7 @@ class Pan3 extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible)} />
+                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible, item.isfavourite)} />
                     <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Modal
                       trigger={<Button icon="plus" color="grey"
@@ -580,7 +580,7 @@ class Pan3 extends React.Component {
                         <Modal.Description>
                           <Grid columns={1} doubling stackable>
                             <Grid.Column>
-                             <label className="fullwidth">Retailer</label>                    
+                              <label className="fullwidth">Retailer</label>                    
                               <Dropdown className="fullwidth" name="retailername"
                                 search
                                 selection
