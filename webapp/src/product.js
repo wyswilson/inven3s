@@ -483,13 +483,14 @@ class Product extends React.Component {
                 </Grid.Column>
               </Grid>
             </Card.Meta>
-            <Label color='grey' attached='top right'>0</Label>
+            <Label className='grey button' attached='top right'>0</Label>
           </Card.Content>
           <Card.Content extra textAlign="center">
             <Grid columns={2} doubling stackable>
               <Grid.Column>
-                <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.upsertproduct.bind(this)}>
-                  Add or update
+                <Button loading={this.state.loading || false}
+                className='grey button fullwidth' onClick={this.upsertproduct.bind(this)}>
+                  ADD OR UPDATE
                 </Button>
               </Grid.Column>
               <Grid.Column>

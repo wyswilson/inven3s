@@ -1,6 +1,6 @@
 ==============COLORSCHEME===========
-GREEN		9AA293  
-GREY		767676
+GREEN		f7c51e
+GREY		9e9e9e
 DARK-GREY	222222
 
 ERR			c75061	

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -232,7 +232,17 @@ class ToBuy extends React.Component {
       if(response.status === 200){
         console.log('shoppinglist [' + response.data[0]['message'] + ']');
         
-        this.setState({ slist: response.data[0]['results'] });
+        const updatedlist = _.map(response.data[0]['results'], (item) => (
+          {
+            gtin: item.gtin,
+            productname: item.productname,
+            productimage: item.productimage,
+            retailers: item.retailers.split(',').map( (retailer) => (
+                <Label basic size='medium' className='margined' content={retailer}/>
+              ))
+          }
+        ));
+        this.setState({ slist: updatedlist });
       }
     })
     .catch(error => {
@@ -273,7 +283,7 @@ class ToBuy extends React.Component {
             <List.Item key={item.gtin}>
               <List.Content floated='right'>
                 <Modal
-                      trigger={<Button icon="plus" color="grey"
+                      trigger={<Button icon="plus" className='grey button'
                       onClick={this.setproductmetadata.bind(this,item.gtin)} />}
                       centered={false}
                       size="fullscreen"
@@ -322,7 +332,9 @@ class ToBuy extends React.Component {
                   <Modal.Actions>
                     <Grid columns={2} container doubling stackable>
                       <Grid.Column>
-                        <Button loading={this.state.loading || false} className="fullwidth" color="grey" onClick={this.addinventory.bind(this,item.gtin)}>
+                        <Button loading={this.state.loading || false} 
+                        className='grey button fullwidth'
+                        onClick={this.addinventory.bind(this,item.gtin)}>
                           ADD
                         </Button>
                       </Grid.Column>
@@ -338,10 +350,9 @@ class ToBuy extends React.Component {
                 onError={this.setdefaultimage.bind(this)}
                 />
               </List.Content>
-              
               <List.Content>
                 <List.Header>{item.productname}</List.Header>
-                <List.Description as='a'>{item.retailers}</List.Description>
+                <List.Description>{item.retailers}</List.Description>
               </List.Content>
             </List.Item>
            ));
@@ -352,7 +363,7 @@ class ToBuy extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        <List divided celled floated="left">
+        <List divided celled relaxed floated="left" size="medium" className='fullwidth'>
           {this.generateshoppinglist()}
         </List>
       </div>

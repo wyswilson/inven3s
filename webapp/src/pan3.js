@@ -19,6 +19,7 @@ class Pan3 extends React.Component {
       actionedmsg: '',
       inventoryfetched: false,
       inventorymsg: '',
+      inventoryfilterable: false,
       queryisedible: redirectstate ? redirectstate.queryisedible : '2',
       //queryisedible: querystr ? querystr.isedible : '2',
       queryisopened: redirectstate ? redirectstate.queryisopened : '2',
@@ -81,23 +82,25 @@ class Pan3 extends React.Component {
   }
 
   generatecountmsg(itemcnt){
-    let message = itemcnt
+    let message = itemcnt;
+    this.setState({ inventoryfilterable: true });
     if(this.state.queryisedible === 0 && this.state.queryisopened === 0){
-      message += ' new non-food items';
+      message += " new non-food items";
     }
     else if(this.state.queryisedible === 0 && this.state.queryisopened === 1){
-      message += ' opened non-food items';
+      message += " opened non-food items";
     }
     else if(this.state.queryisedible === 1 && this.state.queryisopened === 0){
-      message += ' new food items';
+      message += " new food items";
     }
     else if(this.state.queryisedible === 1 && this.state.queryisopened === 1){
-      message += ' opened food items';
+      message += " opened food items";
     }
     else if(this.state.queryexpirystatus !== 'all'){
-      message += ' ' + this.state.queryexpirystatus + ' items';          
+      message += " " + this.state.queryexpirystatus + " items";          
     }
     else{
+      this.setState({ inventoryfilterable: false });
       message += ' items';
     }
 
@@ -446,13 +449,14 @@ class Pan3 extends React.Component {
               size='tiny'
             />
             <Card.Header className="item title">{this.state.inventorymsg}</Card.Header>
-            <Card.Meta></Card.Meta>
-            <Label color='grey' attached='top right'>0</Label>
+            <Card.Description textAlign="center"></Card.Description>
+            <Label className='grey button' attached='top right'>0</Label>
           </Card.Content>
           <Card.Content extra textAlign="center">
             <Modal
               trigger={
-                <Button icon onClick={this.clearactionmessage.bind(this)} labelPosition='left' color="grey">
+                <Button icon onClick={this.clearactionmessage.bind(this)}
+                labelPosition='left' className='grey button'>
                   <Icon name='plus' />ADD ITEMS
                 </Button>
               }
@@ -515,7 +519,8 @@ class Pan3 extends React.Component {
               <Modal.Actions>
                 <Grid columns={2} container doubling stackable>
                   <Grid.Column>
-                    <Button loading={this.state.loading || false} className="fullwidth" color='grey' onClick={this.addinventory.bind(this,this.state.gtin)}>
+                    <Button loading={this.state.loading || false}
+                    className='grey button fullwidth' onClick={this.addinventory.bind(this,this.state.gtin)}>
                       ADD
                     </Button>
                   </Grid.Column>
@@ -557,15 +562,15 @@ class Pan3 extends React.Component {
                   <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta className="item small">{item.brandname}</Card.Meta>
                   <Card.Description className="item small" textAlign="left">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Description>
-                  <Label color={item.isfavourite === 1 ? 'red' : 'grey'} attached='top right'>{item.itemcount}</Label>
+                  <Label className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" color="grey" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible, item.isfavourite)} />
-                    <Button icon="minus" color="grey" onClick={this.consumeinventory.bind(this,item.gtin)}/>
+                    <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible, item.isfavourite)} />
+                    <Button icon="minus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.consumeinventory.bind(this,item.gtin)}/>
                     <Modal
-                      trigger={<Button icon="plus" color="grey"
+                      trigger={<Button icon="plus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'}
                       onClick={this.clearactionmessage.bind(this)} />}
                       centered={false}
                       size="fullscreen"

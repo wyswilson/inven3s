@@ -179,7 +179,7 @@ class Home extends React.Component {
                 <Card.Header>{this.state.username}'s inventory</Card.Header>
               </Card.Content>
               <Card.Content extra>
-                <Button color="grey" onClick={this.handlelogout.bind(this)}>
+                <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
                 LOGOUT</Button>
               </Card.Content>
             </Card> 

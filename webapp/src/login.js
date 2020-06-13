@@ -155,13 +155,13 @@ class Login extends React.Component {
                         on='hover'
                         disabled={!this.state.messageactive}
                         trigger={
-                          <Button color="grey" className="fullwidth" onClick={this.authenticate.bind(this)}>
+                          <Button className='kuning button fullwidth' onClick={this.authenticate.bind(this)}>
                           LOGIN</Button>
                         }
                       />
                     </Grid.Column>
                     <Grid.Column width={8}>
-                      <Button color="grey" className="fullwidth"
+                      <Button className='kuning button fullwidth'
                       onClick={this.scrollto.bind(this)}>
                       REGISTER INTEREST</Button>
                     </Grid.Column>
@@ -177,10 +177,10 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
               <Grid.Column className="fontdark">
-                <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
                   Food waste is a problem
                 </Header>
-                <p style={{ fontSize: '1.1em' }} className="fontdark">
+                <p className="fontdark">
                   Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">3 average-size fridges</a> worth of food each year, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
@@ -200,10 +200,10 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
               <Grid.Column>
-                <Header as='h3' style={{ fontSize: '1.8em' }} className="fontlight">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
                   How can our solution help?
                 </Header>
-                <p style={{ fontSize: '1.1em' }} className="fontlight">
+                <p className="fontlight">
                 Our web app enables effortless tracking of food items at home and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
@@ -223,10 +223,10 @@ class Login extends React.Component {
         >
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column className="fontdark">
-              <Header as='h3' style={{ fontSize: '1.8em' }} className="fontdark">
+              <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
                 Ready to make a difference?
               </Header>
-              <p style={{ fontSize: '1.1em' }} className="fontdark">
+              <p className="fontdark">
                 Want to find out more or interested in early access to the web app? Let us know and we'll get back to you
               </p>
             </Grid.Column>
@@ -238,7 +238,7 @@ class Login extends React.Component {
                 </Grid.Column>
                 <Grid.Row columns={2}>
                   <Grid.Column width={6}>
-                    <Button color="grey" className="fullwidth"
+                    <Button className='kuning button fullwidth'
                       loading={this.state.loading || false}
                       onClick={this.registerinterest.bind(this)}>
                       REGISTER NOW</Button>
