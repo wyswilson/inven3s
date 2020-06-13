@@ -6,7 +6,6 @@ import { Popup, Icon, Image, List, Header, Button, Card, Message, Grid } from 's
 import Field from './field.js';
 import scrollToComponent from 'react-scroll-to-component';
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props);

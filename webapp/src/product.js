@@ -4,22 +4,17 @@ import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
-//import queryString from 'query-string'
-
 
 class Product extends React.Component {
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
-    //const querystr = queryString.parse(this.props.location.search);
     this.state = {
       //apihost: 'http://127.0.0.1:88',
       apihost: 'https://inven3s.xyz',
       token: getToken(),
       loading: false,
       actionedmsg: '',
-      //queryisedible: querystr ? querystr.isedible : '2',
-      //queryisopened: querystr ? querystr.isopened : '2',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       productsuggests: [],
       brandsuggests: [],
@@ -389,11 +384,11 @@ class Product extends React.Component {
   }
 
   generateitemadditionmsg(){
-      if(this.state.actionedmsg !== ''){
-        return (
-          <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
-        )
-      }
+    if(this.state.actionedmsg !== ''){
+      return (
+        <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
+      )
+    }
   }
 
   componentDidMount() {

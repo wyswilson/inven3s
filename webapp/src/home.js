@@ -4,7 +4,6 @@ import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
 import { Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 
-
 class Home extends React.Component {
   constructor(props) {
     super(props)

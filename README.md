@@ -36,6 +36,7 @@ remove screen: screen -XS <screennumber> quit
 PACKAGE DEPENDENCY
 npm i semantic-ui-calendar-react
 npm i semantic-ui-react
+npm install semantic-ui-css
 npm i react
 npm i react-favicon
 npx create-react-app my-app
@@ -48,6 +49,9 @@ export HTTPS=true
 IF NPM RUNNING ERROR
 - rm -rf node_modules package-lock.json
 - npm install
+
+ADD import 'semantic-ui-css/semantic.min.css' IN index.js
+
 
 ==============NGINX=================
 RUNS ON WEBAPP

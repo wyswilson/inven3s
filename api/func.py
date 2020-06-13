@@ -45,6 +45,32 @@ cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
+def addscreentracker(newtask,newstar):
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d')
+
+	query1 = "INSERT INTO screentracker (task,stars,datetime) VALUES (%s,%s,%s)"
+	cursor.execute(query1,(newtask,newstar,eventdate))
+	db.commit()
+
+def getscreentracker():
+	tasks = []
+	query1 = """
+    	SELECT
+        	task,stars,datetime
+    	FROM screentracker
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	for record in records:
+		task = {}
+		task['task']	 = record[0]
+		task['stars']  	 = record[1]
+		task['datetime'] = record[2]
+
+		tasks.append(task)
+
+	return tasks
+
 def generatehash(password):
 	return werkzeug.security.generate_password_hash(password, method='sha256')
 

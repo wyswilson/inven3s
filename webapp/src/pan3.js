@@ -5,8 +5,6 @@ import { getToken } from './utils/common';
 import { Icon, Message, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
-//import queryString from 'query-string'
-
 
 class Pan3 extends React.Component {
   constructor(props) {

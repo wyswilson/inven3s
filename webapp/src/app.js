@@ -14,7 +14,6 @@ import ToBuy from './tobuy';
 import PrivateRoute from './utils/private-route';
 import PublicRoute from './utils/public-route';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props)

@@ -21,6 +21,29 @@ flask_cors.CORS(app,
 #501#Not Implemented
 #401#Unauthorized
 
+@app.route('/screentracker', methods=['POST'])
+def screentrackerpost():
+	statuscode = 200
+	status = "tasks added successfully"
+
+	data = json.loads(flask.request.get_data().decode('UTF-8'))
+	newtask = data["task"]
+	newstar = data["stars"]
+
+	func.addscreentracker(newtask,newstar)
+	tasks = func.getscreentracker()
+
+	return func.jsonifyoutput(statuscode,status,tasks)	
+
+@app.route('/screentracker', methods=['GET'])
+def screentrackerget():
+	statuscode = 200
+	status = "tasks fetched successfully"
+
+	tasks = func.getscreentracker()
+
+	return func.jsonifyoutput(statuscode,status,tasks)	
+
 @app.route('/user/register/interest', methods=['POST'])
 def userregisterinterest():
 	print('hit [userregisterinterest]')
@@ -651,5 +674,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	app.run(debug=True,host='0.0.0.0',port=88)
-    #waitress.serve(app, host="0.0.0.0", port=88)
+	#app.run(debug=True,host='0.0.0.0',port=88)
+    waitress.serve(app, host="0.0.0.0", port=88)

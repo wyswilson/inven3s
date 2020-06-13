@@ -54,10 +54,12 @@ for record in records:
 	productname = record[1]
 	productimage = record[2]
 	if productimage != '':
-		opener=urllib.request.build_opener()
-		opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
-		urllib.request.install_opener(opener)
-		imageloc = imagepath + gtin + '.jpg'
-		print('downloading [%s][%s]' % (productname,imageloc))
-		urllib.request.urlretrieve(productimage, imageloc)
-
+		try:
+			opener=urllib.request.build_opener()
+			opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+			urllib.request.install_opener(opener)
+			imageloc = imagepath + gtin + '.jpg'
+			print('downloading [%s][%s]' % (productname,imageloc))
+			urllib.request.urlretrieve(productimage, imageloc)
+		except:
+			print('error downloading [%s][%s]' % (productname,imageloc))
