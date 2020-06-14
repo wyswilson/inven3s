@@ -163,7 +163,7 @@ class Home extends React.Component {
                 content="Please try again later if it doesn't load"
               />
             </Grid.Column>
-          )
+          );
     }
   }
 

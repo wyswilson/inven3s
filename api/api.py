@@ -21,8 +21,9 @@ flask_cors.CORS(app,
 #501#Not Implemented
 #401#Unauthorized
 
-@app.route('/activities', methods=['POST'])
-def activitiespost():
+@app.route('/ledger', methods=['POST'])
+@func.requiretoken
+def ledgerpost(userid):
 	statuscode = 200
 	status = "activity added successfully"
 
@@ -31,8 +32,8 @@ def activitiespost():
 	stars 		= data["stars"]
 	type 		= data["type"]
 
-	func.addactivity(activity,stars,type)
-	activities, totalstars, totalins, totalouts = func.getactivities()
+	func.addledger(activity,stars,type)
+	activities, totalstars, totalins, totalouts = func.getledger()
 
 	message2 = {}
 	message2['earned'] = totalins
@@ -50,12 +51,13 @@ def activitiespost():
 	response = flask.jsonify(messagestoplvl),statuscode
 	return response	
 
-@app.route('/activities', methods=['GET'])
-def activitiesget():
+@app.route('/ledger', methods=['GET'])
+@func.requiretoken
+def ledgerget(userid):
 	statuscode = 200
 	status = "activities fetched successfully"
 
-	activities, totalstars, totalins, totalouts = func.getactivities()
+	activities, totalstars, totalins, totalouts = func.getledger()
 
 	message2 = {}
 	message2['earned'] = totalins

@@ -75,9 +75,10 @@ class Login extends React.Component {
         );
     }
   }
+
   authenticate(event){
     this.setState({ messageactive: true });
-    if(this.state.email !== '' && this.state.email !== ''){
+    if(this.state.email !== '' && this.state.password !== ''){
       this.setState({ message: 'authenticating' });
 
       console.log('authenticate [' + this.state.email + ']');

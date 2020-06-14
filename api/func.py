@@ -45,19 +45,19 @@ cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
-def addactivity(newtask,newstar,type):
+def addledger(newtask,newstar,type):
 	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-	query1 = "INSERT INTO activities (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
+	query1 = "INSERT INTO ledger (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
 	cursor.execute(query1,(string.capwords(newtask),newstar,eventdate,type))
 	db.commit()
 
-def getactivities():
+def getledger():
 	tasks = []
 	query1 = """
     	SELECT
         	activity,stars,datetime,type
-    	FROM activities
+    	FROM ledger
 	"""
 	cursor.execute(query1)
 	records = cursor.fetchall()
