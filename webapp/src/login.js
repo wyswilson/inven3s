@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
-import { Popup, Icon, Image, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { Popup, Icon, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
 import Field from './field.js';
 import scrollToComponent from 'react-scroll-to-component';
 
