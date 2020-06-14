@@ -45,31 +45,47 @@ cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
-def addscreentracker(newtask,newstar):
-	eventdate = datetime.datetime.today().strftime('%Y-%m-%d')
+def addactivity(newtask,newstar,type):
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-	query1 = "INSERT INTO screentracker (task,stars,datetime) VALUES (%s,%s,%s)"
-	cursor.execute(query1,(newtask,newstar,eventdate))
+	query1 = "INSERT INTO activities (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
+	cursor.execute(query1,(string.capwords(newtask),newstar,eventdate,type))
 	db.commit()
 
-def getscreentracker():
+def getactivities():
 	tasks = []
 	query1 = """
     	SELECT
-        	task,stars,datetime
-    	FROM screentracker
+        	activity,stars,datetime,type
+    	FROM activities
 	"""
 	cursor.execute(query1)
 	records = cursor.fetchall()
+	totalstars = 0
+	totalins = 0
+	totalouts = 0
 	for record in records:
 		task = {}
-		task['task']	 = record[0]
-		task['stars']  	 = record[1]
-		task['datetime'] = record[2]
 
+		activity 	= record[0]
+		stars		= record[1]
+		datetime	= record[2]
+		type	= record[3]
+
+		task['activity']	= activity
+		task['stars']  	 	= stars
+		task['datetime'] 	= datetime
+		task['type'] 	= type
 		tasks.append(task)
 
-	return tasks
+		if type == 'earned':
+			totalstars += int(stars)
+			totalins += 1
+		else:
+			totalstars -= int(stars)
+			totalouts += 1
+
+	return tasks, totalstars, totalins, totalouts
 
 def generatehash(password):
 	return werkzeug.security.generate_password_hash(password, method='sha256')

@@ -21,28 +21,57 @@ flask_cors.CORS(app,
 #501#Not Implemented
 #401#Unauthorized
 
-@app.route('/screentracker', methods=['POST'])
-def screentrackerpost():
+@app.route('/activities', methods=['POST'])
+def activitiespost():
 	statuscode = 200
-	status = "tasks added successfully"
+	status = "activity added successfully"
 
 	data = json.loads(flask.request.get_data().decode('UTF-8'))
-	newtask = data["task"]
-	newstar = data["stars"]
+	activity 	= data["activity"]
+	stars 		= data["stars"]
+	type 		= data["type"]
 
-	func.addscreentracker(newtask,newstar)
-	tasks = func.getscreentracker()
+	func.addactivity(activity,stars,type)
+	activities, totalstars, totalins, totalouts = func.getactivities()
 
-	return func.jsonifyoutput(statuscode,status,tasks)	
+	message2 = {}
+	message2['earned'] = totalins
+	message2['spent'] = totalouts
 
-@app.route('/screentracker', methods=['GET'])
-def screentrackerget():
+	messages = {}
+	messages['message'] = status
+	messages['totalstars'] = totalstars
+	messages['totalactivities'] = message2
+	messages['activities'] = activities
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response	
+
+@app.route('/activities', methods=['GET'])
+def activitiesget():
 	statuscode = 200
-	status = "tasks fetched successfully"
+	status = "activities fetched successfully"
 
-	tasks = func.getscreentracker()
+	activities, totalstars, totalins, totalouts = func.getactivities()
 
-	return func.jsonifyoutput(statuscode,status,tasks)	
+	message2 = {}
+	message2['earned'] = totalins
+	message2['spent'] = totalouts
+
+	messages = {}
+	messages['message'] = status
+	messages['totalstars'] = totalstars
+	messages['totalactivities'] = message2
+	messages['activities'] = activities
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response	
 
 @app.route('/user/register/interest', methods=['POST'])
 def userregisterinterest():
@@ -674,5 +703,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)
