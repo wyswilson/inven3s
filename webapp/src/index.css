@@ -155,8 +155,8 @@ body {
   -o-background-size: cover !important;
   background-size: cover !important;
   background-color: #FFFFFF !important;
-  padding-top: 2em !important;
-  padding-bottom: 2em !important;
+  padding-top: 4em !important;
+  padding-bottom: 4em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
 }
