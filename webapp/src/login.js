@@ -255,7 +255,7 @@ class Login extends React.Component {
         <div className={isMobile ? "navfooter login mobile" : "navfooter login"}>
           <List horizontal verticalAlign="middle">
             <List.Item className="footheader">
-              <Image src='/logowhite.png' size='mini' inline verticalAlign="middle" /> Copyright © 2020 Inven3s. All Rights Reserved.
+              Copyright © 2020 Inven3s. All Rights Reserved.
             </List.Item>
             <List.Item className="footheader">
               <a href="https://www.instagram.com/inven3s/" target="_blank" rel="noopener noreferrer" className="footheader"><Icon name="instagram" size="large" /></a>
