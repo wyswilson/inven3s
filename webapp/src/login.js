@@ -201,10 +201,10 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column>
                 <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
-                  How can our solution help?
+                  How does our technology help?
                 </Header>
                 <p className="fontlight">
-                Our web app enables effortless tracking of food items at home and uses AI to help you manage them to reduce waste and save you time
+                Our web app enables effortless tracking of food items at home and on-the-go and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
