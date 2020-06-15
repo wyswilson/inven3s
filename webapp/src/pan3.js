@@ -366,7 +366,7 @@ class Pan3 extends React.Component {
     });        
   }
 
-  consumeinventory(gtin){
+  consumeinventory(gtin,consumeextent){
     console.log('consumeinventory [' + gtin + ']');
     this.setState({ inventoryfetched: false });
 
@@ -375,7 +375,7 @@ class Pan3 extends React.Component {
         gtin:gtin,
         retailername:'',
         dateexpiry:'',
-        quantity:0.5,
+        quantity:consumeextent,
         itemstatus:'OUT',
         receiptno:'',
         queryisedible:this.state.queryisedible,
@@ -568,7 +568,33 @@ class Pan3 extends React.Component {
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
                     <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage, item.brandname, item.isedible, item.isfavourite)} />
-                    <Button icon="minus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.consumeinventory.bind(this,item.gtin)}/>
+                    
+                    <Modal
+                      trigger={<Button icon="minus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'}
+                      onClick={this.clearactionmessage.bind(this)} />}
+                      centered={false}
+                      size="fullscreen"
+                      dimmer="blurring"
+                      closeIcon
+                    >
+                      <Modal.Header>Consume items</Modal.Header>
+                      <Modal.Content textAlign='center'>
+                        <Button.Group size='massive'>
+                          <Button className='grey button' size='massive'
+                            onClick={this.consumeinventory.bind(this,item.gtin,0.5)}
+                          >
+                            PARTIAL
+                          </Button>
+                          <Button.Or />
+                          <Button className='grey button' size='massive'
+                            onClick={this.consumeinventory.bind(this,item.gtin,1.0)}
+                          >
+                            COMPLETE
+                          </Button>
+                        </Button.Group>
+                      </Modal.Content>
+                    </Modal>
+
                     <Modal
                       trigger={<Button icon="plus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'}
                       onClick={this.clearactionmessage.bind(this)} />}
