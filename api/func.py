@@ -60,7 +60,7 @@ def addledger(newtask,newstar,type):
 	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 	query1 = "INSERT INTO ledger (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
-	cursor.execute(query1,(string.capwords(newtask),newstar,eventdate,type))
+	cursor.execute(query1,(newtask,newstar,eventdate,type))
 	db.commit()
 
 def getledger():
