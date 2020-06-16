@@ -588,6 +588,7 @@ class Pan3 extends React.Component {
                           <Button.Or />
                           <Button className='grey button' size='massive'
                             onClick={this.consumeinventory.bind(this,item.gtin,1.0)}
+                            disabled={item.itemcount % 1 !== 0 ? true : false}
                           >
                             COMPLETE
                           </Button>

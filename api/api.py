@@ -51,6 +51,24 @@ def ledgerpost(userid):
 	response = flask.jsonify(messagestoplvl),statuscode
 	return response	
 
+@app.route('/ledger/activities', methods=['GET'])
+@func.requiretoken
+def ledgeractivitiesget(userid):
+	statuscode = 200
+	status = "activities fetched successfully"
+
+	distinctactivities = func.getledgeractivities()
+
+	messages = {}
+	messages['message'] = status
+	messages['activities'] = distinctactivities
+
+	messagestoplvl = []
+	messagestoplvl.append(messages)
+
+	response = flask.jsonify(messagestoplvl),statuscode
+	return response	
+
 @app.route('/ledger', methods=['GET'])
 @func.requiretoken
 def ledgerget(userid):

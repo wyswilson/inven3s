@@ -38,12 +38,23 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
     pool_name='sqlpool',
-    pool_size = 5, pool_reset_session = True
+    pool_size = 10, pool_reset_session = True
    	)
 
 cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
+
+def getledgeractivities():
+	query1 = """
+    	SELECT
+        	distinct(activity) as activity
+    	FROM ledger
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return records
 
 def addledger(newtask,newstar,type):
 	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
