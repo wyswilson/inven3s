@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
+import { Header, Grid } from 'semantic-ui-react'
 
-import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, NavLink, Redirect, useLocation } from 'react-router-dom';
 
 import Login from './login';
 import Pan3 from './pan3';
@@ -23,6 +24,24 @@ class App extends React.Component {
       token: getToken(),
       authloading: true
     };
+  }
+
+  bla(event){
+    let location = useLocation();
+    return (
+      <div
+        className={isMobile ? "bodymain mobile" : "bodymain"}
+      >
+        <Grid columns={1} doubling stackable>
+          <Grid.Column key="0" textAlign="left">
+            <Header size='small'>
+              Oops! Looks like you're lost.<br/><br/>
+              Please visit us at <a href='/login'>/login</a>
+            </Header>
+          </Grid.Column>
+        </Grid>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -68,9 +87,7 @@ class App extends React.Component {
               <PrivateRoute path="/2buy" component={ToBuy} />
               <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
-              <PublicRoute exact path="/">
-                <Redirect to="/login" />
-              </PublicRoute>
+              <PublicRoute component={this.bla.bind(this)} />
             </Switch>
           </div>
         </BrowserRouter>
