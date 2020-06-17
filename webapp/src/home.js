@@ -63,7 +63,7 @@ class Home extends React.Component {
         console.log(response.data[0]['results']);
 
         this.formatactivityfeed( response.data[0]['results'] );
-
+        this.getinventorycount();
       }
     })
     .catch(error => {
