@@ -178,7 +178,7 @@ def registeruserinterest(email, clientip, browser,platform,language,referrer):
 	if records:	
 		return False
 	else:
-		eventdate = datetime.datetime.today().strftime('%Y-%m-%d')
+		eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 		query1 = "INSERT INTO usersinterest (email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s)"
 		cursor.execute(query1,(email,clientip,browser,platform,language,eventdate,referrer))
@@ -395,7 +395,9 @@ def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 	else:
 		return ""
 
-def addinventoryitem(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno):
+def addinventoryitem(uid,gtin,retailerid,dateexpiry,itemstatus,quantity,receiptno):
+	dateentry = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+
 	if uid != "" and gtin != "" and retailerid != "" and dateentry != "":
 		quantity = float(quantity)
 		if quantity >= 1.0:

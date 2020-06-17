@@ -564,8 +564,7 @@ def inventoryupsert(userid):
 			else:
 				if itemstatus == "OUT" and (dateexpiry is None or dateexpiry == ""):
 					retailerid,dateexpiry = func.findproductexpiry(userid,gtin)
-				dateentry = datetime.datetime.today().strftime('%Y-%m-%d')
-				func.addinventoryitem(userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno)
+				func.addinventoryitem(userid,gtin,retailerid,dateexpiry,itemstatus,quantity,receiptno)
 				if itemstatus == "IN":
 					status = "product item added to inventory"
 				else:
