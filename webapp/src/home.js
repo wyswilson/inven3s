@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import _ from 'lodash'
 
 class Home extends React.Component {
   constructor(props) {
@@ -21,13 +22,58 @@ class Home extends React.Component {
         expiredcnt: 0,
         expiringcnt: 0,
         shoppinglistcnt: 0,
-      }
+      },
+      feed: []
     };
   }
 
   handlelogout(e) {
     removeUserSession();
     this.props.history.push('/login');
+  }
+
+  formatactivityfeed(activities){
+    const feed = _.map(activities, (item) => (
+        {
+          date: item.dateentry,
+          image: item.productimage,
+          meta: item.brandname,
+          summary: item.productname
+        }
+      ));
+    console.log(feed);
+    this.setState({ feed: feed });
+  }
+
+  getinventoryfeed(){
+    console.log('getinventoryfeed');
+
+    axios.get(this.state.apihost + '/inventory/feed',
+      {
+        headers: {
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        console.log('getinventoryfeed [' + response.data[0]['message'] + ']');
+
+        console.log(response.data[0]['results']);
+
+        this.formatactivityfeed( response.data[0]['results'] );
+
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log("getinventoryfeed ["+ error.response.status + ":" + error.response.data[0]['message'] + ']');
+      }
+      else{
+        console.log('getinventoryfeed [server unreachable]');
+      }
+    });
   }
 
   getinventorycount(){
@@ -92,6 +138,7 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.getinventorycount();
+    this.getinventoryfeed();
   }
 
   generateinsights(){
@@ -172,19 +219,18 @@ class Home extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-         <Grid columns={3} doubling stackable>
-          <Grid.Column key="0" textAlign="center">
-            <Card raised key="0" fluid>
-              <Card.Content>
-                <Card.Header>{this.state.username}'s inventory</Card.Header>
-              </Card.Content>
-              <Card.Content extra>
-                <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
-                LOGOUT</Button>
-              </Card.Content>
-            </Card> 
+         <Grid columns={2} doubling stackable>
+          <Grid.Column textAlign="center">
+            {this.state.username}'s inventory
+            <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
+            LOGOUT</Button>
+            <Feed events={this.state.feed} />
           </Grid.Column>
-          {this.generateinsights()}
+          <Grid.Column textAlign="center">>
+            <Grid columns={2} doubling stackable>
+              {this.generateinsights()}
+            </Grid>
+          </Grid.Column>
         </Grid>
       </div>
     )

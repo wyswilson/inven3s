@@ -21,11 +21,13 @@ flask_cors.CORS(app,
 #501#Not Implemented
 #401#Unauthorized
 
+#####################LEDGER4KIDS######################
+
 @app.route('/ledger', methods=['POST'])
 @func.requiretoken
 def ledgerpost(userid):
 	statuscode = 200
-	status = "activity added successfully"
+	status = "activity added"
 
 	data = json.loads(flask.request.get_data().decode('UTF-8'))
 	activity 	= data["activity"]
@@ -55,7 +57,7 @@ def ledgerpost(userid):
 @func.requiretoken
 def ledgeractivitiesget(userid):
 	statuscode = 200
-	status = "activities fetched successfully"
+	status = "activities fetched"
 
 	distinctactivities = func.getledgeractivities()
 
@@ -73,7 +75,7 @@ def ledgeractivitiesget(userid):
 @func.requiretoken
 def ledgerget(userid):
 	statuscode = 200
-	status = "activities fetched successfully"
+	status = "activities fetched"
 
 	activities, totalstars, totalins, totalouts = func.getledger()
 
@@ -92,6 +94,11 @@ def ledgerget(userid):
 
 	response = flask.jsonify(messagestoplvl),statuscode
 	return response	
+
+#####################################################
+
+
+#####################INVEN3S#########################
 
 @app.route('/user/register/interest', methods=['POST'])
 def userregisterinterest():
@@ -167,7 +174,7 @@ def usersadd():
 	if func.validateemail(email):
 		try:
 			func.addnewuser(email,func.generatehash(password))
-			return func.jsonifyoutput(200,"user registered successfully",[])
+			return func.jsonifyoutput(200,"user registered",[])
 		except:
 			return func.jsonifyoutput(403,"user is already registered",[])
 	else:
@@ -655,10 +662,25 @@ def inventoryselect(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
+@app.route('/inventory/feed', methods=['GET'])
+@func.requiretoken
+def inventoryfeed(userid):
+	print('hit [inventoryfeed] with [%s]' % (userid))
+	
+	status = "activity feed retrieved"
+	statuscode = 200
+
+	events = func.fetchinventoryfeedbyuser(userid)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyfeed(events))
+
+
 @app.route('/inventory/insights', methods=['GET'])
 @func.requiretoken
 def inventoryinsights(userid):
 	print('hit [inventoryinsights] with [%s]' % (userid))
+
+	status = "insights generated"
 	statuscode = 200
 	
 	data1 = func.fetchinventorybyuser(userid,2,2)
@@ -666,7 +688,7 @@ def inventoryinsights(userid):
 	data3 = func.generateshoppinglist(userid)
 
 	messages = {}
-	messages['message'] = 'insights'
+	messages['message'] = status
 
 	message1 = {}
 	message1['expiring'] = data2['expiring']['count']
@@ -723,5 +745,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

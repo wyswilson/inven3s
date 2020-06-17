@@ -238,7 +238,7 @@ class ToBuy extends React.Component {
             productname: item.productname,
             productimage: item.productimage,
             retailers: item.retailers.split(',').map( (retailer) => (
-                <Label basic size='medium' className='margined' content={retailer}/>
+                <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
               ))
           }
         ));

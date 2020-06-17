@@ -271,6 +271,25 @@ def jsonifybrands(records):
 
 	return brands
 
+def jsonifyfeed(records):
+	feed = []
+	for record in records:
+		productname	  	= record[0]
+		productimage  	= record[1]
+		brandname	  	= record[2]
+		dateentry		= record[3]
+		itemstatus      = record[4]
+
+		activity = {}
+		activity['productname'] 	= productname
+		activity['productimage']	= productimage
+		activity['brandname']		= brandname
+		activity['dateentry']		= dateentry
+		activity['itemstatus']		= itemstatus
+		feed.append(activity)
+
+	return feed
+
 def jsonifyretailers(records):
 	retailers = []
 	for record in records:
@@ -846,6 +865,24 @@ def findproductimage(gtin,productname):
 		logging.debug("error: unknown [%s]" % url)	
 
 	return productimage
+
+def fetchinventoryfeedbyuser(uid):
+	query1 = """
+		SELECT
+			p.productname, p.productimage, b.brandname, i.dateentry, i.itemstatus
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		WHERE i.userid = %s
+		ORDER BY 4 DESC
+		LIMIT 10
+	"""
+	cursor.execute(query1,(uid,))
+	records = cursor.fetchall()
+
+	return records
 
 def fetchinventorybyuser(uid,isedible,isopened):
 	query1 = """
