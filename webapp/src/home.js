@@ -37,8 +37,7 @@ class Home extends React.Component {
         {
           date: item.dateentry,
           image: item.productimage,
-          meta: item.brandname,
-          summary: item.productname
+          summary: item.itemstatus === 'IN' ? 'added ' + item.productname : 'consumed ' + item.productname 
         }
       ));
     console.log(feed);
@@ -220,15 +219,21 @@ class Home extends React.Component {
       >
          <Grid columns={2} doubling stackable>
           <Grid.Column textAlign="center">
-            {this.state.username}'s inventory
-            <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
-            LOGOUT</Button>
-            <Feed events={this.state.feed} />
-          </Grid.Column>
-          <Grid.Column textAlign="center">>
             <Grid columns={2} doubling stackable>
+              <Grid.Column>
+                <Card raised key={0} fluid>
+                  <Card.Content>
+                    <Card.Header>{this.state.username}'s inventory</Card.Header>
+                    <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
+                    LOGOUT</Button>
+                  </Card.Content>
+                </Card> 
+              </Grid.Column>
               {this.generateinsights()}
             </Grid>
+          </Grid.Column>
+          <Grid.Column textAlign="center">            
+            <Feed events={this.state.feed} />
           </Grid.Column>
         </Grid>
       </div>

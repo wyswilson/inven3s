@@ -284,7 +284,7 @@ def jsonifyfeed(records):
 		activity['productname'] 	= productname
 		activity['productimage']	= productimage
 		activity['brandname']		= brandname
-		activity['dateentry']		= dateentry
+		activity['dateentry']		= dateentry.strftime('%Y-%m-%d')
 		activity['itemstatus']		= itemstatus
 		feed.append(activity)
 
@@ -877,7 +877,7 @@ def fetchinventoryfeedbyuser(uid):
 		ON p.brandid = b.brandid
 		WHERE i.userid = %s
 		ORDER BY 4 DESC
-		LIMIT 10
+		LIMIT 8
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
