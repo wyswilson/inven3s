@@ -871,13 +871,14 @@ def findproductimage(gtin,productname):
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
 		SELECT
-			p.productname, p.productimage, b.brandname, i.dateentry, i.itemstatus
+			p.productname, p.productimage, b.brandname, i.dateentry, i.itemstatus, count(*)
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		WHERE i.userid = %s
+		GROUP BY 1,2,3,4,5
 		ORDER BY 4 DESC
 		LIMIT 8
 	"""

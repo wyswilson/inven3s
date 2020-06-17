@@ -190,7 +190,7 @@ class Home extends React.Component {
               <Grid.Column key={stat.id} textAlign="center">
                 <Card raised key={stat.id} fluid onClick={this.directtoinventory.bind(this,stat.isedible,stat.isopened,stat.expirystatus)}>
                   <Card.Content>
-                    <Statistic size="small">
+                    <Statistic size="tiny">
                       <Statistic.Value>
                       {stat.number}</Statistic.Value>
                       <Statistic.Label>{stat.label}</Statistic.Label>
