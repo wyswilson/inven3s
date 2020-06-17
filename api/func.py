@@ -38,7 +38,7 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
     pool_name='sqlpool',
-    pool_size = 10, pool_reset_session = True
+    pool_size = 4, pool_reset_session = True
    	)
 
 cursor = db.cursor()
