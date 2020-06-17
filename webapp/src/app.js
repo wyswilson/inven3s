@@ -4,7 +4,7 @@ import {isMobile} from 'react-device-detect';
 import { getToken, removeUserSession, setUserSession } from './utils/common';
 import { Header, Grid } from 'semantic-ui-react'
 
-import { BrowserRouter, Switch, NavLink } from 'react-router-dom';
+import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 
 import Login from './login';
 import Pan3 from './pan3';
@@ -86,6 +86,9 @@ class App extends React.Component {
               <PrivateRoute path="/2buy" component={ToBuy} />
               <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
+              <PublicRoute exact path="/">
+                <Redirect to="/login" />
+              </PublicRoute>
               <PublicRoute component={this.nomatch.bind(this)} />
             </Switch>
           </div>
