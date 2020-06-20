@@ -279,8 +279,8 @@ def jsonifyfeed(records):
 		brandname	  	= record[2]
 		isedible		= record[3]
 		isfavourite		= record[4]
-		dateentry		= record[3]
-		itemstatus      = record[4]
+		dateentry		= record[5]
+		itemstatus      = record[6]
 
 		activity = {}
 		activity['productname'] 	= productname
