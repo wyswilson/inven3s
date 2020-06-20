@@ -883,7 +883,7 @@ def fetchinventoryfeedbyuser(uid):
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		JOIN productsfavourite as pf
+		LEFT JOIN productsfavourite as pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
 		GROUP BY 1,2,3,4,5,6,7,8
