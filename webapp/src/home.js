@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Icon, Segment, Header, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class Home extends React.Component {
@@ -23,7 +23,7 @@ class Home extends React.Component {
         expiringcnt: 0,
         shoppinglistcnt: 0,
       },
-      feed: []
+      feed: <Feed></Feed>
     };
   }
 
@@ -32,16 +32,30 @@ class Home extends React.Component {
     this.props.history.push('/login');
   }
 
+  handleproductclick(gtin, productname, productimage, brandname, isedible, isfavourite){
+    this.props.history.push({
+      pathname: '/product',
+      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+    })
+  }
+
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
-        {
-          date: item.dateentry,
-          image: item.productimage,
-          summary: item.itemstatus === 'IN' ? 'added ' + item.productname : 'consumed ' + item.productname 
-        }
+        <Feed.Event>
+          <Feed.Label>
+            <img src={item.productimage} />
+          </Feed.Label>
+          <Feed.Content>
+            <Feed.Summary>
+              {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
+              <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimage, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
+              <Feed.Date>{item.dateentry}</Feed.Date>
+            </Feed.Summary>
+          </Feed.Content>
+        </Feed.Event>
       ));
-    console.log(feed);
-    this.setState({ feed: feed });
+
+    this.setState( { feed: feed});
   }
 
   getinventoryfeed(){
@@ -218,22 +232,26 @@ class Home extends React.Component {
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
          <Grid columns={2} doubling stackable>
-          <Grid.Column textAlign="center">
-            <Grid columns={2} doubling stackable>
-              <Grid.Column>
+          <Grid.Column textAlign="left">
+            <Grid columns={2} doubling stackable textAlign='left'>
+              <Grid.Column key={0} textAlign="center">
                 <Card raised key={0} fluid>
                   <Card.Content>
-                    <Card.Header>{this.state.username}'s inventory</Card.Header>
-                    <Button className='kuning button fullwidth' onClick={this.handlelogout.bind(this)}>
-                    LOGOUT</Button>
+                    <Header size='small'>
+                      {this.state.username}'s pantry 
+                      <Button floated='right' className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
+                    </Header>
                   </Card.Content>
                 </Card> 
               </Grid.Column>
               {this.generateinsights()}
             </Grid>
           </Grid.Column>
-          <Grid.Column textAlign="center">            
-            <Feed events={this.state.feed} />
+          <Grid.Column textAlign="left">   
+            <Feed>  
+            <Header size='small'>Pantry activities</Header>
+              {this.state.feed}    
+            </Feed>
           </Grid.Column>
         </Grid>
       </div>

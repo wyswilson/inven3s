@@ -277,6 +277,8 @@ def jsonifyfeed(records):
 		productname	  	= record[0]
 		productimage  	= record[1]
 		brandname	  	= record[2]
+		isedible		= record[3]
+		isfavourite		= record[4]
 		dateentry		= record[3]
 		itemstatus      = record[4]
 
@@ -284,6 +286,8 @@ def jsonifyfeed(records):
 		activity['productname'] 	= productname
 		activity['productimage']	= productimage
 		activity['brandname']		= brandname
+		activity['isedible']		= isedible
+		activity['isfavourite']		= isfavourite
 		activity['dateentry']		= dateentry.strftime('%Y-%m-%d')
 		activity['itemstatus']		= itemstatus
 		feed.append(activity)
@@ -871,15 +875,17 @@ def findproductimage(gtin,productname):
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
 		SELECT
-			p.productname, p.productimage, b.brandname, i.dateentry, i.itemstatus, count(*)
+			p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		JOIN productsfavourite as pf
+		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5
-		ORDER BY 4 DESC
+		GROUP BY 1,2,3,4,5,6,7
+		ORDER BY 6 DESC
 		LIMIT 8
 	"""
 	cursor.execute(query1,(uid,))
