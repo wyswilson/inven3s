@@ -274,15 +274,17 @@ def jsonifybrands(records):
 def jsonifyfeed(records):
 	feed = []
 	for record in records:
-		productname	  	= record[0]
-		productimage  	= record[1]
-		brandname	  	= record[2]
-		isedible		= record[3]
-		isfavourite		= record[4]
-		dateentry		= record[5]
-		itemstatus      = record[6]
+		gtin 			= record[0]
+		productname	  	= record[1]
+		productimage  	= record[2]
+		brandname	  	= record[3]
+		isedible		= record[4]
+		isfavourite		= record[5]
+		dateentry		= record[6]
+		itemstatus      = record[7]
 
 		activity = {}
+		activity['gtin'] 			= gtin
 		activity['productname'] 	= productname
 		activity['productimage']	= productimage
 		activity['brandname']		= brandname
@@ -875,7 +877,7 @@ def findproductimage(gtin,productname):
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
 		SELECT
-			p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
+			p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
@@ -884,8 +886,8 @@ def fetchinventoryfeedbyuser(uid):
 		JOIN productsfavourite as pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5,6,7
-		ORDER BY 6 DESC
+		GROUP BY 1,2,3,4,5,6,7,8
+		ORDER BY 7 DESC
 		LIMIT 8
 	"""
 	cursor.execute(query1,(uid,))
