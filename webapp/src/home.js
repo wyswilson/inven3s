@@ -41,10 +41,8 @@ class Home extends React.Component {
 
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
-        <Feed.Event>
-          <Feed.Label>
-            <img src={item.productimage} alt={item.productname}/>
-          </Feed.Label>
+        <Feed.Event key={item.gtin}>
+          <Feed.Label image={item.productimage} alt={item.productname} />
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
@@ -236,11 +234,9 @@ class Home extends React.Component {
             <Grid columns={2} doubling stackable textAlign='left'>
               <Grid.Column key={0} textAlign="center">
                 <Card raised key={0} fluid>
-                  <Card.Content>
-                    <Header size='small'>
-                      {this.state.username}'s pantry 
-                      <Button floated='right' className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
-                    </Header>
+                  <Card.Content textAlign='center'>
+                    <Header size='small'>{this.state.username}'s pantry</Header>
+                    <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
                   </Card.Content>
                 </Card> 
               </Grid.Column>
@@ -249,7 +245,7 @@ class Home extends React.Component {
           </Grid.Column>
           <Grid.Column textAlign="left">   
             <Feed>  
-            <Header size='small'>Pantry activities</Header>
+              <Header size='small'>Pantry activities</Header>
               {this.state.feed}    
             </Feed>
           </Grid.Column>
