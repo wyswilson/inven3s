@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Header, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Image, Header, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class Home extends React.Component {
@@ -42,7 +42,9 @@ class Home extends React.Component {
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
         <Feed.Event key={item.gtin}>
-          <Feed.Label image={item.productimage} alt={item.productname} />
+          <Feed.Label alt={item.productname}>
+            <Image wrapped src={item.productimage} size='tiny' />
+          </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
