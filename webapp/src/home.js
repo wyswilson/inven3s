@@ -51,6 +51,7 @@ class Home extends React.Component {
               <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimage, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>
+            <Feed.Meta>{item.itemcount}</Feed.Meta>
           </Feed.Content>
         </Feed.Event>
       ));
