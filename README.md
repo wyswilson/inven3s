@@ -1,5 +1,5 @@
 ==============COLORSCHEME===========
-GREEN		f7c51e
+SPECIAL COLOR 285075
 GREY		8c8c8c
 DARK-GREY	222222
 
@@ -26,8 +26,8 @@ sudo pip3 install waitress
 
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s
-WEBAPP 	ssh -i inven3s.pem ubuntu@54.255.238.5
-API 	ssh -i inven3s.pem ubuntu@52.221.217.97
+WEBAPP 	ssh -i inven3s.pem ubuntu@18.139.228.229
+API 	ssh -i inven3s.pem ubuntu@54.179.48.67
 
 create new screen: screen -S <screenname>
 remove screen: screen -XS <screennumber> quit

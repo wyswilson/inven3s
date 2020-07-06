@@ -21,7 +21,8 @@ config = configparser.ConfigParser()
 config.read('conf.ini')
 
 apisecretkey	= config['auth']['secretkey']
-logfile 		= config['log']['file']
+logfile 		= config['path']['log']
+productdir 	= config['path']['products']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -288,6 +289,7 @@ def jsonifyfeed(records):
 		activity['gtin'] 			= gtin
 		activity['productname'] 	= productname
 		activity['productimage']	= productimage
+		activity['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
 		activity['brandname']		= brandname
 		activity['isedible']		= isedible
 		activity['isfavourite']		= isfavourite
@@ -326,6 +328,7 @@ def jsonifyproducts(records):
 		product['gtin'] 			= gtin
 		product['productname']		= productname
 		product['productimage'] 	= productimage
+		product['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
 		product['brandname'] 		= brandname
 		product['isperishable'] 	= isperishable
 		product['isedible'] 		= isedible
@@ -355,6 +358,7 @@ def jsonifyinventory(records):
 		itemgroup['gtin'] 			= gtin
 		itemgroup['productname']	= productname
 		itemgroup['productimage'] 	= productimage
+		itemgroup['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
 		itemgroup['brandname'] 		= brandname
 		itemgroup['dateexpiry'] 	= dateexpiry
 		itemgroup['retailers'] 		= retailers

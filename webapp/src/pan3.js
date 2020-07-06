@@ -300,7 +300,7 @@ class Pan3 extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimage === '' ? this.state.defaultimage : item.productimage,
+          img: item.productimage === '' ? this.state.defaultimage : item.productimagelocal,
         }
       ));
     this.setState({ productsuggests: updatedsuggest });
@@ -414,8 +414,8 @@ class Pan3 extends React.Component {
     });    
   }
 
-  setdefaultimage(event){
-    event.target.src = this.state.defaultimage;
+  setdefaultimage(event,productimageremote){
+    event.target.src = productimageremote;
   }
 
   clearactionmessage(){
@@ -554,10 +554,10 @@ class Pan3 extends React.Component {
               <Card raised key={item.gtin}>
                 <Card.Content>
                     <Image rounded
-                      centered src={item.productimage}
+                      centered src={item.productimagelocal}
                       floated='right'
                       size='tiny' style={{width: 'auto', height: '70px'}}
-                      onError={this.setdefaultimage.bind(this)}
+                      onError={this.setdefaultimage.bind(this,item.productimage)}
                     />
                   <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta className="item small">{item.brandname}</Card.Meta>

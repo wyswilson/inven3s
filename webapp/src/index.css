@@ -30,7 +30,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #f7c51e !important;
+  background-color: #285075 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -40,7 +40,7 @@ body {
 .button.kuning{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #f7c51e !important;
+  background-color: #285075 !important;
 }
 
 .button.grey.fullwidth{
@@ -213,7 +213,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #f7c51e;
+  color: #285075;
 }
 
 .navheader.mobile {
@@ -233,7 +233,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #f7c51e;
+  color: #285075;
 }
 
 .error {
@@ -258,7 +258,7 @@ body {
   font-size: 14px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #f7c51e;
+  background-color: #285075;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
