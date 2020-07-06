@@ -16,12 +16,13 @@ import werkzeug.security
 import jwt
 import string
 import math
+from PIL import Image
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
 
 apisecretkey	= config['auth']['secretkey']
-logfile 		= config['log']['file']
+logfile 		= config['path']['log']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -59,7 +60,12 @@ for record in records:
 			opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
 			urllib.request.install_opener(opener)
 			imageloc = imagepath + gtin + '.jpg'
-			print('downloading [%s][%s]' % (productname,imageloc))
+			print('downloading [%s][%s][%s]\n' % (productname,productimage,imageloc))
 			urllib.request.urlretrieve(productimage, imageloc)
+			image = Image.open(imageloc)
+			image.thumbnail((400,400), Image.ANTIALIAS)
+			image.save(imageloc, "jpeg")
 		except:
-			print('error downloading [%s][%s]' % (productname,imageloc))
+			with open(imagepath + "error.log", "a") as errfile:
+				errfile.write("[%s][%s]\n\n" % (productname, productimage))
+			print('error downloading [%s][%s][%s]\n' % (productname,productimage,imageloc))

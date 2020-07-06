@@ -75,8 +75,6 @@ class Home extends React.Component {
       if(response.status === 200){
         console.log('getinventoryfeed [' + response.data[0]['message'] + ']');
 
-        console.log(response.data[0]['results']);
-
         this.formatactivityfeed( response.data[0]['results'] );
         this.getinventorycount();
       }
