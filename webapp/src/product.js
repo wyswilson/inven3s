@@ -143,7 +143,7 @@ class Product extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimage === '' ? this.state.defaultimage : item.productimage,
+          img: item.productimage === '' ? this.state.defaultimage : item.productimagelocal,
           brand: item.brandname,
           isedible: item.isedible,
           isfavourite: item.isfavourite
