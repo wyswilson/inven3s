@@ -43,12 +43,12 @@ class Home extends React.Component {
     const feed = _.map(activities, (item) => (
         <Feed.Event key={item.gtin}>
           <Feed.Label alt={item.productname}>
-            <Image wrapped src={item.productimage} size='tiny' />
+            <Image wrapped src={item.productimagelocal} size='tiny' />
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
-              <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimage, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
+              <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
               {item.itemstatus === 'IN' ? ' (' + item.itemcount + ' items)' : ''}
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>

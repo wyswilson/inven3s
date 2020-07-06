@@ -236,7 +236,7 @@ class ToBuy extends React.Component {
           {
             gtin: item.gtin,
             productname: item.productname,
-            productimage: item.productimage,
+            productimage: item.productimagelocal,
             retailers: item.retailers.split(',').map( (retailer) => (
                 <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
               ))
@@ -268,10 +268,6 @@ class ToBuy extends React.Component {
           <Message className="fullwidth" size="tiny">{this.state.actionedmsg}</Message>
         )
       }
-  }
-
-  setdefaultimage(event){
-    event.target.src = this.state.defaultimage;
   }
 
   componentDidMount() {
@@ -347,7 +343,6 @@ class ToBuy extends React.Component {
               </List.Content>
               <List.Content floated='left'>
                 <Image size="tiny" src={item.productimage}
-                onError={this.setdefaultimage.bind(this)}
                 />
               </List.Content>
               <List.Content>
