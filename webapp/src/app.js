@@ -86,6 +86,7 @@ class App extends React.Component {
               <PrivateRoute path="/2buy" component={ToBuy} />
               <PrivateRoute path="/product" component={Product} />
               <PublicRoute path="/login" component={Login} />
+              <PublicRoute path="/inventory" component={Login} />
               <PublicRoute exact path="/">
                 <Redirect to="/login" />
               </PublicRoute>

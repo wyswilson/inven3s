@@ -19,7 +19,7 @@ config = configparser.ConfigParser()
 config.read('conf.ini')
 
 apisecretkey	= config['auth']['secretkey']
-logfile 		= config['log']['file']
+logfile 		= config['path']['log']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
