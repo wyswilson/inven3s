@@ -463,7 +463,9 @@ class Pan3 extends React.Component {
               >
               <Modal.Header>Add items</Modal.Header>
               <Modal.Content image>
-                <Image wrapped size='tiny' src={this.state.productimage} />
+                <Image
+                  wrapped size='tiny' src={this.state.productimage}
+                />
                 <Modal.Description>
                   <Grid columns={1} doubling stackable>
                     <Grid.Column>
@@ -552,7 +554,8 @@ class Pan3 extends React.Component {
                     <Image rounded
                       centered src={item.productimagelocal}
                       floated='right'
-                      size='tiny' style={{width: 'auto', height: '70px'}}
+                      size='tiny' style={{width: 'auto', height: '70px'}}                      
+                      onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
                     />
                   <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta className="item small">{item.brandname}</Card.Meta>
@@ -607,7 +610,10 @@ class Pan3 extends React.Component {
                     >
                       <Modal.Header>Add items</Modal.Header>
                       <Modal.Content image>
-                        <Image wrapped size='tiny' src={item.productimagelocal} />
+                        <Image
+                          wrapped size='tiny' src={item.productimagelocal}
+                          onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+                        />
                         <Modal.Description>
                           <Grid columns={1} doubling stackable>
                             <Grid.Column>

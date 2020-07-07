@@ -152,7 +152,6 @@ class Product extends React.Component {
           isfavourite: item.isfavourite
         }
       ));
-    console.log(updatedsuggest);
     this.setState({ productsuggests: updatedsuggest });
   }
 
@@ -168,6 +167,7 @@ class Product extends React.Component {
       if(selectedarr){
         const selectedgtin = selectedarr['key'];
         const selectedimg = selectedarr['img'];
+        const selectedimglocal = selectedarr['imglocal'];
         const selectedbrand = selectedarr['brand'];
         const selectedisedible = selectedarr['isedible'];
         const selectedisfavourite = selectedarr['isfavourite'];
@@ -176,6 +176,7 @@ class Product extends React.Component {
         this.setState({ gtin: selectedgtin });
         this.setState({ productname: value });
         this.setState({ productimage: selectedimg });
+        this.setState({ productimagelocal: selectedimglocal });
         this.setState({ brandname: selectedbrand });
         this.setState({ isedible: selectedisedible });
         this.setState({ isfavourite: selectedisfavourite });
@@ -365,7 +366,7 @@ class Product extends React.Component {
   }
 
   setdefaultimage(event){
-    event.target.src = this.state.defaultimage;
+    event.target.src = this.state.productimage;
   }
 
   updateedibletoggle(event,data){
@@ -451,7 +452,7 @@ class Product extends React.Component {
                 <Image wrapped
                   src={this.state.productimagelocal}
                   size='small'
-                  onError={this.setdefaultimage.bind(this)}
+                  onError={(e)=>{e.target.onerror = null; e.target.src=this.state.productimage}}
                 />
                 <Grid.Column>
                   <label className="fullwidth">GTIN</label>

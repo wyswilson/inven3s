@@ -236,7 +236,8 @@ class ToBuy extends React.Component {
           {
             gtin: item.gtin,
             productname: item.productname,
-            productimage: item.productimagelocal,
+            productimage: item.productimage,
+            productimagelocal: item.productimagelocal,
             retailers: item.retailers.split(',').map( (retailer) => (
                 <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
               ))
@@ -288,7 +289,10 @@ class ToBuy extends React.Component {
                     >
                   <Modal.Header>Add items</Modal.Header>
                   <Modal.Content image>
-                    <Image wrapped size='tiny' src={item.productimage} />
+                    <Image
+                      wrapped size='tiny' src={item.productimagelocal}
+                      onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+                    />
                     <Modal.Description>
                       <Grid columns={1} doubling stackable>
                         <Grid.Column>
@@ -342,7 +346,9 @@ class ToBuy extends React.Component {
                 </Modal>
               </List.Content>
               <List.Content floated='left'>
-                <Image size="tiny" src={item.productimage}
+                <Image
+                  size="tiny" src={item.productimagelocal}
+                  onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
                 />
               </List.Content>
               <List.Content>

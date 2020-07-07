@@ -43,7 +43,10 @@ class Home extends React.Component {
     const feed = _.map(activities, (item) => (
         <Feed.Event key={item.gtin + item.itemstatus +  item.dateentry}>
           <Feed.Label alt={item.productname}>
-            <Image wrapped src={item.productimagelocal} size='tiny' />
+            <Image
+              wrapped src={item.productimagelocal} size='tiny'
+              onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+            />
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
