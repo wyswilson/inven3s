@@ -418,11 +418,11 @@ class Pan3 extends React.Component {
     this.setState({ actionedmsg: '' });
   }
 
-  redirectoproduct(gtin, productname, productimage, brandname, isedible, isfavourite){
+  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite){
     this.props.history.push({
       pathname: '/product',
       //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
-      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
     })
   }
   
@@ -562,7 +562,7 @@ class Pan3 extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimagelocal, item.brandname, item.isedible, item.isfavourite)} />
+                    <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite)} />
                     
                     <Modal
                       trigger={<Button icon="minus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'}

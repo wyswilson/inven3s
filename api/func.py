@@ -16,7 +16,7 @@ import werkzeug.security
 import jwt
 import string
 import math
-import PIL
+from PIL import Image
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -537,8 +537,8 @@ def downloadproductimage(gtin,productname,productimage):
 		urllib.request.install_opener(opener)
 		urllib.request.urlretrieve(productimage, imageloc)
 
-		image = Pillow.Image.open(imageloc)
-		image.thumbnail((300,300), Pillow.Image.ANTIALIAS)
+		image = Image.open(imageloc)
+		image.thumbnail((300,300), Image.ANTIALIAS)
 		image.save(imageloc, "jpeg")
 
 		return True

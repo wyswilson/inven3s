@@ -22,6 +22,7 @@ class Product extends React.Component {
       gtin: redirectstate ? redirectstate.gtin : '',
       productname: redirectstate ? redirectstate.productname : '',
       productimage: redirectstate ? redirectstate.productimage : 'https://react.semantic-ui.com/images/wireframe/image.png',
+      productimagelocal: redirectstate ? redirectstate.productimagelocal : 'https://react.semantic-ui.com/images/wireframe/image.png',
       brandname: redirectstate ? redirectstate.brandname : '',
       isedible: redirectstate ? redirectstate.isedible : 1,
       isperishable:0,
@@ -65,6 +66,7 @@ class Product extends React.Component {
 
         this.setState({ productname: response.data[0]['results'][0]['productname'] });
         this.setState({ productimage: response.data[0]['results'][0]['productimage'] });
+        this.setState({ productimagelocal: response.data[0]['results'][0]['productimagelocal'] });
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
         this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
         this.setState({ isfavourite: response.data[0]['results'][0]['isfavourite'] });
@@ -143,7 +145,8 @@ class Product extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimage === '' ? this.state.defaultimage : item.productimagelocal,
+          img: item.productimage === '' ? this.state.defaultimage : item.productimage,
+          imglocal: item.productimagelocal === '' ? this.state.defaultimage : item.productimagelocal,
           brand: item.brandname,
           isedible: item.isedible,
           isfavourite: item.isfavourite
@@ -446,7 +449,7 @@ class Product extends React.Component {
             <Card.Meta>
               <Grid columns={1} doubling stackable>
                 <Image wrapped
-                  src={this.state.productimage}
+                  src={this.state.productimagelocal}
                   size='small'
                   onError={this.setdefaultimage.bind(this)}
                 />

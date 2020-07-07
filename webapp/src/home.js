@@ -32,10 +32,10 @@ class Home extends React.Component {
     this.props.history.push('/login');
   }
 
-  handleproductclick(gtin, productname, productimage, brandname, isedible, isfavourite){
+  handleproductclick(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite){
     this.props.history.push({
       pathname: '/product',
-      state: { gtin: gtin, productname: productname, productimage: productimage, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
     })
   }
 
@@ -48,7 +48,7 @@ class Home extends React.Component {
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
-              <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
+              <Feed.User onClick={this.handleproductclick.bind(this,item.gtin,item.productname, item.productimage, item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
               {item.itemstatus === 'IN' ? ' (' + item.itemcount + ' items)' : ''}
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>
