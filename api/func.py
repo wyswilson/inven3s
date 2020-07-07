@@ -16,13 +16,15 @@ import werkzeug.security
 import jwt
 import string
 import math
+import PIL
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
 
 apisecretkey	= config['auth']['secretkey']
 logfile 		= config['path']['log']
-productdir 	= config['path']['products']
+productdir 		= config['path']['products']
+imagepath 		= config['path']['images']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -527,6 +529,24 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 	return "ERR",""
 
+def downloadproductimage(gtin,productname,productimage):
+	imageloc = imagepath + gtin + '.jpg'
+	try:
+		opener=urllib.request.build_opener()
+		opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
+		urllib.request.install_opener(opener)
+		urllib.request.urlretrieve(productimage, imageloc)
+
+		image = PIL.Image.open(imageloc)
+		image.thumbnail((300,300), PIL.Image.ANTIALIAS)
+		image.save(imageloc, "jpeg")
+
+		return True
+	except:
+		with open(imagepath + "error.log", "a") as errfile:
+			errfile.write("[%s][%s]\n\n" % (productname, productimage))
+		return False
+
 def discovernewproduct(gtin,attempt):
 	preferredsources = ["https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org","https:\/\/www\.campbells\.com\.au","https:\/\/www\.ebay\.com"]
 
@@ -877,6 +897,9 @@ def findproductimage(gtin,productname):
 		logging.debug("error: [%s] [%s]" % (url,str(e)))
 	except:
 		logging.debug("error: unknown [%s]" % url)	
+
+	if productimage != '':
+		successful = downloadproductimage(gtin,productname,productimage)
 
 	return productimage
 

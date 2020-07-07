@@ -1,6 +1,7 @@
 import datetime
 import flask
 
+import func
 import functools
 import mysql.connector
 import hashlib
@@ -23,6 +24,7 @@ config.read('conf.ini')
 
 apisecretkey	= config['auth']['secretkey']
 logfile 		= config['path']['log']
+imagepath 		= config['path']['images']
 mysqlhost 		= config['mysql']['host']
 mysqlport 		= config['mysql']['port']
 mysqluser 		= config['mysql']['user']
@@ -34,38 +36,28 @@ defaultretailercity = config['default']['retailercity']
 defaultdateexpiry 	= config['default']['dateexpiry']
 useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 
-db = mysql.connector.connect(
+db1 = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
-    pool_name='sqlpool',
-    pool_size = 5, pool_reset_session = True
+    pool_name='sqlpool1',
+    pool_size = 1, pool_reset_session = True
    	)
 
-cursor = db.cursor()
+cursor9 = db1.cursor()
 
 query1 = """
 	SELECT gtin,productname,productimage FROM products
 """
-cursor.execute(query1)
-records = cursor.fetchall()
-imagepath = "../webapp/public/products/"
-for record in records:
+cursor9.execute(query1)
+records9 = cursor9.fetchall()
+for record in records9:
 	gtin = record[0]
 	productname = record[1]
 	productimage = record[2]
 	if productimage != '':
-		try:
-			opener=urllib.request.build_opener()
-			opener.addheaders=[('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36')]
-			urllib.request.install_opener(opener)
-			imageloc = imagepath + gtin + '.jpg'
-			print('downloading [%s][%s][%s]\n' % (productname,productimage,imageloc))
-			urllib.request.urlretrieve(productimage, imageloc)
-			image = Image.open(imageloc)
-			image.thumbnail((400,400), Image.ANTIALIAS)
-			image.save(imageloc, "jpeg")
-		except:
-			with open(imagepath + "error.log", "a") as errfile:
-				errfile.write("[%s][%s]\n\n" % (productname, productimage))
-			print('error downloading [%s][%s][%s]\n' % (productname,productimage,imageloc))
+		successful = func.downloadproductimage(gtin,productname,productimage)
+		if successful:
+			print('downloading [%s][%s]\n' % (productname,productimage))
+		else:
+			print('error downloading [%s][%s]\n' % (productname,productimage))
