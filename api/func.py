@@ -883,10 +883,10 @@ def findproductimage(gtin,productname):
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
 		SELECT gtin, productname, productimage, brandname, isedible, favourite,
-			date(dateentry), itemstatus
+			date(dateentry), itemstatus, itemcount
 		FROM (
 			SELECT
-				p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
+				p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*) as itemcount
 			FROM inventories AS i
 			JOIN products AS p
 			ON i.gtin = p.gtin
