@@ -882,19 +882,23 @@ def findproductimage(gtin,productname):
 
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
-		SELECT
-			p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
-		FROM inventories AS i
-		JOIN products AS p
-		ON i.gtin = p.gtin
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		LEFT JOIN productsfavourite as pf
-		ON i.gtin = pf.gtin AND i.userid = pf.userid
-		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5,6,7,8
-		ORDER BY 7 DESC
-		LIMIT 15
+		SELECT gtin, productname, productimage, brandname, isedible, favourite,
+			date(dateentry), itemstatus
+		FROM (
+			SELECT
+				p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*)
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
+			LEFT JOIN productsfavourite as pf
+			ON i.gtin = pf.gtin AND i.userid = pf.userid
+			WHERE i.userid = %s
+			GROUP BY 1,2,3,4,5,6,7,8
+			ORDER BY 7 DESC
+			LIMIT 15
+		) as tmp
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
