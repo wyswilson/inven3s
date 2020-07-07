@@ -17,7 +17,6 @@ import werkzeug.security
 import jwt
 import string
 import math
-from PIL import Image
 
 config = configparser.ConfigParser()
 config.read('conf.ini')

@@ -537,8 +537,8 @@ def downloadproductimage(gtin,productname,productimage):
 		urllib.request.install_opener(opener)
 		urllib.request.urlretrieve(productimage, imageloc)
 
-		image = PIL.Image.open(imageloc)
-		image.thumbnail((300,300), PIL.Image.ANTIALIAS)
+		image = Pillow.Image.open(imageloc)
+		image.thumbnail((300,300), Pillow.Image.ANTIALIAS)
 		image.save(imageloc, "jpeg")
 
 		return True
