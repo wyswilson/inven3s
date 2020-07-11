@@ -238,6 +238,9 @@ class ToBuy extends React.Component {
             productname: item.productname,
             productimage: item.productimage,
             productimagelocal: item.productimagelocal,
+            brandname: item.brandname,
+            isedible: item.isedible,
+            isfavourite: item.isfavourite,
             retailers: item.retailers.split(',').map( (retailer) => (
                 <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
               ))
@@ -261,6 +264,13 @@ class ToBuy extends React.Component {
         this.setState({ inventorymsg: 'server unreachable' })
       }
     });
+  }
+
+  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite){
+    this.props.history.push({
+      pathname: '/product',
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+    })
   }
 
   generateitemadditionmsg(){
@@ -352,7 +362,7 @@ class ToBuy extends React.Component {
                 />
               </List.Content>
               <List.Content>
-                <List.Header>{item.productname}</List.Header>
+                <List.Header as="a" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</List.Header>
                 <List.Description>{item.retailers}</List.Description>
               </List.Content>
             </List.Item>
