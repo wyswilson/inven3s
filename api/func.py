@@ -771,41 +771,6 @@ def findproductexpiry(uid,gtin):
 	else:
 		return "",defaultdateexpiry
 
-def determineproductcat(productname):
-	query1 = """
-		SELECT
-			metadataname,
-			COUNT(*) AS freq
-		FROM (
-			SELECT
-				dl.listingurl,
-				dl.listingtitle,
-				dm.metadataname,
-				dm.metadatatype,
-				MATCH(listingtitle) AGAINST (%s IN BOOLEAN MODE) AS score
-			FROM deals_listings AS dl
-			JOIN deals_listingmetadata AS dlm
-			ON dl.listingurl = dlm.listingurl
-			JOIN deals_metadata AS dm
-			ON dlm.metadatauri = dm.metadatauri
-			WHERE
-				dm.metadatatype IN ('tag','cat') AND
-				MATCH(listingtitle) AGAINST (%s IN BOOLEAN MODE)
-			ORDER BY score DESC
-			LIMIT 50
-		) AS tmp
-		GROUP BY 1
-		ORDER BY 2 DESC
-		LIMIT 1
-	"""
-	cursor.execute(query1,(productname,productname))
-	records = cursor.fetchall()
-	category = ""
-	for record in records:
-		category = record[0]
-
-	return category
-
 def fetchinventoryexpireditems(uid):
 	query1 = """
 		SELECT

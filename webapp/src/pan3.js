@@ -29,6 +29,7 @@ class Pan3 extends React.Component {
       gtin: '',
       productname: '',
       productimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
+      productimagelocal: 'https://react.semantic-ui.com/images/wireframe/image.png',
       brandid:'',
       brandname:'',
       retailerid:'',
@@ -204,10 +205,12 @@ class Pan3 extends React.Component {
       if(selectedarr){
         const selectedgtin = selectedarr['key'];
         const selectedimg = selectedarr['img'];
+        const selectedimglocal = selectedarr['imglocal'];
 
         this.setState({ gtin: selectedgtin });
         this.setState({ productname: value });
         this.setState({ productimage: selectedimg });
+        this.setState({ productimagelocal: selectedimglocal });
       }
       else{
         //NEW PRODCU
@@ -269,6 +272,7 @@ class Pan3 extends React.Component {
         this.setState({ gtin: '' });
         this.setState({ productname: '' });
         this.setState({ productimage: 'https://react.semantic-ui.com/images/wireframe/image.png' });
+        this.setState({ productimagelocal: 'https://react.semantic-ui.com/images/wireframe/image.png' });
         this.setState({ retailerid: ''});
         this.setState({ retailername: ''});
         this.setState({ dateexpiry: ''});
@@ -300,7 +304,8 @@ class Pan3 extends React.Component {
           key: item.gtin,
           text: item.productname,
           value: item.productname,
-          img: item.productimagelocal,
+          img: item.productimage,
+          imglocal: item.productimagelocal,
         }
       ));
     this.setState({ productsuggests: updatedsuggest });
@@ -464,7 +469,8 @@ class Pan3 extends React.Component {
               <Modal.Header>Add items</Modal.Header>
               <Modal.Content image>
                 <Image
-                  wrapped size='tiny' src={this.state.productimage}
+                  wrapped size='tiny' src={this.state.productimagelocal}
+                  onError={(e)=>{e.target.onerror = null; e.target.src=this.state.productimage}}
                 />
                 <Modal.Description>
                   <Grid columns={1} doubling stackable>
