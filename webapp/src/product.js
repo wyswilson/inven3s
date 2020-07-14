@@ -26,7 +26,8 @@ class Product extends React.Component {
       brandname: redirectstate ? redirectstate.brandname : '',
       isedible: redirectstate ? redirectstate.isedible : 1,
       isperishable:0,
-      isfavourite: redirectstate ? redirectstate.isfavourite : 0
+      isfavourite: redirectstate ? redirectstate.isfavourite : 0,
+      categories: redirectstate ? redirectstate.categories : []
     };
   }
 

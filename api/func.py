@@ -644,32 +644,6 @@ def discovernewproduct(gtin,attempt):
 	else:
 		return "ERR","",""
 
-def findallproducts(userid,isedible):
-	query1 = """
-		SELECT
-			p.gtin,p.productname,p.productimage,b.brandname,
-			p.isedible,
-			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			pc.category,
-			count(*)
-		FROM products AS p
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		LEFT JOIN productscategory as pc
-		ON p.gtin = pc.gtin
-		LEFT JOIN productsfavourite AS pf
-		ON p.gtin = pf.gtin AND pf.userid = %s
-	"""
-	if validateisedible(isedible) == "2":
-		query1 += "WHERE p.isedible != %s"
-	else:
-		query1 += "WHERE p.isedible = %s"
-	query1 += " GROUP BY 1,2,3,4,5,6,7"
-	cursor.execute(query1,(userid,validateisedible(isedible)))
-	records = cursor.fetchall()
-
-	return records
-
 def generateshoppinglist(userid):
 	query1 = """
 		SELECT
@@ -695,7 +669,7 @@ def generateshoppinglist(userid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN productscategory as pc
-			ON p.gtin = pc.gtin
+			ON p.gtin = pc.gtin AND pc.status = 'SELECTED'
 			LEFT JOIN productsfavourite AS pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s AND p.isedible IN (0,1)
@@ -709,6 +683,32 @@ def generateshoppinglist(userid):
 
 	return records
 
+def findallproducts(userid,isedible):
+	query1 = """
+		SELECT
+			p.gtin,p.productname,p.productimage,b.brandname,
+			p.isedible,
+			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			GROUP_CONCAT(CONCAT('"category":{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			count(*)
+		FROM products AS p
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		LEFT JOIN productscategory as pc
+		ON p.gtin = pc.gtin
+		LEFT JOIN productsfavourite AS pf
+		ON p.gtin = pf.gtin AND pf.userid = %s
+	"""
+	if validateisedible(isedible) == "2":
+		query1 += "WHERE p.isedible != %s"
+	else:
+		query1 += "WHERE p.isedible = %s"
+	query1 += " GROUP BY 1,2,3,4,5,6"
+	cursor.execute(query1,(userid,validateisedible(isedible)))
+	records = cursor.fetchall()
+
+	return records
+
 def findproductbykeyword(gtin,userid,isedible):
 	gtinfuzzy = "%" + gtin + "%"
 	query1 = """
@@ -716,7 +716,7 @@ def findproductbykeyword(gtin,userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			pc.category,
+			GROUP_CONCAT(CONCAT('"category":{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -733,7 +733,7 @@ def findproductbykeyword(gtin,userid,isedible):
 	else:
 		query1 += " AND p.isedible = %s"
 	query1 += """
-		GROUP BY 1,2,3,4,5,6,7
+		GROUP BY 1,2,3,4,5,6
 		LIMIT 10
 	"""
 	cursor.execute(query1,(userid,gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
@@ -747,7 +747,7 @@ def findproductbygtin(gtin,userid):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			pc.category,
+			GROUP_CONCAT(CONCAT('"category":{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -757,7 +757,7 @@ def findproductbygtin(gtin,userid):
 		LEFT JOIN productsfavourite as pf
 		ON p.gtin = pf.gtin AND pf.userid = %s
 		WHERE p.gtin = %s 
-		GROUP by 1,2,3,4,5,6,7
+		GROUP by 1,2,3,4,5,6
 		ORDER BY 2
 	"""
 	cursor.execute(query,(userid,gtin))
@@ -819,7 +819,7 @@ def fetchinventoryexpireditems(uid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN productscategory as pc
-			ON p.gtin = pc.gtin
+			ON p.gtin = pc.gtin AND pc.status = 'SELECTED'
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE
@@ -904,7 +904,7 @@ def fetchinventoryfeedbyuser(uid):
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		LEFT JOIN productscategory as pc
-		ON i.gtin = pc.gtin
+		ON i.gtin = pc.gtin AND pc.status = 'SELECTED'
 		LEFT JOIN productsfavourite as pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
@@ -945,7 +945,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN productscategory as pc
-			ON i.gtin = pc.gtin
+			ON i.gtin = pc.gtin AND pc.status = 'SELECTED'
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s
