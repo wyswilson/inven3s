@@ -377,7 +377,7 @@ def productselect(userid,gtin):
 
 	gtin,productname,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
-		records = func.findproductbygtin(gtin)
+		records = func.findproductbygtin(gtin,userid)
 	elif gtinstatus == "NEW":
 		status = "product does not exists"
 		statuscode = 404#Not Found
