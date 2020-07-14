@@ -825,7 +825,7 @@ def fetchinventoryexpireditems(uid):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  pc.categories,
 			  i.dateexpiry,
 			  case
 				when dateexpiry <= NOW() then 'expired'
@@ -841,17 +841,21 @@ def fetchinventoryexpireditems(uid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
-			LEFT JOIN productscategory as pc
+			LEFT JOIN (
+				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				FROM productscategory
+				GROUP BY 1		
+			) as pc
 			ON p.gtin = pc.gtin
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE
 				i.userid = %s AND p.isedible = '1'
 				AND dateexpiry IS NOT NULL AND dateexpiry != '0000-00-00'
-			GROUP BY 1,2,3,4,5,6,8,9
+			GROUP BY 1,2,3,4,5,6,7,8,9
 		) AS tmp
 		WHERE itemstotal > 0 AND itemgoodness IN ('expired','expiring')
-		ORDER BY 8 asc
+		ORDER BY 9 asc
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
@@ -919,19 +923,23 @@ def fetchinventoryfeedbyuser(uid):
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			pf.favourite,
-			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			pc.categories,
 			i.dateentry, i.itemstatus, count(*) as itemcount
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
-		LEFT JOIN productscategory as pc
+		LEFT JOIN (
+			SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+			FROM productscategory
+			GROUP BY 1		
+		) as pc
 		ON i.gtin = pc.gtin
 		LEFT JOIN productsfavourite as pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5,6,8,9
+		GROUP BY 1,2,3,4,5,6,7,8,9
 		ORDER BY 8 DESC
 		LIMIT 15
 	"""
@@ -956,7 +964,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  pc.categories,
 			  max(i.dateexpiry) as dateexpiry,
 			  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
@@ -967,7 +975,11 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
-			LEFT JOIN productscategory as pc
+			LEFT JOIN (
+				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				FROM productscategory
+				GROUP BY 1		
+			) as pc
 			ON i.gtin = pc.gtin
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
@@ -978,7 +990,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 	else:
 		query1 += " AND p.isedible = %s"	
 	query1 += """
-			GROUP BY 1,2,3,4,5,6
+			GROUP BY 1,2,3,4,5,6,7
 			ORDER BY 2 ASC
 		) AS X
 		WHERE itemstotal > 0
@@ -1001,7 +1013,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 		brandname 		= record[3]
 		isedible 		= record[4]
 		isfavourite		= record[5]
-		category		= record[6]
+		categories		= record[6]
 		itemstotal 		= record[7]
 		dateexpiry		= record[8]
 		retailers		= record[9]
