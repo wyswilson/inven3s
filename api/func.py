@@ -388,7 +388,7 @@ def jsonifyinventory(records):
 		itemgroup['itemcount'] 		= itemcount
 		itemgroup['isedible'] 		= isedible
 		itemgroup['isfavourite'] 	= isfavourite
-		itemgroup['categories'] 	= categorystr
+		itemgroup['categories'] 	= categories
 
 		inventory.append(itemgroup)
 
