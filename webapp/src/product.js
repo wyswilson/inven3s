@@ -150,7 +150,8 @@ class Product extends React.Component {
           imglocal: item.productimagelocal === '' ? this.state.defaultimage : item.productimagelocal,
           brand: item.brandname,
           isedible: item.isedible,
-          isfavourite: item.isfavourite
+          isfavourite: item.isfavourite,
+          categories: item.categories
         }
       ));
     this.setState({ productsuggests: updatedsuggest });
@@ -364,10 +365,6 @@ class Product extends React.Component {
           console.log('searchbrands [server unreachable]');
         }
       });
-  }
-
-  setdefaultimage(event){
-    event.target.src = this.state.productimage;
   }
 
   updateedibletoggle(event,data){
