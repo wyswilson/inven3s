@@ -326,7 +326,9 @@ def jsonifyproducts(records):
 		brandname   	= record[3]
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
-		category	   	= record[6]
+		categorystr	   	= record[6]
+
+		categories = json.loads(categorystr)
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -336,7 +338,7 @@ def jsonifyproducts(records):
 		product['brandname'] 		= brandname
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
-		product['category'] 		= category
+		product['category'] 		= categories
 
 		products.append(product)
 
