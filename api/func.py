@@ -327,9 +327,8 @@ def jsonifyproducts(records):
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
 		categorystr	   	= record[6]
-		print(categorystr)
 
-		#categories = json.loads('[' + categorystr + ']')
+		categories = json.loads('[' + categorystr + ']')
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -692,7 +691,7 @@ def findallproducts(userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(CONCAT('"category":{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
