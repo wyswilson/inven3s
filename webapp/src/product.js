@@ -18,6 +18,7 @@ class Product extends React.Component {
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       productsuggests: [],
       brandsuggests: [],
+      categorysuggests: [],
       productdropdown: '',
       gtin: redirectstate ? redirectstate.gtin : '',
       productname: redirectstate ? redirectstate.productname : '',
@@ -27,7 +28,7 @@ class Product extends React.Component {
       isedible: redirectstate ? redirectstate.isedible : 1,
       isperishable:0,
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
-      categories: redirectstate ? redirectstate.categories : []
+      redirectedcategories: redirectstate ? redirectstate.redirectedcategories : []
     };
   }
 
@@ -173,6 +174,7 @@ class Product extends React.Component {
         const selectedbrand = selectedarr['brand'];
         const selectedisedible = selectedarr['isedible'];
         const selectedisfavourite = selectedarr['isfavourite'];
+        const selectedcategories = selectedarr['categories'];
 
         this.setState({ productdropdown: value });
         this.setState({ gtin: selectedgtin });
@@ -184,6 +186,8 @@ class Product extends React.Component {
         this.setState({ isfavourite: selectedisfavourite });
         
         this.searchbrands(selectedbrand);
+
+        this.updatecategorysuggests(selectedcategories);
       }
       else{
         //NEW PRODUCT
@@ -202,6 +206,9 @@ class Product extends React.Component {
         //NEW BRAND
       }
     }
+    else if(field === 'categoryname'){
+      console.log('set categoryname');
+    }    
   }
 
   addnewbrand(event,data){
@@ -313,6 +320,19 @@ class Product extends React.Component {
       });
   }
 
+  updatecategorysuggests(suggestions){
+    const updatedsuggest = _.map(suggestions, (cat) => (
+        {
+          key: cat.name,
+          text: cat.name,
+          value: cat.name,
+          status: cat.status,
+          confidence: cat.confidence
+        }
+      ));
+    this.setState({ categorysuggests: updatedsuggest });
+  }  
+
   updatebrandsuggests(suggestions){
     const updatedsuggest = _.map(suggestions, (item) => (
         {
@@ -398,7 +418,9 @@ class Product extends React.Component {
     if(this.state.brandname !== ''){
       this.searchbrands(this.state.brandname);
     }
-   
+    if(this.state.redirectedcategories){
+      this.updatecategorysuggests(this.state.redirectedcategories);
+    }
   }
 
   checkfavourite(){
@@ -476,6 +498,18 @@ class Product extends React.Component {
                     noResultsMessage = "No brand found"
                     onSearchChange={this.lookupbrand.bind(this)}
                     onAddItem={this.addnewbrand.bind(this)}
+                    onChange={this.setproductmetadata.bind(this)}
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <label className="fullwidth">Category</label>
+                  <Dropdown className="fullwidth" name="categoryname"
+                    clearable
+                    fluid
+                    multiple
+                    search
+                    selection
+                    options={this.state.categorysuggests}
                     onChange={this.setproductmetadata.bind(this)}
                   />
                 </Grid.Column>

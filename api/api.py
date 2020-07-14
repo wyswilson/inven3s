@@ -296,6 +296,21 @@ def productupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
+@app.route('/product/category/<gtin>', methods=['POST'])
+@func.requiretoken
+def productcategory(userid,gtin):
+	print('hit [productcategory] with [%s,%s]' % (userid,gtin))
+
+	status = ""
+	statuscode = 200
+	records = []
+
+	category = flask.request.args.get("category")
+
+	func.updateproductcategory(gtin,category)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
+
 @app.route('/product/image/<gtin>', methods=['GET'])
 @func.requiretoken
 def productimage(userid,gtin):
