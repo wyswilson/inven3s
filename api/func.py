@@ -329,7 +329,7 @@ def jsonifyproducts(records):
 		categorystr	   	= record[6]
 		print(categorystr)
 
-		categories = json.loads('[' + categorystr + ']')
+		#categories = json.loads('[' + categorystr + ']')
 
 		product = {}
 		product['gtin'] 			= gtin
