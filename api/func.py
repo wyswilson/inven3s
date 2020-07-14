@@ -372,7 +372,10 @@ def jsonifyinventory(records):
 			if categorystr:
 				categories = json.loads('[' + categorystr + ']')
 		except: 
+			print('------------------------------')
+			print(productname)
 			print(categorystr)
+			print('------------------------------')
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
