@@ -327,7 +327,8 @@ def jsonifyproducts(records):
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
 		categorystr	   	= record[6]
-
+		print(categorystr)
+		
 		categories = json.loads(categorystr)
 
 		product = {}
