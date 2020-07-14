@@ -32,10 +32,10 @@ class Home extends React.Component {
     this.props.history.push('/login');
   }
 
-  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite){
+  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
       pathname: '/product',
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, redirectedcategories: categories }
     })
   }
 
@@ -51,7 +51,7 @@ class Home extends React.Component {
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
-              <Feed.User onClick={this.redirectoproduct.bind(this,item.gtin,item.productname, item.productimage, item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</Feed.User>
+              <Feed.User onClick={this.redirectoproduct.bind(this,item.gtin,item.productname, item.productimage, item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)}>{item.productname}</Feed.User>
               {item.itemstatus === 'IN' ? ' (' + item.itemcount + ' items)' : ''}
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>

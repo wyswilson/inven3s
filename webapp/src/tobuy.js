@@ -241,6 +241,7 @@ class ToBuy extends React.Component {
             brandname: item.brandname,
             isedible: item.isedible,
             isfavourite: item.isfavourite,
+            categories: item.categories,
             retailers: item.retailers.split(',').map( (retailer) => (
                 <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
               ))
@@ -266,10 +267,10 @@ class ToBuy extends React.Component {
     });
   }
 
-  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite){
+  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
       pathname: '/product',
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, redirectedcategories: categories }
     })
   }
 
@@ -362,7 +363,7 @@ class ToBuy extends React.Component {
                 />
               </List.Content>
               <List.Content>
-                <List.Header as="a" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite)}>{item.productname}</List.Header>
+                <List.Header as="a" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)}>{item.productname}</List.Header>
                 <List.Description>{item.retailers}</List.Description>
               </List.Content>
             </List.Item>
