@@ -283,9 +283,10 @@ def jsonifyfeed(records):
 		brandname	  	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		dateentry		= record[6]
-		itemstatus      = record[7]
-		itemcount		= record[8]
+		category	   	= record[6]
+		dateentry		= record[7]
+		itemstatus      = record[8]
+		itemcount		= record[9]
 
 		activity = {}
 		activity['gtin'] 			= gtin
@@ -295,6 +296,7 @@ def jsonifyfeed(records):
 		activity['brandname']		= brandname
 		activity['isedible']		= isedible
 		activity['isfavourite']		= isfavourite
+		activity['category']		= category
 		activity['dateentry']		= dateentry.strftime('%Y-%m-%d')
 		activity['itemstatus']		= itemstatus
 		activity['itemcount']		= itemcount
@@ -322,9 +324,9 @@ def jsonifyproducts(records):
 		productname  	= record[1]
 		productimage	= record[2]
 		brandname   	= record[3]
-		isperishable   	= record[4]
-		isedible	   	= record[5]
-		isfavourite	   	= record[6]
+		isedible	   	= record[4]
+		isfavourite	   	= record[5]
+		category	   	= record[6]
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -332,9 +334,9 @@ def jsonifyproducts(records):
 		product['productimage'] 	= productimage
 		product['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
 		product['brandname'] 		= brandname
-		product['isperishable'] 	= isperishable
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
+		product['category'] 		= category
 
 		products.append(product)
 
@@ -349,9 +351,10 @@ def jsonifyinventory(records):
 		brandname   	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		itemcount		= record[6]
-		dateexpiry		= record[7]
-		retailers		= record[8]
+		category		= record[6]
+		itemcount		= record[7]
+		dateexpiry		= record[8]
+		retailers		= record[9]
 
 		if dateexpiry:
 			dateexpiry = dateexpiry.strftime('%Y-%m-%d')
@@ -366,7 +369,8 @@ def jsonifyinventory(records):
 		itemgroup['retailers'] 		= retailers
 		itemgroup['itemcount'] 		= itemcount
 		itemgroup['isedible'] 		= isedible
-		itemgroup['isfavourite'] 		= isfavourite
+		itemgroup['isfavourite'] 	= isfavourite
+		itemgroup['category'] 		= category
 
 		inventory.append(itemgroup)
 
@@ -644,12 +648,15 @@ def findallproducts(userid,isedible):
 	query1 = """
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,
-			p.isperishable,p.isedible,
+			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			pc.category,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		LEFT JOIN productscategory as pc
+		ON p.gtin = pc.gtin
 		LEFT JOIN productsfavourite AS pf
 		ON p.gtin = pf.gtin AND pf.userid = %s
 	"""
@@ -666,12 +673,15 @@ def findallproducts(userid,isedible):
 def generateshoppinglist(userid):
 	query1 = """
 		SELECT
-			gtin, productname, productimage, brandname, isedible,isfavourite,
+			gtin, productname, productimage, brandname, isedible,
+			isfavourite,
+			category,
 			itemstotal, dateexpiry, retailers
 		FROM (
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
-			  	case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			  pc.category,
 			  max(i.dateexpiry) as dateexpiry,
 			  max(i.dateentry) AS recentpurchasedate,
 	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
@@ -684,11 +694,13 @@ def generateshoppinglist(userid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productscategory as pc
+			ON p.gtin = pc.gtin
 			LEFT JOIN productsfavourite AS pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s AND p.isedible IN (0,1)
-			GROUP BY 1,2,3,4,5,6
-			ORDER BY 6 DESC, 10 DESC, 8 DESC
+			GROUP BY 1,2,3,4,5,6,7
+			ORDER BY 6 DESC, 11 DESC, 9 DESC
 		) AS tmp
 		WHERE (isfavourite = 0 and itemstotal < 1 and historicaltotal >= 2) OR (isfavourite = 1 and itemstotal < 2 and historicaltotal >= 1)
 	"""
@@ -702,12 +714,15 @@ def findproductbykeyword(gtin,userid,isedible):
 	query1 = """
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,
-			p.isperishable,p.isedible,
+			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			pc.category,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		LEFT JOIN productscategory as pc
+		ON p.gtin = pc.gtin
 		LEFT JOIN productsfavourite AS pf
 		ON p.gtin = pf.gtin AND pf.userid = %s
 		WHERE (p.productname LIKE %s OR
@@ -730,12 +745,15 @@ def findproductbygtin(gtin,userid):
 	query = """
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,
-			p.isperishable,p.isedible,
+			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			pc.category,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		LEFT JOIN productscategory as pc
+		ON p.gtin = pc.gtin
 		LEFT JOIN productsfavourite as pf
 		ON p.gtin = pf.gtin AND pf.userid = %s
 		WHERE p.gtin = %s 
@@ -774,7 +792,9 @@ def findproductexpiry(uid,gtin):
 def fetchinventoryexpireditems(uid):
 	query1 = """
 		SELECT
-			gtin, productname, productimage, brandname, isedible, isfavourite,
+			gtin, productname, productimage, brandname, isedible,
+			isfavourite,
+			category,
 			itemstotal, dateexpiry, retailers,
 			itemgoodness
 		FROM
@@ -782,12 +802,13 @@ def fetchinventoryexpireditems(uid):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			  pc.category,
 			  i.dateexpiry,
 			  case
-					when dateexpiry <= NOW() then 'expired'
-					when NOW() < dateexpiry AND dateexpiry <= NOW() + INTERVAL 30 DAY then 'expiring'
-					ELSE 'can-keep'
-				END AS itemgoodness,
+				when dateexpiry <= NOW() then 'expired'
+				when NOW() < dateexpiry AND dateexpiry <= NOW() + INTERVAL 30 DAY then 'expiring'
+				ELSE 'can-keep'
+			  END AS itemgoodness,
 			  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
 			FROM inventories AS i
@@ -797,15 +818,17 @@ def fetchinventoryexpireditems(uid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productscategory as pc
+			ON p.gtin = pc.gtin
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE
 				i.userid = %s AND p.isedible = '1'
 				AND dateexpiry IS NOT NULL AND dateexpiry != '0000-00-00'
-			GROUP BY 1,2,3,4,5,6,7,8
+			GROUP BY 1,2,3,4,5,6,7,8,9
 		) AS tmp
 		WHERE itemstotal > 0 AND itemgoodness IN ('expired','expiring')
-		ORDER BY 7 asc
+		ORDER BY 8 asc
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
@@ -814,8 +837,8 @@ def fetchinventoryexpireditems(uid):
 	expiringrecords = []
 	expiredrecords 	= []
 	for record in records:
-		goodness 	= record[9]
-		itemstotal 	= record[6]
+		goodness 	= record[10]
+		itemstotal 	= record[7]
 		if goodness == 'expiring':
 			expiringrecords.append(record)
 			expiringcnt += math.ceil(itemstotal)
@@ -871,17 +894,22 @@ def findproductimage(gtin,productname):
 def fetchinventoryfeedbyuser(uid):
 	query1 = """
 		SELECT
-			p.gtin,p.productname, p.productimage, b.brandname, p.isedible, pf.favourite, i.dateentry, i.itemstatus, count(*) as itemcount
+			p.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			pf.favourite,
+			pc.category,
+			i.dateentry, i.itemstatus, count(*) as itemcount
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid
+		LEFT JOIN productscategory as pc
+		ON i.gtin = pc.gtin
 		LEFT JOIN productsfavourite as pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5,6,7,8
-		ORDER BY 7 DESC
+		GROUP BY 1,2,3,4,5,6,7,8,9
+		ORDER BY 8 DESC
 		LIMIT 15
 	"""
 	cursor.execute(query1,(uid,))
@@ -892,7 +920,9 @@ def fetchinventoryfeedbyuser(uid):
 def fetchinventorybyuser(uid,isedible,isopened):
 	query1 = """
 		SELECT 
-			gtin, productname, productimage, brandname, isedible, isfavourite,
+			gtin, productname, productimage, brandname, isedible,
+			isfavourite,
+			category,
 			itemstotal, dateexpiry, retailers,
 			CASE
 				when MOD(itemstotal*2,2) != 0 AND itemstotal = 0.5 then 'OPENED'
@@ -903,6 +933,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			  pc.category,
 			  max(i.dateexpiry) as dateexpiry,
 			  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
@@ -913,6 +944,8 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
+			LEFT JOIN productscategory as pc
+			ON i.gtin = pc.gtin
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s
@@ -922,7 +955,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 	else:
 		query1 += " AND p.isedible = %s"	
 	query1 += """
-			GROUP BY 1,2,3,4,5,6
+			GROUP BY 1,2,3,4,5,6,7
 			ORDER BY 2 ASC
 		) AS X
 		WHERE itemstotal > 0
@@ -945,10 +978,11 @@ def fetchinventorybyuser(uid,isedible,isopened):
 		brandname 		= record[3]
 		isedible 		= record[4]
 		isfavourite		= record[5]
-		itemstotal 		= record[6]
-		dateexpiry		= record[7]
-		retailers		= record[8]
-		itemstatus 		= record[9]
+		category		= record[6]
+		itemstotal 		= record[7]
+		dateexpiry		= record[8]
+		retailers		= record[9]
+		itemstatus 		= record[10]
 
 		if(isedible == 1 and itemstatus == "NEW"):
 			ediblenewcnt += itemstotal
