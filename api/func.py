@@ -957,7 +957,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN productscategory as pc
-			ON i.gtin = pc.gtin AND pc.status = 'SELECTED'
+			ON i.gtin = pc.gtin
 			LEFT JOIN productsfavourite as pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s
