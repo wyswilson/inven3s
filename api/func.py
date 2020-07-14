@@ -678,7 +678,7 @@ def generateshoppinglist(userid):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  pc.categories,
 			  max(i.dateexpiry) as dateexpiry,
 			  max(i.dateentry) AS recentpurchasedate,
 	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
@@ -691,13 +691,17 @@ def generateshoppinglist(userid):
 			ON p.brandid = b.brandid
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
-			LEFT JOIN productscategory as pc
+			LEFT JOIN (
+				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				FROM productscategory
+				GROUP BY 1		
+			) as pc
 			ON p.gtin = pc.gtin
 			LEFT JOIN productsfavourite AS pf
 			ON i.gtin = pf.gtin AND i.userid = pf.userid
 			WHERE i.userid = %s AND p.isedible IN (0,1)
-			GROUP BY 1,2,3,4,5,6
-			ORDER BY 6 DESC, 11 DESC, 9 DESC
+			GROUP BY 1,2,3,4,5,6,7
+			ORDER BY 6 DESC, 12 DESC, 10 DESC
 		) AS tmp
 		WHERE (isfavourite = 0 and itemstotal < 1 and historicaltotal >= 2) OR (isfavourite = 1 and itemstotal < 2 and historicaltotal >= 1)
 	"""
