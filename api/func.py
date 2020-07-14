@@ -673,7 +673,7 @@ def generateshoppinglist(userid):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			  max(i.dateexpiry) as dateexpiry,
 			  max(i.dateentry) AS recentpurchasedate,
 	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
@@ -707,7 +707,7 @@ def findallproducts(userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -734,7 +734,7 @@ def findproductbykeyword(gtin,userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -765,7 +765,7 @@ def findproductbygtin(gtin,userid):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -820,7 +820,7 @@ def fetchinventoryexpireditems(uid):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			  i.dateexpiry,
 			  case
 				when dateexpiry <= NOW() then 'expired'
@@ -914,7 +914,7 @@ def fetchinventoryfeedbyuser(uid):
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			pf.favourite,
-			GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			i.dateentry, i.itemstatus, count(*) as itemcount
 		FROM inventories AS i
 		JOIN products AS p
@@ -951,7 +951,7 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			SELECT
 			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  GROUP_CONCAT(CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			  GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
 			  max(i.dateexpiry) as dateexpiry,
 			  GROUP_CONCAT(distinct(r.retailername)) AS retailers,
 			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
