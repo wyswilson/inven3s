@@ -27,6 +27,7 @@ class Product extends React.Component {
       brandname: redirectstate ? redirectstate.brandname : '',
       isedible: redirectstate ? redirectstate.isedible : 1,
       isperishable:0,
+      categories: '',
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
       redirectedcategories: redirectstate ? redirectstate.redirectedcategories : []
     };
@@ -49,8 +50,9 @@ class Product extends React.Component {
         productimage:this.state.productimage,
         brandname:this.state.brandname,
         isedible:this.state.isedible,
-        isperishable:this.state.isperishable,
-        isfavourite:this.state.isfavourite
+        isperishable: this.state.isperishable,
+        isfavourite: this.state.isfavourite,
+        categories: this.state.categories
       }, 
       {
         headers: {
@@ -207,7 +209,7 @@ class Product extends React.Component {
       }
     }
     else if(field === 'categoryname'){
-      console.log('set categoryname');
+      this.setState({ categories: value });
     }    
   }
 

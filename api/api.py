@@ -231,6 +231,7 @@ def productupsert(userid):
 	isperishable= data["isperishable"]
 	isedible	= data["isedible"]
 	isfavourite	= data["isfavourite"]
+	categories	= data["categories"]
 
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
@@ -248,6 +249,9 @@ def productupsert(userid):
 		if isfavourite != '':
 			func.updateisfavourite(gtin,userid,isfavourite)
 			status = status + "isfavourite "
+		if categories != '':
+			func.updateproductcategories(gtin,categories)
+			status = status + "categories "
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
 			status = status + "isedible "
@@ -293,21 +297,6 @@ def productupsert(userid):
 	else:
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
-
-	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
-
-@app.route('/product/category/<gtin>', methods=['POST'])
-@func.requiretoken
-def productcategory(userid,gtin):
-	print('hit [productcategory] with [%s,%s]' % (userid,gtin))
-
-	status = ""
-	statuscode = 200
-	records = []
-
-	category = flask.request.args.get("category")
-
-	func.updateproductcategory(gtin,category)
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 

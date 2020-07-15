@@ -66,9 +66,9 @@ for record in records:
 		WHERE
 			MATCH(listingtitle) AGAINST (%s IN BOOLEAN MODE)
 			AND metadatatype = 'tag'
-		GROUP BY 1,2,3
-		ORDER BY 3 DESC
-		limit 3
+		GROUP BY 1,2
+		ORDER BY 3 DESC, 4 DESC
+		limit 10
 	"""
 	cursor.execute(query2,(productname,productname))
 	records2 = cursor.fetchall()

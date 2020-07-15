@@ -217,10 +217,17 @@ def updatebrandname(brandid,brandname):
 	cursor.execute(query2,(brandname.strip(),brandid))
 	db.commit()
 
-def updateproductcategory(gtin,category):
-	query2 = "UPDATE productscategory SET status = 'SELECTED' WHERE gtin = %s AND category = %s"
-	cursor.execute(query2,(gtin,category))
+def updateproductcategories(gtin,categories):
+
+	query2 = "UPDATE productscategory SET status = 'SUGGESTED' WHERE gtin = %s"
+	cursor.execute(query2,(gtin,))
 	db.commit()
+
+	for cat in categories.split(','):
+		cat = cat.strip()
+		query2 = "UPDATE productscategory SET status = 'SELECTED' WHERE gtin = %s AND category = %s"
+		cursor.execute(query2,(gtin,cat))
+		db.commit()
 
 def updateproductbrand(gtin,brandid):
 	query2 = "UPDATE products SET brandid = %s WHERE gtin = %s"
