@@ -41,7 +41,7 @@ class Home extends React.Component {
 
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
-        <Feed.Event key={item.gtin + item.itemstatus +  item.dateentry}>
+        <Feed.Event key={ new Date().getTime() }>
           <Feed.Label alt={item.productname}>
             <Image
               wrapped src={item.productimagelocal} size='tiny'
