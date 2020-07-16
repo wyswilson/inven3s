@@ -27,9 +27,9 @@ class Product extends React.Component {
       brandname: redirectstate ? redirectstate.brandname : '',
       isedible: redirectstate ? redirectstate.isedible : 1,
       isperishable:0,
-      categories: '',
+      selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
-      redirectedcategories: redirectstate ? redirectstate.redirectedcategories : []
+      categoryoptions: redirectstate ? redirectstate.categoryoptions : []
     };
   }
 
@@ -52,7 +52,7 @@ class Product extends React.Component {
         isedible:this.state.isedible,
         isperishable: this.state.isperishable,
         isfavourite: this.state.isfavourite,
-        categories: this.state.categories
+        categories: this.state.selectedcategories
       }, 
       {
         headers: {
@@ -176,7 +176,7 @@ class Product extends React.Component {
         const selectedbrand = selectedarr['brand'];
         const selectedisedible = selectedarr['isedible'];
         const selectedisfavourite = selectedarr['isfavourite'];
-        const selectedcategories = selectedarr['categories'];
+        const categoryoptions = selectedarr['categories'];
 
         this.setState({ productdropdown: value });
         this.setState({ gtin: selectedgtin });
@@ -186,10 +186,11 @@ class Product extends React.Component {
         this.setState({ brandname: selectedbrand });
         this.setState({ isedible: selectedisedible });
         this.setState({ isfavourite: selectedisfavourite });
+        this.setState({ categoryoptions: categoryoptions });
         
         this.searchbrands(selectedbrand);
 
-        this.updatecategorysuggests(selectedcategories);
+        this.updatecategorysuggests(categoryoptions);
       }
       else{
         //NEW PRODUCT
@@ -209,7 +210,7 @@ class Product extends React.Component {
       }
     }
     else if(field === 'categoryname'){
-      this.setState({ categories: value });
+      this.setState({ selectedcategories: value });
     }    
   }
 
@@ -333,6 +334,13 @@ class Product extends React.Component {
         }
       ));
     this.setState({ categorysuggests: updatedsuggest });
+    let selectedcats = [];
+    suggestions.forEach(function(cat) {
+      if(cat.status === 'SELECTED'){
+        selectedcats.push(cat.name);
+      }
+    });  
+    this.setState({ selectedcategories: selectedcats });
   }  
 
   updatebrandsuggests(suggestions){
@@ -420,8 +428,8 @@ class Product extends React.Component {
     if(this.state.brandname !== ''){
       this.searchbrands(this.state.brandname);
     }
-    if(this.state.redirectedcategories){
-      this.updatecategorysuggests(this.state.redirectedcategories);
+    if(this.state.categoryoptions){
+      this.updatecategorysuggests(this.state.categoryoptions);
     }
   }
 
@@ -507,10 +515,10 @@ class Product extends React.Component {
                   <label className="fullwidth">Category</label>
                   <Dropdown className="fullwidth" name="categoryname"
                     clearable
-                    fluid
                     multiple
                     search
                     selection
+                    value={this.state.selectedcategories}
                     options={this.state.categorysuggests}
                     onChange={this.setproductmetadata.bind(this)}
                   />

@@ -427,7 +427,7 @@ class Pan3 extends React.Component {
     this.props.history.push({
       pathname: '/product',
       //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, redirectedcategories: categories }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
     })
   }
   

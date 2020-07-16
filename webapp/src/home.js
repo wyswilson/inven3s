@@ -35,13 +35,13 @@ class Home extends React.Component {
   redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
       pathname: '/product',
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, redirectedcategories: categories }
+      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
     })
   }
 
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
-        <Feed.Event key={ new Date().getTime() }>
+        <Feed.Event key={ item.gtin + (new Date().getTime()) }>
           <Feed.Label alt={item.productname}>
             <Image
               wrapped src={item.productimagelocal} size='tiny'
