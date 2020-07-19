@@ -984,7 +984,9 @@ def fetchinventorybyuser(uid,isedible,isopened):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN (
-				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				SELECT
+					gtin,
+					GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence LIMIT 5 SEPARATOR ', ') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
