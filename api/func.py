@@ -384,7 +384,7 @@ def jsonifyinventory(records):
 			if categorystr:
 				categories = json.loads('[' + categorystr + ']')
 		except:
-			print(categorystr)
+			print('error with json categories')
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
