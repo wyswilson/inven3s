@@ -380,8 +380,10 @@ def jsonifyinventory(records):
 			dateexpiry = dateexpiry.strftime('%Y-%m-%d')
 
 		categories = []
-		if categorystr:
-			#categories = json.loads('[' + categorystr + ']')
+		try:
+			if categorystr:
+				categories = json.loads('[' + categorystr + ']')
+		except:
 			print(categorystr)
 
 		itemgroup = {}
