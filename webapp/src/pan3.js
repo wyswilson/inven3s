@@ -582,7 +582,7 @@ class Pan3 extends React.Component {
                       closeIcon
                     >
                       <Modal.Header>Consume items</Modal.Header>
-                      <Modal.Content textAlign='center'>
+                      <Modal.Content>
                         <Button.Group size='massive' vertical>
                           <Button className='grey button' size='massive'
                             onClick={this.consumeinventory.bind(this,item.gtin,0.5)}

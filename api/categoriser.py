@@ -43,14 +43,19 @@ cursor = db.cursor()
 query1 = """
 	SELECT
 		gtin,productname
-	FROM products
+	FROM products 
+	WHERE gtin NOT IN (
+		SELECT gtin FROM productscategory
+		WHERE status = 'SELECTED'
+	)
+	ORDER BY 2 asc
 """
 cursor.execute(query1)
 records = cursor.fetchall()
 category = ""
 for record in records:
-	gtin 		= record[0]
-	productname = record[1]
+	gtin		= record[0]
+	productname	= record[1]
 
 	query2 = """
 		SELECT
