@@ -189,11 +189,11 @@ while continuescrape == 1:
 
 							status = 'IS-NEW'
 							listingdateobj = datetime.datetime.strptime(listingdate, '%Y-%m-%d %H:%M:%S')
-							if listingdateobj < mostrecentlistingdate:
-								status = "ALREADY-EXISTS"
-								continuescrape = 0
-							else:
-								extractandsavemetadata(listinglink,listinghtml)
+							#if listingdateobj < mostrecentlistingdate:
+							#	status = "ALREADY-EXISTS"
+							#	continuescrape = 0
+							#else:
+							extractandsavemetadata(listinglink,listinghtml)
 								#saveproductpage(producturl,producthtml,sourcelink)
 
 							print("status: %s" % status)						

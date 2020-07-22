@@ -99,3 +99,9 @@ sudo service nginx restart
    secure backup of this folder now. This configuration directory will
    also contain certificates and private keys obtained by Certbot so
    making regular backups of this folder is ideal.
+
+
+  ==============RDS================
+  group_concat_max_len = 1000000;
+  max_allowed_packet = 24000000
+  net_read_timeout = 60

@@ -932,7 +932,7 @@ def fetchinventoryfeedbyuser(uid):
 			p.gtin,p.productname,p.productimage,b.brandname,p.isedible,
 			pf.favourite,
 			pc.categories,
-			i.dateentry, i.itemstatus, count(*) as itemcount
+			i.dateentry, i.itemstatus, sum(quantity) as itemcount
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin
