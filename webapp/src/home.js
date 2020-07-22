@@ -53,7 +53,6 @@ class Home extends React.Component {
               {item.itemstatus === 'IN' ? 'added ' : 'consumed '}
               <Feed.User onClick={this.redirectoproduct.bind(this,item.gtin,item.productname, item.productimage, item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)}>{item.productname}</Feed.User>
               {item.itemstatus === 'IN' ? ' (' + item.itemcount + ' items)' : ''}
-              {item.itemcount}
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>
             <Feed.Meta></Feed.Meta>
