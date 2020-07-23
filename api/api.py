@@ -398,12 +398,12 @@ def productselect(userid,gtin):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/product/category', methods=['GET'])
+@app.route('/inventory/category', methods=['GET'])
 @func.requiretoken
-def productcategories(userid):
-	print('hit [productcategories] with [%s]' % (userid))
+def inventorycategories(userid):
+	print('hit [inventorycategories] with [%s]' % (userid))
 
-	status = "products by category returned"
+	status = "inventories by category returned"
 	statuscode = 200
 	
 	records = func.fetchinventorybyuserbycat(userid)

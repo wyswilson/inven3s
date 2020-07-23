@@ -23,6 +23,7 @@ class Home extends React.Component {
         expiringcnt: 0,
         shoppinglistcnt: 0,
       },
+      cardscats: <Grid.Column></Grid.Column>,
       feed: <Feed></Feed>
     };
   }
@@ -80,7 +81,7 @@ class Home extends React.Component {
         console.log('getinventoryfeed [' + response.data[0]['message'] + ']');
 
         this.formatactivityfeed( response.data[0]['results'] );
-        this.getinventorycount();
+        this.getinventorybycat();
       }
     })
     .catch(error => {
@@ -137,6 +138,36 @@ class Home extends React.Component {
     });
   }
 
+  getinventorybycat(){
+    console.log('getinventorybycat');
+
+    axios.get(this.state.apihost + '/inventory/category',
+      {
+        headers: {
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        console.log('getinventorybycat [' + response.data[0]['message'] + ']');
+
+        this.formatinventorybycat( response.data[0]['results'] );
+        this.getinventorycount();
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log("getinventorybycat ["+ error.response.status + ":" + error.response.data[0]['message'] + ']');
+      }
+      else{
+        console.log('getinventorybycat [server unreachable]');
+      }
+    });
+  }
+
+
   directtoinventory(isedible,isopened,expirystatus){
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
@@ -157,8 +188,26 @@ class Home extends React.Component {
     this.getinventoryfeed();
   }
 
+  formatinventorybycat(results){
+    const cards = _.map(results, (item) => (
+        <Grid.Column key={item} textAlign="center">
+          <Card raised key={item}>
+            <Card.Content>
+              <Statistic size="tiny">
+                <Statistic.Value>hi</Statistic.Value>
+                <Statistic.Label>ho</Statistic.Label>
+              </Statistic>
+            </Card.Content>
+          </Card> 
+        </Grid.Column>
+      )
+    );
+
+    this.setState({cardscats: cards});
+  }
+
   generateinsights(){
-    const stats = [
+    const cardsstats = [
      {
         'id':1,
         'number': this.state.shoppinglistcnt,
@@ -204,14 +253,14 @@ class Home extends React.Component {
     ];
 
     if(this.state.insightsloaded){
-      return stats.map( (stat) => (
-              <Grid.Column key={stat.id} textAlign="center">
-                <Card raised key={stat.id} fluid onClick={this.directtoinventory.bind(this,stat.isedible,stat.isopened,stat.expirystatus)}>
+      return cardsstats.map( (cardsstat) => (
+              <Grid.Column key={cardsstat.id} textAlign="center">
+                <Card raised key={cardsstat.id} fluid onClick={this.directtoinventory.bind(this,cardsstat.isedible,cardsstat.isopened,cardsstat.expirystatus)}>
                   <Card.Content>
                     <Statistic size="tiny">
                       <Statistic.Value>
-                      {stat.number}</Statistic.Value>
-                      <Statistic.Label>{stat.label}</Statistic.Label>
+                      {cardsstat.number}</Statistic.Value>
+                      <Statistic.Label>{cardsstat.label}</Statistic.Label>
                     </Statistic>
                   </Card.Content>
                 </Card> 
