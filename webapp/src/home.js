@@ -42,7 +42,7 @@ class Home extends React.Component {
 
   formatactivityfeed(activities){
     const feed = _.map(activities, (item) => (
-        <Feed.Event key={ item.gtin + (new Date().getTime()) }>
+        <Feed.Event key={ item.gtin + (new Date().getMilliseconds()) }>
           <Feed.Label alt={item.productname}>
             <Image
               wrapped src={item.productimagelocal} size='tiny'
@@ -167,7 +167,6 @@ class Home extends React.Component {
     });
   }
 
-
   directtoinventory(isedible,isopened,expirystatus,category){
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
@@ -189,13 +188,13 @@ class Home extends React.Component {
   }
 
   formatinventorybycat(results){
-    const cats = _.map(results, (catobj,catname) => (
+    const cats = _.map(results, (catobj) => (
         {
-          'id': 'id_'+ catname,
-          'number': catobj.length,
-          'label': '' + catname + ' items',
+          'id': 'id_'+ catobj['name'],
+          'number': catobj['count'],
+          'label': '' + catobj['name'] + ' items',
           'isedible':2,'isopened':2,'expirystatus':'all',
-          'category': catname
+          'category': catobj['name']
         }
       ));
     this.setState({cardscats: cats});

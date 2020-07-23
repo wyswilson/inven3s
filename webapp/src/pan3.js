@@ -253,7 +253,8 @@ class Pan3 extends React.Component {
         receiptno:'',
         queryisedible:this.state.queryisedible,
         queryisopened:this.state.queryisopened,
-        queryexpirystatus:this.state.queryexpirystatus
+        queryexpirystatus:this.state.queryexpirystatus,
+        querycategory:this.state.querycategory
       }, 
       {
         headers: {
@@ -386,7 +387,8 @@ class Pan3 extends React.Component {
         receiptno:'',
         queryisedible:this.state.queryisedible,
         queryisopened:this.state.queryisopened,
-        queryexpirystatus:this.state.queryexpirystatus
+        queryexpirystatus:this.state.queryexpirystatus,
+        querycategory:this.state.querycategory
       }, 
       {
         headers: {
