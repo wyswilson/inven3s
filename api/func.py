@@ -1078,6 +1078,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 		) AS X
 		WHERE itemstotal > 0
 	"""
+	print(query1)
 	cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
 
