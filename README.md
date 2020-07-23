@@ -26,8 +26,8 @@ sudo pip3 install waitress
 
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s
-WEBAPP 	ssh -i inven3s.pem ubuntu@18.139.228.229
-API 	ssh -i inven3s.pem ubuntu@54.179.48.67
+WEBAPP 	ssh -i inven3s.pem ubuntu@inven3s.com
+API 	ssh -i inven3s.pem ubuntu@inven3s.xyz
 
 create new screen: screen -S <screenname>
 remove screen: screen -XS <screennumber> quit

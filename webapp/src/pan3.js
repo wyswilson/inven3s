@@ -25,6 +25,7 @@ class Pan3 extends React.Component {
       queryisopened: redirectstate ? redirectstate.queryisopened : '2',
       //queryisopened: querystr ? querystr.isopened : '2',
       queryexpirystatus: redirectstate ? redirectstate.queryexpirystatus : 'all',
+      querycategory: redirectstate ? redirectstate.querycategory : 'all',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -46,7 +47,7 @@ class Pan3 extends React.Component {
     console.log('fetchinventory');
     this.setState({ inventoryfetched: false });
    
-    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus,
+    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus + '&category=' + this.state.querycategory,
       {
         headers: {
           "content-type": "application/json",

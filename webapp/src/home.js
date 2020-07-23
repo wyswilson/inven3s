@@ -23,7 +23,7 @@ class Home extends React.Component {
         expiringcnt: 0,
         shoppinglistcnt: 0,
       },
-      cardscats: <Grid.Column></Grid.Column>,
+      cardscats: [],
       feed: <Feed></Feed>
     };
   }
@@ -168,12 +168,12 @@ class Home extends React.Component {
   }
 
 
-  directtoinventory(isedible,isopened,expirystatus){
+  directtoinventory(isedible,isopened,expirystatus,category){
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
         pathname: '/pan3',
         //search: '?isedible=' + isedible + '&isopened=' + isopened,
-        state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus }
+        state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus, querycategory: category }
       })      
     }
     else{
@@ -189,21 +189,16 @@ class Home extends React.Component {
   }
 
   formatinventorybycat(results){
-    const cards = _.map(results, (item) => (
-        <Grid.Column key={item} textAlign="center">
-          <Card raised key={item}>
-            <Card.Content>
-              <Statistic size="tiny">
-                <Statistic.Value>hi</Statistic.Value>
-                <Statistic.Label>ho</Statistic.Label>
-              </Statistic>
-            </Card.Content>
-          </Card> 
-        </Grid.Column>
-      )
-    );
-
-    this.setState({cardscats: cards});
+    const cats = _.map(results, (catobj,catname) => (
+        {
+          'id': 'id_'+ catname,
+          'number': catobj.length,
+          'label': '' + catname + ' items',
+          'isedible':2,'isopened':2,'expirystatus':'all',
+          'category': catname
+        }
+      ));
+    this.setState({cardscats: cats});
   }
 
   generateinsights(){
@@ -212,55 +207,63 @@ class Home extends React.Component {
         'id':1,
         'number': this.state.shoppinglistcnt,
         'label': 'items in 2Buy',
-        'isedible':-1,'isopened':-1,'expirystatus':'all'
+        'isedible':-1,'isopened':-1,'expirystatus':'all',
+        'category': 'all'
       },
       {
         'id':2,
         'number': this.state.expiringcnt,
         'label': 'expiring food items',
-        'isedible':2,'isopened':2,'expirystatus':'expiring'
+        'isedible':2,'isopened':2,'expirystatus':'expiring',
+        'category': 'all'
       },
       {
         'id':3,
         'number': this.state.expiredcnt,
         'label': 'expired food items',
-        'isedible':2,'isopened':2,'expirystatus':'expired'
+        'isedible':2,'isopened':2,'expirystatus':'expired',
+        'category': 'all'
       },
       {
         'id':4,
         'number': this.state.edibleopenedcnt,
         'label': 'opened food items',
-        'isedible':1,'isopened':1,'expirystatus':'all'
+        'isedible':1,'isopened':1,'expirystatus':'all',
+        'category': 'all'
       },
       {
         'id':5,
         'number': this.state.ediblenewcnt,
         'label': 'new food items',
-        'isedible':1,'isopened':0,'expirystatus':'all'
+        'isedible':1,'isopened':0,'expirystatus':'all',
+        'category': 'all'
       },
       {
         'id':6,
         'number': this.state.inedibleopenedcnt,
         'label': 'opened non-food items',
-        'isedible':0,'isopened':1,'expirystatus':'all'
+        'isedible':0,'isopened':1,'expirystatus':'all',
+        'category': 'all'
       },
       {
         'id':7,
         'number': this.state.inediblenewcnt,
         'label': 'new non-food items',
-        'isedible':0,'isopened':0,'expirystatus':'all'
+        'isedible':0,'isopened':0,'expirystatus':'all',
+        'category': 'all'
       }
     ];
 
+    const cards = cardsstats.concat(this.state.cardscats);
+
     if(this.state.insightsloaded){
-      return cardsstats.map( (cardsstat) => (
-              <Grid.Column key={cardsstat.id} textAlign="center">
-                <Card raised key={cardsstat.id} fluid onClick={this.directtoinventory.bind(this,cardsstat.isedible,cardsstat.isopened,cardsstat.expirystatus)}>
+      return cards.map( (card) => (
+              <Grid.Column key={card.id} textAlign="center">
+                <Card raised key={card.id} fluid onClick={this.directtoinventory.bind(this,card.isedible,card.isopened,card.expirystatus,card.category)}>
                   <Card.Content>
                     <Statistic size="tiny">
-                      <Statistic.Value>
-                      {cardsstat.number}</Statistic.Value>
-                      <Statistic.Label>{cardsstat.label}</Statistic.Label>
+                      <Statistic.Value>{card.number}</Statistic.Value>
+                      <Statistic.Label>{card.label}</Statistic.Label>
                     </Statistic>
                   </Card.Content>
                 </Card> 
