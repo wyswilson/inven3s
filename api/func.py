@@ -1058,9 +1058,9 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 				FROM productscategory
 				
 		"""
-		if category != "all":
-			query1 += "WHERE category = %s" % (category)		
-		query1 += """
+	if category != "all":
+		query1 += "WHERE category = %s" % (category)		
+	query1 += """
 				GROUP BY 1		
 			) as pc
 			ON i.gtin = pc.gtin
