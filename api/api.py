@@ -549,6 +549,7 @@ def inventoryupsert(userid):
 	queryisedible		= data["queryisedible"]
 	queryisopened		= data["queryisopened"]
 	queryexpirystatus	= data["queryexpirystatus"]
+	querycategory	= data["querycategory"]
 
 	inventorycnt = 0
 	gtin,productname,gtinstatus = func.validategtin(gtin)
@@ -593,7 +594,7 @@ def inventoryupsert(userid):
 			inventorycnt = data[queryexpirystatus]['count']
 			records = data[queryexpirystatus]['results']
 		else:
-			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisopened(queryisopened),"all")
+			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisopened(queryisopened),querycategory)
 			inventorycnt = data['all']['count']
 			records = data['all']['results']		
 	elif gtinstatus == 'INVALID':
