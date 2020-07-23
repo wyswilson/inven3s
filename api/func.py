@@ -335,6 +335,7 @@ def jsonifyretailers(records):
 
 def jsonifycategories(records):
 	categories = {}
+	categoriescnt = {}
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
@@ -360,10 +361,20 @@ def jsonifycategories(records):
 
 		if category in categories:
 			categories[category].append(item)
+			categoriescnt[category] += math.ceil(itemstotal)
 		else:
 			categories[category] = [item]
+			categoriescnt[category] = math.ceil(itemstotal)
 
-	return categories
+	categoriesobjects = {}
+	for cat,items in categories.items():
+		catcnt = categoriescnt[cat]
+		catobj = {}
+		catobj['name'] = cat
+		catobj['count'] = catcnt
+		catobj['items'] = items
+
+	return categoriesobjects
 
 def jsonifyproducts(records):
 	products = []
