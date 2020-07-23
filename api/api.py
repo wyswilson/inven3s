@@ -593,7 +593,7 @@ def inventoryupsert(userid):
 			inventorycnt = data[queryexpirystatus]['count']
 			records = data[queryexpirystatus]['results']
 		else:
-			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisopened(queryisopened))
+			data = func.fetchinventorybyuser(userid,func.validateisedible(queryisedible),func.validateisopened(queryisopened),"all")
 			inventorycnt = data['all']['count']
 			records = data['all']['results']		
 	elif gtinstatus == 'INVALID':
@@ -647,6 +647,7 @@ def inventoryselect(userid):
 	isedible = flask.request.args.get("isedible")
 	isopened = flask.request.args.get("isopened")
 	expirystatus = flask.request.args.get("expirystatus")
+	category = flask.request.args.get("category")
 
 	inventorycnt = 0
 	if func.validateuser(userid) and isedible and isopened:
@@ -656,7 +657,7 @@ def inventoryselect(userid):
 			inventorycnt = data[expirystatus]['count']
 			records = data[expirystatus]['results']			
 		else:
-			data = func.fetchinventorybyuser(userid,isedible,isopened)
+			data = func.fetchinventorybyuser(userid,isedible,isopened,category)
 			inventorycnt = data['all']['count']
 			records = data['all']['results']
 
@@ -698,7 +699,7 @@ def inventoryinsights(userid):
 	status = "insights generated"
 	statuscode = 200
 	
-	data1 = func.fetchinventorybyuser(userid,2,2)
+	data1 = func.fetchinventorybyuser(userid,2,2,"all")
 	data2 = func.fetchinventoryexpireditems(userid)
 	data3 = func.generateshoppinglist(userid)
 

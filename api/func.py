@@ -1017,14 +1017,14 @@ def fetchinventoryfeedbyuser(uid):
 		WHERE i.userid = %s
 		GROUP BY 1,2,3,4,5,6,7,8,9
 		ORDER BY 8 DESC
-		LIMIT 20
+		LIMIT 30
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
 
 	return records
 
-def fetchinventorybyuser(uid,isedible,isopened):
+def fetchinventorybyuser(uid,isedible,isopened,category):
 	query1 = """
 		SELECT 
 			gtin, productname, productimage, brandname, isedible,
@@ -1056,6 +1056,11 @@ def fetchinventorybyuser(uid,isedible,isopened):
 					gtin,
 					GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
 				FROM productscategory
+				
+		"""
+		if category != "all":
+			query1 += "WHERE category = %s" % (category)		
+		query1 += """
 				GROUP BY 1		
 			) as pc
 			ON i.gtin = pc.gtin
