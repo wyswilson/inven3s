@@ -334,7 +334,7 @@ def jsonifyretailers(records):
 	return retailers
 
 def jsonifycategories(records):
-	categories = []
+	categories = {}
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
@@ -346,7 +346,7 @@ def jsonifycategories(records):
 		dateexpiry 		= record[7]
 		itemstotal		= record[8]
 
-		item = []
+		item = {}
 		item['gtin'] 			= gtin
 		item['productname'] 	= productname
 		item['productimage'] 	= productimage
