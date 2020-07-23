@@ -358,7 +358,7 @@ def jsonifycategories(records):
 		item['dateexpiry'] 	= dateexpiry
 		item['itemstotal'] 	= itemstotal
 
-		if categories[category]:
+		if category in categories:
 			categories[category].append(item)
 		else:
 			categories[category] = [item]
