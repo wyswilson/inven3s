@@ -366,13 +366,15 @@ def jsonifycategories(records):
 			categories[category] = [item]
 			categoriescnt[category] = math.ceil(itemstotal)
 
-	categoriesobjects = {}
+	categoriesobjects = []
 	for cat,items in categories.items():
 		catcnt = categoriescnt[cat]
 		catobj = {}
 		catobj['name'] = cat
 		catobj['count'] = catcnt
 		catobj['items'] = items
+
+		categoriesobjects.append(catobj)
 
 	return categoriesobjects
 
