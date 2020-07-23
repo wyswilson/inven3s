@@ -1056,11 +1056,6 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 					gtin,
 					GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
 				FROM productscategory
-				
-		"""
-	if category != "all":
-		query1 += "WHERE category = '%s' AND status = 'SELECTED'" % (category)	
-	query1 += """
 				GROUP BY 1		
 			) as pc
 			ON i.gtin = pc.gtin
@@ -1078,6 +1073,9 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 		) AS X
 		WHERE itemstotal > 0
 	"""
+	if category != "all":
+		query1 += "AND categories LIKE '%\"name\":\"%s\",\"status\":\"SELECTED\"%'" % (category)	
+
 	print(query1)
 	cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
