@@ -1059,7 +1059,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 				
 		"""
 	if category != "all":
-		query1 += "WHERE category = '%s'" % (category)		
+		query1 += "WHERE category = '%s' AND status = 'SELECTED'" % (category)	
 	query1 += """
 				GROUP BY 1		
 			) as pc
