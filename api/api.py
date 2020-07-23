@@ -398,6 +398,18 @@ def productselect(userid,gtin):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
+@app.route('/product/category', methods=['GET'])
+@func.requiretoken
+def productcategories(userid):
+	print('hit [productcategories] with [%s]' % (userid))
+
+	status = "products returned"
+	statuscode = 200
+	
+	records = func.fetchinventorybyuserbycat(userid)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
+
 @app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):
@@ -748,5 +760,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

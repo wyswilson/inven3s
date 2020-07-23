@@ -333,6 +333,38 @@ def jsonifyretailers(records):
 
 	return retailers
 
+def jsonifycategories(records):
+	categories = []
+	for record in records:
+		gtin	  		= record[0]
+		productname  	= record[1]
+		productimage	= record[2]
+		brandname   	= record[3]
+		isedible	   	= record[4]
+		isfavourite	   	= record[5]
+		category	   	= record[6]
+		dateexpiry 		= record[7]
+		itemstotal		= record[8]
+
+		item = []
+		item['gtin'] 			= gtin
+		item['productname'] 	= productname
+		item['productimage'] 	= productimage
+		item['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
+		item['brandname'] 	= brandname
+		item['isedible'] 	= isedible
+		item['category']	= category
+		item['isfavourite'] = isfavourite
+		item['dateexpiry'] 	= dateexpiry
+		item['itemstotal'] 	= itemstotal
+
+		if categories[category]:
+			categories[category].append(item)
+		else:
+			categories[category] = [item]
+
+	return categories
+
 def jsonifyproducts(records):
 	products = []
 	for record in records:
@@ -819,6 +851,34 @@ def findproductexpiry(uid,gtin):
 		return retailerid,dateexpiry
 	else:
 		return "",defaultdateexpiry
+
+def fetchinventorybyuserbycat(uid):
+	query1 = """
+		SELECT
+			i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+		  	case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+		  	case
+				when pc.category IS NOT NULL then pc.category
+				ELSE 'Not-Categorised'
+			END AS productcat,
+		  	max(i.dateexpiry) as dateexpiry,
+		  	SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		LEFT JOIN productscategory AS pc
+		ON p.gtin = pc.gtin AND pc.status = 'SELECTED'
+		LEFT JOIN productsfavourite as pf
+		ON i.gtin = pf.gtin AND i.userid = pf.userid
+		WHERE i.userid = %s
+		GROUP BY 1,2,3,4,5,6,7
+	"""
+	cursor.execute(query1,(uid,))
+	records = cursor.fetchall()
+
+	return records
 
 def fetchinventoryexpireditems(uid):
 	query1 = """
