@@ -854,26 +854,34 @@ def findproductexpiry(uid,gtin):
 
 def fetchinventorybyuserbycat(uid):
 	query1 = """
-		SELECT
-			i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
-		  	case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-		  	case
-				when pc.category IS NOT NULL then pc.category
-				ELSE 'Not-Categorised'
-			END AS productcat,
-		  	max(i.dateexpiry) as dateexpiry,
-		  	SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
-		FROM inventories AS i
-		JOIN products AS p
-		ON i.gtin = p.gtin
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		LEFT JOIN productscategory AS pc
-		ON p.gtin = pc.gtin AND pc.status = 'SELECTED'
-		LEFT JOIN productsfavourite as pf
-		ON i.gtin = pf.gtin AND i.userid = pf.userid
-		WHERE i.userid = %s
-		GROUP BY 1,2,3,4,5,6,7
+		SELECT gtin,productname,productimage,brandname,isedible,
+			isfavourite,
+			category,
+			dateexpiry,
+			itemstotal
+		FROM (
+			SELECT
+				i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+			  	case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+			  	case
+					when pc.category IS NOT NULL then pc.category
+					ELSE 'Not-Categorised'
+				END AS category,
+			  	max(i.dateexpiry) as dateexpiry,
+			  	SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
+			FROM inventories AS i
+			JOIN products AS p
+			ON i.gtin = p.gtin
+			JOIN brands AS b
+			ON p.brandid = b.brandid
+			LEFT JOIN productscategory AS pc
+			ON p.gtin = pc.gtin AND pc.status = 'SELECTED'
+			LEFT JOIN productsfavourite as pf
+			ON i.gtin = pf.gtin AND i.userid = pf.userid
+			WHERE i.userid = %s
+			GROUP BY 1,2,3,4,5,6,7
+		) as tmp
+		WHERE itemstotal > 0
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()

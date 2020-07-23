@@ -403,7 +403,7 @@ def productselect(userid,gtin):
 def productcategories(userid):
 	print('hit [productcategories] with [%s]' % (userid))
 
-	status = "products returned"
+	status = "products by category returned"
 	statuscode = 200
 	
 	records = func.fetchinventorybyuserbycat(userid)
