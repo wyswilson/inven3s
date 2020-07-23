@@ -1074,7 +1074,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 		WHERE itemstotal > 0
 	"""
 	if category != "all":
-		category = "%\"name\":\"%s\",\"status\":\"SELECTED\"%" % (category)
+		category = '"name":"%s","status":"SELECTED"' % (category)
 		query1 += "AND categories LIKE %s"
 	else:
 		category = ""
