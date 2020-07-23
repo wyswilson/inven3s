@@ -1076,11 +1076,10 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 	if category != "all":
 		category = '%%"name":"%s","status":"SELECTED"%%' % (category)
 		query1 += "AND categories LIKE %s"
+		cursor.execute(query1,(uid,isedible,category))
 	else:
-		category = ""
-		query1 += "%s"
+		cursor.execute(query1,(uid,isedible))
 	print(query1)
-	cursor.execute(query1,(uid,isedible,category))
 	records = cursor.fetchall()
 
 	ediblenewcnt = 0
