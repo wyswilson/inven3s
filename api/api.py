@@ -643,7 +643,7 @@ def categoryselect(userid):
 
 	status = "top product categories returned"
 	statuscode = 200
-	records = func.fetchcategories(userid)
+	records = func.fetchcategories()
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
 
