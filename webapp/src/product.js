@@ -177,7 +177,7 @@ class Product extends React.Component {
         const selectedbrand = selectedarr['brand'];
         const selectedisedible = selectedarr['isedible'];
         const selectedisfavourite = selectedarr['isfavourite'];
-        const categoryoptions = selectedarr['categories'];
+        const selectedprodcategoryoptions = selectedarr['categories'];
 
         this.setState({ productdropdown: value });
         this.setState({ gtin: selectedgtin });
@@ -187,11 +187,17 @@ class Product extends React.Component {
         this.setState({ brandname: selectedbrand });
         this.setState({ isedible: selectedisedible });
         this.setState({ isfavourite: selectedisfavourite });
-        this.setState({ categoryoptions: categoryoptions });
+        this.setState({ categoryoptions: selectedprodcategoryoptions });
         
         this.searchbrands(selectedbrand);
 
-        this.updatecategorysuggests(categoryoptions);
+        if(selectedprodcategoryoptions.length > 0){
+          this.updatecategorysuggests(selectedprodcategoryoptions);
+        }
+        else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
+          this.setState({ categorysuggests: this.state.defaultcategoryoptions });
+          this.setState({ selectedcategories: [] });
+        }
       }
       else{
         //NEW PRODUCT
@@ -366,7 +372,7 @@ class Product extends React.Component {
   fetchdefaultcategories(){
     console.log('fetchdefaultcategories');
 
-    axios.get(this.state.apihost + '/category/',
+    axios.get(this.state.apihost + '/category',
         {
           headers: {
             "content-type": "application/json",
@@ -434,6 +440,7 @@ class Product extends React.Component {
         }
       ));
     this.setState({ defaultcategoryoptions: updatedsuggest });
+    this.setState({ categorysuggests: updatedsuggest });
   }
 
   updateedibletoggle(event,data){
@@ -467,11 +474,12 @@ class Product extends React.Component {
     if(this.state.brandname !== ''){
       this.searchbrands(this.state.brandname);
     }
-    if(this.state.categoryoptions){
+    if(this.state.categoryoptions.length > 0){
       this.updatecategorysuggests(this.state.categoryoptions);
     }
-
-    this.fetchdefaultcategories();
+    else{
+      this.fetchdefaultcategories();
+    }
   }
 
   checkfavourite(){
