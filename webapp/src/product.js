@@ -16,6 +16,7 @@ class Product extends React.Component {
       loading: false,
       actionedmsg: '',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
+      defaultcategoryoptions: [],
       productsuggests: [],
       brandsuggests: [],
       categorysuggests: [],
@@ -362,6 +363,31 @@ class Product extends React.Component {
     }
   }
 
+  fetchdefaultcategories(){
+    console.log('fetchdefaultcategories');
+
+    axios.get(this.state.apihost + '/category/',
+        {
+          headers: {
+            "content-type": "application/json",
+            "access-token": this.state.token
+          }
+        }
+      )
+      .then(response => { 
+        if(response.status === 200){
+          console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
+          this.updatedefaultcategories(response.data[0]['results']);
+        }
+        else{
+          console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
+        }
+      })
+      .catch(error => {
+        console.log('fetchdefaultcategories [server unreachable]');
+      });
+  }
+
   searchbrands(brand){
     console.log('searchbrands [' + brand + ']');
 
@@ -395,6 +421,19 @@ class Product extends React.Component {
           console.log('searchbrands [server unreachable]');
         }
       });
+  }
+
+  updatedefaultcategories(defaultcats){
+    const updatedsuggest = _.map(defaultcats, (cat) => (
+        {
+          key: cat.category,
+          text: cat.category,
+          value: cat.category,
+          status: 'SELECTED',
+          confidence: cat.count
+        }
+      ));
+    this.setState({ defaultcategoryoptions: updatedsuggest });
   }
 
   updateedibletoggle(event,data){
@@ -431,6 +470,8 @@ class Product extends React.Component {
     if(this.state.categoryoptions){
       this.updatecategorysuggests(this.state.categoryoptions);
     }
+
+    this.fetchdefaultcategories();
   }
 
   checkfavourite(){
