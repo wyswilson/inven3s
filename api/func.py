@@ -337,6 +337,21 @@ def jsonifycategories(records):
 	categories = {}
 	categoriescnt = {}
 	for record in records:
+		category	 	= record[0]
+		productcnt  	= record[1]
+
+		cat = {}
+		cat['category'] = category
+		cat['count'] 	= productcnt
+
+		categories.append(cat)
+
+	return categories		
+
+def jsonifyinventorycategories(records):
+	categories = {}
+	categoriescnt = {}
+	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
 		productimage	= record[2]
@@ -838,6 +853,19 @@ def findproductbygtin(gtin,userid):
 	"""
 	cursor.execute(query,(userid,gtin))
 	records = cursor.fetchall()
+
+	return records
+
+def fetchcategories():
+	query1 = """
+		SELECT
+			category,count(*)
+		FROM productscategory
+		WHERE status = 'SELECTED'
+		ORDER BY 2 DESC
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()	
 
 	return records
 

@@ -408,7 +408,7 @@ def inventorycategories(userid):
 	
 	records = func.fetchinventorybyuserbycat(userid)
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
 
 @app.route('/product', methods=['GET'])
 @func.requiretoken
@@ -635,6 +635,17 @@ def shoppinglist(userid):
 		statuscode = 412#Precondition Failed		
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+
+@app.route('/category', methods=['GET'])
+@func.requiretoken
+def categoryselect(userid):
+	print('hit [categoryselect] with [%s]' % (userid))
+
+	status = "top product categories returned"
+	statuscode = 200
+	records = func.fetchcategories(userid)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
 
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
