@@ -334,8 +334,7 @@ def jsonifyretailers(records):
 	return retailers
 
 def jsonifycategories(records):
-	categories = {}
-	categoriescnt = {}
+	categories = []
 	for record in records:
 		category	 	= record[0]
 		productcnt  	= record[1]
