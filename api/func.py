@@ -861,6 +861,7 @@ def fetchcategories():
 			category,count(*)
 		FROM productscategory
 		WHERE status = 'SELECTED'
+		GROUP BY 1
 		ORDER BY 2 DESC
 	"""
 	cursor.execute(query1)
