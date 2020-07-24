@@ -895,6 +895,7 @@ def fetchinventorybyuserbycat(uid):
 			GROUP BY 1,2,3,4,5,6,7
 		) as tmp
 		WHERE itemstotal > 0
+		ORDER BY 7 ASC
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
