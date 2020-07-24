@@ -192,7 +192,7 @@ class Home extends React.Component {
         {
           'id': 'id_'+ catobj['name'],
           'number': catobj['count'],
-          'label': '' + catobj['name'] + ' items',
+          'label': '' + catobj['name'] + '',
           'isedible':2,'isopened':2,'expirystatus':'all',
           'category': catobj['name']
         }
