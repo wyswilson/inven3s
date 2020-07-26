@@ -198,6 +198,8 @@ class Product extends React.Component {
           this.setState({ categorysuggests: this.state.defaultcategoryoptions });
           this.setState({ selectedcategories: [] });
         }
+
+        console.log(this.state.categorysuggests)
       }
       else{
         //NEW PRODUCT
