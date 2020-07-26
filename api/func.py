@@ -225,8 +225,8 @@ def updateproductcategories(gtin,categories):
 
 	for cat in categories:
 		cat = cat.strip()
-		query2 = "UPDATE productscategory SET status = 'SELECTED' WHERE gtin = %s AND category = %s"
-		cursor.execute(query2,(gtin,cat))
+		query2 = "REPLACE INTO productscategory (gtin,category,status,confidence) VALUES (%s,%s,%s,%s)"
+		cursor.execute(query2,(gtin,cat,'SELECTED',30.000))
 		db.commit()
 
 def updateproductbrand(gtin,brandid):

@@ -39,6 +39,7 @@ class Product extends React.Component {
     this.setState({ loading: true });
 
     console.log('upsertproduct');
+console.log(this.state.selectedcategories);
 
     if(this.state.productimage === this.state.defaultimage){
       this.setState({ productimage: '' });
