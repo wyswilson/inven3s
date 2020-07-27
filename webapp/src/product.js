@@ -39,7 +39,6 @@ class Product extends React.Component {
     this.setState({ loading: true });
 
     console.log('upsertproduct');
-console.log(this.state.selectedcategories);
 
     if(this.state.productimage === this.state.defaultimage){
       this.setState({ productimage: '' });
@@ -190,7 +189,7 @@ console.log(this.state.selectedcategories);
         this.setState({ isfavourite: selectedisfavourite });
         this.setState({ categoryoptions: selectedprodcategoryoptions });
         
-        this.searchbrands(selectedbrand);
+        this.searchbrands(selectedbrand,0);
 
         if(selectedprodcategoryoptions.length > 0){
           this.updatecategorysuggests(selectedprodcategoryoptions);
@@ -199,8 +198,6 @@ console.log(this.state.selectedcategories);
           this.setState({ categorysuggests: this.state.defaultcategoryoptions });
           this.setState({ selectedcategories: [] });
         }
-
-        console.log(this.state.categorysuggests)
       }
       else{
         //NEW PRODUCT
@@ -368,7 +365,7 @@ console.log(this.state.selectedcategories);
     const brand = data.searchQuery;
 
     if(brand.length > 1){
-      this.searchbrands(brand);
+      this.searchbrands(brand,0);
     }
   }
 
@@ -397,7 +394,7 @@ console.log(this.state.selectedcategories);
       });
   }
 
-  searchbrands(brand){
+  searchbrands(brand,preloaddefaultcatafter){
     console.log('searchbrands [' + brand + ']');
 
     axios.get(this.state.apihost + '/brand/' + brand,
@@ -412,6 +409,10 @@ console.log(this.state.selectedcategories);
         if(response.status === 200){
           console.log('searchbrands [' + response.data[0]['message'] + ']');
           this.updatebrandsuggests(response.data[0]['results']);
+          
+          if(preloaddefaultcatafter === 1){
+            this.fetchdefaultcategories();
+          }
         }
         else{
           console.log('searchbrands [' + response.data[0]['message'] + ']');
@@ -445,7 +446,7 @@ console.log(this.state.selectedcategories);
     this.setState({ defaultcategoryoptions: updatedsuggest });
     this.setState({ categorysuggests: updatedsuggest });
   }
-
+  
   updateedibletoggle(event,data){
     if(data.checked){
       this.setState({ isedible: 1 });
@@ -474,16 +475,16 @@ console.log(this.state.selectedcategories);
 
   componentDidMount() {
     //ONLOAD, IF REDIRECT WITH PRODUCT DETAILS FROM INVENTORY. NEED TO POPULATE DROPDOWN
+    
     if(this.state.brandname !== ''){
-      this.searchbrands(this.state.brandname);
+      this.searchbrands(this.state.brandname,1);//PRELOAD DEFAULT CAT === 1
     }
+
     if(this.state.categoryoptions.length > 0){
       this.updatecategorysuggests(this.state.categoryoptions);
     }
-    else{
-      this.fetchdefaultcategories();
-    }
   }
+
 
   checkfavourite(){
     if(this.state.isfavourite === 1){
