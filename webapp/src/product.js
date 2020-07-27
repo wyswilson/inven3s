@@ -303,7 +303,20 @@ class Product extends React.Component {
           this.setState({ gtin: newproductdata['gtin'] });
           this.setState({ productname: newproductdata['productname'] });
           this.setState({ productimage: newproductdata['productimage'] });
+          this.setState({ productimagelocal: newproductdata['productimagelocal'] });
           this.setState({ brandname: newproductdata['brandname'] });
+          this.setState({ isedible: newproductdata['isedible'] });
+          this.setState({ isfavourite: newproductdata['isfavourite'] });
+                    
+          this.searchbrands(selectedbrand,0);
+
+          if(selectedprodcategoryoptions.length > 0){
+            this.updatecategorysuggests(newproductdata['isfavourite']);
+          }
+          else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
+            this.setState({ categorysuggests: this.state.defaultcategoryoptions });
+            this.setState({ selectedcategories: [] });
+          }
         }
         else{
           console.log('addnewproduct [' + response.data[0]['message'] + ']');
@@ -446,7 +459,7 @@ class Product extends React.Component {
     this.setState({ defaultcategoryoptions: updatedsuggest });
     this.setState({ categorysuggests: updatedsuggest });
   }
-  
+
   updateedibletoggle(event,data){
     if(data.checked){
       this.setState({ isedible: 1 });
