@@ -597,17 +597,17 @@ class Pan3 extends React.Component {
                             OPENED ITEM CONSUMED
                           </Button>
                           <Button className='grey button' size='massive'
-                            onClick={this.consumeinventory.bind(this,item.gtin,0.5)}
-                            disabled={item.itemcount % 1 !== 0 ? true : false}
-                          >
-                            START CONSUMING NEW ITEM
-                          </Button>
-                          <Button className='grey button' size='massive'
                             onClick={this.consumeinventory.bind(this,item.gtin,1.0)}
                             disabled={item.itemcount % 1 !== 0 ? true : false}
                           >
                             NEW ITEM CONSUMED
                           </Button>
+                          <Button className='grey button' size='massive'
+                            onClick={this.consumeinventory.bind(this,item.gtin,0.5)}
+                            disabled={item.itemcount % 1 !== 0 ? true : false}
+                          >
+                            START CONSUMING NEW ITEM
+                          </Button>                          
                         </Button.Group>
                       </Modal.Content>
                     </Modal>
