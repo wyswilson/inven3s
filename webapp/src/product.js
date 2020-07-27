@@ -75,6 +75,7 @@ class Product extends React.Component {
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
         this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
         this.setState({ isfavourite: response.data[0]['results'][0]['isfavourite'] });
+        this.updateproductsuggests(response.data[0]['results'][0]['categories']);
       }
       else{
         console.log('upsertproduct [' + response.data[0]['message'] + ']');
@@ -307,11 +308,11 @@ class Product extends React.Component {
           this.setState({ brandname: newproductdata['brandname'] });
           this.setState({ isedible: newproductdata['isedible'] });
           this.setState({ isfavourite: newproductdata['isfavourite'] });
-                    
-          this.searchbrands(selectedbrand,0);
 
-          if(selectedprodcategoryoptions.length > 0){
-            this.updatecategorysuggests(newproductdata['isfavourite']);
+          this.searchbrands(newproductdata['brandname'],0);
+
+          if(newproductdata['categories'].length > 0){
+            this.updatecategorysuggests(newproductdata['categories']);
           }
           else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
             this.setState({ categorysuggests: this.state.defaultcategoryoptions });
