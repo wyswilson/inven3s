@@ -102,7 +102,7 @@ class Pan3 extends React.Component {
       message += " " + this.state.queryexpirystatus + " items";          
     }
     else if(this.state.querycategory !== 'all'){
-      message += " " + this.state.querycategory.toLowerCase() + " items";   
+      message += " " + this.state.querycategory.toLowerCase() + "";   
     }
     else{
       this.setState({ inventoryfilterable: false });
@@ -594,19 +594,19 @@ class Pan3 extends React.Component {
                             onClick={this.consumeinventory.bind(this,item.gtin,0.5)}
                             disabled={item.itemcount % 1 === 0 ? true : false}
                           >
-                            CONSUME OPENED ITEM
+                            OPENED ITEM CONSUMED
                           </Button>
                           <Button className='grey button' size='massive'
                             onClick={this.consumeinventory.bind(this,item.gtin,0.5)}
                             disabled={item.itemcount % 1 !== 0 ? true : false}
                           >
-                            OPEN NEW ITEM
+                            START CONSUMING NEW ITEM
                           </Button>
                           <Button className='grey button' size='massive'
                             onClick={this.consumeinventory.bind(this,item.gtin,1.0)}
                             disabled={item.itemcount % 1 !== 0 ? true : false}
                           >
-                            CONSUME NEW ITEM
+                            NEW ITEM CONSUMED
                           </Button>
                         </Button.Group>
                       </Modal.Content>
