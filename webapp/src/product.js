@@ -493,12 +493,14 @@ class Product extends React.Component {
     if(this.state.brandname !== ''){
       this.searchbrands(this.state.brandname,1);//PRELOAD DEFAULT CAT === 1
     }
+    else{//IF NO BRANDS, WE'LL LOAD DEFAULT CAT SEPARATELY
+      this.fetchdefaultcategories();
+    }
 
     if(this.state.categoryoptions.length > 0){
       this.updatecategorysuggests(this.state.categoryoptions);
     }
   }
-
 
   checkfavourite(){
     if(this.state.isfavourite === 1){
