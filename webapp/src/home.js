@@ -24,7 +24,8 @@ class Home extends React.Component {
         shoppinglistcnt: 0,
       },
       cardscats: [],
-      feed: <Feed></Feed>
+      feed: <Feed></Feed>,
+      feedcnt: 0
     };
   }
 
@@ -40,9 +41,10 @@ class Home extends React.Component {
     })
   }
 
-  formatactivityfeed(activities){
-    const feed = _.map(activities, (item) => (
-        <Feed.Event key={ item.itemstatus + item.gtin + (new Date().getMilliseconds()) + (new Date().getDate()) }>
+  instantiatefeed(item){
+    this.setState({ feedcnt: this.state.feedcnt+1});
+    return (
+        <Feed.Event key={ item.itemstatus + item.gtin + this.state.feedcnt }>
           <Feed.Label alt={item.productname}>
             <Image
               wrapped src={item.productimagelocal} size='tiny'
@@ -60,6 +62,11 @@ class Home extends React.Component {
           </Feed.Content>
         </Feed.Event>
       )
+  }
+
+  formatactivityfeed(activities){
+    const feed = _.map(activities, (item) => 
+      this.instantiatefeed(item)
     );
 
     this.setState( { feed: feed});
