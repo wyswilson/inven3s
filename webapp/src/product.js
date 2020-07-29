@@ -546,15 +546,20 @@ class Product extends React.Component {
             <Divider/>
             <Card.Meta>
               <Grid columns={1} doubling stackable>
-                <Image wrapped
-                  src={this.state.productimagelocal}
-                  size='small'
-                  onError={(e)=>{e.target.onerror = null; e.target.src=this.state.productimage}}
-                />
-                <Grid.Column>
-                  <label className="fullwidth">GTIN</label>
-                  <Input className="fullwidth" disabled value={this.state.gtin}/>
-                </Grid.Column>
+                <Grid.Row columns={2}>
+                  <Grid.Column width={4}>
+                    <Image inline
+                      src={this.state.productimagelocal}
+                      size="small"
+                      spaced="left"
+                      onError={(e)=>{e.target.onerror = null; e.target.src=this.state.productimage}}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={11}>
+                    <label className="fullwidth">GTIN</label>
+                    <Input className="fullwidth" disabled value={this.state.gtin}/>
+                  </Grid.Column>
+                </Grid.Row>
                 <Grid.Column>
                   <label className="fullwidth">Product</label>
                   <Input value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
@@ -563,33 +568,35 @@ class Product extends React.Component {
                   <label className="fullwidth">Image</label>
                   <Input value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
                 </Grid.Column>
-                <Grid.Column>
-                  <label className="fullwidth">Brand</label>
-                  <Dropdown className="fullwidth" name="brandname" 
-                    search
-                    selection
-                    allowAdditions
-                    value={this.state.brandname}
-                    options={this.state.brandsuggests}
-                    additionLabel = "Add new brand "
-                    noResultsMessage = "No brand found"
-                    onSearchChange={this.lookupbrand.bind(this)}
-                    onAddItem={this.addnewbrand.bind(this)}
-                    onChange={this.setproductmetadata.bind(this)}
-                  />
-                </Grid.Column>
-                <Grid.Column>
-                  <label className="fullwidth">Category</label>
-                  <Dropdown className="fullwidth" name="categoryname"
-                    clearable
-                    multiple
-                    search
-                    selection
-                    value={this.state.selectedcategories}
-                    options={this.state.categorysuggests}
-                    onChange={this.setproductmetadata.bind(this)}
-                  />
-                </Grid.Column>
+                <Grid.Row columns={2}>
+                  <Grid.Column width={5}>
+                    <label className="fullwidth">Brand</label>
+                    <Dropdown className="fullwidth" name="brandname" 
+                      search
+                      selection
+                      allowAdditions
+                      value={this.state.brandname}
+                      options={this.state.brandsuggests}
+                      additionLabel = "Add new brand "
+                      noResultsMessage = "No brand found"
+                      onSearchChange={this.lookupbrand.bind(this)}
+                      onAddItem={this.addnewbrand.bind(this)}
+                      onChange={this.setproductmetadata.bind(this)}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={10}>
+                    <label className="fullwidth">Category</label>
+                    <Dropdown className="fullwidth" name="categoryname"
+                      clearable
+                      multiple
+                      search
+                      selection
+                      value={this.state.selectedcategories}
+                      options={this.state.categorysuggests}
+                      onChange={this.setproductmetadata.bind(this)}
+                    />
+                  </Grid.Column>
+                </Grid.Row>
                 <Grid.Column>
                    <Checkbox toggle label='Is edible?' checked={this.checkedible()} onChange={this.updateedibletoggle.bind(this)}/>
                    <Checkbox toggle label='Is favourite?' checked={this.checkfavourite()} onChange={this.updatefavouritetoggle.bind(this)}/>
