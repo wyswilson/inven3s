@@ -169,7 +169,6 @@ class Product extends React.Component {
 
     if(field === 'productname'){
       const array = this.state.productsuggests;
-      console.log(this.state.productsuggests);
       let selectedarr = [];
 
       try{
