@@ -169,39 +169,47 @@ class Product extends React.Component {
 
     if(field === 'productname'){
       const array = this.state.productsuggests;
-      let selectedarr = array.filter(prod => prod.value.includes(value))[0];
+      console.log(this.state.productsuggests);
+      let selectedarr = [];
 
-      if(selectedarr){
-        const selectedgtin = selectedarr['key'];
-        const selectedimg = selectedarr['img'];
-        const selectedimglocal = selectedarr['imglocal'];
-        const selectedbrand = selectedarr['brand'];
-        const selectedisedible = selectedarr['isedible'];
-        const selectedisfavourite = selectedarr['isfavourite'];
-        const selectedprodcategoryoptions = selectedarr['categories'];
+      try{
+        selectedarr = array.filter(prod => prod.value.includes(value))[0];
 
-        this.setState({ productdropdown: value });
-        this.setState({ gtin: selectedgtin });
-        this.setState({ productname: value });
-        this.setState({ productimage: selectedimg });
-        this.setState({ productimagelocal: selectedimglocal });
-        this.setState({ brandname: selectedbrand });
-        this.setState({ isedible: selectedisedible });
-        this.setState({ isfavourite: selectedisfavourite });
-        this.setState({ categoryoptions: selectedprodcategoryoptions });
-        
-        this.searchbrands(selectedbrand,0);
+        if(selectedarr){
+          const selectedgtin = selectedarr['key'];
+          const selectedimg = selectedarr['img'];
+          const selectedimglocal = selectedarr['imglocal'];
+          const selectedbrand = selectedarr['brand'];
+          const selectedisedible = selectedarr['isedible'];
+          const selectedisfavourite = selectedarr['isfavourite'];
+          const selectedprodcategoryoptions = selectedarr['categories'];
 
-        if(selectedprodcategoryoptions.length > 0){
-          this.updatecategorysuggests(selectedprodcategoryoptions);
+          this.setState({ productdropdown: value });
+          this.setState({ gtin: selectedgtin });
+          this.setState({ productname: value });
+          this.setState({ productimage: selectedimg });
+          this.setState({ productimagelocal: selectedimglocal });
+          this.setState({ brandname: selectedbrand });
+          this.setState({ isedible: selectedisedible });
+          this.setState({ isfavourite: selectedisfavourite });
+          this.setState({ categoryoptions: selectedprodcategoryoptions });
+          
+          this.searchbrands(selectedbrand,0);
+
+          if(selectedprodcategoryoptions.length > 0){
+            this.updatecategorysuggests(selectedprodcategoryoptions);
+          }
+          else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
+            this.setState({ categorysuggests: this.state.defaultcategoryoptions });
+            this.setState({ selectedcategories: [] });
+          }
         }
-        else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
-          this.setState({ categorysuggests: this.state.defaultcategoryoptions });
-          this.setState({ selectedcategories: [] });
+        else{
+          //NEW PRODUCT
         }
       }
-      else{
-        //NEW PRODUCT
+      catch(error){
+        console.log("setproductmetadata: " + error)
       }
     }
     else if(field === 'brandname'){
