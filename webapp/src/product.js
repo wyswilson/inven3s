@@ -75,7 +75,7 @@ class Product extends React.Component {
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
         this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
         this.setState({ isfavourite: response.data[0]['results'][0]['isfavourite'] });
-        this.updateproductsuggests(response.data[0]['results'][0]['categories']);
+        this.updatecategorysuggests(response.data[0]['results'][0]['categories']);
       }
       else{
         console.log('upsertproduct [' + response.data[0]['message'] + ']');
