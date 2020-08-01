@@ -175,11 +175,13 @@ class Home extends React.Component {
   }
 
   directtoinventory(isedible,isopened,expirystatus,category){
+    const catencoded = encodeURIComponent(category);
+
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
         pathname: '/pan3',
         //search: '?isedible=' + isedible + '&isopened=' + isopened,
-        state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus, querycategory: category }
+        state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus, querycategory: catencoded }
       })      
     }
     else{

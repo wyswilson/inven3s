@@ -102,7 +102,8 @@ class Pan3 extends React.Component {
       message += " " + this.state.queryexpirystatus + " items";          
     }
     else if(this.state.querycategory !== 'all'){
-      message += " " + this.state.querycategory.toLowerCase() + "";   
+      const catname = decodeURIComponent(this.state.querycategory.toLowerCase())
+      message += " " + catname + "";   
     }
     else{
       this.setState({ inventoryfilterable: false });
