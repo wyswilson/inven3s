@@ -181,24 +181,13 @@ def registerapilogs(endpoint, email, flaskreq):
 	language = flaskreq.user_agent.language
 	referrer = flaskreq.referrer
 
-	query1 = """
-    	SELECT
-        	email
-    	FROM apilogs
-    	WHERE email = %s
-	"""
-	cursor.execute(query1,(email,))
-	records = cursor.fetchall()
-	if records:	
-		return False
-	else:
-		eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-		query1 = "INSERT INTO apilogs (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
-		db.commit()
+	query1 = "INSERT INTO apilogs (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+	cursor.execute(query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
+	db.commit()
 
-		return True
+	return True
 
 def addnewuser(email,passwordhashed):
 	userid = hashlib.md5(email.encode('utf-8')).hexdigest()
