@@ -176,7 +176,6 @@ class Home extends React.Component {
 
   directtoinventory(isedible,isopened,expirystatus,category){
     const catencoded = encodeURIComponent(category);
-    console.log(catencoded);
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
         pathname: '/pantry',

@@ -267,7 +267,7 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column>
               <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
-                Popular products added to pantries
+                Popular products in pantries
               </Header>
               <Grid doubling stackable>
                 <Grid.Row stretched columns={5}>

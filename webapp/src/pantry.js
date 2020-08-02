@@ -25,7 +25,7 @@ class Pan3 extends React.Component {
       queryisopened: redirectstate ? redirectstate.queryisopened : '2',
       //queryisopened: querystr ? querystr.isopened : '2',
       queryexpirystatus: redirectstate ? redirectstate.queryexpirystatus : 'all',
-      querycategory: redirectstate ? redirectstate.querycategory : 'all',
+      querycategory: redirectstate ? decodeURIComponent(redirectstate.querycategory) : 'all',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       gtin: '',
       productname: '',
@@ -46,8 +46,8 @@ class Pan3 extends React.Component {
   fetchinventory(){
     console.log('fetchinventory');
     this.setState({ inventoryfetched: false });
-   
-    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus + '&category=' + this.state.querycategory,
+    const catencoded = encodeURIComponent(this.state.querycategory);
+    axios.get(this.state.apihost + '/inventory?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened + '&expirystatus=' + this.state.queryexpirystatus + '&category=' + catencoded,
       {
         headers: {
           "content-type": "application/json",
@@ -102,7 +102,7 @@ class Pan3 extends React.Component {
       message += " " + this.state.queryexpirystatus + " items";          
     }
     else if(this.state.querycategory !== 'all'){
-      const catname = decodeURIComponent(this.state.querycategory.toLowerCase())
+      const catname = this.state.querycategory.toLowerCase();
       message += " " + catname + "";   
     }
     else{
@@ -395,7 +395,7 @@ class Pan3 extends React.Component {
         queryisedible:this.state.queryisedible,
         queryisopened:this.state.queryisopened,
         queryexpirystatus:this.state.queryexpirystatus,
-        querycategory:this.state.querycategory
+        querycategory: this.state.querycategory
       }, 
       {
         headers: {
@@ -410,7 +410,6 @@ class Pan3 extends React.Component {
         console.log('consumeinventory [' + response.data[0]['message'] + ']');
         this.setState({ inventorymsg: this.generatecountmsg(response.data[0]['count']) });
         this.setState({ inventoryfetched: true });
-        console.log(response.data[0]['results']);
         this.setState({ inventory: response.data[0]['results'] });
       }
     })
