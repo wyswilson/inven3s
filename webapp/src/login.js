@@ -248,7 +248,7 @@ class Login extends React.Component {
                   How does our technology help?
                 </Header>
                 <p className="fontdark">
-                Our web app enables effortless tracking of food items at home and on-the-go and uses AI to help you manage them to reduce waste and save you time
+                Our web app enables effortless tracking of food items when you are at home or on-the-go and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
