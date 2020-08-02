@@ -244,6 +244,7 @@ class Pan3 extends React.Component {
   addinventory(gtin){
     this.setState({ actionedmsg: '' });
     this.setState({ loading: true });
+    this.setState({ inventoryfetched: false });
 
     console.log('addinventory [' + gtin + ']');
 
@@ -283,6 +284,8 @@ class Pan3 extends React.Component {
         this.setState({ retailername: ''});
         this.setState({ dateexpiry: ''});
         this.setState({ quantity: 1 });
+
+        this.setState({ inventoryfetched: true });
       }
     })
     .catch(error => {
