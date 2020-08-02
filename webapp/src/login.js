@@ -31,6 +31,30 @@ class Login extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.fetchtopproducts();
+  }
+
+  fetchtopproducts(){
+    console.log('fetchtopproducts');
+   
+    axios.get(this.state.apihost + '/public/topproducts')
+    .then(response => { 
+      if(response.status === 200){
+        console.log('fetchtopproducts [' + response.data[0]['message'] + ']');
+        console.log(response.data[0]['results']);
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log('fetchtopproducts [' + error.response.data[0]['message'] + ']');
+      }
+      else{
+        console.log('fetchtopproducts [server unreachable]');
+      }
+    });
+  }
+
   updateinterest(field,value){
     this.setState({ interestemail: value });
   }
@@ -182,7 +206,7 @@ class Login extends React.Component {
                   Food waste is a problem
                 </Header>
                 <p className="fontlight">
-                  Aussie households throw away 3 average-size fridges worth of food each year <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">[1]</a>, which is both bad for the environment and your pocket
+                  Aussie households throw away 3 average-size fridges worth of food each year <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer" style={{color: "#ffffff"}}>[1]</a>, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">

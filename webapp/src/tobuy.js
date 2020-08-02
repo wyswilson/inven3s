@@ -262,7 +262,7 @@ class ToBuy extends React.Component {
       }
       else{
         console.log('fetchinventory [server unreachable]');
-        this.setState({ inventorymsg: 'server unreachable' })
+        this.setState({ inventorymsg: 'server unreachable' });
       }
     });
   }

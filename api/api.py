@@ -372,7 +372,7 @@ def productdiscover(userid,gtin):
 def publicpopularproducts():
 	print('hit [publicpopularproducts]')
 
-	status = ""
+	status = "top products returned"
 	statuscode = 200
 	records = []
 
@@ -713,7 +713,6 @@ def inventoryfeed(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyfeed(events))
 
-
 @app.route('/inventory/insights', methods=['GET'])
 @func.requiretoken
 def inventoryinsights(userid):
@@ -784,5 +783,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	app.run(debug=True,host='0.0.0.0',port=88)
-    #waitress.serve(app, host="0.0.0.0", port=88)
+	#app.run(debug=True,host='0.0.0.0',port=88)
+    waitress.serve(app, host="0.0.0.0", port=88)

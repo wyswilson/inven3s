@@ -48,7 +48,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #b0b0b0 !important;
+  background-color: #919191 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -58,11 +58,11 @@ body {
 .button.grey{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #b0b0b0 !important;
+  background-color: #919191 !important;
 }
 
 .fontdark{
-  color: #b0b0b0 !important;
+  color: #919191 !important;
 }
 
 .fontlight{
@@ -82,7 +82,7 @@ body {
 }
 
 .bodyrest2.login{
-  background-color: #b0b0b0 !important;
+  background-color: #919191 !important;
   padding-top: 8em !important;
   padding-bottom: 8em !important;
   padding-left: 12em !important;
@@ -90,7 +90,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #b0b0b0 !important;
+  background-color: #919191 !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -205,6 +205,14 @@ body {
   border-bottom: 0px solid #FFFFFF;
 }
 
+.nav a {
+  color: #ffffff !important;
+}
+
+.nav a:hover {
+  color: #234a6e !important;
+}
+
 .navheader a {
   color: #ffffff;
   text-decoration: unset;
@@ -267,7 +275,7 @@ body {
 }
 
 .field:hover {
-  background-color: #b0b0b0;
+  background-color: #919191;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
 }
 
