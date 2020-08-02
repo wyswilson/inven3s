@@ -393,14 +393,7 @@ class Product extends React.Component {
   fetchdefaultcategories(){
     console.log('fetchdefaultcategories');
 
-    axios.get(this.state.apihost + '/category',
-        {
-          headers: {
-            "content-type": "application/json",
-            "access-token": this.state.token
-          }
-        }
-      )
+    axios.get(this.state.apihost + '/public/categories')
       .then(response => { 
         if(response.status === 200){
           console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');

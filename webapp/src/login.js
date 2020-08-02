@@ -81,7 +81,7 @@ class Login extends React.Component {
   registerinterest(event){
     this.setState({ loading: true });
 
-    axios.post(this.state.apihost + '/user/register/interest', 
+    axios.post(this.state.apihost + '/public/userinterest', 
       {
         email:this.state.interestemail
       }, 
