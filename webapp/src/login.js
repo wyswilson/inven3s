@@ -20,7 +20,7 @@ class Login extends React.Component {
       message: '',
       messageactive: false,
       interestmessage: '',
-      topproducts: <Card></Card>
+      topproducts: null
     };
   }
   
@@ -38,7 +38,7 @@ class Login extends React.Component {
         <Grid.Column key={item.gtin}>
           <Card raised key={item.gtin}>
             <Card.Content textAlign="center">
-              <Image wrapped src={item.productimagelocal}
+              <Image inline wrapped src={item.productimagelocal}
                 size='tiny'                   
                 onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
               />

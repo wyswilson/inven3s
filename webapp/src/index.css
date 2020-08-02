@@ -75,6 +75,10 @@ body {
 
 .item.title{
   font-size: 14px !important;
+  padding-top: 0.8em !important;
+  padding-bottom: 0em !important;
+  padding-left: 0em !important;
+  padding-right: 0em !important;  
 }
 
 .item.small{
