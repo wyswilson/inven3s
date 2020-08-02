@@ -17,6 +17,7 @@ import jwt
 import string
 import math
 from PIL import Image
+import flask_limiter.util
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
@@ -177,6 +178,9 @@ def registerapilogs(endpoint, email, flaskreq):
 	
 	ipaddr = flaskreq.environ
 	print(ipaddr)
+
+	ipaddr2 = flask_limiter.util.get_ipaddr()
+	print(ipaddr2)
 
 	clientip = flaskreq.remote_addr
 	browser = flaskreq.user_agent.browser
