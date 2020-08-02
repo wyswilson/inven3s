@@ -135,7 +135,7 @@ class Login extends React.Component {
           <Grid columns={2} doubling stackable>
             <Grid.Column textAlign="left" verticalAlign="middle">
               <Header
-                content='Reducing food waste starts with your Pan3'
+                content='Reducing food waste starts with your pantry'
                 className={isMobile ? "text main mobile" : "text main"}
               />
             </Grid.Column>
@@ -238,13 +238,13 @@ class Login extends React.Component {
                   parentCallback={this.updateinterest.bind(this)}/>
                 </Grid.Column>
                 <Grid.Row columns={2}>
-                  <Grid.Column width={6}>
+                  <Grid.Column width={7}>
                     <Button className='kuning button fullwidth'
                       loading={this.state.loading || false}
                       onClick={this.registerinterest.bind(this)}>
                       REGISTER NOW</Button>
                   </Grid.Column>
-                  <Grid.Column width={10}>
+                  <Grid.Column width={9}>
                     {this.generateinterestmessage()}
                   </Grid.Column>
                 </Grid.Row>
