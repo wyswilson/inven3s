@@ -368,6 +368,17 @@ def productdiscover(userid,gtin):
 	response = flask.jsonify(messagestoplvl),statuscode
 	return response
 
+@app.route('/public/topproducts', methods=['GET'])
+def publicpopularproducts(userid):
+	print('hit [topproducts] with [%s]' % (userid))
+
+	status = ""
+	statuscode = 200
+	records = []
+
+	records = func.gettopproductsallusers()
+	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
+
 @app.route('/product/<gtin>', methods=['GET'])
 @func.requiretoken
 def productselect(userid,gtin):

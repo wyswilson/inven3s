@@ -1,6 +1,6 @@
 ==============COLORSCHEME===========
 SPECIAL COLOR 285075
-GREY		8c8c8c
+GREY		b0b0b0
 DARK-GREY	222222
 
 ERR			c75061	

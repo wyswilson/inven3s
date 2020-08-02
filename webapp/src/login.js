@@ -173,20 +173,20 @@ class Login extends React.Component {
           </Grid>
         </div>
         <div 
-          className={isMobile ? "bodyrest1 login mobile" : "bodyrest1 login"}
+          className={isMobile ? "bodyrest2 login mobile" : "bodyrest2 login"}
         >
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
-              <Grid.Column className="fontdark">
-                <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
+              <Grid.Column className="fontlight">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
                   Food waste is a problem
                 </Header>
-                <p className="fontdark">
-                  Aussie households throw away <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">3 average-size fridges</a> worth of food each year, which is both bad for the environment and your pocket
+                <p className="fontlight">
+                  Aussie households throw away 3 average-size fridges worth of food each year <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer">[1]</a>, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
-                <List floated="left" className="fontdark">
+                <List floated="left" className="fontlight">
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
                   <List.Item icon='barcode' content="Not knowing how to make the best use of the food that we have at home" />
@@ -196,20 +196,20 @@ class Login extends React.Component {
           </Grid>
         </div>
         <div 
-          className={isMobile ? "bodyrest2 login mobile" : "bodyrest2 login"}
+          className={isMobile ? "bodyrest1 login mobile" : "bodyrest1 login"}
         >
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
               <Grid.Column>
-                <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
                   How does our technology help?
                 </Header>
-                <p className="fontlight">
+                <p className="fontdark">
                 Our web app enables effortless tracking of food items at home and on-the-go and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
-                <List floated="left" className="fontlight">
+                <List floated="left" className="fontdark">
                   <List.Item icon='barcode' content="Reminds you of expiring food so that you can prioritise consuming them sooner" />
                   <List.Item icon='barcode' content="Writes your shopping lists for you with food that are running out or that you likely need" />
                   <List.Item icon='barcode' content="Suggests recipes you can make using the food that you have at home" />
@@ -218,6 +218,20 @@ class Login extends React.Component {
             </Grid.Row>
           </Grid>
         </div>
+        <div 
+          className={isMobile ? "bodyrest2 login mobile" : "bodyrest2 login"}
+        >
+          <Grid celled='internally' columns='equal' stackable>
+            <Grid.Column>
+              <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
+                Latest products added to pantries
+              </Header>
+              <p className="fontlight">
+
+              </p>
+            </Grid.Column>
+          </Grid>
+        </div>        
         <div 
           className={isMobile ? "bodyrest1 login mobile" : "bodyrest1 login"}
           ref={(div) => { this.registerinterestpanel = div; }}

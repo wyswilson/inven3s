@@ -773,6 +773,30 @@ def generateshoppinglist(userid):
 
 	return records
 
+def gettopproductsallusers():
+	query1 = """
+		SELECT
+			p.gtin,p.productname,p.productimage,b.brandname,
+			p.isedible,
+			1 AS isfavourite,
+			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			SUM(i.quantity)
+		FROM products AS p
+		JOIN inventories AS i
+		ON p.gtin = i.gtin AND i.itemstatus = 'IN'
+		JOIN brands AS b
+		ON p.brandid = b.brandid	
+		LEFT JOIN productscategory as pc
+		ON p.gtin = pc.gtin	AND pc.status = 'SELECTED'
+		GROUP BY 1,2
+		ORDER BY 8 DESC
+		LIMIT 5
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return records	
+
 def findallproducts(userid,isedible):
 	query1 = """
 		SELECT
