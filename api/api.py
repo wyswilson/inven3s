@@ -369,8 +369,8 @@ def productdiscover(userid,gtin):
 	return response
 
 @app.route('/public/topproducts', methods=['GET'])
-def publicpopularproducts(userid):
-	print('hit [topproducts] with [%s]' % (userid))
+def publicpopularproducts():
+	print('hit [publicpopularproducts]')
 
 	status = ""
 	statuscode = 200
