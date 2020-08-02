@@ -148,6 +148,19 @@ def publicpopularproducts():
 	records = func.gettopproductsallusers()
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
+@app.route('/public/productscnt', methods=['GET'])
+def publicproductcnt():
+	print('hit [publicproductcnt]')
+	func.registerapilogs("publicproductcnt","",flask.request)
+
+	status = "products count returned"
+	statuscode = 200
+	records = []
+
+	productscnt = func.countallproducts()
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records),productscnt)
+
 @app.route("/")
 @func.requiretoken
 def main():
@@ -446,6 +459,7 @@ def productselectall(userid):
 
 	status = "products returned"
 	statuscode = 200
+	records = []
 
 	isedible = flask.request.args.get("isedible")
 	

@@ -772,6 +772,16 @@ def generateshoppinglist(userid):
 
 	return records
 
+def countallproducts():
+	query1 = """
+		SELECT *
+		FROM products
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return len(records)
+
 def gettopproductsallusers():
 	query1 = """
 		SELECT
