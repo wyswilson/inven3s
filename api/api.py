@@ -583,7 +583,7 @@ def inventoryupsert(userid):
 	queryisedible		= data["queryisedible"]
 	queryisopened		= data["queryisopened"]
 	queryexpirystatus	= data["queryexpirystatus"]
-	querycategory	= data["querycategory"]
+	querycategory		= data["querycategory"]
 
 	inventorycnt = 0
 	gtin,productname,gtinstatus = func.validategtin(gtin)
@@ -801,5 +801,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-    waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+    #waitress.serve(app, host="0.0.0.0", port=88)

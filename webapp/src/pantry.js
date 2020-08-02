@@ -410,7 +410,7 @@ class Pan3 extends React.Component {
         console.log('consumeinventory [' + response.data[0]['message'] + ']');
         this.setState({ inventorymsg: this.generatecountmsg(response.data[0]['count']) });
         this.setState({ inventoryfetched: true });
-
+        console.log(response.data[0]['results']);
         this.setState({ inventory: response.data[0]['results'] });
       }
     })
