@@ -158,7 +158,7 @@ def publicproductcnt():
 	records = []
 
 	productscnt = func.countallproducts()
-
+	print(productscnt)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records),productscnt)
 
 @app.route("/")
