@@ -175,7 +175,7 @@ def validateemail(email):
 
 def registerapilogs(endpoint, email, flaskreq):
 	
-	ipaddr = flaskreq.headers
+	ipaddr = flaskreq.access_route[0]
 	print(ipaddr)
 
 	clientip = flaskreq.remote_addr
