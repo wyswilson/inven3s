@@ -1,5 +1,5 @@
 ==============COLORSCHEME===========
-SPECIAL COLOR 285075
+SPECIAL COLOR 285075 #234a6e
 GREY		b0b0b0
 DARK-GREY	222222
 
@@ -69,6 +69,7 @@ server {
        proxy_set_header Upgrade $http_upgrade;
        proxy_set_header Connection 'upgrade';
        proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
        proxy_cache_bypass $http_upgrade;
    }
 }
