@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { setUserSession } from './utils/common';
-import { Popup, Icon, List, Header, Button, Card, Message, Grid } from 'semantic-ui-react'
+import { Popup, Icon, List, Header, Button, Card, Message, Grid, Image } from 'semantic-ui-react'
 import Field from './field.js';
+import _ from 'lodash'
 import scrollToComponent from 'react-scroll-to-component';
 
 class Login extends React.Component {
@@ -19,6 +20,7 @@ class Login extends React.Component {
       message: '',
       messageactive: false,
       interestmessage: '',
+      topproducts: <Card></Card>
     };
   }
   
@@ -29,6 +31,23 @@ class Login extends React.Component {
     if(field === 'Password'){
       this.setState({ password:value });
     }
+  }
+
+  loadtopproducts(products){
+    const prodgrid = _.map(products, (item) => (
+        <Grid.Column key={item.gtin}>
+          <Card raised key={item.gtin}>
+            <Card.Content textAlign="center">
+              <Image wrapped src={item.productimagelocal}
+                size='tiny'                   
+                onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+              />
+              <Card.Header className="item title" textAlign="center">{item.productname}</Card.Header>
+            </Card.Content>
+          </Card>
+        </Grid.Column>
+      ));
+    this.setState({topproducts: prodgrid});
   }
 
   componentDidMount() {
@@ -42,7 +61,7 @@ class Login extends React.Component {
     .then(response => { 
       if(response.status === 200){
         console.log('fetchtopproducts [' + response.data[0]['message'] + ']');
-        console.log(response.data[0]['results']);
+        this.loadtopproducts(response.data[0]['results']);
       }
     })
     .catch(error => {
@@ -248,11 +267,11 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column>
               <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
-                Latest products added to pantries
+                Popular products added to pantries
               </Header>
-              <p className="fontlight">
-
-              </p>
+              <Grid columns={5} doubling stackable>
+                {this.state.topproducts}
+              </Grid>
             </Grid.Column>
           </Grid>
         </div>        
