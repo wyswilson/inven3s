@@ -48,6 +48,7 @@ cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
+###############################################################
 def getledgeractivities():
 	query1 = """
     	SELECT
@@ -100,6 +101,9 @@ def getledger():
 			totalouts += 1
 
 	return tasks, totalstars, totalins, totalouts
+###############################################################
+
+###############################################################
 
 def generatehash(password):
 	return werkzeug.security.generate_password_hash(password, method='sha256')
@@ -169,11 +173,18 @@ def validateemail(email):
 	else:
 		return False
 
-def registeruserinterest(email, clientip, browser,platform,language,referrer):
+def registerapilogs(endpoint, email, flaskreq):
+	
+	clientip = flaskreq.remote_addr
+	browser = flaskreq.user_agent.browser
+	platform = flaskreq.user_agent.platform
+	language = flaskreq.user_agent.language
+	referrer = flaskreq.referrer
+
 	query1 = """
     	SELECT
         	email
-    	FROM usersinterest
+    	FROM apilogs
     	WHERE email = %s
 	"""
 	cursor.execute(query1,(email,))
@@ -183,8 +194,8 @@ def registeruserinterest(email, clientip, browser,platform,language,referrer):
 	else:
 		eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-		query1 = "INSERT INTO usersinterest (email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query1,(email,clientip,browser,platform,language,eventdate,referrer))
+		query1 = "INSERT INTO apilogs (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+		cursor.execute(query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
 		db.commit()
 
 		return True

@@ -100,9 +100,9 @@ def ledgerget(userid):
 
 #####################INVEN3S#########################
 
-@app.route('/user/register/interest', methods=['POST'])
-def userregisterinterest():
-	print('hit [userregisterinterest]')
+@app.route('/public/userinterest', methods=['POST'])
+def publicuserinterest():
+	print('hit [publicuserinterest]')
 
 	status = ""
 	statuscode = 200
@@ -110,15 +110,10 @@ def userregisterinterest():
 
 	data = json.loads(flask.request.get_data().decode('UTF-8'))
 	email = data["email"]
-	clientip = flask.request.remote_addr
-	browser = flask.request.user_agent.browser
-	platform = flask.request.user_agent.platform
-	language = flask.request.user_agent.language
-	referrer = flask.request.referrer
 
 	#if validate_email.validate_email(email_address=email):
 	if func.validateemail(email):
-		registered = func.registeruserinterest(email,clientip,browser,platform,language,referrer)
+		registered = func.registerapilogs("publicuserinterest",email,flask.request)
 		if registered:
 			status = "Thanks for your interest. We'll be in touch."
 		else:
@@ -129,6 +124,39 @@ def userregisterinterest():
 		statuscode = 412
 
 	return func.jsonifyoutput(statuscode,status,[])	
+
+@app.route('/public/categories', methods=['GET'])
+def publiccategories():
+	print('hit [publiccategories]')
+	func.registerapilogs("publiccategories","",flask.request)
+
+	status = "top product categories returned"
+	statuscode = 200
+	records = func.fetchcategories()
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
+
+@app.route('/public/topproducts', methods=['GET'])
+def publicpopularproducts():
+	print('hit [publicpopularproducts]')
+	func.registerapilogs("publicpopularproducts","",flask.request)
+
+	status = "top products returned"
+	statuscode = 200
+	records = []
+
+	records = func.gettopproductsallusers()
+	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
+
+@app.route("/")
+@func.requiretoken
+def main():
+	print('hit [main]')
+
+	status = "invalid endpoint"
+	statuscode = 501#Not Implemented
+
+	return jsonifyoutput(statuscode,status,[])
 
 @app.route('/user/validate/<token>', methods=['GET'])
 def uservalidate(token):
@@ -149,6 +177,8 @@ def userlogin():
 	email = auth.username
 	password = auth.password
 
+	func.registerapilogs("userlogin",email,flask.request)
+
 	if not auth or not email or not password:
 		return func.jsonifyoutput(401,"unable to verify identity",[],{'WWW.Authentication': 'Basic realm: "login required"'})	
 	userid,username,passwordhashed = func.finduserbyid(email)
@@ -162,12 +192,14 @@ def userlogin():
 		#return flask.make_response('could not verify',  401, {'WWW.Authentication': 'Basic realm: "login required"'})
 
 @app.route('/user/register', methods=['POST'])
-def usersadd():
-	print('hit [usersadd]')
+def useradd():
+	print('hit [useradd]')
 
 	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
 	email 		= data["email"]
 	password 	= data["password"]
+
+	func.registerapilogs("useradd",email,flask.request)
 
 	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
 	#if validate_email.validate_email(email_address=email):
@@ -179,21 +211,12 @@ def usersadd():
 			return func.jsonifyoutput(403,"user is already registered",[])
 	else:
 		return func.jsonifyoutput(412,"invalid user email - try again",[])
-	
-@app.route("/")
-@func.requiretoken
-def main():
-	print('hit [main]')
-
-	status = "invalid endpoint"
-	statuscode = 501#Not Implemented
-
-	return jsonifyoutput(statuscode,status,[])
 
 @app.route('/product/<gtin>', methods=['DELETE'])
 @func.requiretoken
 def productdelete(userid,gtin):
 	print('hit [productdelete] with [%s,%s]' % (userid,gtin))
+	func.registerapilogs("productdelete",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -218,6 +241,7 @@ def productdelete(userid,gtin):
 @func.requiretoken
 def productupsert(userid):
 	print('hit [productupsert] with [%s]' % (userid))
+	func.registerapilogs("productupsert",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -304,6 +328,7 @@ def productupsert(userid):
 @func.requiretoken
 def productimage(userid,gtin):
 	print('hit [productimage] with [%s,%s]' % (userid,gtin))
+	func.registerapilogs("productimage",userid,flask.request)
 
 	statuscode = 200
 	status = "public search for product image is successful"
@@ -333,6 +358,7 @@ def productimage(userid,gtin):
 @func.requiretoken
 def productdiscover(userid,gtin):
 	print('hit [productdiscover] with [%s,%s]' % (userid,gtin))
+	func.registerapilogs("productdiscover",userid,flask.request)
 
 	statuscode = 200
 	status = ""
@@ -368,21 +394,11 @@ def productdiscover(userid,gtin):
 	response = flask.jsonify(messagestoplvl),statuscode
 	return response
 
-@app.route('/public/topproducts', methods=['GET'])
-def publicpopularproducts():
-	print('hit [publicpopularproducts]')
-
-	status = "top products returned"
-	statuscode = 200
-	records = []
-
-	records = func.gettopproductsallusers()
-	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
-
 @app.route('/product/<gtin>', methods=['GET'])
 @func.requiretoken
 def productselect(userid,gtin):
 	print('hit [productselect] with [%s,%s]' % (userid,gtin))
+	func.registerapilogs("productselect",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -413,6 +429,7 @@ def productselect(userid,gtin):
 @func.requiretoken
 def inventorycategories(userid):
 	print('hit [inventorycategories] with [%s]' % (userid))
+	func.registerapilogs("inventorycategories",userid,flask.request)
 
 	status = "inventories by category returned"
 	statuscode = 200
@@ -425,6 +442,7 @@ def inventorycategories(userid):
 @func.requiretoken
 def productselectall(userid):
 	print('hit [productselectall] with [%s]' % (userid))
+	func.registerapilogs("productselectall",userid,flask.request)
 
 	status = "products returned"
 	statuscode = 200
@@ -439,6 +457,7 @@ def productselectall(userid):
 @func.requiretoken
 def branddelete(userid,brandid):
 	print('hit [branddelete] with [%s,%s]' % (userid,brandid))
+	func.registerapilogs("branddelete",userid,flask.request)
 
 	status = "brand deleted"
 	statuscode = 200
@@ -463,6 +482,7 @@ def branddelete(userid,brandid):
 @func.requiretoken
 def brandupsert(userid):
 	print('hit [brandupsert] with [%s]' % (userid))
+	func.registerapilogs("brandupsert",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -511,6 +531,7 @@ def brandupsert(userid):
 @func.requiretoken
 def brandselect(userid,brandid):
 	print('hit [brandselect] with [%s,%s]' % (userid,brandid))
+	func.registerapilogs("brandselect",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -533,6 +554,7 @@ def brandselect(userid,brandid):
 @func.requiretoken
 def brandselectall(userid):
 	print('hit [brandselectall] with [%s]' % (userid))
+	func.registerapilogs("brandselectall",userid,flask.request)
 
 	status = "brands returned"
 	statuscode = 200
@@ -545,6 +567,7 @@ def brandselectall(userid):
 @func.requiretoken
 def inventoryupsert(userid):
 	print('hit [inventoryupsert] with [%s]' % (userid))
+	func.registerapilogs("inventoryupsert",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -633,6 +656,7 @@ def inventoryupsert(userid):
 @func.requiretoken
 def shoppinglist(userid):
 	print('hit [shoppinglist] with [%s]' % (userid))
+	func.registerapilogs("shoppinglist",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -647,21 +671,11 @@ def shoppinglist(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
 
-@app.route('/category', methods=['GET'])
-@func.requiretoken
-def categoryselect(userid):
-	print('hit [categoryselect] with [%s]' % (userid))
-
-	status = "top product categories returned"
-	statuscode = 200
-	records = func.fetchcategories()
-
-	return func.jsonifyoutput(statuscode,status,func.jsonifycategories(records))
-
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
 def inventoryselect(userid):
 	print('hit [inventoryselect] with [%s]' % (userid))
+	func.registerapilogs("inventoryselect",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -705,6 +719,7 @@ def inventoryselect(userid):
 @func.requiretoken
 def inventoryfeed(userid):
 	print('hit [inventoryfeed] with [%s]' % (userid))
+	func.registerapilogs("inventoryfeed",userid,flask.request)
 	
 	status = "activity feed retrieved"
 	statuscode = 200
@@ -717,6 +732,7 @@ def inventoryfeed(userid):
 @func.requiretoken
 def inventoryinsights(userid):
 	print('hit [inventoryinsights] with [%s]' % (userid))
+	func.registerapilogs("inventoryinsights",userid,flask.request)
 
 	status = "insights generated"
 	statuscode = 200
@@ -748,6 +764,7 @@ def inventoryinsights(userid):
 @func.requiretoken
 def retailerselect(userid,retailer):
 	print('hit [retailerselect] with [%s,%s]' % (userid,retailer))
+	func.registerapilogs("retailerselect",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -765,6 +782,7 @@ def retailerselect(userid,retailer):
 @func.requiretoken
 def retaileradd(userid):
 	print('hit [retaileradd] with [%s]' % (userid))
+	func.registerapilogs("retaileradd",userid,flask.request)
 
 	status = ""
 	statuscode = 200
