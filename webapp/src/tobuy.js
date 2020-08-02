@@ -269,7 +269,7 @@ class ToBuy extends React.Component {
 
   redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
-      pathname: '/product',
+      pathname: '/products',
       state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
     })
   }

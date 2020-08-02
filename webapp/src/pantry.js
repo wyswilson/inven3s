@@ -432,7 +432,7 @@ class Pan3 extends React.Component {
 
   redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
-      pathname: '/product',
+      pathname: '/products',
       //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
       state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
     })
@@ -564,12 +564,12 @@ class Pan3 extends React.Component {
       return this.state.inventory.map( (item) => (
               <Card raised key={item.gtin}>
                 <Card.Content>
-                    <Image rounded
-                      centered src={item.productimagelocal}
-                      floated='right'
-                      size='tiny' style={{width: 'auto', height: '70px'}}                      
-                      onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
-                    />
+                  <Image rounded
+                    centered src={item.productimagelocal}
+                    floated='right'
+                    size='tiny' style={{width: 'auto', height: '70px'}}                      
+                    onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+                  />
                   <Card.Header className="item title">{item.productname}</Card.Header>
                   <Card.Meta className="item small">{item.brandname}</Card.Meta>
                   <Card.Description className="item small" textAlign="left">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Description>

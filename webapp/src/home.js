@@ -36,7 +36,7 @@ class Home extends React.Component {
 
   redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
-      pathname: '/product',
+      pathname: '/products',
       state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
     })
   }
@@ -176,17 +176,17 @@ class Home extends React.Component {
 
   directtoinventory(isedible,isopened,expirystatus,category){
     const catencoded = encodeURIComponent(category);
-
+    console.log(catencoded);
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
-        pathname: '/pan3',
+        pathname: '/pantry',
         //search: '?isedible=' + isedible + '&isopened=' + isopened,
         state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus, querycategory: catencoded }
       })      
     }
     else{
       this.props.history.push({
-        pathname: '/2buy'
+        pathname: '/tobuy'
       }) 
     }
 
