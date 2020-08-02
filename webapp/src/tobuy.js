@@ -173,7 +173,8 @@ class ToBuy extends React.Component {
         receiptno:'',
         queryisedible:'2',
         queryisopened:'2',
-        queryexpirystatus:'all'
+        queryexpirystatus:'all',
+        querycategory:'all'
       }, 
       {
         headers: {
