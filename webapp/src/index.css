@@ -135,8 +135,8 @@ body {
 }
 
 .bodymain.login{
-  background: url('/background2.jpg') !important;
-  opacity: 0.8;
+  background: url('/background1.jpg') !important;
+  opacity: 1;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
@@ -152,7 +152,8 @@ body {
 }
 
 .bodymain.login.mobile{
-  background: url('/background2.jpg') !important;
+  background: url('/background1.jpg') !important;
+  opacity: 1;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
