@@ -30,7 +30,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #234a6e !important;
+  background-color: #2c4f70 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -40,7 +40,7 @@ body {
 .button.kuning{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #234a6e !important;
+  background-color: #2c4f70 !important;
 }
 
 .button.grey.fullwidth{
@@ -48,7 +48,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #919191 !important;
+  background-color: #647587 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -58,11 +58,11 @@ body {
 .button.grey{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #919191 !important;
+  background-color: #647587 !important;
 }
 
 .fontdark{
-  color: #919191 !important;
+  color: #647587 !important;
 }
 
 .fontlight{
@@ -74,6 +74,7 @@ body {
 }
 
 .item.title{
+  color: #2c4f70 !important;
   font-size: 14px !important;
   padding-top: 0.8em !important;
   padding-bottom: 0em !important;
@@ -86,7 +87,7 @@ body {
 }
 
 .bodyrest2.login{
-  background-color: #919191 !important;
+  background-color: #647587 !important;
   padding-top: 8em !important;
   padding-bottom: 8em !important;
   padding-left: 12em !important;
@@ -94,7 +95,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #919191 !important;
+  background-color: #647587 !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -214,7 +215,7 @@ body {
 }
 
 .nav a:hover {
-  color: #234a6e !important;
+  color: #2c4f70 !important;
 }
 
 .navheader a {
@@ -225,7 +226,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #234a6e;
+  color: #2c4f70;
 }
 
 .navheader.mobile {
@@ -245,7 +246,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #234a6e;
+  color: #2c4f70;
 }
 
 .error {
@@ -270,7 +271,7 @@ body {
   font-size: 14px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #234a6e;
+  background-color: #2c4f70;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -279,7 +280,7 @@ body {
 }
 
 .field:hover {
-  background-color: #919191;
+  background-color: #647587;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
 }
 

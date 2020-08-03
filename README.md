@@ -1,9 +1,8 @@
 ==============COLORSCHEME===========
-SPECIAL COLOR 285075 #234a6e
-GREY		b0b0b0
-DARK-GREY	222222
-
-ERR			c75061	
+DARK-BLUE   2c4f70
+LIGHT-BLUE	647587
+DARK-GREY	  222222
+ERR			    c75061	
 LOGIN BACKGROUNDIMG CREDIT "Photo by Annie Spratt on Unsplash" (https://unsplash.com/photos/nLHnx2-_sK4)
 
 ==============PYTHON================

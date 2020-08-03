@@ -20,7 +20,8 @@ class Login extends React.Component {
       message: '',
       messageactive: false,
       interestmessage: '',
-      topproducts: null
+      topproducts: null,
+      allproductscnt: 'a large number of'
     };
   }
   
@@ -54,6 +55,26 @@ class Login extends React.Component {
     this.fetchtopproducts();
   }
 
+  fetchproductscnt(){
+    console.log('fetchproductscnt');
+   
+    axios.get(this.state.apihost + '/public/productscnt')
+    .then(response => { 
+      if(response.status === 200){
+        console.log('fetchproductscnt [' + response.data[0]['message'] + ']');
+        this.setState({ allproductscnt: response.data[0]['count']});
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log('fetchproductscnt [' + error.response.data[0]['message'] + ']');
+      }
+      else{
+        console.log('fetchproductscnt [server unreachable]');
+      }
+    });
+  }
+
   fetchtopproducts(){
     console.log('fetchtopproducts');
    
@@ -62,6 +83,7 @@ class Login extends React.Component {
       if(response.status === 200){
         console.log('fetchtopproducts [' + response.data[0]['message'] + ']');
         this.loadtopproducts(response.data[0]['results']);
+        this.fetchproductscnt();
       }
     })
     .catch(error => {
@@ -142,7 +164,7 @@ class Login extends React.Component {
           });
         }
         else{
-          this.setState({ message:'blabla' });
+          this.setState({ message:'unknown error' });
         }
       })
       .catch(error => {
@@ -267,8 +289,11 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column>
               <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
-                Popular products in pantries
+                Popular products across pantries at the moment
               </Header>
+              <p className="fontlight">
+                We have {this.state.allproductscnt} unique products in our pantries and the number is growing
+              </p>
               <Grid doubling stackable>
                 <Grid.Row stretched columns={5}>
                   {this.state.topproducts}
