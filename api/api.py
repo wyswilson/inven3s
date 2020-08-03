@@ -158,13 +158,13 @@ def publicproductcnt():
 	records = []
 
 	productscnt = func.countallproducts()
-	print(productscnt)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records),productscnt)
 
 @app.route("/")
 @func.requiretoken
 def main():
 	print('hit [main]')
+	func.registerapilogs("main","",flask.request)
 
 	status = "invalid endpoint"
 	statuscode = 501#Not Implemented
