@@ -30,7 +30,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #544c43 !important;
+  background-color: #29231e !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -40,7 +40,7 @@ body {
 .button.kuning{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #544c43 !important;
+  background-color: #29231e !important;
 }
 
 .button.grey.fullwidth{
@@ -48,7 +48,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #a8a19d !important;
+  background-color: #6b6665 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -58,11 +58,11 @@ body {
 .button.grey{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #a8a19d !important;
+  background-color: #6b6665 !important;
 }
 
 .fontdark{
-  color: #a8a19d !important;
+  color: #6b6665 !important;
 }
 
 .fontlight{
@@ -74,7 +74,7 @@ body {
 }
 
 .item.title{
-  color: #544c43 !important;
+  color: #29231e !important;
   font-size: 14px !important;
   padding-top: 0.8em !important;
   padding-bottom: 0em !important;
@@ -87,7 +87,7 @@ body {
 }
 
 .bodyrest2.login{
-  background-color: #a8a19d !important;
+  background-color: #6b6665 !important;
   padding-top: 8em !important;
   padding-bottom: 8em !important;
   padding-left: 12em !important;
@@ -95,7 +95,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #a8a19d !important;
+  background-color: #6b6665 !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -217,7 +217,7 @@ body {
 }
 
 .nav a:hover {
-  color: #544c43 !important;
+  color: #29231e !important;
 }
 
 .navheader a {
@@ -228,7 +228,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #a8a19d;
+  color: #6b6665;
 }
 
 .navheader.mobile {
@@ -248,7 +248,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #544c43;
+  color: #29231e;
 }
 
 .error {
@@ -273,7 +273,7 @@ body {
   font-size: 14px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #544c43;
+  background-color: #29231e;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -282,7 +282,7 @@ body {
 }
 
 .field:hover {
-  background-color: #a8a19d;
+  background-color: #6b6665;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
 }
 
