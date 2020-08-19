@@ -1,6 +1,6 @@
 ==============COLORSCHEME===========
 DARK-BROWN  29231e 
-LIGHT-BROWN	 6e6b6a
+LIGHT-BROWN	 6b6665
 DARK-GREY	  222222
 ERR			    c75061	
 LOGIN BACKGROUNDIMG CREDIT "Photo by Annie Spratt on Unsplash" (https://unsplash.com/photos/nLHnx2-_sK4)
