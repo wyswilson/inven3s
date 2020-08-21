@@ -352,7 +352,7 @@ class Product extends React.Component {
   }
 
   updatecategorysuggests(suggestions){
-    const updatedsuggest = _.map(suggestions, (cat) => (
+    let updatedsuggest = _.map(suggestions, (cat) => (
         {
           key: cat.name,
           text: cat.name,
@@ -361,6 +361,7 @@ class Product extends React.Component {
           confidence: cat.confidence
         }
       ));
+
     this.setState({ categorysuggests: updatedsuggest });
     let selectedcats = [];
     suggestions.forEach(function(cat) {
