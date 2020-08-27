@@ -429,20 +429,13 @@ def jsonifyinventory(records):
 		brandname   	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		categorystr		= record[6]
+		categories		= record[6]
 		itemcount		= record[7]
 		dateexpiry		= record[8]
 		retailers		= record[9]
 
 		if dateexpiry:
 			dateexpiry = dateexpiry.strftime('%Y-%m-%d')
-
-		categories = []
-		try:
-			if categorystr:
-				categories = json.loads('[' + categorystr + ']')
-		except:
-			print('error with json categories')
 
 		itemgroup = {}
 		itemgroup['gtin'] 			= gtin
