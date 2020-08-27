@@ -438,19 +438,6 @@ def productselect(userid,gtin):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/inventory/category', methods=['GET'])
-@func.requiretoken
-def inventorycategories(userid):
-	print('hit [inventorycategories] with [%s]' % (userid))
-	func.registerapilogs("inventorycategories",userid,flask.request)
-
-	status = "inventories by category returned"
-	statuscode = 200
-	
-	records = func.fetchinventorybyuserbycat(userid)
-
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
-
 @app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):
@@ -576,6 +563,19 @@ def brandselectall(userid):
 	records = func.findallbrands()
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
+
+@app.route('/inventory/category', methods=['GET'])
+@func.requiretoken
+def inventorycategories(userid):
+	print('hit [inventorycategories] with [%s]' % (userid))
+	func.registerapilogs("inventorycategories",userid,flask.request)
+
+	status = "inventories by category returned"
+	statuscode = 200
+	
+	records = func.fetchinventorybyuserbycat(userid)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
 
 @app.route('/inventory', methods=['POST'])
 @func.requiretoken
