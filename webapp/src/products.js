@@ -426,7 +426,8 @@ class Product extends React.Component {
     const defaultcatsstr = this.state.defaultcategories;
     const allcats = defaultcatsstr + userselectedcats;
     const catsarr = allcats.split('; ');
-    const updatedsuggest = _.map(catsarr, (cat) => (
+    const uniquecats = [...new Set(catsarr)];
+    const updatedsuggest = _.map(uniquecats, (cat) => (
         {
           key: cat,
           text: cat,
