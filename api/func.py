@@ -757,7 +757,7 @@ def generateshoppinglist(userid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN (
-				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				SELECT gtin, GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
@@ -792,7 +792,7 @@ def gettopproductsallusers():
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			1 AS isfavourite,
-			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
 			SUM(i.quantity)
 		FROM products AS p
 		JOIN inventories AS i
@@ -816,7 +816,7 @@ def findallproducts(userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -843,7 +843,7 @@ def findproductbykeyword(gtin,userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -874,7 +874,7 @@ def findproductbygtin(gtin,userid):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT CONCAT('{"name":"',pc.category,'","status":"',pc.status,'","confidence":',pc.confidence,'}') ORDER BY pc.confidence SEPARATOR ', ') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -997,7 +997,7 @@ def fetchinventoryexpireditems(uid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN (
-				SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+				SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
@@ -1086,7 +1086,7 @@ def fetchinventoryfeedbyuser(uid):
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		LEFT JOIN (
-			SELECT gtin,GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+			SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
 			FROM productscategory
 			GROUP BY 1		
 		) as pc
@@ -1133,7 +1133,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 			LEFT JOIN (
 				SELECT
 					gtin,
-					GROUP_CONCAT(DISTINCT CONCAT('{"name":"',category,'","status":"',status,'","confidence":',confidence,'}') ORDER BY confidence SEPARATOR ', ') AS categories
+					GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
