@@ -194,7 +194,6 @@ class Product extends React.Component {
           this.setState({ categoryoptions: selectedprodcategoryoptions });
           
           this.searchbrands(selectedbrand);
-          console.log(selectedprodcategoryoptions);
           this.fetchdefaultcategories(selectedprodcategoryoptions);
 
         }
@@ -367,7 +366,13 @@ class Product extends React.Component {
         .then(response => { 
           if(response.status === 200){
             console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
-            this.updatecategories(response.data[0]['results'],userselectedcats);
+            let defaultcatsstr = '';
+            const defaultcats = response.data[0]['results'];
+            for (var i = 0; i < defaultcats.length; i++) {
+              defaultcatsstr += defaultcats[i]['category'] + '; ';
+            }
+            this.setState({ defaultcategories: defaultcatsstr });
+            this.updatecategories(userselectedcats);
           }
           else{
             console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
@@ -378,7 +383,7 @@ class Product extends React.Component {
         });
     }
     else{
-      this.updatecategories(this.state.defaultcategories,userselectedcats);
+      this.updatecategories(userselectedcats);
     }
   }
 
@@ -417,11 +422,8 @@ class Product extends React.Component {
       });
   }
 
-  updatecategories(defaultcats,userselectedcats){
-    let defaultcatsstr = '';
-    for (var i = 0; i < defaultcats.length; i++) {
-      defaultcatsstr += defaultcats[i]['category'] + '; ';
-    }
+  updatecategories(userselectedcats){
+    const defaultcatsstr = this.state.defaultcategories;
     const allcats = defaultcatsstr + userselectedcats;
     const catsarr = allcats.split('; ');
     const updatedsuggest = _.map(catsarr, (cat) => (
@@ -431,10 +433,7 @@ class Product extends React.Component {
           value: cat
         }
       ));
-    this.setState({ defaultcategories: defaultcatsstr });
     this.setState({ categorysuggests: updatedsuggest });
-    console.log(defaultcatsstr);
-    console.log('hi: ' + allcats);
 
     let selectedcats = [];
     userselectedcats.split('; ').forEach(function(cat) {
