@@ -294,14 +294,10 @@ def jsonifyfeed(records):
 		brandname	  	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		categorystr	   	= record[6]
+		categories	   	= record[6]
 		dateentry		= record[7]
 		itemstatus      = record[8]
 		itemcount		= record[9]
-
-		categories = []
-		if categorystr:
-			categories = json.loads('[' + categorystr + ']')
 
 		activity = {}
 		activity['gtin'] 			= gtin
@@ -400,11 +396,7 @@ def jsonifyproducts(records):
 		brandname   	= record[3]
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
-		categorystr	   	= record[6]
-
-		categories = []
-		if categorystr:
-			categories = json.loads('[' + categorystr + ']')
+		categories	   	= record[6]
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -750,7 +742,7 @@ def generateshoppinglist(userid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN (
-				SELECT gtin, GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
+				SELECT gtin, GROUP_CONCAT(DISTINCT category SEPARATOR '; ') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
@@ -990,7 +982,7 @@ def fetchinventoryexpireditems(uid):
 			JOIN retailers AS r
 			ON i.retailerid = r.retailerid
 			LEFT JOIN (
-				SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
+				SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR '; ') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
@@ -1079,7 +1071,7 @@ def fetchinventoryfeedbyuser(uid):
 		JOIN brands AS b
 		ON p.brandid = b.brandid
 		LEFT JOIN (
-			SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
+			SELECT gtin,GROUP_CONCAT(DISTINCT category SEPARATOR '; ') AS categories
 			FROM productscategory
 			GROUP BY 1		
 		) as pc
@@ -1126,7 +1118,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 			LEFT JOIN (
 				SELECT
 					gtin,
-					GROUP_CONCAT(DISTINCT category SEPARATOR ';') AS categories
+					GROUP_CONCAT(DISTINCT category SEPARATOR '; ') AS categories
 				FROM productscategory
 				GROUP BY 1		
 			) as pc
