@@ -18,9 +18,11 @@ class Product extends React.Component {
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       defaultcategories: '',
       productsuggests: [],
+      similarproductsuggests: [],
       brandsuggests: [],
       categorysuggests: [],
       productdropdown: '',
+      selectedsimilarproducts: [],
       gtin: redirectstate ? redirectstate.gtin : '',
       productname: redirectstate ? redirectstate.productname : '',
       productimage: redirectstate ? redirectstate.productimage : 'https://react.semantic-ui.com/images/wireframe/image.png',
@@ -53,7 +55,8 @@ class Product extends React.Component {
         isedible:this.state.isedible,
         isperishable: this.state.isperishable,
         isfavourite: this.state.isfavourite,
-        categories: this.state.selectedcategories
+        categories: this.state.selectedcategories,
+        similarproducts: this.state.selectedsimilarproducts
       }, 
       {
         headers: {
@@ -101,16 +104,24 @@ class Product extends React.Component {
     });
   }
 
-  lookupproduct(event, data){
-    const gtinorproduct = data.searchQuery
+  lookupsimilarproduct(event, data){
+    const gtinorproduct = data.searchQuery;
 
     if(gtinorproduct.length > 3){
-      this.searchproducts(gtinorproduct);
+      this.searchproducts(gtinorproduct,'similar');
     }
   }
 
-  searchproducts(gtinorproduct){
-    console.log('searchproducts [' + gtinorproduct + ']');
+  lookupproduct(event, data){
+    const gtinorproduct = data.searchQuery;
+
+    if(gtinorproduct.length > 3){
+      this.searchproducts(gtinorproduct,'main');
+    }
+  }
+
+  searchproducts(gtinorproduct,type){
+    console.log('searchproducts [' + gtinorproduct + ', ' + type + ']');
 
     axios.get(this.state.apihost + '/product/' + gtinorproduct + '?isedible=2',
         {
@@ -124,7 +135,7 @@ class Product extends React.Component {
         if(response.status === 200){
           console.log('searchproducts [' + response.data[0]['message'] + ']');
           
-          this.updateproductsuggests(response.data[0]['results']);
+          this.updateproductsuggests(response.data[0]['results'],type);
         }
         else{
           console.log('searchproducts [' + response.data[0]['message'] + ']');          
@@ -145,7 +156,7 @@ class Product extends React.Component {
       });
   }
 
-  updateproductsuggests(suggestions){
+  updateproductsuggests(suggestions,type){
     const updatedsuggest = _.map(suggestions, (item) => (
         {
           key: item.gtin,
@@ -159,7 +170,12 @@ class Product extends React.Component {
           categories: item.categories
         }
       ));
-    this.setState({ productsuggests: updatedsuggest });
+    if(type === 'main'){
+      this.setState({ productsuggests: updatedsuggest });
+    }
+    else{
+      this.setState({ similarproductsuggests: updatedsuggest });
+    }
   }
 
   setproductmetadata(event, data){
@@ -387,6 +403,14 @@ class Product extends React.Component {
     }
   }
 
+  setsimilarproducts(event, data){
+    const field = data.name;
+    const value = data.value;
+
+    console.log(field + ":" + value);
+    this.setState({ selectedsimilarproducts: value });
+  }
+
   searchbrands(brand){
     console.log('searchbrands [' + brand + ']');
 
@@ -564,7 +588,7 @@ class Product extends React.Component {
                       onChange={this.setproductmetadata.bind(this)}
                     />
                   </Grid.Column>
-                  <Grid.Column width={10}>
+                  <Grid.Column width={5}>
                     <label className="fullwidth">Category</label>
                     <Dropdown className="fullwidth" name="categoryname"
                       clearable
@@ -574,6 +598,19 @@ class Product extends React.Component {
                       value={this.state.selectedcategories}
                       options={this.state.categorysuggests}
                       onChange={this.setproductmetadata.bind(this)}
+                    />
+                  </Grid.Column>
+                  <Grid.Column width={5}>
+                    <label className="fullwidth">Similar To</label>
+                    <Dropdown className="fullwidth" name="similarproducts"
+                      clearable
+                      multiple
+                      search
+                      selection
+                      value={this.state.selectedsimilarproducts}
+                      options={this.state.similarproductsuggests}
+                      onSearchChange={this.lookupsimilarproduct.bind(this)}
+                      onChange={this.setsimilarproducts.bind(this)}
                     />
                   </Grid.Column>
                 </Grid.Row>
