@@ -1138,9 +1138,8 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 		WHERE itemstotal > 0
 	"""
 	if category != "all" and category != "Not-Categorised":
-		category = '%' + category + ';%'
-		query1 += "AND categories LIKE %s"
-		cursor.execute(query1,(uid,isedible,category))
+		query1 += "AND categories LIKE '%" + category + ";%'"
+		cursor.execute(query1,(uid,isedible))
 	elif category == "Not-Categorised":
 		query1 += "AND (categories NOT LIKE '%SELECTED%' OR categories IS NULL)"
 		cursor.execute(query1,(uid,isedible))		
