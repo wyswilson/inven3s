@@ -777,7 +777,7 @@ def gettopproductsallusers():
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			1 AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
 			SUM(i.quantity)
 		FROM products AS p
 		JOIN inventories AS i
@@ -801,7 +801,7 @@ def findallproducts(userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -828,7 +828,7 @@ def findproductbykeyword(gtin,userid,isedible):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b
@@ -859,7 +859,7 @@ def findproductbygtin(gtin,userid):
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR ';') AS categories,
+			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
 			count(*)
 		FROM products AS p
 		JOIN brands AS b

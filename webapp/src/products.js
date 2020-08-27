@@ -16,7 +16,7 @@ class Product extends React.Component {
       loading: false,
       actionedmsg: '',
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
-      defaultcategoryoptions: [],
+      defaultcategories: '',
       productsuggests: [],
       brandsuggests: [],
       categorysuggests: [],
@@ -30,7 +30,7 @@ class Product extends React.Component {
       isperishable:0,
       selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
-      categoryoptions: redirectstate ? redirectstate.categoryoptions : []
+      categoryoptions: redirectstate ? redirectstate.categoryoptions : ''
     };
   }
 
@@ -75,7 +75,7 @@ class Product extends React.Component {
         this.setState({ brandname: response.data[0]['results'][0]['brandname'] });
         this.setState({ isedible: response.data[0]['results'][0]['isedible'] });
         this.setState({ isfavourite: response.data[0]['results'][0]['isfavourite'] });
-        this.updatecategorysuggests(response.data[0]['results'][0]['categories']);
+        this.fetchdefaultcategories(response.data[0]['results'][0]['categories']);
       }
       else{
         console.log('upsertproduct [' + response.data[0]['message'] + ']');
@@ -193,15 +193,10 @@ class Product extends React.Component {
           this.setState({ isfavourite: selectedisfavourite });
           this.setState({ categoryoptions: selectedprodcategoryoptions });
           
-          this.searchbrands(selectedbrand,0);
+          this.searchbrands(selectedbrand);
+          console.log(selectedprodcategoryoptions);
+          this.fetchdefaultcategories(selectedprodcategoryoptions);
 
-          if(selectedprodcategoryoptions.length > 0){
-            this.updatecategorysuggests(selectedprodcategoryoptions);
-          }
-          else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
-            this.setState({ categorysuggests: this.state.defaultcategoryoptions });
-            this.setState({ selectedcategories: [] });
-          }
         }
         else{
           //NEW PRODUCT
@@ -316,15 +311,9 @@ class Product extends React.Component {
           this.setState({ isedible: newproductdata['isedible'] });
           this.setState({ isfavourite: newproductdata['isfavourite'] });
 
-          this.searchbrands(newproductdata['brandname'],0);
+          this.searchbrands(newproductdata['brandname']);
 
-          if(newproductdata['categories'].length > 0){
-            this.updatecategorysuggests(newproductdata['categories']);
-          }
-          else{//LOAD DEFAULT CATS IF NOT CATS PREDICTED FOR PRODUCT YET
-            this.setState({ categorysuggests: this.state.defaultcategoryoptions });
-            this.setState({ selectedcategories: [] });
-          }
+          this.fetchdefaultcategories(newproductdata['categories']);
         }
         else{
           console.log('addnewproduct [' + response.data[0]['message'] + ']');
@@ -351,27 +340,6 @@ class Product extends React.Component {
       });
   }
 
-  updatecategorysuggests(suggestions){
-    let updatedsuggest = _.map(suggestions, (cat) => (
-        {
-          key: cat.name,
-          text: cat.name,
-          value: cat.name,
-          status: cat.status,
-          confidence: cat.confidence
-        }
-      ));
-
-    this.setState({ categorysuggests: updatedsuggest });
-    let selectedcats = [];
-    suggestions.forEach(function(cat) {
-      if(cat.status === 'SELECTED'){
-        selectedcats.push(cat.name);
-      }
-    });  
-    this.setState({ selectedcategories: selectedcats });
-  }  
-
   updatebrandsuggests(suggestions){
     const updatedsuggest = _.map(suggestions, (item) => (
         {
@@ -387,29 +355,34 @@ class Product extends React.Component {
     const brand = data.searchQuery;
 
     if(brand.length > 1){
-      this.searchbrands(brand,0);
+      this.searchbrands(brand);
     }
   }
 
-  fetchdefaultcategories(){
+  fetchdefaultcategories(userselectedcats){
     console.log('fetchdefaultcategories');
 
-    axios.get(this.state.apihost + '/public/categories')
-      .then(response => { 
-        if(response.status === 200){
-          console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
-          this.updatedefaultcategories(response.data[0]['results']);
-        }
-        else{
-          console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
-        }
-      })
-      .catch(error => {
-        console.log('fetchdefaultcategories [server unreachable]');
-      });
+    if(this.state.defaultcategories === ''){
+      axios.get(this.state.apihost + '/public/categories')
+        .then(response => { 
+          if(response.status === 200){
+            console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
+            this.updatecategories(response.data[0]['results'],userselectedcats);
+          }
+          else{
+            console.log('fetchdefaultcategories [' + response.data[0]['message'] + ']');
+          }
+        })
+        .catch(error => {
+          console.log('fetchdefaultcategories [server unreachable]');
+        });
+    }
+    else{
+      this.updatecategories(this.state.defaultcategories,userselectedcats);
+    }
   }
 
-  searchbrands(brand,preloaddefaultcatafter){
+  searchbrands(brand){
     console.log('searchbrands [' + brand + ']');
 
     axios.get(this.state.apihost + '/brand/' + brand,
@@ -424,10 +397,6 @@ class Product extends React.Component {
         if(response.status === 200){
           console.log('searchbrands [' + response.data[0]['message'] + ']');
           this.updatebrandsuggests(response.data[0]['results']);
-          
-          if(preloaddefaultcatafter === 1){
-            this.fetchdefaultcategories();
-          }
         }
         else{
           console.log('searchbrands [' + response.data[0]['message'] + ']');
@@ -448,18 +417,32 @@ class Product extends React.Component {
       });
   }
 
-  updatedefaultcategories(defaultcats){
-    const updatedsuggest = _.map(defaultcats, (cat) => (
+  updatecategories(defaultcats,userselectedcats){
+    let defaultcatsstr = '';
+    for (var i = 0; i < defaultcats.length; i++) {
+      defaultcatsstr += defaultcats[i]['category'] + '; ';
+    }
+    const allcats = defaultcatsstr + userselectedcats;
+    const catsarr = allcats.split('; ');
+    const updatedsuggest = _.map(catsarr, (cat) => (
         {
-          key: cat.category,
-          text: cat.category,
-          value: cat.category,
-          status: 'SELECTED',
-          confidence: cat.count
+          key: cat,
+          text: cat,
+          value: cat
         }
       ));
-    this.setState({ defaultcategoryoptions: updatedsuggest });
+    this.setState({ defaultcategories: defaultcatsstr });
     this.setState({ categorysuggests: updatedsuggest });
+    console.log(defaultcatsstr);
+    console.log('hi: ' + allcats);
+
+    let selectedcats = [];
+    userselectedcats.split('; ').forEach(function(cat) {
+      if(cat !== ''){
+       selectedcats.push(cat);
+      }
+    })  
+    this.setState({ selectedcategories: selectedcats });
   }
 
   updateedibletoggle(event,data){
@@ -492,15 +475,9 @@ class Product extends React.Component {
     //ONLOAD, IF REDIRECT WITH PRODUCT DETAILS FROM INVENTORY. NEED TO POPULATE DROPDOWN
     
     if(this.state.brandname !== ''){
-      this.searchbrands(this.state.brandname,1);//PRELOAD DEFAULT CAT === 1
+      this.searchbrands(this.state.brandname);//PRELOAD DEFAULT CAT === 1
     }
-    else{//IF NO BRANDS, WE'LL LOAD DEFAULT CAT SEPARATELY
-      this.fetchdefaultcategories();
-    }
-
-    if(this.state.categoryoptions.length > 0){
-      this.updatecategorysuggests(this.state.categoryoptions);
-    }
+    this.fetchdefaultcategories(this.state.categoryoptions);
   }
 
   checkfavourite(){
