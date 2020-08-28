@@ -228,11 +228,10 @@ def updatesimilarproducts(gtin,userid,similarproducts):
 		simprod = simprod.strip()
 		records = findproductbykeyword(simprod,userid,"2")
 		gtin2 = records[0][0]
-		print(records)
-		print(gtin2)
-		#query2 = "REPLACE INTO productssimilar (gtin1,gtin2) VALUES (%s,%s)"
-		#cursor.execute(query2,(gtin,cat))
-		#db.commit()
+		
+		query2 = "REPLACE INTO productssimilar (gtin1,gtin2) VALUES (%s,%s)"
+		cursor.execute(query2,(gtin,gtin2))
+		db.commit()
 
 def updateproductcategories(gtin,categories):
 
