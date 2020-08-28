@@ -216,21 +216,6 @@ def updatebrandname(brandid,brandname):
 	cursor.execute(query2,(brandname.strip(),brandid))
 	db.commit()
 
-def updatesimilarproducts(gtin,userid,similarproducts):
-
-	query2 = "DELETE FROM productssimilar WHERE gtin1 = %s"
-	cursor.execute(query2,(gtin,))
-	db.commit()
-
-	for simprod in similarproducts:
-		simprod = simprod.strip()
-		records = findproductbykeyword(simprod,userid,"2")
-		gtin2 = records[0][0]
-
-		query2 = "REPLACE INTO productssimilar (gtin1,gtin2) VALUES (%s,%s)"
-		cursor.execute(query2,(gtin,gtin2))
-		db.commit()
-
 def updateproductcategories(gtin,categories):
 
 	query2 = "UPDATE productscategory SET status = 'SUGGESTED' WHERE gtin = %s"
@@ -978,7 +963,7 @@ def fetchinventorybyuserbycat(uid):
 			GROUP BY 1,2,3,4,5,6,7
 		) as tmp
 		WHERE itemstotal > 0
-		ORDER BY 7 ASC
+		ORDER BY 9 DESC
 	"""
 	cursor.execute(query1,(uid,))
 	records = cursor.fetchall()
