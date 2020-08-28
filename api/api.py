@@ -295,6 +295,9 @@ def productupsert(userid):
 		if categories != '':
 			func.updateproductcategories(gtin,categories)
 			status = status + "categories "
+		if similarproducts != '':
+			func.updatesimilarproducts(gtin,similarproducts)
+			status = status + "categories "
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
 			status = status + "isedible "

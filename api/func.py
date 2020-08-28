@@ -216,6 +216,24 @@ def updatebrandname(brandid,brandname):
 	cursor.execute(query2,(brandname.strip(),brandid))
 	db.commit()
 
+def updatesimilarproducts(gtin,userid,similarproducts):
+
+	query2 = "DELETE FROM productssimilar WHERE gtin1 = %s"
+	cursor.execute(query2,(gtin,))
+	db.commit()
+
+	print(similarproducts)
+
+	for simprod in similarproducts:
+		simprod = simprod.strip()
+		records = func.findproductbykeyword(simprod,userid,"2")
+		gtin2 = records[0]['gtin']
+		print(records)
+		print(gtin2)
+		#query2 = "REPLACE INTO productssimilar (gtin1,gtin2) VALUES (%s,%s)"
+		#cursor.execute(query2,(gtin,cat))
+		#db.commit()
+
 def updateproductcategories(gtin,categories):
 
 	query2 = "UPDATE productscategory SET status = 'SUGGESTED' WHERE gtin = %s"
