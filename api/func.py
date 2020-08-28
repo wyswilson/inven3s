@@ -228,7 +228,7 @@ def updatesimilarproducts(gtin,userid,similarproducts):
 		simprod = simprod.strip()
 		records = findproductbykeyword(simprod,userid,"2")
 		gtin2 = records[0][0]
-		
+
 		query2 = "REPLACE INTO productssimilar (gtin1,gtin2) VALUES (%s,%s)"
 		cursor.execute(query2,(gtin,gtin2))
 		db.commit()
@@ -557,6 +557,7 @@ def removeproduct(gtin):
 	db.commit()
 
 def downloadproductpages(gtin,engine,preferredsources):
+	print(gtin + ':' + engine + ':' + preferredsources)
 	if engine == 'google':
 		url = "https://www.google.com/search?q=%s" % gtin
 	elif engine == 'bing':
@@ -575,6 +576,7 @@ def downloadproductpages(gtin,engine,preferredsources):
 		urlresolved = r.url
 		html = r.content
 		logging.debug("webcrawl: [%s] [%s] [%s]" % (gtin,engine,urlresolved))
+		print("webcrawl: [%s] [%s] [%s]" % (gtin,engine,urlresolved))
 
 		soup = bs4.BeautifulSoup(html, 'html.parser')
 		results = []
@@ -609,16 +611,21 @@ def downloadproductpages(gtin,engine,preferredsources):
 		if selectedurl == "":
 			selectedurl = firsturl
 			selectedtitle = firsttitle
+		print("webcrawl output: [%s] [%s]" % (selectedurl,selectedtitle))
 
 		selectedtitle = string.capwords(selectedtitle.strip())
 		return selectedurl,selectedtitle
 	except requests.ConnectionError as e:
+		print("error: internet connection for [%s] [%s]" % (url,str(e)))
 		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))
 	except requests.Timeout as e:
+		print("error: timeout for [%s] [%s]" % (url,str(e)))
 		logging.debug("error: timeout for [%s] [%s]" % (url,str(e)))
 	except requests.RequestException as e:
+		print("error: [%s] [%s]" % (url,str(e)))
 		logging.debug("error: [%s] [%s]" % (url,str(e)))
 	except:
+		print("error: unknown [%s]" % url)
 		logging.debug("error: unknown [%s]" % url)
 
 	return "ERR",""
@@ -647,14 +654,17 @@ def discovernewproduct(gtin,attempt):
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,"google",preferredsources)
 	if selectedurl != "ERROR" and selectedurl != "":
+		print("NOT-ERROR")
 		selectedhtml = ""
 		try:
 			randagent1 = random.choice(useragents)
 			headers1 = {'User-Agent': randagent1}
 			r1 = requests.get(selectedurl, headers=headers1, timeout=10)
 			selectedhtml = r1.content
+			print("html fetched")
 		except:
 			logging.debug("scraper-error: [%s]" % selectedurl)
+			print("scraper-error: [%s]" % selectedurl)
 			selectedurl,selectedtitle = downloadproductpages(gtin,"bing",preferredsources)
 			if selectedurl != "ERR" and selectedurl != "":
 				randagent2 = random.choice(useragents)
@@ -666,6 +676,7 @@ def discovernewproduct(gtin,attempt):
 			soup = bs4.BeautifulSoup(selectedhtml, 'html.parser')
 			
 			logging.debug("crawler: selectedurl [%s]" % (selectedurl))
+			print("crawler: selectedurl [%s]" % (selectedurl))
 
 			brandid = ""
 			productname = ""
@@ -727,11 +738,14 @@ def discovernewproduct(gtin,attempt):
 			return "ERR","",""
 
 	elif selectedurl == "" and attempt == 2:
+		print("NO-SELECTED-URL-2NDATTEMPT")
 		productname,brandid,brandname = discovernewproduct(gtin,attempt)
 		return productname,brandid,brandname
 	elif selectedurl == "":
+		print("NO-SELECTED-URL")
 		return "WARN","",""
 	else:
+		print("ERR")
 		return "ERR","",""
 
 def generateshoppinglist(userid):
