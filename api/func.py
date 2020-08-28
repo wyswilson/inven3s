@@ -622,9 +622,9 @@ def downloadproductpages(gtin,engine,preferredsources):
 	except requests.RequestException as e:
 		print("line 625: error: [%s] [%s]" % (url,str(e)))
 		logging.debug("error: [%s] [%s]" % (url,str(e)))
-	except Exception as e:
-		print("line 628: error: unknown [%s] [%s]" % (url,e.message))
-		logging.debug("error: unknown [%s] [%s]" % (url,e.message))
+	except BaseException as e:
+		print("line 628: error: unknown [%s] [%s]" % (url,format(e)))
+		logging.debug("error: unknown [%s] [%s]" % (url,format(e)))
 
 	return "ERR",""
 
