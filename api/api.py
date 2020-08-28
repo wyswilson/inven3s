@@ -269,7 +269,6 @@ def productupsert(userid):
 	isedible	= data["isedible"]
 	isfavourite	= data["isfavourite"]
 	categories	= data["categories"]
-	similarproducts	= data["similarproducts"]
 
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
@@ -290,9 +289,6 @@ def productupsert(userid):
 		if categories != '':
 			func.updateproductcategories(gtin,categories)
 			status = status + "categories "
-		if similarproducts != '':
-			func.updatesimilarproducts(gtin,userid,similarproducts)
-			status = status + "similarproducts "
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
 			status = status + "isedible "
@@ -819,5 +815,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-	waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+	#waitress.serve(app, host="0.0.0.0", port=88)
