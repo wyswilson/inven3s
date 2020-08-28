@@ -226,7 +226,7 @@ def updatesimilarproducts(gtin,userid,similarproducts):
 
 	for simprod in similarproducts:
 		simprod = simprod.strip()
-		records = func.findproductbykeyword(simprod,userid,"2")
+		records = findproductbykeyword(simprod,userid,"2")
 		gtin2 = records[0]['gtin']
 		print(records)
 		print(gtin2)
