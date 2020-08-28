@@ -622,9 +622,9 @@ def downloadproductpages(gtin,engine,preferredsources):
 	except requests.RequestException as e:
 		print("line 625: error: [%s] [%s]" % (url,str(e)))
 		logging.debug("error: [%s] [%s]" % (url,str(e)))
-	except:
-		print("line 628: error: unknown [%s]" % url)
-		logging.debug("error: unknown [%s]" % url)
+	except Exception as e:
+		print("line 628: error: unknown [%s] [%s]" % (url,e.message))
+		logging.debug("error: unknown [%s] [%s]" % (url,e.message))
 
 	return "ERR",""
 
@@ -652,7 +652,7 @@ def discovernewproduct(gtin,attempt):
 	searchengine = "google"
 	if attempt == 2:
 		searchengine = "bing"
-		
+
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,searchengine,preferredsources)
 	if selectedurl != "ERR" and selectedurl != "":
