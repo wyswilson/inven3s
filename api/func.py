@@ -651,7 +651,7 @@ def discovernewproduct(gtin,attempt):
 
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,"google",preferredsources)
-	if selectedurl != "ERROR" and selectedurl != "":
+	if selectedurl != "ERR" and selectedurl != "":
 		print("line 657: NOT-ERROR")
 		selectedhtml = ""
 		try:
