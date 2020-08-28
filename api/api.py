@@ -271,11 +271,6 @@ def productupsert(userid):
 	categories	= data["categories"]
 	similarproducts	= data["similarproducts"]
 
-	print('similarproducts: ')
-	for simprod in similarproducts:
-		simprod = simprod.strip()
-		print('\t' + simprod)
-
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 
@@ -296,7 +291,7 @@ def productupsert(userid):
 			func.updateproductcategories(gtin,categories)
 			status = status + "categories "
 		if similarproducts != '':
-			func.updatesimilarproducts(gtin,similarproducts)
+			func.updatesimilarproducts(gtin,userid,similarproducts)
 			status = status + "categories "
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
