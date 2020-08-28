@@ -649,8 +649,12 @@ def downloadproductimage(gtin,productname,productimage):
 def discovernewproduct(gtin,attempt):
 	preferredsources = ["https:\/\/(?:world|world\-fr|au|fr\-en|ssl\-api)\.openfoodfacts\.org","https:\/\/www\.campbells\.com\.au","https:\/\/www\.ebay\.com"]
 
+	searchengine = "google"
+	if attempt == 2:
+		searchengine = "bing"
+		
 	attempt += 1
-	selectedurl,selectedtitle = downloadproductpages(gtin,"google",preferredsources)
+	selectedurl,selectedtitle = downloadproductpages(gtin,searchengine,preferredsources)
 	if selectedurl != "ERR" and selectedurl != "":
 		print("line 657: NOT-ERROR")
 		selectedhtml = ""
