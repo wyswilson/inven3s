@@ -557,7 +557,7 @@ def removeproduct(gtin):
 	db.commit()
 
 def downloadproductpages(gtin,engine,preferredsources):
-	print(gtin + ':' + engine + ':' + preferredsources)
+	print(gtin + ':' + engine)
 	if engine == 'google':
 		url = "https://www.google.com/search?q=%s" % gtin
 	elif engine == 'bing':
