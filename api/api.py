@@ -336,7 +336,7 @@ def productupsert(userid):
 	else:
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
-
+		
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/product/image/<gtin>', methods=['GET'])

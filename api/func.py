@@ -900,7 +900,7 @@ def findproductbygtin(gtin,userid):
 	"""
 	cursor.execute(query,(userid,gtin))
 	records = cursor.fetchall()
-
+	print(records)
 	return records
 
 def fetchcategories():
