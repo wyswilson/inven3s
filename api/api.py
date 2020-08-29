@@ -310,6 +310,8 @@ def productupsert(userid):
 			status = "no updates"
 
 		records = func.findproductbygtin(gtin,userid)
+		print("gtinstatus: [%s]" % gtinstatus)
+		print(records)
 	elif gtinstatus == "NEW" and productname != "":
 		brandid,brandname,brandstatus = func.validatebrand("",brandname)
 		if brandstatus == 'NEW':
@@ -336,7 +338,7 @@ def productupsert(userid):
 	else:
 		status = "invalid gtin"
 		statuscode = 412#Precondition Failed
-		
+
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/product/image/<gtin>', methods=['GET'])
