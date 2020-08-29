@@ -269,7 +269,7 @@ def productupsert(userid):
 	isedible	= data["isedible"]
 	isfavourite	= data["isfavourite"]
 	categories	= data["categories"]
-
+	print(categories)
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 	if gtinstatus == "EXISTS":
 
