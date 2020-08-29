@@ -1161,15 +1161,15 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 		WHERE itemstotal > 0
 	"""
 	if category != "all" and category != "Not-Categorised":
-		query1 += "AND (categories LIKE '%; " + category + "' OR categories LIKE '" + category + ";')"
+		query1 += "AND (categories LIKE '%; " + category + "' OR categories LIKE '" + category + ";%')"
 		cursor.execute(query1,(uid,isedible))
 	elif category == "Not-Categorised":
-		query1 += "AND (categories NOT LIKE '%SELECTED%' OR categories IS NULL)"
+		query1 += "AND (categories IS NULL)"
 		cursor.execute(query1,(uid,isedible))		
 	else:
 		cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
-
+	print(query1)
 	ediblenewcnt = 0
 	edibleopenedcnt = 0 
 	inediblenewcnt = 0
