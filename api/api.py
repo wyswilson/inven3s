@@ -271,72 +271,76 @@ def productupsert(userid):
 	categories	= data["categories"]
 	print(categories)
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
-	if gtinstatus == "EXISTS":
+	print('gtinstatus: ' + gtinstatus)
+	try:
+		if gtinstatus == "EXISTS":
 
-		#TRY TO FETCH IMAGE URL IF PRODUCTNAME EXIsTS BUT NOT PRODUCTIMG
-		if productname != '' and productimage == '':
-			productimage = func.findproductimage(gtin,productname)
+			#TRY TO FETCH IMAGE URL IF PRODUCTNAME EXIsTS BUT NOT PRODUCTIMG
+			if productname != '' and productimage == '':
+				productimage = func.findproductimage(gtin,productname)
 
-		if productname != '':
-			func.updateproductname(gtin,productname)
-			status = status + "name "
-		if isperishable != '':
-			func.updateisperishable(gtin,isperishable)
-			status = status + "isperishable "
-		if isfavourite != '':
-			func.updateisfavourite(gtin,userid,isfavourite)
-			status = status + "isfavourite "
-		if len(categories) > 0:
-			func.updateproductcategories(gtin,categories)
-			status = status + "categories "
-			print('cats update')
-		else:
-			print('cats no update')
-		if isedible != '':
-			func.updateisedible(gtin,isedible)
-			status = status + "isedible "
-		if productimage != '':
-			func.updateproductimage(gtin,productimage)
-			status = status + "image "
-		if brandname != '':
-			brandid,brandname,brandstatus = func.validatebrand("",brandname.strip())
-			if brandstatus == 'NEW':
-				brandid = func.addnewbrand(brandid,brandname,"","","")
-			func.updateproductbrand(gtin,brandid)
+			if productname != '':
+				func.updateproductname(gtin,productname)
+				status = status + "name "
+			if isperishable != '':
+				func.updateisperishable(gtin,isperishable)
+				status = status + "isperishable "
+			if isfavourite != '':
+				func.updateisfavourite(gtin,userid,isfavourite)
+				status = status + "isfavourite "
+			if len(categories) > 0:
+				func.updateproductcategories(gtin,categories)
+				status = status + "categories "
+				print('cats update')
+			else:
+				print('cats no update')
+			if isedible != '':
+				func.updateisedible(gtin,isedible)
+				status = status + "isedible "
+			if productimage != '':
+				func.updateproductimage(gtin,productimage)
+				status = status + "image "
+			if brandname != '':
+				brandid,brandname,brandstatus = func.validatebrand("",brandname.strip())
+				if brandstatus == 'NEW':
+					brandid = func.addnewbrand(brandid,brandname,"","","")
+				func.updateproductbrand(gtin,brandid)
 
-			status = status + "brand "
-		if status != "":
-			status = status + "updated"
-		else:
-			status = "no updates"
-
-		records = func.findproductbygtin(gtin,userid)
-	elif gtinstatus == "NEW" and productname != "":
-		brandid,brandname,brandstatus = func.validatebrand("",brandname)
-		if brandstatus == 'NEW':
-			brandid = func.addnewbrand(brandid,brandname,"","","")
-		gtin = func.addnewproduct(gtin,productname,productimage,brandid,0,1)	
-
-		records = func.findproductbygtin(gtin,userid)
-		status = "new product (and branded) added"
-	elif gtinstatus == "NEW" and productname == "":
-		productname,brandid,brandnamenotused = func.discovernewproduct(gtin,1)
-		if productname != "ERR" and productname != "WARN":
-			if productname != "" and brandid != '':
-				status = status + "new product and brand discovered and added"
-			elif productname != "":
-				status = status + "new product discovered and added without brand"
+				status = status + "brand "
+			if status != "":
+				status = status + "updated"
+			else:
+				status = "no updates"
 
 			records = func.findproductbygtin(gtin,userid)
-		elif productname == "ERR":
-			status = "public search for product errored - try again later"
-			statuscode = 503#Service Unavailable
-		elif productname == "WARN":
-			status = "public search for product returned no data - manual entry required"
-			statuscode = 404#Not Found
-	else:
-		status = "invalid gtin"
-		statuscode = 412#Precondition Failed
+		elif gtinstatus == "NEW" and productname != "":
+			brandid,brandname,brandstatus = func.validatebrand("",brandname)
+			if brandstatus == 'NEW':
+				brandid = func.addnewbrand(brandid,brandname,"","","")
+			gtin = func.addnewproduct(gtin,productname,productimage,brandid,0,1)	
+
+			records = func.findproductbygtin(gtin,userid)
+			status = "new product (and branded) added"
+		elif gtinstatus == "NEW" and productname == "":
+			productname,brandid,brandnamenotused = func.discovernewproduct(gtin,1)
+			if productname != "ERR" and productname != "WARN":
+				if productname != "" and brandid != '':
+					status = status + "new product and brand discovered and added"
+				elif productname != "":
+					status = status + "new product discovered and added without brand"
+
+				records = func.findproductbygtin(gtin,userid)
+			elif productname == "ERR":
+				status = "public search for product errored - try again later"
+				statuscode = 503#Service Unavailable
+			elif productname == "WARN":
+				status = "public search for product returned no data - manual entry required"
+				statuscode = 404#Not Found
+		else:
+			status = "invalid gtin"
+			statuscode = 412#Precondition Failed
+	except BaseException as e:
+		print("line 343: error: unknown [%s]" % (format(e)))
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
