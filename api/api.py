@@ -310,8 +310,6 @@ def productupsert(userid):
 			status = "no updates"
 
 		records = func.findproductbygtin(gtin,userid)
-		print("gtinstatus: [%s]" % gtinstatus)
-		print(records)
 	elif gtinstatus == "NEW" and productname != "":
 		brandid,brandname,brandstatus = func.validatebrand("",brandname)
 		if brandstatus == 'NEW':
