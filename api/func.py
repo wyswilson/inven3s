@@ -455,6 +455,9 @@ def jsonifyinventory(records):
 	return inventory
 
 def jsonifyoutput(statuscode,status,records,special=None):
+	print("jsonifyoutput: [%s][%s][%s]" % (statuscode,status,special))
+	print(records)
+	
 	messages = []
 	message = {}
 	message['message'] = status
