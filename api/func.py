@@ -401,7 +401,10 @@ def jsonifyproducts(records):
 		brandname   	= record[3]
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
-		categories	   	= record[6]
+		if record[6]:
+			categories = record[6]
+		else:
+			categories = []
 
 		product = {}
 		product['gtin'] 			= gtin
