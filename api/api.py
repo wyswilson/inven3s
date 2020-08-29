@@ -286,7 +286,7 @@ def productupsert(userid):
 		if isfavourite != '':
 			func.updateisfavourite(gtin,userid,isfavourite)
 			status = status + "isfavourite "
-		if categories != '':
+		if len(categories) > 0:
 			func.updateproductcategories(gtin,categories)
 			status = status + "categories "
 		if isedible != '':
