@@ -217,7 +217,7 @@ def updatebrandname(brandid,brandname):
 	db.commit()
 
 def updateproductcategories(gtin,categories):
-
+	print('in updateproductcategories [%s]' % gtin)
 	query2 = "DELETE FROM productscategory WHERE gtin = %s"
 	cursor.execute(query2,(gtin,))
 	db.commit()

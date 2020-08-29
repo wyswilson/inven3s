@@ -289,6 +289,9 @@ def productupsert(userid):
 		if len(categories) > 0:
 			func.updateproductcategories(gtin,categories)
 			status = status + "categories "
+			print('cats update')
+		else:
+			print('cats no update')
 		if isedible != '':
 			func.updateisedible(gtin,isedible)
 			status = status + "isedible "
