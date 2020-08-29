@@ -217,7 +217,6 @@ def updatebrandname(brandid,brandname):
 	db.commit()
 
 def updateproductcategories(gtin,categories):
-	print('in updateproductcategories [%s]' % gtin)
 	query2 = "DELETE FROM productscategory WHERE gtin = %s"
 	cursor.execute(query2,(gtin,))
 	db.commit()
@@ -294,7 +293,10 @@ def jsonifyfeed(records):
 		brandname	  	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		categories	   	= record[6]
+		if record[6] is None:
+			categories = ''
+		else:
+			categories = record[6]
 		dateentry		= record[7]
 		itemstatus      = record[8]
 		itemcount		= record[9]
@@ -401,10 +403,10 @@ def jsonifyproducts(records):
 		brandname   	= record[3]
 		isedible	   	= record[4]
 		isfavourite	   	= record[5]
-		if record[6]:
-			categories = record[6]
+		if record[6] is None:
+			categories = ''
 		else:
-			categories = []
+			categories = record[6]
 
 		product = {}
 		product['gtin'] 			= gtin
@@ -429,7 +431,10 @@ def jsonifyinventory(records):
 		brandname   	= record[3]
 		isedible		= record[4]
 		isfavourite		= record[5]
-		categories		= record[6]
+		if record[6] is None:
+			categories = ''
+		else:
+			categories = record[6]
 		itemcount		= record[7]
 		dateexpiry		= record[8]
 		retailers		= record[9]
@@ -455,7 +460,7 @@ def jsonifyinventory(records):
 	return inventory
 
 def jsonifyoutput(statuscode,status,records,special=None):
-	
+
 	messages = []
 	message = {}
 	message['message'] = status

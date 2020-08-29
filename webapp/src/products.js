@@ -84,18 +84,19 @@ class Product extends React.Component {
     })
     .catch(error => {
       this.setState({ loading: false });
+      console.log(error.response);
       if(error.response){
         if(error.response.data){
           console.log('upsertproduct [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
           this.setState({ actionedmsg: error.response.data[0]['message'] });        
         }
         else{
-          console.log('upsertproduct [server unreachable]');
+          console.log('upsertproduct1 [server unreachable]');
           this.setState({ actionedmsg: 'server unreachable' });
         }
       }
       else{
-        console.log('upsertproduct [server unreachable]');
+        console.log('upsertproduct2 [server unreachable]');
         this.setState({ actionedmsg: 'server unreachable' });
       }
     });
