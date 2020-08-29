@@ -1178,7 +1178,7 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 	else:
 		cursor.execute(query1,(uid,isedible))
 	records = cursor.fetchall()
-	print(query1)
+
 	ediblenewcnt = 0
 	edibleopenedcnt = 0 
 	inediblenewcnt = 0
