@@ -46,6 +46,9 @@ class App extends React.Component {
   componentDidMount() {
     document.title = 'Inven3s';
 
+    const hostname = window.location.hostname;
+    console.log(hostname);
+
     if (!this.state.token) {
       return;
     }
