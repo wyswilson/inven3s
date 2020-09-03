@@ -45,30 +45,36 @@ class App extends React.Component {
 
   componentDidMount() {
     document.title = 'Inven3s';
-
+    const permissiblehosts = ['inven3s.com','127.0.0.1','localhost']
     const hostname = window.location.hostname;
     console.log(hostname);
 
-    if (!this.state.token) {
-      return;
+    if(!permissiblehosts.includes(hostname)){
+      window.location.href = 'https://google.com'; 
+      return null;
     }
-
-    axios.get(this.state.apihost + '/user/validate/' + this.state.token)
-    .then(response => {
-      if(response.status === 200){
-        setUserSession(response.headers['access-token'],response.headers['name']);
-        this.setState({ authloading: false });
+    else{
+      if (!this.state.token) {
+        return null;
       }
-      else{
+
+      axios.get(this.state.apihost + '/user/validate/' + this.state.token)
+      .then(response => {
+        if(response.status === 200){
+          setUserSession(response.headers['access-token'],response.headers['name']);
+          this.setState({ authloading: false });
+        }
+        else{
+          removeUserSession();
+          this.setState({ authloading: false });
+          this.props.history.push('/login');
+        }
+      }).catch(error => {
         removeUserSession();
         this.setState({ authloading: false });
         this.props.history.push('/login');
-      }
-    }).catch(error => {
-      removeUserSession();
-      this.setState({ authloading: false });
-      this.props.history.push('/login');
-    });
+      });
+    }
   }
 
 
