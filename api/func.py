@@ -954,7 +954,7 @@ def findproductexpiry(uid,gtin):
 
 def fetchtopcats():
 	query1 = """
-	SELECT * FROM (
+	SELECT category FROM (
 		SELECT category, SUM(catcnt) AS subcatcnt
 		FROM(
 			SELECT
