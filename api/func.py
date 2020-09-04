@@ -346,7 +346,7 @@ def jsonifycategories(records):
 
 def jsonifyinventorycategories(records):
 
-	topcats = func.fetchtopcats()
+	topcats = fetchtopcats()
 
 	categories = {}
 	categoriescnt = {}
