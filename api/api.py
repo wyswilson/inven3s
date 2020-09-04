@@ -217,12 +217,14 @@ def useradd():
 
 	#,use_blacklist=True check_mx=True, from_address='wyswilson@live.com', helo_host='my.host.name', smtp_timeout=10, dns_timeout=10, 
 	#if validate_email.validate_email(email_address=email):
-	if func.validateemail(email):
+	if func.validateemail(email) && fullname != '':
 		try:
 			func.addnewuser(email,fullname,func.generatehash(password))
 			return func.jsonifyoutput(200,"user registered",[])
 		except:
 			return func.jsonifyoutput(403,"user is already registered",[])
+	elif fullname == '':
+		return func.jsonifyoutput(412,"invalid fullname - try again",[])
 	else:
 		return func.jsonifyoutput(412,"invalid user email - try again",[])
 
