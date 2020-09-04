@@ -683,7 +683,11 @@ def shoppinglist(userid):
 
 	if func.validateuser(userid):
 		records = func.generateshoppinglist(userid)
-		status = "shopping list generated"
+		if not records:
+			status = "no items in the shopping list"
+			statuscode = 404#Not Found
+		else:
+			status = "shopping list generated"
 	else:
 		status = "invalid user"
 		statuscode = 412#Precondition Failed		
@@ -720,7 +724,7 @@ def inventoryselect(userid):
 		status = "inventory items for the user returned"
 
 		if not records:
-			status = "user does not have an inventory"
+			status = "no inventory found"
 			statuscode = 404#Not Found
 	elif isedible is None or isopened is None:
 		status = "require isedible, isopened flags"
