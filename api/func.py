@@ -383,7 +383,7 @@ def jsonifyinventorycategories(records):
 	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
 	print(topcats)
-	
+
 	categoriesobjects = []
 	for catobj in sortedcats:
 		cat = catobj[0]
@@ -977,7 +977,11 @@ def fetchtopcats():
 	cursor.execute(query1)
 	records = cursor.fetchall()
 
-	return records
+	topcats = []
+	for record in records:
+		topcats.append(record[0])
+
+	return topcats
 
 def fetchinventorybyuserbycat(uid):
 	query1 = """
