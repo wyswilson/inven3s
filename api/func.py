@@ -188,10 +188,10 @@ def registerapilogs(endpoint, email, flaskreq):
 
 	return True
 
-def addnewuser(email,passwordhashed):
+def addnewuser(email,fullname,passwordhashed):
 	userid = hashlib.md5(email.encode('utf-8')).hexdigest()
-	query1 = "INSERT INTO users (userid,email,passwordhashed) VALUES (%s,%s,%s)"
-	cursor.execute(query1,(userid,email,passwordhashed))
+	query1 = "INSERT INTO users (userid,fullname,email,passwordhashed) VALUES (%s,%s,%s,%s)"
+	cursor.execute(query1,(userid,fullname,email,passwordhashed))
 	db.commit()
 
 def updatebrandurl(brandid,brandurl):

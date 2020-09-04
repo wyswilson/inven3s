@@ -211,6 +211,7 @@ def useradd():
 	data 		= json.loads(flask.request.get_data().decode('UTF-8'))
 	email 		= data["email"]
 	password 	= data["password"]
+	fullname 	= data["fullname"]
 
 	func.registerapilogs("useradd",email,flask.request)
 
@@ -218,7 +219,7 @@ def useradd():
 	#if validate_email.validate_email(email_address=email):
 	if func.validateemail(email):
 		try:
-			func.addnewuser(email,func.generatehash(password))
+			func.addnewuser(email,fullname,func.generatehash(password))
 			return func.jsonifyoutput(200,"user registered",[])
 		except:
 			return func.jsonifyoutput(403,"user is already registered",[])
