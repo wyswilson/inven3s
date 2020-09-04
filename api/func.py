@@ -382,20 +382,19 @@ def jsonifyinventorycategories(records):
 
 	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
-	print(topcats)
-
 	categoriesobjects = []
 	for catobj in sortedcats:
 		cat = catobj[0]
 		catcnt = catobj[1]
 
-		items = categories[cat]
-		catobj = {}
-		catobj['name'] = cat
-		catobj['count'] = catcnt
-		catobj['items'] = items
+		if topcats[cat]:
+			items = categories[cat]
+			catobj = {}
+			catobj['name'] = cat
+			catobj['count'] = catcnt
+			catobj['items'] = items
 
-		categoriesobjects.append(catobj)
+			categoriesobjects.append(catobj)
 
 	return categoriesobjects
 
