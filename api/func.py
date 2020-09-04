@@ -387,7 +387,7 @@ def jsonifyinventorycategories(records):
 		cat = catobj[0]
 		catcnt = catobj[1]
 
-		if topcats[cat]:
+		if cat in topcats:
 			items = categories[cat]
 			catobj = {}
 			catobj['name'] = cat
