@@ -44,16 +44,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    document.title = 'Inven3s';
     const permissiblehosts = ['inven3s.com','127.0.0.1','localhost']
     const hostname = window.location.hostname;
     console.log(hostname);
 
     if(!permissiblehosts.includes(hostname)){
+      document.title = 'Illegal Domain Name';
       window.location.href = 'https://google.com'; 
       return null;
     }
     else{
+      document.title = 'Inven3s';
       if (!this.state.token) {
         return null;
       }
