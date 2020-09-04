@@ -345,6 +345,9 @@ def jsonifycategories(records):
 	return categories		
 
 def jsonifyinventorycategories(records):
+
+	topcats = func.fetchtopcats()
+
 	categories = {}
 	categoriescnt = {}
 	for record in records:
@@ -379,6 +382,8 @@ def jsonifyinventorycategories(records):
 
 	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
+	print(topcats)
+	
 	categoriesobjects = []
 	for catobj in sortedcats:
 		cat = catobj[0]
@@ -947,9 +952,37 @@ def findproductexpiry(uid,gtin):
 	else:
 		return "",defaultdateexpiry
 
+def fetchtopcats():
+	query1 = """
+	SELECT * FROM (
+		SELECT category, SUM(catcnt) AS subcatcnt
+		FROM(
+			SELECT
+				category1 AS category,
+				COUNT(DISTINCT(category2)) AS catcnt
+			FROM productscategory_transpose
+			GROUP BY 1
+			UNION
+			SELECT
+				category2 AS category,
+				COUNT(DISTINCT(category1)) AS catcnt
+			FROM	productscategory_transpose
+			GROUP BY 1
+		) AS tmp
+		GROUP BY 1
+		ORDER BY 2 DESC
+	) AS topcats
+	WHERE subcatcnt > 1;	
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return records
+
 def fetchinventorybyuserbycat(uid):
 	query1 = """
-		SELECT gtin,productname,productimage,brandname,isedible,
+		SELECT
+			gtin,productname,productimage,brandname,isedible,
 			isfavourite,
 			category,
 			dateexpiry,
