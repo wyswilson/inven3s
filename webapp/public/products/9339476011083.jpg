@@ -77,27 +77,26 @@
     </div>
   </div>
 </script>
-<meta name='robots' content='noindex,nofollow' />
 <script>window._wca = window._wca || [];</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
 <title>ZENXIN Organic Store | Shop for healthy food from home!</title>
 <meta name="description" content="Organic Delivery by Zenxin offers 800+ organic cooking ingredients from trusted suppliers to Singaporean households. FREE delivery above $100." />
-<meta name="robots" content="follow, noindex" />
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+<link rel="canonical" href="https://zenxin.com/sg/" />
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ZENXIN Organic Store | Shop for healthy food from home!">
 <meta property="og:description" content="Organic Delivery by Zenxin offers 800+ organic cooking ingredients from trusted suppliers to Singaporean households. FREE delivery above $100.">
 <meta property="og:url" content="https://zenxin.com/sg/">
 <meta property="og:site_name" content="Organic Delivery by Zenxin">
-<meta property="og:updated_time" content="2020-09-03T13:14:21+08:00">
+<meta property="og:updated_time" content="2020-08-27T11:05:00+08:00">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ZENXIN Organic Store | Shop for healthy food from home!">
 <meta name="twitter:description" content="Organic Delivery by Zenxin offers 800+ organic cooking ingredients from trusted suppliers to Singaporean households. FREE delivery above $100.">
-<script type="application/ld+json">{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/zenxin.com\/sg\/#website","url":"https:\/\/zenxin.com\/sg","name":"Zenxin Agri-Organic Food Pte Ltd","potentialAction":{"@type":"SearchAction","target":"https:\/\/zenxin.com\/sg\/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Article","headline":"ZENXIN Organic Store | Shop for healthy food from home!","datePublished":"2019-02-08T11:20:27+08:00","dateModified":"2020-09-03T13:14:21+08:00","publisher":{"@type":"Organization","name":"Zenxin Agri-Organic Food Pte Ltd","logo":{"@type":"ImageObject","url":"https:\/\/zenxin.com\/sg\/wp-content\/uploads\/2020\/07\/ZENXINwithyouforyou-4.jpg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zenxin.com\/sg\/"},"author":{"@type":"Person","name":"Ruizhi"},"description":"Organic Delivery by Zenxin offers 800+ organic cooking ingredients from trusted suppliers to Singaporean households. FREE delivery above $100.","image":{"@type":"ImageObject","url":"https:\/\/static.xx.fbcdn.net\/images\/emoji.php\/v9\/t7f\/1\/16\/1f60a.png","width":200,"height":200}},{"@type":"Organization","@id":"https:\/\/zenxin.com\/sg#organization","name":"Zenxin Agri-Organic Food Pte Ltd","url":"https:\/\/zenxin.com\/sg","logo":"https:\/\/zenxin.com\/sg\/wp-content\/uploads\/2020\/07\/ZENXINwithyouforyou-4.jpg"}]}</script>
+<script type="application/ld+json">{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/zenxin.com\/sg\/#website","url":"https:\/\/zenxin.com\/sg","name":"Zenxin Agri-Organic Food Pte Ltd","potentialAction":{"@type":"SearchAction","target":"https:\/\/zenxin.com\/sg\/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"Article","headline":"ZENXIN Organic Store | Shop for healthy food from home!","datePublished":"2019-02-08T11:20:27+08:00","dateModified":"2020-08-27T11:05:00+08:00","publisher":{"@type":"Organization","name":"Zenxin Agri-Organic Food Pte Ltd","logo":{"@type":"ImageObject","url":"https:\/\/zenxin.com\/sg\/wp-content\/uploads\/2020\/07\/ZENXINwithyouforyou-4.jpg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/zenxin.com\/sg\/"},"author":{"@type":"Person","name":"Ruizhi"},"description":"Organic Delivery by Zenxin offers 800+ organic cooking ingredients from trusted suppliers to Singaporean households. FREE delivery above $100.","image":{"@type":"ImageObject","url":"https:\/\/static.xx.fbcdn.net\/images\/emoji.php\/v9\/t7f\/1\/16\/1f60a.png","width":200,"height":200}},{"@type":"Organization","@id":"https:\/\/zenxin.com\/sg#organization","name":"Zenxin Agri-Organic Food Pte Ltd","url":"https:\/\/zenxin.com\/sg","logo":"https:\/\/zenxin.com\/sg\/wp-content\/uploads\/2020\/07\/ZENXINwithyouforyou-4.jpg"}]}</script>
 
 <link rel='dns-prefetch' href='//www.yummly.com' />
-<link rel='dns-prefetch' href='//cdn.datatables.net' />
 <link rel='dns-prefetch' href='//stats.wp.com' />
 <link rel='dns-prefetch' href='//fonts.googleapis.com' />
 <link rel='dns-prefetch' href='//s.w.org' />
@@ -127,6 +126,9 @@ img.emoji {
 </style>
 <link rel='stylesheet' id='wc-block-vendors-style-css' href='https://zenxin.com/sg/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/vendors-style.css?ver=3.1.0' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-block-style-css' href='https://zenxin.com/sg/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/style.css?ver=3.1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wpurp_style_minified-css' href='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/assets/wpurp-public-forced.css?ver=3.12.9' type='text/css' media='all' />
+<link rel='stylesheet' id='wpurp_style1-css' href='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/vendor/font-awesome/css/font-awesome.min.css?ver=3.12.9' type='text/css' media='all' />
+<link rel='stylesheet' id='wpurp_style2-css' href='https://fonts.googleapis.com/css?family=Open+Sans&#038;ver=3.12.9' type='text/css' media='all' />
 <link rel='stylesheet' id='contact-form-7-css' href='https://zenxin.com/sg/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.2.2' type='text/css' media='all' />
 <link rel='stylesheet' id='ced_cng-style-css' href='https://zenxin.com/sg/wp-content/plugins/one-click-order-reorder/assets/css/style.min.css?ver=1.1.5' type='text/css' media='all' />
 <link rel='stylesheet' id='antiscroll-css' href='https://zenxin.com/sg/wp-content/plugins/wc-product-table-lite/assets/antiscroll/css.css?ver=1.9.3' type='text/css' media='all' />
@@ -160,18 +162,18 @@ img.emoji {
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='wpurp_style_minified-css' href='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/assets/wpurp-public-forced.css?ver=3.12.9' type='text/css' media='all' />
-<link rel='stylesheet' id='wpurp_style1-css' href='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/vendor/font-awesome/css/font-awesome.min.css?ver=3.12.9' type='text/css' media='all' />
-<link rel='stylesheet' id='wpurp_style2-css' href='https://fonts.googleapis.com/css?family=Open+Sans&#038;ver=3.12.9' type='text/css' media='all' />
-<link rel='stylesheet' id='woo_discount_rules-customize-table-ui-css-css' href='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Css/customize-table.css?ver=2.1.2' type='text/css' media='all' />
-<link rel='stylesheet' id='coupon-referral-program-css' href='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/css/coupon-referral-program-public.css?ver=1.0.0' type='text/css' media='all' />
-<link rel='stylesheet' id='material_modal-css' href='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/modal/css/material-modal.css?ver=5.5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='modal_style-css' href='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/modal/css/style.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='woo_discount_rules-customize-table-ui-css-css' href='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Css/customize-table.css?ver=2.2.0' type='text/css' media='all' />
 <link rel='stylesheet' id='flatsome-icons-css' href='https://zenxin.com/sg/wp-content/themes/flatsome/assets/css/fl-icons.css?ver=3.12' type='text/css' media='all' />
 <link rel='stylesheet' id='joinchat-css' href='https://zenxin.com/sg/wp-content/plugins/creame-whatsapp-me/public/css/joinchat.min.css?ver=4.0.9' type='text/css' media='all' />
 <style id='joinchat-inline-css' type='text/css'>
 .joinchat{ --red:37; --green:211; --blue:102; }
 </style>
+<link rel='stylesheet' id='woo-variation-swatches-css' href='https://zenxin.com/sg/wp-content/plugins/woo-variation-swatches/assets/css/frontend.min.css?ver=1.0.85' type='text/css' media='all' />
+<style id='woo-variation-swatches-inline-css' type='text/css'>
+.variable-item:not(.radio-variable-item) { width : 30px; height : 30px; } .wvs-style-squared .button-variable-item { min-width : 30px; } .button-variable-item span { font-size : 16px; }
+</style>
+<link rel='stylesheet' id='woo-variation-swatches-theme-override-css' href='https://zenxin.com/sg/wp-content/plugins/woo-variation-swatches/assets/css/wvs-theme-override.min.css?ver=1.0.85' type='text/css' media='all' />
+<link rel='stylesheet' id='woo-variation-swatches-tooltip-css' href='https://zenxin.com/sg/wp-content/plugins/woo-variation-swatches/assets/css/frontend-tooltip.min.css?ver=1.0.85' type='text/css' media='all' />
 <link rel='stylesheet' id='wc-bundle-style-css' href='https://zenxin.com/sg/wp-content/plugins/woocommerce-product-bundles/assets/css/frontend/woocommerce.css?ver=6.3.5' type='text/css' media='all' />
 <link rel='stylesheet' id='flatsome-main-css' href='https://zenxin.com/sg/wp-content/themes/flatsome/assets/css/flatsome.css?ver=3.12.0' type='text/css' media='all' />
 <link rel='stylesheet' id='flatsome-shop-css' href='https://zenxin.com/sg/wp-content/themes/flatsome/assets/css/flatsome-shop.css?ver=3.12.0' type='text/css' media='all' />
@@ -187,25 +189,13 @@ img.emoji {
 	<p>Sorry, this product is unavailable. Please choose a different combination.</p>
 </script>
 <script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-core-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4' id='jquery-ui-core-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4' id='jquery-ui-widget-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4' id='jquery-ui-mouse-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4' id='jquery-ui-draggable-js'></script>
 <script type='text/javascript' id='awdr-main-js-extra'>
 /* <![CDATA[ */
 var awdr_params = {"ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php","enable_update_price_with_qty":"show_when_matched","refresh_order_review":"0","custom_target_simple_product":"","custom_target_variable_product":"","js_init_trigger":""};
 /* ]]> */
 </script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Js/site_main.js?ver=2.1.2' id='awdr-main-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Js/awdr-dynamic-price.js?ver=2.1.2' id='awdr-dynamic-price-js'></script>
-<script type='text/javascript' src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js?ver=1.0.0' id='datatables-js'></script>
-<script type='text/javascript' id='coupon-referral-program-js-extra'>
-/* <![CDATA[ */
-var mwb_crp = {"mwb_crp_animation":"","is_account_page":"","Showing_page":"Showing page _PAGE_ of _PAGES_","no_record":"No records available","nothing_found":"Nothing found","display_record":"Display _MENU_ Entries","filtered_info":"(filtered from _MAX_ total records)","search":"Search","previous":"Previous","next":"Next","mwb_crp_nonce":"4880828782","ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php","apply_text":"Apply","remove_text":"Remove","apply":"Apply"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/js/coupon-referral-program-public.js?ver=1.0.0' id='coupon-referral-program-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/js/dist/clipboard.min.js?ver=5.5.1' id='mwb_wpr_clipboard-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Js/site_main.js?ver=2.2.0' id='awdr-main-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/woo-discount-rules/v2/Assets/Js/awdr-dynamic-price.js?ver=2.2.0' id='awdr-dynamic-price-js'></script>
 <script async defer type='text/javascript' src='https://stats.wp.com/s-202036.js' id='woocommerce-analytics-js'></script>
 <link rel="https://api.w.org/" href="https://zenxin.com/sg/wp-json/" /><link rel="alternate" type="application/json" href="https://zenxin.com/sg/wp-json/wp/v2/pages/61186" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://zenxin.com/sg/xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://zenxin.com/sg/wp-includes/wlwmanifest.xml" />
@@ -213,8 +203,6 @@ var mwb_crp = {"mwb_crp_animation":"","is_account_page":"","Showing_page":"Showi
 <link rel='shortlink' href='https://wp.me/P8EtmH-fUS' />
 <link rel="alternate" type="application/json+oembed" href="https://zenxin.com/sg/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fzenxin.com%2Fsg%2F" />
 <link rel="alternate" type="text/xml+oembed" href="https://zenxin.com/sg/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fzenxin.com%2Fsg%2F&#038;format=xml" />
-<style type="text/css"></style>
-<a href="javascript:;" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored modal__trigger mwb-pr-drag-btn " data-modal="#mwb_modal" id="mwb-cpr-drag" class="animated slideInDown" style="background-color: #E85E54">Referral Program</a>
 <style type='text/css'>img#wpstats{display:none}</style><style>.bg{opacity: 0; transition: opacity 1s; -webkit-transition: opacity 1s;} .bg-loaded{opacity: 1;}</style><!--[if IE]><link rel="stylesheet" type="text/css" href="https://zenxin.com/sg/wp-content/themes/flatsome/assets/css/ie-fallback.css"><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script><script>var head = document.getElementsByTagName('head')[0],style = document.createElement('style');style.type = 'text/css';style.styleSheet.cssText = ':before,:after{content:none !important';head.appendChild(style);setTimeout(function(){head.removeChild(style);}, 0);</script><script src="https://zenxin.com/sg/wp-content/themes/flatsome/assets/libs/ie-flexibility.js"></script><![endif]-->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118478671-2"></script>
 <script>
@@ -510,7 +498,7 @@ small {
 	
 			</style>
 </head>
-<body data-rsssl=1 class="home page-template page-template-page-blank page-template-page-blank-php page page-id-61186 theme-flatsome woocommerce-no-js full-width bg-fill lightbox">
+<body data-rsssl=1 class="home page-template page-template-page-blank page-template-page-blank-php page page-id-61186 theme-flatsome woocommerce-no-js woo-variation-swatches wvs-theme-flatsome-child wvs-theme-child-flatsome wvs-style-squared wvs-attr-behavior-blur wvs-tooltip wvs-css full-width bg-fill lightbox">
 <a class="skip-link screen-reader-text" href="#main">Skip to content</a>
 <div id="wrapper">
 <header id="header" class="header has-sticky sticky-shrink">
@@ -540,7 +528,7 @@ Location </span>
 </a>
 </li>
 <li class="">
-<a href="/cdn-cgi/l/email-protection#f88b909196908d9d81b8829d96809196d69b9795d69581" class="tooltip" title="shinhuey@zenxin.com.my">
+<a href="/cdn-cgi/l/email-protection#d6a5bebfb8bea3b3af96acb3b8aebfb8f8b5b9bbf8bbaf" class="tooltip" title="shinhuey@zenxin.com.my">
 <i class="icon-envelop" style="font-size:16px;"></i> <span>
 Email </span>
 </a>
@@ -644,7 +632,7 @@ Login / Register </span>
 </a>
 </div>
 </li>
- </ul>
+</ul>
 </div>
 </div>
 </div><div id="wide-nav" class="header-bottom wide-nav ">
@@ -733,11 +721,11 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </header>
 <main id="main" class="">
 <div id="content" role="main" class="content-area">
-<section class="section" id="section_48014271">
+<section class="section" id="section_106014115">
 <div class="bg section-bg fill bg-fill  bg-loaded">
 </div>
 <div class="section-content relative">
-<div class="slider-wrapper relative hide-for-small" id="slider-2039518364" style="background-color:rgb(255, 255, 255);">
+<div class="slider-wrapper relative hide-for-small" id="slider-710194799" style="background-color:rgb(255, 255, 255);">
 <div class="slider slider-type-fade slider-nav-circle slider-nav-large slider-nav-light slider-style-normal" data-flickity-options='{
             "cellAlign": "center",
             "imagesLoaded": true,
@@ -757,7 +745,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
             "selectedAttraction": 0.1,
             "parallax" : 0,
             "friction": 0.6        }'>
-<div class="banner has-hover" id="banner-1884494808">
+<div class="banner has-hover" id="banner-1178415681">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -767,23 +755,23 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#banner-1884494808 {
+#banner-1178415681 {
   padding-top: 400px;
 }
-#banner-1884494808 .bg.bg-loaded {
+#banner-1178415681 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/07/Heathier-You-Banner-Web_2000x700.jpg);
 }
-#banner-1884494808 .bg {
+#banner-1178415681 .bg {
   background-position: 49% 52%;
 }
 @media (min-width:550px) {
-  #banner-1884494808 {
+  #banner-1178415681 {
     padding-top: 450px;
   }
 }
 </style>
 </div>
-<div class="banner has-hover" id="banner-991606203">
+<div class="banner has-hover" id="banner-1540395773">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -791,7 +779,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-1519723470" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
+<div id="text-box-4855741" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
 <div class="text dark text-shadow-1">
 <div class="text-inner text-center">
 <h1 class="uppercase alt-font"><span style="font-size: 140%;"><strong>Organic power</strong></span></h1>
@@ -799,24 +787,24 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-1519723470 .text {
+#text-box-4855741 .text {
   background-color: rgba(0, 0, 0, 0.26);
   font-size: 126%;
 }
-#text-box-1519723470 .text-inner {
+#text-box-4855741 .text-inner {
   padding: 5px 5px 50px 5px;
 }
-#text-box-1519723470 {
+#text-box-4855741 {
   width: 88%;
 }
 @media (min-width:550px) {
-  #text-box-1519723470 .text-inner {
+  #text-box-4855741 .text-inner {
     padding: 10px 0px 85px 0px;
   }
 }
 </style>
 </div>
-<div id="text-box-798088641" class="text-box banner-layer x20 md-x25 lg-x25 y85 md-y80 lg-y75 res-text">
+<div id="text-box-1178991752" class="text-box banner-layer x20 md-x25 lg-x25 y85 md-y80 lg-y75 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <a href="https://www.youtube.com/watch?v=AK7CksCT-8s" target="_self" class="button white test" style="border-radius:99px;padding:0px 15px 0px 15px;" rel="noopener">
@@ -825,20 +813,20 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-798088641 {
+#text-box-1178991752 {
   width: 34%;
 }
-#text-box-798088641 .text {
+#text-box-1178991752 .text {
   font-size: 100%;
 }
 @media (min-width:550px) {
-  #text-box-798088641 {
+  #text-box-1178991752 {
     width: 31%;
   }
 }
 </style>
 </div>
-<div id="text-box-1246747098" class="text-box banner-layer x85 md-x75 lg-x75 y85 md-y80 lg-y75 res-text">
+<div id="text-box-1118385911" class="text-box banner-layer x85 md-x75 lg-x75 y85 md-y80 lg-y75 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <a href="https://zenxin.com/sg/?page_id=4" target="_self" class="button white" style="border-radius:99px;">
@@ -847,10 +835,10 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-1246747098 {
+#text-box-1118385911 {
   width: 31%;
 }
-#text-box-1246747098 .text {
+#text-box-1118385911 .text {
   font-size: 100%;
 }
 </style>
@@ -858,21 +846,21 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#banner-991606203 {
+#banner-1540395773 {
   padding-top: 400px;
   background-color: rgb(255, 255, 255);
 }
-#banner-991606203 .bg.bg-loaded {
+#banner-1540395773 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/03/5-colour-scaled.jpg);
 }
-#banner-991606203 .overlay {
+#banner-1540395773 .overlay {
   background-color: rgba(0, 0, 0, 0.13);
 }
-#banner-991606203 .bg {
+#banner-1540395773 .bg {
   background-position: 49% 52%;
 }
 @media (min-width:550px) {
-  #banner-991606203 {
+  #banner-1540395773 {
     padding-top: 450px;
   }
 }
@@ -881,7 +869,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 <div class="loading-spin dark large centered"></div>
 </div>
-<div class="slider-wrapper relative show-for-small" id="slider-1821608158" style="background-color:rgb(255, 255, 255);">
+<div class="slider-wrapper relative show-for-small" id="slider-631507084" style="background-color:rgb(255, 255, 255);">
 <div class="slider slider-type-fade slider-nav-circle slider-nav-large slider-nav-light slider-style-normal" data-flickity-options='{
             "cellAlign": "center",
             "imagesLoaded": true,
@@ -901,7 +889,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
             "selectedAttraction": 0.1,
             "parallax" : 0,
             "friction": 0.6        }'>
-<div class="banner has-hover" id="banner-1003567065">
+<div class="banner has-hover" id="banner-1630959993">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -909,7 +897,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-1486521202" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
+<div id="text-box-411125253" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
 <div class="text dark text-shadow-1">
 <div class="text-inner text-center">
 <h1 class="uppercase alt-font"><span style="font-size: 140%;"><strong>Organic power</strong></span></h1>
@@ -917,24 +905,24 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-1486521202 .text {
+#text-box-411125253 .text {
   background-color: rgba(0, 0, 0, 0.26);
   font-size: 126%;
 }
-#text-box-1486521202 .text-inner {
+#text-box-411125253 .text-inner {
   padding: 5px 5px 50px 5px;
 }
-#text-box-1486521202 {
+#text-box-411125253 {
   width: 88%;
 }
 @media (min-width:550px) {
-  #text-box-1486521202 .text-inner {
+  #text-box-411125253 .text-inner {
     padding: 10px 0px 85px 0px;
   }
 }
 </style>
 </div>
-<div id="text-box-1679362463" class="text-box banner-layer x20 md-x25 lg-x25 y85 md-y80 lg-y75 res-text">
+<div id="text-box-33193070" class="text-box banner-layer x20 md-x25 lg-x25 y85 md-y80 lg-y75 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <a href="https://www.youtube.com/watch?v=r5OQCDF6QqI" target="_self" class="button white test" style="border-radius:99px;padding:0px 15px 0px 15px;" rel="noopener">
@@ -943,20 +931,20 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-1679362463 {
+#text-box-33193070 {
   width: 34%;
 }
-#text-box-1679362463 .text {
+#text-box-33193070 .text {
   font-size: 100%;
 }
 @media (min-width:550px) {
-  #text-box-1679362463 {
+  #text-box-33193070 {
     width: 31%;
   }
 }
 </style>
 </div>
-<div id="text-box-833030984" class="text-box banner-layer x85 md-x75 lg-x75 y85 md-y80 lg-y75 res-text">
+<div id="text-box-1514181827" class="text-box banner-layer x85 md-x75 lg-x75 y85 md-y80 lg-y75 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <a href="https://zenxin.com/sg/?page_id=4" target="_self" class="button white" style="border-radius:99px;">
@@ -965,10 +953,10 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#text-box-833030984 {
+#text-box-1514181827 {
   width: 31%;
 }
-#text-box-833030984 .text {
+#text-box-1514181827 .text {
   font-size: 100%;
 }
 </style>
@@ -976,27 +964,27 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#banner-1003567065 {
+#banner-1630959993 {
   padding-top: 500px;
   background-color: rgb(255, 255, 255);
 }
-#banner-1003567065 .bg.bg-loaded {
+#banner-1630959993 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/03/5-colour-scaled.jpg);
 }
-#banner-1003567065 .overlay {
+#banner-1630959993 .overlay {
   background-color: rgba(0, 0, 0, 0.13);
 }
-#banner-1003567065 .bg {
+#banner-1630959993 .bg {
   background-position: 49% 52%;
 }
 @media (min-width:550px) {
-  #banner-1003567065 {
+  #banner-1630959993 {
     padding-top: 450px;
   }
 }
 </style>
 </div>
-<div class="banner has-hover" id="banner-1979976868">
+<div class="banner has-hover" id="banner-212425830">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -1006,17 +994,17 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 <style>
-#banner-1979976868 {
+#banner-212425830 {
   padding-top: 500px;
 }
-#banner-1979976868 .bg.bg-loaded {
+#banner-212425830 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/07/Healthier-You-Banner.jpg);
 }
-#banner-1979976868 .bg {
+#banner-212425830 .bg {
   background-position: 48% 44%;
 }
 @media (min-width:550px) {
-  #banner-1979976868 {
+  #banner-212425830 {
     padding-top: 450px;
   }
 }
@@ -1025,19 +1013,19 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 <div class="loading-spin dark large centered"></div>
 </div>
-<div class="row" id="row-965142969">
-<div id="col-1086817876" class="col medium-2 small-12 large-2">
+<div class="row" id="row-10612951">
+<div id="col-1886613105" class="col medium-2 small-12 large-2">
 <div class="col-inner text-center">
-<div class="img has-hover x md-x lg-x y md-y lg-y" id="image_1138776316">
+<div class="img has-hover x md-x lg-x y md-y lg-y" id="image_402078604">
 <div class="img-inner dark">
 <img width="858" height="1030" src="https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-858x1030.jpg" class="attachment-large size-large" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-858x1030.jpg 858w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-250x300.jpg 250w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-768x922.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-150x180.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-600x720.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2-500x600.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/06/Tai-Seng-Yee-2.jpg 1000w" sizes="(max-width: 858px) 100vw, 858px" />
 </div>
 <style>
-#image_1138776316 {
+#image_402078604 {
   width: 100%;
 }
 @media (min-width:550px) {
-  #image_1138776316 {
+  #image_402078604 {
     width: 100%;
   }
 }
@@ -1045,7 +1033,7 @@ Cart / <span class="cart-price"><span class="woocommerce-Price-amount amount"><b
 </div>
 </div>
 </div>
-<div id="col-1753921890" class="col medium-10 small-12 large-10">
+<div id="col-170451208" class="col medium-10 small-12 large-10">
 <div class="col-inner" style="border-radius:21px;">
 <h4><span style="font-size: 100%;"><strong>FOREWORD</strong></span></h4>
 <p><strong><span style="font-size: 100%;">Tai Seng Yee &#8211; ZENXIN Organic Food Team Leader<br />
@@ -1066,48 +1054,48 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#col-1753921890 > .col-inner {
+#col-170451208 > .col-inner {
   padding: 15px 0px 15px 0px;
   margin: 0px 0px -30px 0px;
 }
 @media (min-width:550px) {
-  #col-1753921890 > .col-inner {
+  #col-170451208 > .col-inner {
     padding: 15px 15px 15px 15px;
   }
 }
 </style>
 </div>
 </div>
-<div class="row row-collapse align-center row-divided" id="row-905045695">
-<div id="col-2130882719" class="col medium-2 small-12 large-2">
+<div class="row row-collapse align-center row-divided" id="row-1334103739">
+<div id="col-1941303338" class="col medium-2 small-12 large-2">
 <div class="col-inner">
-<div class="banner has-hover hide-for-small" id="banner-547550059">
+<div class="banner has-hover hide-for-small" id="banner-2117726236">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-860649995" class="text-box banner-layer x50 md-x10 lg-x50 y30 md-y40 lg-y40 res-text">
+<div id="text-box-1361890023" class="text-box banner-layer x50 md-x10 lg-x50 y30 md-y40 lg-y40 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <h2 class="uppercase"><a href="https://zenxin.com/sg/new-arrival/"><b>hot deals</b></a></h2>
 </div>
 </div>
 <style>
-#text-box-860649995 {
+#text-box-1361890023 {
   width: 100%;
 }
-#text-box-860649995 .text {
+#text-box-1361890023 .text {
   font-size: 100%;
 }
 @media (min-width:550px) {
-  #text-box-860649995 {
+  #text-box-1361890023 {
     width: 85%;
   }
 }
 @media (min-width:850px) {
-  #text-box-860649995 {
+  #text-box-1361890023 {
     width: 60%;
   }
 }
@@ -1116,11 +1104,11 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#banner-547550059 {
+#banner-2117726236 {
   padding-top: 100px;
 }
 @media (min-width:550px) {
-  #banner-547550059 {
+  #banner-2117726236 {
     padding-top: 329px;
   }
 }
@@ -1129,10 +1117,9 @@ Tai Seng Yee</p>
 <div class="container section-title-container show-for-small" style="max-width:95%;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">Hot Deals</span><b></b></h3></div>
 </div>
 </div>
-<div id="col-1981564490" class="col medium-10 small-11 large-10">
+<div id="col-787659340" class="col medium-10 small-11 large-10">
 <div class="col-inner">
 <div class="row  equalize-box large-columns-6 medium-columns-6 small-columns-2 row-xsmall">
-
 <div class="col">
 <div class="col-inner">
 <div class="badge-container absolute left top z-1">
@@ -1175,7 +1162,7 @@ Tai Seng Yee</p>
 <div class="box-text text-center">
 <div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/fresh-produce/fruit-fresh-produce/organic-blueberries-bundle-promo-x2/">Organic Blueberries (Bundle Promo x2)</a></p></div><div class="price-wrapper">
 <span class="price"><del><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>13.60</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>9.90</bdi></span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=84374" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="84374" data-product_sku="" aria-label="Add &ldquo;Organic Blueberries (Bundle Promo x2)&rdquo; to your cart" rel="nofollow">Add to cart</a></div>  </div>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=84374" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="84374" data-product_sku="" aria-label="Add &ldquo;Organic Blueberries (Bundle Promo x2)&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
 </div>
 </div>
 </div>
@@ -1228,29 +1215,6 @@ Tai Seng Yee</p>
 <div class="col">
 <div class="col-inner">
 <div class="badge-container absolute left top z-1">
-<div class="callout badge badge-circle"><div class="badge-inner secondary on-sale"><span class="onsale">-22%</span></div></div>
-</div>
-<div class="product-small box has-hover box-normal box-text-bottom">
-<div class="box-image" style="border-radius:10%;">
-<div class="image-cover" style="padding-top:100%;">
-<a href="https://zenxin.com/sg/store/cooking-essentials/pastes-sauces/tomato-ketchup-organic-300g/">
-<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-300x300.jpg" class="attachment-medium size-medium" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2018/05/la-Bio-Idea-Organic-Tomato-Ketchup.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
-</div>
-<div class="image-tools top right show-on-hover">
-</div>
-<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-</div>
-</div>
-<div class="box-text text-center">
-<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/cooking-essentials/pastes-sauces/tomato-ketchup-organic-300g/">Bio Idea Organic Tomato Ketchup 300g</a></p></div><div class="price-wrapper">
-<span class="price"><del><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>7.90</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>6.20</bdi></span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=55147" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="55147" data-product_sku="8712153027187" aria-label="Add &ldquo;Bio Idea Organic Tomato Ketchup  300g&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
-</div>
-</div>
-</div>
-<div class="col">
-<div class="col-inner">
-<div class="badge-container absolute left top z-1">
 <div class="callout badge badge-circle"><div class="badge-inner secondary on-sale"><span class="onsale">-24%</span></div></div>
 </div>
 <div class="product-small box has-hover box-normal box-text-bottom">
@@ -1271,47 +1235,70 @@ Tai Seng Yee</p>
 </div>
 </div>
 </div>
+<div class="col">
+<div class="col-inner">
+<div class="badge-container absolute left top z-1">
+<div class="callout badge badge-circle"><div class="badge-inner secondary on-sale"><span class="onsale">-10%</span></div></div>
+</div>
+<div class="product-small box has-hover box-normal box-text-bottom">
+<div class="box-image" style="border-radius:10%;">
+<div class="image-cover" style="padding-top:100%;">
+<a href="https://zenxin.com/sg/store/grocery/honey-syrup/honey-fresh-raw-natural-1kg-2/">
+<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-300x300.jpg" class="attachment-medium size-medium" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-510x510.jpg 510w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2018/05/Fresh-Raw-Honey-Front.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
+</div>
+<div class="image-tools top right show-on-hover">
+</div>
+<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+</div>
+</div>
+<div class="box-text text-center">
+<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/grocery/honey-syrup/honey-fresh-raw-natural-1kg-2/">Simply Natural Natural Raw Honey 1kg</a></p></div><div class="price-wrapper">
+<span class="price"><del><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>19.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>17.10</bdi></span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=55551" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="55551" data-product_sku="9555208107347" aria-label="Add &ldquo;Simply Natural Natural Raw Honey 1kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
 </div>
 </div>
 </div>
 </div>
-<div id="gap-195964948" class="gap-element clearfix hide-for-small" style="display:block; height:auto;">
+</div>
+</div>
+</div>
+<div id="gap-1914048757" class="gap-element clearfix hide-for-small" style="display:block; height:auto;">
 <style>
-#gap-195964948 {
+#gap-1914048757 {
   padding-top: 30px;
 }
 </style>
 </div>
-<div class="row row-collapse align-center row-divided" id="row-1378315114">
-<div id="col-842629371" class="col medium-2 small-12 large-2">
+<div class="row row-collapse align-center row-divided" id="row-436219240">
+<div id="col-1157343381" class="col medium-2 small-12 large-2">
 <div class="col-inner">
-<div class="banner has-hover hide-for-small" id="banner-915144350">
+<div class="banner has-hover hide-for-small" id="banner-603414372">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-1485870965" class="text-box banner-layer x50 md-x10 lg-x50 y30 md-y40 lg-y40 res-text">
+<div id="text-box-799095270" class="text-box banner-layer x50 md-x10 lg-x50 y30 md-y40 lg-y40 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <h2 class="uppercase"><b><a href="https://zenxin.com/sg/new-arrival/">NEW ARRIVALS</a></b></h2>
 </div>
 </div>
 <style>
-#text-box-1485870965 {
+#text-box-799095270 {
   width: 100%;
 }
-#text-box-1485870965 .text {
+#text-box-799095270 .text {
   font-size: 100%;
 }
 @media (min-width:550px) {
-  #text-box-1485870965 {
+  #text-box-799095270 {
     width: 85%;
   }
 }
 @media (min-width:850px) {
-  #text-box-1485870965 {
+  #text-box-799095270 {
     width: 60%;
   }
 }
@@ -1320,11 +1307,11 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#banner-915144350 {
+#banner-603414372 {
   padding-top: 100px;
 }
 @media (min-width:550px) {
-  #banner-915144350 {
+  #banner-603414372 {
     padding-top: 329px;
   }
 }
@@ -1333,7 +1320,7 @@ Tai Seng Yee</p>
 <div class="container section-title-container show-for-small" style="max-width:95%;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">New Arrivals</span><b></b></h3></div>
 </div>
 </div>
-<div id="col-638708455" class="col medium-10 small-11 large-10">
+<div id="col-1717776477" class="col medium-10 small-11 large-10">
 <div class="col-inner">
 <div class="row  equalize-box large-columns-6 medium-columns-6 small-columns-2 row-xsmall">
 <div class="col">
@@ -1388,6 +1375,50 @@ Tai Seng Yee</p>
 <div class="product-small box has-hover box-normal box-text-bottom">
 <div class="box-image" style="border-radius:10%;">
 <div class="image-cover" style="padding-top:100%;">
+<a href="https://zenxin.com/sg/store/fresh-produce/vegetables-fresh-produce/organic-savoy-cabbage-1pc/">
+<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-300x300.jpg" class="attachment-medium size-medium" alt="Organic Savoy Cabbage 1pc" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2020/08/2-4.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
+</div>
+<div class="image-tools top right show-on-hover">
+</div>
+<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+</div>
+</div>
+<div class="box-text text-center">
+<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/fresh-produce/vegetables-fresh-produce/organic-savoy-cabbage-1pc/">Organic Savoy Cabbage 1pc</a></p></div><div class="price-wrapper">
+<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>3.00</bdi></span></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=95524" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="95524" data-product_sku="2011658" aria-label="Add &ldquo;Organic Savoy Cabbage 1pc&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
+</div>
+</div>
+</div>
+<div class="col">
+<div class="col-inner">
+<div class="badge-container absolute left top z-1">
+</div>
+<div class="product-small box has-hover box-normal box-text-bottom">
+<div class="box-image" style="border-radius:10%;">
+<div class="image-cover" style="padding-top:100%;">
+<a href="https://zenxin.com/sg/store/frozen-foods/bean-curds/simply-natural-seaweed-bean-curd-400g/">
+<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-300x300.jpg" class="attachment-medium size-medium" alt="Simply Natural Seaweed Bean Curd 400g" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2020/08/4-1.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
+</div>
+<div class="image-tools top right show-on-hover">
+</div>
+<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+</div>
+</div>
+<div class="box-text text-center">
+<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/frozen-foods/bean-curds/simply-natural-seaweed-bean-curd-400g/">Simply Natural Seaweed Bean Curd 400g</a></p></div><div class="price-wrapper">
+<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>3.50</bdi></span></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=95380" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="95380" data-product_sku="9555208012504" aria-label="Add &ldquo;Simply Natural Seaweed Bean Curd 400g&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
+</div>
+</div>
+</div>
+<div class="col">
+<div class="col-inner">
+<div class="badge-container absolute left top z-1">
+</div>
+<div class="product-small box has-hover box-normal box-text-bottom">
+<div class="box-image" style="border-radius:10%;">
+<div class="image-cover" style="padding-top:100%;">
 <a href="https://zenxin.com/sg/store/frozen-foods/seafood-frozen-foods/natural-frozen-ribbon-fish-portion-1kg/">
 <img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-300x300.jpg" class="attachment-medium size-medium" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-4.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
 </div>
@@ -1425,60 +1456,16 @@ Tai Seng Yee</p>
 </div>
 </div>
 </div>
-<div class="col">
-<div class="col-inner">
-<div class="badge-container absolute left top z-1">
-</div>
-<div class="product-small box has-hover box-normal box-text-bottom">
-<div class="box-image" style="border-radius:10%;">
-<div class="image-cover" style="padding-top:100%;">
-<a href="https://zenxin.com/sg/store/frozen-foods/seafood-frozen-foods/natural-frozen-kupang-meat-800g/">
-<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-300x300.jpg" class="attachment-medium size-medium" alt="Natural Frozen Kupang Meat 800g" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2020/08/Untitled-design-2.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
-</div>
-<div class="image-tools top right show-on-hover">
-</div>
-<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-</div>
-</div>
-<div class="box-text text-center">
-<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/frozen-foods/seafood-frozen-foods/natural-frozen-kupang-meat-800g/">Natural Frozen Kupang Meat 800g</a></p></div><div class="price-wrapper">
-<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>9.90</bdi></span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=95376" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="95376" data-product_sku="8885005593922" aria-label="Add &ldquo;Natural Frozen Kupang Meat 800g&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
-</div>
-</div>
-</div>
-<div class="col">
-<div class="col-inner">
-<div class="badge-container absolute left top z-1">
-</div>
-<div class="product-small box has-hover box-normal box-text-bottom">
-<div class="box-image" style="border-radius:10%;">
-<div class="image-cover" style="padding-top:100%;">
-<a href="https://zenxin.com/sg/store/frozen-foods/seafood-frozen-foods/natural-frozen-squid-ring-500g/">
-<img width="300" height="300" src="https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-300x300.jpg" class="attachment-medium size-medium" alt="Natural Frozen Squid Ring 500g" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-300x300.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-1030x1030.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-80x80.jpg 80w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-768x768.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-150x150.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-600x600.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-1536x1536.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-350x350.jpg 350w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-500x500.jpg 500w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5-100x100.jpg 100w, https://zenxin.com/sg/wp-content/uploads/2020/08/1-5.jpg 1800w" sizes="(max-width: 300px) 100vw, 300px" /> </a>
-</div>
-<div class="image-tools top right show-on-hover">
-</div>
-<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-</div>
-</div>
-<div class="box-text text-center">
-<div class="title-wrapper"><p class="name product-title woocommerce-loop-product__title"><a href="https://zenxin.com/sg/store/frozen-foods/seafood-frozen-foods/natural-frozen-squid-ring-500g/">Natural Frozen Squid Ring 500g</a></p></div><div class="price-wrapper">
-<span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&#36;</span>6.90</bdi></span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=95375" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-underline" data-product_id="95375" data-product_sku="8885005590211" aria-label="Add &ldquo;Natural Frozen Squid Ring 500g&rdquo; to your cart" rel="nofollow">Add to cart</a></div> </div>
 </div>
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="row row-small align-center" id="row-1030020307">
-<div id="col-1131794063" class="col small-12 large-12">
+<div class="row row-small align-center" id="row-986116091">
+<div id="col-1117701714" class="col small-12 large-12">
 <div class="col-inner" style="background-color:rgba(255, 255, 255, 0);">
-<div id="gap-1184038760" class="gap-element clearfix" style="display:block; height:auto;">
+<div id="gap-2146685444" class="gap-element clearfix" style="display:block; height:auto;">
 <style>
-#gap-1184038760 {
+#gap-2146685444 {
   padding-top: 40px;
 }
 </style>
@@ -1486,9 +1473,9 @@ Tai Seng Yee</p>
 <div class="container section-title-container" style="margin-top:0px;margin-bottom:0px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">STAY HOME ESSENTIALS</span><b></b></h3></div>
 </div>
 </div>
-<div id="col-462863827" class="col medium-4 small-12 large-4">
+<div id="col-100308658" class="col medium-4 small-12 large-4">
 <div class="col-inner">
-<div class="banner has-hover" id="banner-314742194">
+<div class="banner has-hover" id="banner-1690756984">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -1496,7 +1483,7 @@ Tai Seng Yee</p>
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-2023325569" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
+<div id="text-box-1056465260" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <h2 class="uppercase">organic fresh produce</h2>
@@ -1506,10 +1493,10 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#text-box-2023325569 {
+#text-box-1056465260 {
   width: 88%;
 }
-#text-box-2023325569 .text {
+#text-box-1056465260 .text {
   font-size: 100%;
 }
 </style>
@@ -1517,30 +1504,30 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#banner-314742194 {
+#banner-1690756984 {
   padding-top: 200px;
 }
-#banner-314742194 .bg.bg-loaded {
+#banner-1690756984 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/02/vegetables-790022-1030x687.jpg);
 }
-#banner-314742194 .overlay {
+#banner-1690756984 .overlay {
   background-color: rgba(0, 0, 0, 0.17);
 }
-#banner-314742194 .bg {
+#banner-1690756984 .bg {
   background-position: 43% 50%;
 }
 </style>
 </div>
 </div>
 <style>
-#col-462863827 > .col-inner {
+#col-100308658 > .col-inner {
   padding: 0px 5px 0px 5px;
 }
 </style>
 </div>
-<div id="col-1892841355" class="col medium-4 small-12 large-4">
+<div id="col-764146548" class="col medium-4 small-12 large-4">
 <div class="col-inner">
-<div class="banner has-hover" id="banner-245364041">
+<div class="banner has-hover" id="banner-2039056809">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -1548,7 +1535,7 @@ Tai Seng Yee</p>
 </div>
 <div class="banner-layers container">
 <div class="fill banner-link"></div>
-<div id="text-box-1850189585" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
+<div id="text-box-1504005981" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
 <div class="text dark">
 <div class="text-inner text-center">
 <h2 class="uppercase">organic box &amp; Hamper</h2>
@@ -1558,10 +1545,10 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#text-box-1850189585 {
+#text-box-1504005981 {
   width: 73%;
 }
-#text-box-1850189585 .text {
+#text-box-1504005981 .text {
   font-size: 100%;
 }
 </style>
@@ -1569,27 +1556,27 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#banner-245364041 {
+#banner-2039056809 {
   padding-top: 200px;
 }
-#banner-245364041 .bg.bg-loaded {
+#banner-2039056809 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/02/IMG_9392-3-1030x687.jpg);
 }
-#banner-245364041 .overlay {
+#banner-2039056809 .overlay {
   background-color: rgba(0, 0, 0, 0.17);
 }
 </style>
 </div>
 </div>
 <style>
-#col-1892841355 > .col-inner {
+#col-764146548 > .col-inner {
   padding: 0px 5px 0px 5px;
 }
 </style>
 </div>
-<div id="col-438807213" class="col medium-4 small-12 large-4">
+<div id="col-1149076070" class="col medium-4 small-12 large-4">
 <div class="col-inner">
-<div class="banner has-hover" id="banner-259601382">
+<div class="banner has-hover" id="banner-831065261">
 <div class="banner-inner fill">
 <div class="banner-bg fill">
 <div class="bg fill bg-fill "></div>
@@ -1597,9 +1584,8 @@ Tai Seng Yee</p>
 </div>
 <div class="banner-layers container">
 <a class="fill" href="http://www.freepik.com" rel="Designed by Freepik noopener" target="_blank"><div class="fill banner-link"></div></a>
-<div id="text-box-934256011" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
+<div id="text-box-1049135799" class="text-box banner-layer x50 md-x50 lg-x50 y50 md-y50 lg-y50 res-text">
 <div class="text dark">
-
 <div class="text-inner text-center">
 <h2 class="uppercase">organic cleaning agents</h2>
 <a href="https://zenxin.com/sg/product-category/personal-care/" target="_self" class="button white is-outline is-xlarge" style="border-radius:99px;">
@@ -1608,10 +1594,10 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#text-box-934256011 {
+#text-box-1049135799 {
   width: 84%;
 }
-#text-box-934256011 .text {
+#text-box-1049135799 .text {
   font-size: 100%;
 }
 </style>
@@ -1619,55 +1605,55 @@ Tai Seng Yee</p>
 </div>
 </div>
 <style>
-#banner-259601382 {
+#banner-831065261 {
   padding-top: 200px;
 }
-#banner-259601382 .bg.bg-loaded {
+#banner-831065261 .bg.bg-loaded {
   background-image: url(https://zenxin.com/sg/wp-content/uploads/2020/02/372341-PBABG8-217-1030x700.jpg);
 }
-#banner-259601382 .overlay {
+#banner-831065261 .overlay {
   background-color: rgba(0, 0, 0, 0.17);
 }
 </style>
 </div>
 </div>
 <style>
-#col-438807213 > .col-inner {
+#col-1149076070 > .col-inner {
   padding: 0px 5px 0px 5px;
 }
 </style>
 </div>
 </div>
 <div class="container section-title-container" style="margin-top:40px;margin-bottom:10px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">Organic Box</span><b></b></h3></div>
-<div class="row align-center row-divided" id="row-48710912">
-<div id="col-1597865309" class="col medium-5 small-12 large-5">
+<div class="row align-center row-divided" id="row-450365689">
+<div id="col-1126050484" class="col medium-5 small-12 large-5">
 <div class="col-inner text-center" style="border-radius:25px;">
 <p><strong><span style="font-size: 110%;">Customize Your Own Box</span></strong></p>
-<div class="img has-hover show-for-small x md-x lg-x y md-y lg-y" id="image_1248564723">
+<div class="img has-hover show-for-small x md-x lg-x y md-y lg-y" id="image_577575350">
 <div class="img-inner image-cover dark" style="padding-top:250px;">
 <img width="623" height="545" src="https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1.png" class="attachment-large size-large" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1.png 623w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-300x262.png 300w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-150x131.png 150w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-600x525.png 600w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-500x437.png 500w" sizes="(max-width: 623px) 100vw, 623px" />
 </div>
 <style>
-#image_1248564723 {
+#image_577575350 {
   width: 100%;
 }
 @media (min-width:550px) {
-  #image_1248564723 {
+  #image_577575350 {
     width: 100%;
   }
 }
 </style>
 </div>
-<div class="img has-hover hide-for-small x md-x lg-x y md-y lg-y" id="image_90168332">
+<div class="img has-hover hide-for-small x md-x lg-x y md-y lg-y" id="image_1031627187">
 <div class="img-inner image-cover dark" style="padding-top:352px;">
 <img width="623" height="545" src="https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1.png" class="attachment-large size-large" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1.png 623w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-300x262.png 300w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-150x131.png 150w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-600x525.png 600w, https://zenxin.com/sg/wp-content/uploads/2019/12/2019-12-31-2-1-500x437.png 500w" sizes="(max-width: 623px) 100vw, 623px" />
 </div>
 <style>
-#image_90168332 {
+#image_1031627187 {
   width: 100%;
 }
 @media (min-width:550px) {
-  #image_90168332 {
+  #image_1031627187 {
     width: 100%;
   }
 }
@@ -1679,17 +1665,17 @@ Tai Seng Yee</p>
 <i class="icon-angle-right"></i></a>
 </div>
 <style>
-#col-1597865309 > .col-inner {
+#col-1126050484 > .col-inner {
   padding: 15px 0px 0px 0px;
 }
 @media (min-width:550px) {
-  #col-1597865309 > .col-inner {
+  #col-1126050484 > .col-inner {
     padding: 15px 25px 0px 25px;
   }
 }
 </style>
 </div>
-<div id="col-1101286810" class="col medium-7 small-12 large-7">
+<div id="col-1397968252" class="col medium-7 small-12 large-7">
 <div class="col-inner text-center" style="background-color:rgb(255, 255, 255);border-radius:25px;">
 <p><strong><span style="font-size: 110%;">Available Options </span></strong></p>
 <div class="row  equalize-box large-columns-4 medium-columns-3 small-columns-2 row-xsmall">
@@ -1790,18 +1776,18 @@ Check out forecast menus at:<span style="text-decoration: underline;"> <a href="
 <i class="icon-angle-right"></i></a>
 </div>
 <style>
-#col-1101286810 > .col-inner {
+#col-1397968252 > .col-inner {
   padding: 15px 10px 0px 10px;
 }
 @media (min-width:550px) {
-  #col-1101286810 > .col-inner {
+  #col-1397968252 > .col-inner {
     padding: 15px 10px 0px 10px;
   }
 }
 </style>
 </div>
 <style>
-#row-48710912 > .col > .col-inner {
+#row-450365689 > .col > .col-inner {
   background-color: rgb(255, 255, 255);
 }
 </style>
@@ -1809,7 +1795,7 @@ Check out forecast menus at:<span style="text-decoration: underline;"> <a href="
 <div class="container section-title-container" style="margin-top:40px;margin-bottom:10px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">Our Product Range</span><b></b></h3></div>
 <div class="row large-columns-6 medium-columns-3 small-columns-3 row-small">
 <div class="product-category col">
- <div class="col-inner">
+<div class="col-inner">
 <a href="https://zenxin.com/sg/product-category/fresh-produce/"> <div class="box box-category has-hover box-normal ">
 <div class="box-image" style="border-radius:100%;">
 <div class="">
@@ -1820,7 +1806,7 @@ Check out forecast menus at:<span style="text-decoration: underline;"> <a href="
 <h5 class="uppercase header-title">
 Organic Fresh Produce </h5>
 <p class="is-xsmall uppercase count ">
-85 Products </p>
+90 Products </p>
 </div>
 </div>
 </div>
@@ -1872,9 +1858,10 @@ Organic Cooking Essentials </h5>
 <div class="box-text text-center">
 <div class="box-text-inner">
 <h5 class="uppercase header-title">
- Organic Noodles </h5>
+Organic Noodles </h5>
 <p class="is-xsmall uppercase count ">
 61 Products </p>
+
 </div>
 </div>
 </div>
@@ -1892,7 +1879,7 @@ Organic Cooking Essentials </h5>
 <h5 class="uppercase header-title">
 Dairy &amp; Eggs </h5>
 <p class="is-xsmall uppercase count ">
-4 Products </p>
+5 Products </p>
 </div>
 </div>
 </div>
@@ -1910,7 +1897,7 @@ Dairy &amp; Eggs </h5>
 <h5 class="uppercase header-title">
 Organic Frozen Foods </h5>
 <p class="is-xsmall uppercase count ">
-51 Products </p>
+50 Products </p>
 </div>
 </div>
 </div>
@@ -1928,7 +1915,7 @@ Organic Frozen Foods </h5>
 <h5 class="uppercase header-title">
 Grains </h5>
 <p class="is-xsmall uppercase count ">
-91 Products </p>
+92 Products </p>
 </div>
 </div>
 </div>
@@ -1941,12 +1928,12 @@ Grains </h5>
 <div class="">
 <img src="https://zenxin.com/sg/wp-content/uploads/2019/09/Brown-Rice-Cracker-510x510-min-300x300.jpg" alt="Organic Confectioneries" width="300" height="300" /> </div>
 </div>
-<div class="box-text text-center">
+ <div class="box-text text-center">
 <div class="box-text-inner">
 <h5 class="uppercase header-title">
 Organic Confectioneries </h5>
 <p class="is-xsmall uppercase count ">
-80 Products </p>
+82 Products </p>
 </div>
 </div>
 </div>
@@ -1964,7 +1951,7 @@ Organic Confectioneries </h5>
 <h5 class="uppercase header-title">
 Grocery </h5>
 <p class="is-xsmall uppercase count ">
-57 Products </p>
+58 Products </p>
 </div>
 </div>
 </div>
@@ -1982,7 +1969,7 @@ Grocery </h5>
 <h5 class="uppercase header-title">
 Health </h5>
 <p class="is-xsmall uppercase count ">
-22 Products </p>
+23 Products </p>
 </div>
 </div>
 </div>
@@ -2005,7 +1992,7 @@ Personal Care </h5>
 </div>
 </div>
 </a> </div>
- </div>
+</div>
 <div class="product-category col">
 <div class="col-inner">
 <a href="https://zenxin.com/sg/product-category/living/"> <div class="box box-category has-hover box-normal ">
@@ -2026,22 +2013,22 @@ Living </h5>
 </div>
 </div>
 <div class="container section-title-container" style="margin-top:40px;margin-bottom:10px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">Latest Stories</span><b></b></h3></div>
-<div class="row" id="row-1231155815">
-<div id="col-1330977022" class="col medium-4 small-12 large-4">
+<div class="row" id="row-259980365">
+<div id="col-544716546" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="border-radius:20px;">
 <div class="video video-fit mb" style="padding-top:65%;"><p><iframe title="【Week 33 with ZENXIN_Take Root with New Possibilities】" width="1020" height="574" src="https://www.youtube.com/embed/ix9-di7kxmc?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 </div>
 <h5 class="title style-scope ytd-video-primary-info-renderer" style="text-align: center;">Take Root with New Possibilities</h5>
 </div>
 </div>
-<div id="col-1075090218" class="col medium-4 small-12 large-4">
+<div id="col-188060261" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="border-radius:20px;">
 <div class="video video-fit mb" style="padding-top:65%;"><p><iframe title="Brand New Look for 𝐒𝐢𝐦𝐩𝐥𝐲 𝐍𝐚𝐭𝐮𝐫𝐚𝐥 ‘𝐬 𝐂𝐇𝐄𝐖𝐘 𝐎𝐫𝐠𝐚𝐧𝐢𝐜 𝐇𝐚𝐧𝐝𝐦𝐚𝐝𝐞 𝐏𝐮𝐦𝐩𝐤𝐢𝐧 𝐏𝐚𝐧 𝐌𝐞𝐞" width="1020" height="574" src="https://www.youtube.com/embed/EDYxxcrs9LU?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 </div>
 <h5 class="title style-scope ytd-video-primary-info-renderer" style="text-align: center;">Chewy Organic Handmade Pan Mee</h5>
 </div>
 </div>
-<div id="col-267787769" class="col medium-4 small-12 large-4">
+<div id="col-189955132" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="border-radius:20px;">
 <div class="video video-fit mb" style="padding-top:65%;"><p><iframe title="【Week 31 with ZENXIN: Embrace and Explore】" width="1020" height="574" src="https://www.youtube.com/embed/AK7CksCT-8s?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
 </div>
@@ -2049,16 +2036,16 @@ Living </h5>
 </div>
 </div>
 <style>
-#row-1231155815 > .col > .col-inner {
+#row-259980365 > .col > .col-inner {
   padding: 15px 15px 15px 15px;
   background-color: rgb(255, 255, 255);
 }
 </style>
 </div>
-<div class="row" id="row-2120871372">
-<div id="col-1691047992" class="col medium-4 small-12 large-4">
+<div class="row" id="row-644556512">
+<div id="col-895009881" class="col medium-4 small-12 large-4">
 <div class="col-inner text-center" style="border-radius:20px;">
-<div id="row-1675071384" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
+<div id="row-163892873" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
 <div class="col post-item">
 <div class="col-inner">
 <a href="https://zenxin.com/sg/take-root-10-healthiest-root-vegetables/" class="plain">
@@ -2082,9 +2069,9 @@ Read More </button>
 </div>
 </div>
 </div>
-<div id="col-112316691" class="col medium-4 small-12 large-4">
+<div id="col-2146205824" class="col medium-4 small-12 large-4">
 <div class="col-inner text-center" style="border-radius:20px;">
-<div id="row-1551095354" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
+<div id="row-141485827" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
 <div class="col post-item">
 <div class="col-inner">
 <a href="https://zenxin.com/sg/5-reasons-to-go-organic-for-baby/" class="plain">
@@ -2108,9 +2095,9 @@ Read More </button>
 </div>
 </div>
 </div>
-<div id="col-977967415" class="col medium-4 small-12 large-4">
+<div id="col-1451752634" class="col medium-4 small-12 large-4">
 <div class="col-inner text-center" style="border-radius:20px;">
-<div id="row-627509932" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
+<div id="row-360000601" class="slider slider-auto-height row-collapse slider-nav-reveal" data-flickity-options='{"imagesLoaded": true, "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
 <div class="col post-item">
 <div class="col-inner">
 <a href="https://zenxin.com/sg/organic-way-of-life/" class="plain">
@@ -2135,7 +2122,7 @@ Read More </button>
 </div>
 </div>
 <style>
-#row-2120871372 > .col > .col-inner {
+#row-644556512 > .col > .col-inner {
   padding: 15px 15px 15px 15px;
   background-color: rgb(255, 255, 255);
 }
@@ -2144,20 +2131,6 @@ Read More </button>
 <div class="container section-title-container" style="margin-top:40px;margin-bottom:10px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">Cooking Recipe</span><b></b></h3></div>
 <p style="text-align: center;">Crafted for you by our dietitians and chef friends</p>
 <div class="row large-columns-4 medium-columns-1 small-columns-2">
-<div class="col post-item">
-<div class="col-inner">
-<a href="https://zenxin.com/sg/recipe/simple-cauliflower-soup/" class="plain">
-<div class="box box-normal box-text-bottom box-blog-post has-hover">
-<div class="box-text text-center" style="background-color:rgba(255, 255, 255, 0);">
-<div class="box-text-inner blog-post-inner">
-<h5 class="post-title is-large ">Simple Cauliflower Soup</h5>
-<div class="post-meta is-small op-8">September 3, 2020</div> <div class="is-divider"></div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
 <div class="col post-item">
 <div class="col-inner">
 <a href="https://zenxin.com/sg/simple-bircher-muesli-2/" class="plain">
@@ -2212,10 +2185,28 @@ Read More </button>
 </a>
 </div>
 </div>
+<div class="col post-item">
+<div class="col-inner">
+<a href="https://zenxin.com/sg/red-bean-paste-hongdou-sha-%e7%ba%a2%e8%b1%86%e6%b2%99/" class="plain">
+<div class="box box-normal box-text-bottom box-blog-post has-hover">
+<div class="box-image" style="border-radius:100%;">
+<div class="image-zoom image-cover" style="padding-top:100%;">
+<img width="1020" height="940" src="https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-1030x949.jpg" class="attachment-large size-large wp-post-image" alt="" loading="lazy" srcset="https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-1030x949.jpg 1030w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-300x276.jpg 300w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-768x707.jpg 768w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-150x138.jpg 150w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-600x553.jpg 600w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-1536x1415.jpg 1536w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-2048x1886.jpg 2048w, https://zenxin.com/sg/wp-content/uploads/2020/08/20200824_170241_HDR-500x460.jpg 500w" sizes="(max-width: 1020px) 100vw, 1020px" /> </div>
+</div>
+<div class="box-text text-center" style="background-color:rgba(255, 255, 255, 0);">
+<div class="box-text-inner blog-post-inner">
+<h5 class="post-title is-large ">Red Bean Paste (Hóngdòu shā 红豆沙)</h5>
+<div class="post-meta is-small op-8">August 27, 2020</div> <div class="is-divider"></div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
 </div>
 <div class="container section-title-container" style="margin-bottom:10px;"><h3 class="section-title section-title-center"><b></b><span class="section-title-main">What Our Customers Say</span><b></b></h3></div>
-<div class="row" id="row-1524990611">
-<div id="col-643866931" class="col medium-4 small-12 large-4">
+<div class="row" id="row-1237203616">
+<div id="col-1895543332" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="background-color:rgb(255, 255, 255);border-radius:25px;">
 <div class="icon-box testimonial-box icon-box-center text-center">
 <div class="icon-box-img testimonial-image circle" style="width: 110px">
@@ -2232,7 +2223,7 @@ Read More </button>
 </div>
 </div>
 </div>
-<div id="col-218760339" class="col medium-4 small-12 large-4">
+<div id="col-2083715163" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="background-color:rgb(255, 255, 255);border-radius:25px;">
 <div class="icon-box testimonial-box icon-box-center text-center">
 <div class="icon-box-img testimonial-image circle" style="width: 110px">
@@ -2249,7 +2240,7 @@ Read More </button>
 </div>
 </div>
 </div>
-<div id="col-1879592457" class="col medium-4 small-12 large-4">
+<div id="col-1593248244" class="col medium-4 small-12 large-4">
 <div class="col-inner" style="background-color:rgb(255, 255, 255);border-radius:25px;">
 <div class="icon-box testimonial-box icon-box-center text-center">
 <div class="icon-box-img testimonial-image circle" style="width: 110px">
@@ -2267,14 +2258,14 @@ Read More </button>
 </div>
 </div>
 <style>
-#row-1524990611 > .col > .col-inner {
+#row-1237203616 > .col > .col-inner {
   padding: 10px 10px 10px 10px;
 }
 </style>
 </div>
 </div>
 <style>
-#section_48014271 {
+#section_106014115 {
   padding-top: 0px;
   padding-bottom: 0px;
   background-color: rgb(250, 239, 234);
@@ -2284,19 +2275,19 @@ Read More </button>
 </div>
 </main>
 <footer id="footer" class="footer-wrapper">
-<section class="section" id="section_1483097191">
+<section class="section" id="section_785656794">
 <div class="bg section-bg fill bg-fill  bg-loaded">
 </div>
 <div class="section-content relative">
-<div id="gap-1586440534" class="gap-element clearfix" style="display:block; height:auto;">
+<div id="gap-1621747385" class="gap-element clearfix" style="display:block; height:auto;">
 <style>
-#gap-1586440534 {
+#gap-1621747385 {
   padding-top: 40px;
 }
 </style>
 </div>
-<div class="row row-small" id="row-1277926128">
-<div id="col-1656868825" class="col medium-3 small-12 large-3">
+<div class="row row-small" id="row-1497282038">
+<div id="col-269331462" class="col medium-3 small-12 large-3">
 <div class="col-inner dark">
 <ul class="sidebar-wrapper ul-reset"><div id="woocommerce_product_tag_cloud-2" class="col pb-0 widget woocommerce widget_product_tag_cloud"><span class="widget-title">Product tags</span><div class="is-divider small"></div><div class="tagcloud"><a href="https://zenxin.com/sg/product-tag/baby-products/" class="tag-cloud-link tag-link-9204 tag-link-position-1" style="font-size: 11.230769230769pt;" aria-label="Baby Products (1 product)">Baby Products</a>
 <a href="https://zenxin.com/sg/product-tag/bundle-promotion/" class="tag-cloud-link tag-link-9199 tag-link-position-2" style="font-size: 22pt;" aria-label="Bundle Promotion (19 products)">Bundle Promotion</a>
@@ -2308,7 +2299,7 @@ Read More </button>
 <a href="https://zenxin.com/sg/product-tag/vegan/" class="tag-cloud-link tag-link-9205 tag-link-position-8" style="font-size: 11.230769230769pt;" aria-label="Vegan (1 product)">Vegan</a></div></div></ul>
 </div>
 </div>
-<div id="col-1542385953" class="col medium-2 small-6 large-2">
+<div id="col-411599990" class="col medium-2 small-6 large-2">
 <div class="col-inner dark">
 <h5><span style="color: #f1f1f1;">GET TO KNOW US</span></h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
@@ -2318,12 +2309,12 @@ Read More </button>
 <p><span style="font-size: 90%;"><a href="https://zenxin.com/sg/recipes/">Recipe</a><br /><a href="https://zenxin.com/sg/inspiration/stories/">Stories</a></span><br /><span style="font-size: 90%;"><a href="https://zenxin.com/sg/inspiration/newsletter/">Newsletter</a></span></p>
 </div>
 <style>
-#col-1542385953 > .col-inner {
+#col-411599990 > .col-inner {
   margin: 0px 0px 0px 15px;
 }
 </style>
 </div>
-<div id="col-1025665799" class="col medium-2 small-6 large-2">
+<div id="col-942997044" class="col medium-2 small-6 large-2">
 <div class="col-inner dark">
 <h5>THEME</h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
@@ -2333,47 +2324,47 @@ Read More </button>
 <p><span style="font-size: 90%"><a href="https://zenxin.com/sg/terms-conditions/">Terms &amp; Conditions</a><br /><a href="https://zenxin.com/sg/privacy-policy/">Privacy Policy</a><br /><a href="https://zenxin.com/sg/delivery-information/">Delivery Info</a><br /><a href="https://zenxin.com/sg/return-refunds/">Returns &amp; Refunds</a></span></p>
 </div>
 <style>
-#col-1025665799 > .col-inner {
+#col-942997044 > .col-inner {
   margin: 0px 0px -10px 0px;
 }
 </style>
 </div>
-<div id="col-542484469" class="col hide-for-small medium-2 small-6 large-2">
+<div id="col-534095959" class="col hide-for-small medium-2 small-6 large-2">
 <div class="col-inner dark">
 <h5><span style="color: #f1f1f1;">CONTACT</span></h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
-<p><strong><span style="font-size: 150%;">+65 6778 7369<br /></span></strong><span style="font-size: 90%;">- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1871767e7758627d76607176367b7775367561">[email&#160;protected]</a><br /></span><span style="font-size: 90%;">- 8.00am-6.00pm<br /></span><span style="font-size: 90%;">- Blk14 Pasir Panjang Wholesale Centre #01-25, Singapore 110014.</span></p>
+<p><strong><span style="font-size: 150%;">+65 6778 7369<br /></span></strong><span style="font-size: 90%;">- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdd4d3dbd2fdc7d8d3c5d4d393ded2d093d0c4">[email&#160;protected]</a><br /></span><span style="font-size: 90%;">- 8.00am-6.00pm<br /></span><span style="font-size: 90%;">- Blk14 Pasir Panjang Wholesale Centre #01-25, Singapore 110014.</span></p>
 </div>
 </div>
-<div id="col-786488678" class="col show-for-small medium-2 small-12 large-2">
+<div id="col-908928862" class="col show-for-small medium-2 small-12 large-2">
 <div class="col-inner dark">
 <h5><span style="color: #f1f1f1;">CONTACT</span></h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
-<p><strong><span style="font-size: 150%;">+65 6778 7369<br /></span></strong><span style="font-size: 90%;">- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e58c8b838aa59f808b9d8c8bcb868a88cb889c">[email&#160;protected]</a><br /></span><span style="font-size: 90%;">- 8.00am-6.00pm<br /></span><span style="font-size: 90%;">- Blk14 Pasir Panjang Wholesale Centre #01-25, Singapore 110014.</span></p>
+<p><strong><span style="font-size: 150%;">+65 6778 7369<br /></span></strong><span style="font-size: 90%;">- <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5c35323a331c263932243532723f3331723125">[email&#160;protected]</a><br /></span><span style="font-size: 90%;">- 8.00am-6.00pm<br /></span><span style="font-size: 90%;">- Blk14 Pasir Panjang Wholesale Centre #01-25, Singapore 110014.</span></p>
 </div>
 <style>
-#col-786488678 > .col-inner {
+#col-908928862 > .col-inner {
   padding: 0px 15px 0px 0px;
   margin: 0px 0px 0px 15px;
 }
 </style>
 </div>
-<div id="col-1744616268" class="col medium-3 small-12 large-3">
+<div id="col-2102596251" class="col medium-3 small-12 large-3">
 <div class="col-inner dark">
 <h5><span style="color: #f1f1f1;">FOLLOW US</span></h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
 <div class="social-icons follow-icons" style="font-size:105%"><a href="https://www.facebook.com/ZenxinOrganicFoodSingapore/" target="_blank" data-label="Facebook" rel="noopener noreferrer nofollow" class="icon primary button circle facebook tooltip" title="Follow on Facebook"><i class="icon-facebook"></i></a><a href="https://www.instagram.com/zenxin_organicsg/" target="_blank" rel="noopener noreferrer nofollow" data-label="Instagram" class="icon primary button circle  instagram tooltip" title="Follow on Instagram"><i class="icon-instagram"></i></a><a href="https://www.linkedin.com/company/zenxin-agri-organic-food" target="_blank" rel="noopener noreferrer nofollow" data-label="LinkedIn" class="icon primary button circle  linkedin tooltip" title="Follow on LinkedIn"><i class="icon-linkedin"></i></a><a href="https://www.youtube.com/channel/UCg7baQOvDNCQWvOhq1pyDhQ" target="_blank" rel="noopener noreferrer nofollow" data-label="YouTube" class="icon primary button circle  youtube tooltip" title="Follow on YouTube"><i class="icon-youtube"></i></a></div>
-<div id="gap-1471560572" class="gap-element clearfix" style="display:block; height:auto;">
+<div id="gap-1964060419" class="gap-element clearfix" style="display:block; height:auto;">
 <style>
-#gap-1471560572 {
+#gap-1964060419 {
   padding-top: 20px;
 }
 </style>
 </div>
 <h5><span style="color: #f1f1f1;">NEWSLETTER</span></h5>
 <div class="is-divider divider clearfix" style="margin-top:10px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.4);"></div>
-<div class="row hide-for-small" id="row-1498638447">
-<div id="col-958163828" class="col small-12 large-12">
+<div class="row hide-for-small" id="row-1808764234">
+<div id="col-272197302" class="col small-12 large-12">
 <div class="col-inner">
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function() {
 	window.mc4wp = window.mc4wp || {
@@ -2398,20 +2389,20 @@ Read More </button>
 </div>
 <input type="email" name="EMAIL" placeholder="Your email address" required />
 <input type="submit" value="Sign up" />
-</div><label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_mc4wp_timestamp" value="1599179251" /><input type="hidden" name="_mc4wp_form_id" value="59670" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1" /><div class="mc4wp-response"></div></form>
+</div><label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_mc4wp_timestamp" value="1599277118" /><input type="hidden" name="_mc4wp_form_id" value="59670" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1" /><div class="mc4wp-response"></div></form>
 </div>
 </div>
 </div>
 </div>
 <style>
-#col-1744616268 > .col-inner {
+#col-2102596251 > .col-inner {
   margin: 0px 0px 0px 15px;
 }
 </style>
 </div>
 </div>
-<div class="row show-for-small" id="row-572120823">
-<div id="col-1917029753" class="col small-12 large-12">
+<div class="row show-for-small" id="row-883626124">
+<div id="col-2137558867" class="col small-12 large-12">
 <div class="col-inner">
 <script>(function() {
 	window.mc4wp = window.mc4wp || {
@@ -2436,13 +2427,13 @@ Read More </button>
 </div>
 <input type="email" name="EMAIL" placeholder="Your email address" required />
 <input type="submit" value="Sign up" />
-</div><label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_mc4wp_timestamp" value="1599179251" /><input type="hidden" name="_mc4wp_form_id" value="59670" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-2" /><div class="mc4wp-response"></div></form>
+</div><label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_mc4wp_timestamp" value="1599277118" /><input type="hidden" name="_mc4wp_form_id" value="59670" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-2" /><div class="mc4wp-response"></div></form>
 </div>
 </div>
 </div>
 </div>
 <style>
-#section_1483097191 {
+#section_785656794 {
   padding-top: 0px;
   padding-bottom: 0px;
   background-color: rgb(254, 176, 121);
@@ -2450,7 +2441,7 @@ Read More </button>
 </style>
 </section>
 <div class="absolute-footer dark medium-text-center text-center">
- <div class="container clearfix">
+<div class="container clearfix">
 <div class="footer-primary pull-left">
 <div class="copyright-footer">
 Copyright 2020 © Zenxin Agri-Organic Food Pte Ltd </div>
@@ -2587,7 +2578,7 @@ Location </span>
 </a>
 </li>
 <li class="">
-<a href="/cdn-cgi/l/email-protection#d7a4bfbeb9bfa2b2ae97adb2b9afbeb9f9b4b8baf9baae" class="tooltip" title="shinhuey@zenxin.com.my">
+<a href="/cdn-cgi/l/email-protection#98ebf0f1f6f0edfde1d8e2fdf6e0f1f6b6fbf7f5b6f5e1" class="tooltip" title="shinhuey@zenxin.com.my">
 <i class="icon-envelop" style="font-size:16px;"></i> <span>
 Email </span>
 </a>
@@ -2620,65 +2611,14 @@ if (urlFields) {
 		urlFields[j].addEventListener('blur', maybePrefixUrlField);
 	}
 }
-})();</script> <style type="text/css">
-            span.modal__close:after {
-        background-image: url('https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/images/cancel.png');
-      }
-    </style>
-<div id="mwb_modal" class="mwb_modal mwb_modal__bg">
-<div class="mwb_modal__dialog mwb-pr-dialog">
-<div class="mwb_modal__content">
-<div class="mwb_modal__header">
-<div class="mwb_modal__title">
-<h2 class="mwb_modal__title-text">Invite & Earn</h2>
-</div>
-<span class="mwb_modal__close">
-
-X
-</span>
-</div>
-<div class="mwb_modal__text mwb-pr-popup-text">
-<div class="mwb_cpr_guest" style="background-image: url('https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/images/bg.png');">
-<div class="meb_cpr_guest__content">
-<div class="meb_cpr_guest__content-text">
-Signup to start sharing your link </div>
-<span class="mwb_cpr_btn_wrapper">
-<a href="https://zenxin.com/sg/my-account/" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-cpr-btn" style="background-color: #E85E54">Signup</a>
-</span>
-</div>
-</div>
-</div>
-<div class="mwb_modal__footer mwb-pr-footer">
-<a class="mdl-button mdl-button--colored mdl-js-button  mwb_modal__close mwb-pr-close-btn" style="border-color: #E85E54 ; color:#E85E54"> Close </a>
-</div>
-</div>
-</div>
-</div>
-<div id="mwb_crp_loader" style="display: none;">
-<img src="https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/public/images/loading.gif">
-</div>
-<div class="mwb-coupon-popup-wrapper" style="display: none;">
-<div class="mwb-coupon-popup-content">
-<div class="mwb-coupon-popup-header">
-<h2>Available Coupon</h2>
-<span class="mwb-coupon-close-btn">X</span>
-</div>
-<div class="mwb-coupon-popup-body">
- <div class="mwb-coupon-popup-row">
-</div>
-</div>
-<div class="mwb-coupon-popup-footer">
-<a href="javascript:void(0);" class="mwb-coupon-close-btn">Close</a>
-</div>
-</div>
-</div><script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/38c1ca61ee2d346c01037682f/6062970086b504c1469dbe60d.js");</script> <section class="section sticky-mobile-menu dark show-for-small" id="section_951743377">
+})();</script><script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/38c1ca61ee2d346c01037682f/6062970086b504c1469dbe60d.js");</script> <section class="section sticky-mobile-menu dark show-for-small" id="section_2039863984">
 <div class="bg section-bg fill bg-fill  bg-loaded">
 <div class="is-border" style="border-width:1px5 0px 0px 0px;">
 </div>
 </div>
 <div class="section-content relative">
-<div class="row row-collapse align-middle align-center show-for-small" id="row-324677057">
-<div id="col-1889421918" class="col medium-3 small-2 large-3">
+<div class="row row-collapse align-middle align-center show-for-small" id="row-1568209400">
+<div id="col-1058138448" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/"> <div class="icon-box featured-box icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 20px">
@@ -2694,7 +2634,7 @@ Signup to start sharing your link </div>
 </a>
 </div>
 </div>
-<div id="col-992089239" class="col medium-3 small-2 large-3">
+<div id="col-1643138383" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/store/"> <div class="icon-box featured-box bottom-menu-icon icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 20px">
@@ -2710,13 +2650,13 @@ Signup to start sharing your link </div>
 </a>
 </div>
 <style>
-#col-992089239 > .col-inner {
+#col-1643138383 > .col-inner {
   padding: 0 0px 0px 0px;
   margin: 0 0px 0px 0px;
 }
 </style>
 </div>
-<div id="col-1990734478" class="col medium-3 small-2 large-3">
+<div id="col-2080394691" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/product-category/organic-box/"> <div class="icon-box featured-box icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 25px">
@@ -2732,7 +2672,7 @@ Signup to start sharing your link </div>
 </a>
 </div>
 </div>
-<div id="col-1921716311" class="col medium-3 small-2 large-3">
+<div id="col-718765910" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/super-deal/"> <div class="icon-box featured-box bottom-menu-icon icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 20px">
@@ -2748,7 +2688,7 @@ Signup to start sharing your link </div>
 </a>
 </div>
 </div>
-<div id="col-1816308533" class="col medium-3 small-2 large-3">
+<div id="col-1180808934" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/inspiration/recipes/"> <div class="icon-box featured-box bottom-menu-icon icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 20px">
@@ -2764,7 +2704,7 @@ Signup to start sharing your link </div>
 </a>
 </div>
 </div>
-<div id="col-1709446949" class="col medium-3 small-2 large-3">
+<div id="col-1115499722" class="col medium-3 small-2 large-3">
 <div class="col-inner">
 <a class="plain" href="https://zenxin.com/sg/my-account/"> <div class="icon-box featured-box bottom-menu-icon icon-box-center text-center is-small">
 <div class="icon-box-img" style="width: 20px">
@@ -2781,11 +2721,11 @@ Signup to start sharing your link </div>
 </div>
 </div>
 <style>
-#row-324677057 > .col > .col-inner {
+#row-1568209400 > .col > .col-inner {
   padding: 2px 0px 2px 0px;
 }
 @media (min-width:550px) {
-  #row-324677057 > .col > .col-inner {
+  #row-1568209400 > .col > .col-inner {
     padding: 0 0px 0px 0px;
   }
 }
@@ -2793,12 +2733,12 @@ Signup to start sharing your link </div>
 </div>
 </div>
 <style>
-#section_951743377 {
+#section_2039863984 {
   padding-top: 0px;
   padding-bottom: 0px;
   background-color: rgb(255, 255, 255);
 }
-#section_951743377 .section-bg-overlay {
+#section_2039863984 .section-bg-overlay {
   background-color: rgb(255, 255, 255);
 }
 </style>
@@ -2811,7 +2751,7 @@ Signup to start sharing your link </div>
 <div class="account-login-inner">
 <h3 class="uppercase">Login</h3>
 <form class="woocommerce-form woocommerce-form-login login" method="post">
-<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+ <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 <label for="username">Username or email address&nbsp;<span class="required">*</span></label>
 <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="" /> </p>
 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
@@ -2822,7 +2762,7 @@ Signup to start sharing your link </div>
 <label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
 <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>Remember me</span>
 </label>
-<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="5d37164853" /><input type="hidden" name="_wp_http_referer" value="/sg/" /> <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
+<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="b8dde2fd3a" /><input type="hidden" name="_wp_http_referer" value="/sg/" /> <button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
 </p>
 <p class="woocommerce-LostPassword lost_password">
 <a href="https://zenxin.com/sg/my-account/lost-password/">Lost your password?</a>
@@ -2844,7 +2784,7 @@ Signup to start sharing your link </div>
 <p class="form-row form-row-wide mailchimp-newsletter"><input class="woocommerce-form__input woocommerce-form__input-checkbox input-checkbox" id="mailchimp_woocommerce_newsletter" type="checkbox" name="mailchimp_woocommerce_newsletter" value="1" checked="checked"> <label for="mailchimp_woocommerce_newsletter" class="woocommerce-form__label woocommerce-form__label-for-checkbox inline"><span>Subscribe to our newsletter</span></label></p><div class="clear"></div><div class="woocommerce-privacy-policy-text"><p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a href="https://zenxin.com/sg/privacy-policy/" class="woocommerce-privacy-policy-link" target="_blank">privacy policy</a>.</p>
 </div>
 <p class="woocommerce-form-row form-row">
-<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="fe920ef15d" /><input type="hidden" name="_wp_http_referer" value="/sg/" /> <button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
+<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="77503cc8a9" /><input type="hidden" name="_wp_http_referer" value="/sg/" /> <button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
 </p>
 </form>
 </div>
@@ -2882,6 +2822,23 @@ Powered by <svg viewbox="0 0 1424 318"><title>Join.chat</title><path d="M170.93 
 		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
 		document.body.className = c;
 	</script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4' id='jquery-ui-core-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4' id='jquery-ui-widget-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4' id='jquery-ui-mouse-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/sortable.min.js?ver=1.11.4' id='jquery-ui-sortable-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4' id='jquery-ui-draggable-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/droppable.min.js?ver=1.11.4' id='jquery-ui-droppable-js'></script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/suggest.min.js?ver=1.1-20110113' id='suggest-js'></script>
+<script type='text/javascript' id='wpurp_script_minified-js-extra'>
+/* <![CDATA[ */
+var wpurp_servings = {"precision":"2","decimal_character":"."};
+var wpurp_print = {"ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php?wpurp_ajax=1","nonce":"ef87c38812","custom_print_css":"","wpIncludesUrl":"https:\/\/zenxin.com\/sg\/wp-includes\/","coreUrl":"https:\/\/zenxin.com\/sg\/wp-content\/plugins\/wp-ultimate-recipe","premiumUrl":"","title":"Organic Delivery by Zenxin","permalinks":"\/%postname%\/"};
+var wpurp_responsive_data = {"breakpoint":"500"};
+var wpurp_sharing_buttons = {"facebook_lang":"en_US","twitter_lang":"en","google_lang":"en-US"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/assets/wpurp-public.js?ver=3.12.9' id='wpurp_script_minified-js'></script>
+<script type='text/javascript' src='https://www.yummly.com/js/widget.js?wordpress&#038;ver=3.12.9' id='yummly-js'></script>
 <script type='text/javascript' id='contact-form-7-js-extra'>
 /* <![CDATA[ */
 var wpcf7 = {"apiSettings":{"root":"https:\/\/zenxin.com\/sg\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
@@ -2891,7 +2848,7 @@ var wpcf7 = {"apiSettings":{"root":"https:\/\/zenxin.com\/sg\/wp-json\/contact-f
 <script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/makewebbetter-hubspot-for-woocommerce///admin/js/hubwoo-public.min.js?ver=4.4.1' id='hubwoo-public-js'></script>
 <script type='text/javascript' id='ced_cng_cart-js-extra'>
 /* <![CDATA[ */
-var global_var = {"ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php","plugi_dir_url":"https:\/\/zenxin.com\/sg\/wp-content\/plugins\/one-click-order-reorder\/","cart_url":"https:\/\/zenxin.com\/sg\/cart\/","account_url":"https:\/\/zenxin.com\/sg\/my-account\/","checkouturl":"https:\/\/zenxin.com\/sg\/checkout\/","ajax_nonce":"94180f51ce","product_not_exist":"All products of this order is no longer exist in our store.","exclude_products_head":"Exclude products from this order","exc_basket_item_head":"Exclude products from your basket","exclude":"Exclude","image":"Image","out_of_stock_desc":"This product is out of stock, so it would be excluded from order.","exclude_desc":"Click on this checkbox to exclude this product from reordering.","product_name":"Product name","stock":"Stock","quantity":"Quantity","submit":"Checkout","atc":"Add to cart","close":"Close","no_items":"No items found.","atbBtnText":"Add to basket","rfbBtnText":"Remove from basket"};
+var global_var = {"ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php","plugi_dir_url":"https:\/\/zenxin.com\/sg\/wp-content\/plugins\/one-click-order-reorder\/","cart_url":"https:\/\/zenxin.com\/sg\/cart\/","account_url":"https:\/\/zenxin.com\/sg\/my-account\/","checkouturl":"https:\/\/zenxin.com\/sg\/checkout\/","ajax_nonce":"a9ee90fd90","product_not_exist":"All products of this order is no longer exist in our store.","exclude_products_head":"Exclude products from this order","exc_basket_item_head":"Exclude products from your basket","exclude":"Exclude","image":"Image","out_of_stock_desc":"This product is out of stock, so it would be excluded from order.","exclude_desc":"Click on this checkbox to exclude this product from reordering.","product_name":"Product name","stock":"Stock","quantity":"Quantity","submit":"Checkout","atc":"Add to cart","close":"Close","no_items":"No items found.","atbBtnText":"Add to basket","rfbBtnText":"Remove from basket"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/one-click-order-reorder/assets/js/ced_cng_cart.min.js?ver=1.1.5' id='ced_cng_cart-js'></script>
@@ -2963,20 +2920,6 @@ var wc_cart_fragments_params = {"ajax_url":"\/sg\/wp-admin\/admin-ajax.php","wc_
 		} );
 	
 </script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/sortable.min.js?ver=1.11.4' id='jquery-ui-sortable-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/ui/droppable.min.js?ver=1.11.4' id='jquery-ui-droppable-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/jquery/suggest.min.js?ver=1.1-20110113' id='suggest-js'></script>
-<script type='text/javascript' id='wpurp_script_minified-js-extra'>
-/* <![CDATA[ */
-var wpurp_servings = {"precision":"2","decimal_character":"."};
-var wpurp_print = {"ajaxurl":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php?wpurp_ajax=1","nonce":"4de301b9ba","custom_print_css":"","wpIncludesUrl":"https:\/\/zenxin.com\/sg\/wp-includes\/","coreUrl":"https:\/\/zenxin.com\/sg\/wp-content\/plugins\/wp-ultimate-recipe","premiumUrl":"","title":"Organic Delivery by Zenxin","permalinks":"\/%postname%\/"};
-var wpurp_responsive_data = {"breakpoint":"500"};
-var wpurp_sharing_buttons = {"facebook_lang":"en_US","twitter_lang":"en","google_lang":"en-US"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/wp-ultimate-recipe/assets/wpurp-public.js?ver=3.12.9' id='wpurp_script_minified-js'></script>
-<script type='text/javascript' src='https://www.yummly.com/js/widget.js?wordpress&#038;ver=3.12.9' id='yummly-js'></script>
-<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/coupon-referral-program/modal/js/material-modal.min.js?ver=1.0.0' id='mwb_materal_modal_min-js'></script>
 <script type='text/javascript' id='mailchimp-woocommerce-js-extra'>
 /* <![CDATA[ */
 var mailchimp_public_data = {"site_url":"https:\/\/zenxin.com\/sg","ajax_url":"https:\/\/zenxin.com\/sg\/wp-admin\/admin-ajax.php","language":"en"};
@@ -2986,6 +2929,12 @@ var mailchimp_public_data = {"site_url":"https:\/\/zenxin.com\/sg","ajax_url":"h
 <script type='text/javascript' src='https://zenxin.com/sg/wp-content/themes/flatsome/inc/extensions/flatsome-instant-page/flatsome-instant-page.js?ver=1.2.1' id='flatsome-instant-page-js'></script>
 <script type='text/javascript' src='https://zenxin.com/sg/wp-content/themes/flatsome/inc/extensions/flatsome-live-search/flatsome-live-search.js?ver=3.12.0' id='flatsome-live-search-js'></script>
 <script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/creame-whatsapp-me/public/js/joinchat.min.js?ver=4.0.9' id='joinchat-js'></script>
+<script type='text/javascript' id='woo-variation-swatches-js-extra'>
+/* <![CDATA[ */
+var woo_variation_swatches_options = {"is_product_page":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://zenxin.com/sg/wp-content/plugins/woo-variation-swatches/assets/js/frontend.min.js?ver=1.0.85' id='woo-variation-swatches-js'></script>
 <script type='text/javascript' src='https://zenxin.com/sg/wp-includes/js/hoverIntent.min.js?ver=1.8.1' id='hoverIntent-js'></script>
 <script type='text/javascript' id='flatsome-js-js-extra'>
 /* <![CDATA[ */
