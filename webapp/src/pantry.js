@@ -556,8 +556,8 @@ class Pan3 extends React.Component {
     if(!this.state.inventoryfetched){
       return (<Card raised>
                 <Message size='tiny'
-                  header="Fetching your inventory"
-                  content="Please try again later if it doesn't load"
+                  header="Loading your inventory."
+                  content="Please try again later if it doesn't load."
                 />
               </Card>
               )

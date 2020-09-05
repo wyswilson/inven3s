@@ -380,8 +380,8 @@ class ToBuy extends React.Component {
     else if(this.state.loadingshopping){
       return (<List.Item key={0}>
                 <List.Content floated='left'>
-                  <List.Header>Loading your inventory</List.Header>
-                  <List.Description>Please try again later if it doesn't load</List.Description>
+                  <List.Header>Loading your inventory.</List.Header>
+                  Please try again later if it doesn't load.
                 </List.Content>
               </List.Item>
               )
@@ -389,8 +389,8 @@ class ToBuy extends React.Component {
     else{
       return (<List.Item key={0}>
                 <List.Content floated='left'>
-                  <List.Header>You do not have a shopping list</List.Header>
-                  <List.Description>Start tracking items that go in and out of your inventory</List.Description>
+                  <List.Header>No shopping list available.</List.Header>
+                  Start tracking items that go in and out of your inventory.
                 </List.Content>
               </List.Item>
               )      

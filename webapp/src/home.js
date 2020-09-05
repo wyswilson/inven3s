@@ -24,7 +24,7 @@ class Home extends React.Component {
         shoppinglistcnt: 0,
       },
       cardscats: [],
-      feed: <Feed></Feed>,
+      feed: <Feed>Loading your activities.</Feed>,
       feedcnt: 0
     };
   }
@@ -65,10 +65,22 @@ class Home extends React.Component {
   }
 
   formatactivityfeed(activities){
-    const feed = _.map(activities, (item) => 
-      this.instantiatefeed(item)
-    );
-
+    let feed;
+    if(activities){
+      feed = _.map(activities, (item) => 
+        this.instantiatefeed(item)
+      );
+    }
+    else{
+      feed = (
+        <Feed.Event>
+          <Feed.Content>
+            <b>No activities.</b>
+            <br/>Start tracking items that go in and out of your inventory.
+          </Feed.Content>
+        </Feed.Event>
+      );
+    }
     this.setState( { feed: feed});
   }
 
@@ -281,8 +293,8 @@ class Home extends React.Component {
       return (
             <Grid.Column textAlign="center">
               <Message size='tiny'
-                header="Generating insights for you"
-                content="Please try again later if it doesn't load"
+                header="Generating insights."
+                content="Please try again later if it doesn't load."
               />
             </Grid.Column>
           );
