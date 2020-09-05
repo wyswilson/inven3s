@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Card, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
