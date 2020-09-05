@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Card, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -15,6 +15,8 @@ class ToBuy extends React.Component {
       token: getToken(),
       loading: false,
       actionedmsg: '',
+      hasshoppinglist: false,
+      loadingshopping: false,
       defaultimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
       slist:[],
       retailersuggests:[],
@@ -219,6 +221,7 @@ class ToBuy extends React.Component {
   }
         
   fetchshoppinglist(){
+    this.setState({ loadingshopping: true});
     console.log('fetchshoppinglist');
    
     axios.get(this.state.apihost + '/shoppinglist',
@@ -230,7 +233,7 @@ class ToBuy extends React.Component {
       }
     )
     .then(response => { 
-      if(response.status === 200){
+     if(response.status === 200){
         console.log('shoppinglist [' + response.data[0]['message'] + ']');
         
         const updatedlist = _.map(response.data[0]['results'], (item) => (
@@ -249,10 +252,12 @@ class ToBuy extends React.Component {
           }
         ));
         this.setState({ slist: updatedlist });
+        this.setState({ hasshoppinglist: true});
       }
+     this.setState({ loadingshopping: false});
     })
     .catch(error => {
-      this.setState({ inventoryfetched: false });
+      this.setState({ hasshoppinglist: false });
       if(error.response){
         if(error.response.status === 404){
           console.log('shoppinglist [' + error.response.data[0]['message'] + ']');        
@@ -265,6 +270,7 @@ class ToBuy extends React.Component {
         console.log('fetchinventory [server unreachable]');
         this.setState({ inventorymsg: 'server unreachable' });
       }
+      this.setState({ loadingshopping: false});
     });
   }
 
@@ -288,7 +294,8 @@ class ToBuy extends React.Component {
   }
 
   generateshoppinglist(){
-    return this.state.slist.map( (item) => (
+    if(!this.state.loadingshopping && this.state.hasshoppinglist){
+      return this.state.slist.map( (item) => (
             <List.Item key={item.gtin}>
               <List.Content floated='right'>
                 <Modal
@@ -368,7 +375,26 @@ class ToBuy extends React.Component {
                 <List.Description>{item.retailers}</List.Description>
               </List.Content>
             </List.Item>
-           ));
+         ));
+    }
+    else if(this.state.loadingshopping){
+      return (<List.Item key={0}>
+                <List.Content floated='left'>
+                  <List.Header>Loading your inventory</List.Header>
+                  <List.Description>Please try again later if it doesn't load</List.Description>
+                </List.Content>
+              </List.Item>
+              )
+    }
+    else{
+      return (<List.Item key={0}>
+                <List.Content floated='left'>
+                  <List.Header>You do not have a shopping list</List.Header>
+                  <List.Description>Start tracking items that go in and out of your inventory</List.Description>
+                </List.Content>
+              </List.Item>
+              )      
+    }
   }
 
   render() {
