@@ -73,7 +73,12 @@ class App extends React.Component {
       }).catch(error => {
         removeUserSession();
         this.setState({ authloading: false });
-        this.props.history.push('/login');
+        if(hostname === 'inven3s.com'){
+          window.location.href = 'https://inven3s.com';
+        }
+        else{
+          window.location.href = 'http://localhost:3000';
+        }
       });
     }
   }
