@@ -792,7 +792,7 @@ def generateshoppinglistbycat(userid):
 		ON p.gtin = pc.gtin
 		LEFT JOIN productsfavourite AS pf
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
-		WHERE i.userid = '371952ce0d4ca236ba1a9c8040e8c89a' AND p.isedible IN (0,1)
+		WHERE i.userid = %s AND p.isedible IN (0,1)
 		GROUP BY 1,2,3,4,5,6,7
 	"""
 	cursor.execute(query1,(userid,))
