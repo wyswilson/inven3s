@@ -569,7 +569,7 @@ def brandselectall(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifybrands(records))
 
-@app.route('/inventory/category', methods=['GET'])
+@app.route('/inventory/categories', methods=['GET'])
 @func.requiretoken
 def inventorycategories(userid):
 	print('hit [inventorycategories] with [%s]' % (userid))
@@ -847,5 +847,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-	waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+	#waitress.serve(app, host="0.0.0.0", port=88)
