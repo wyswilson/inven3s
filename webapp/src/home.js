@@ -160,7 +160,7 @@ class Home extends React.Component {
   getinventorybycat(){
     console.log('getinventorybycat');
 
-    axios.get(this.state.apihost + '/inventory/category',
+    axios.get(this.state.apihost + '/inventory/categories',
       {
         headers: {
           "content-type": "application/json",

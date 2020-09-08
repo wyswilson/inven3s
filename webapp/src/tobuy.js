@@ -224,7 +224,7 @@ class ToBuy extends React.Component {
     this.setState({ loadingshopping: true});
     console.log('fetchshoppinglist');
    
-    axios.get(this.state.apihost + '/shoppinglist',
+    axios.get(this.state.apihost + '/shoppinglist/items',
       {
         headers: {
           "content-type": "application/json",
