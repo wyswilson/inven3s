@@ -671,11 +671,11 @@ def inventoryupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
-@app.route('/shoppinglist', methods=['GET'])
+@app.route('/shoppinglist/items', methods=['GET'])
 @func.requiretoken
-def shoppinglist(userid):
-	print('hit [shoppinglist] with [%s]' % (userid))
-	func.registerapilogs("shoppinglist",userid,flask.request)
+def shoppinglistbyitems(userid):
+	print('hit [shoppinglistbyitems] with [%s]' % (userid))
+	func.registerapilogs("shoppinglistbyitems",userid,flask.request)
 
 	status = ""
 	statuscode = 200
@@ -693,6 +693,29 @@ def shoppinglist(userid):
 		statuscode = 412#Precondition Failed		
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
+
+@app.route('/shoppinglist/categories', methods=['GET'])
+@func.requiretoken
+def shoppinglistbycats(userid):
+	print('hit [shoppinglistbycats] with [%s]' % (userid))
+	func.registerapilogs("shoppinglistbycats",userid,flask.request)
+
+	status = ""
+	statuscode = 200
+	records = []
+
+	if func.validateuser(userid):
+		records = func.generateshoppinglistbycat(userid)
+		if not records:
+			status = "no items in the shopping list"
+			statuscode = 404#Not Found
+		else:
+			status = "shopping list generated"
+	else:
+		status = "invalid user"
+		statuscode = 412#Precondition Failed		
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
 
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken

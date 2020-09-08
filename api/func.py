@@ -753,6 +753,53 @@ def discovernewproduct(gtin,attempt):
 		print("line 748: ERR")
 		return "ERR","",""
 
+def generateshoppinglistbycat(userid):
+	query1 = """
+		SELECT
+		  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
+		  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
+		  pc.category,
+		  max(i.dateexpiry) as dateexpiry,
+		  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal,
+		  max(i.dateentry) AS recentpurchasedate,
+		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
+		  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal
+		FROM inventories AS i
+		JOIN products AS p
+		ON i.gtin = p.gtin
+		JOIN brands AS b
+		ON p.brandid = b.brandid
+		JOIN retailers AS r
+		ON i.retailerid = r.retailerid
+		JOIN (
+			SELECT gtin, category
+			FROM(
+				SELECT
+					gtin,
+					category1 AS category
+				FROM productscategory_transpose
+				WHERE category1 NOT IN (SELECT category FROM productscategory_top)
+				UNION
+				SELECT
+					gtin,
+					category2 AS category
+				FROM productscategory_transpose
+				WHERE category2 NOT IN (SELECT category FROM productscategory_top)
+			) AS tmp
+			WHERE category IS NOT NULL AND category != ''
+			ORDER BY 1 ASC
+		) as pc
+		ON p.gtin = pc.gtin
+		LEFT JOIN productsfavourite AS pf
+		ON i.gtin = pf.gtin AND i.userid = pf.userid
+		WHERE i.userid = '371952ce0d4ca236ba1a9c8040e8c89a' AND p.isedible IN (0,1)
+		GROUP BY 1,2,3,4,5,6,7
+	"""
+	cursor.execute(query1,(userid,))
+	records = cursor.fetchall()	
+
+	return records
+
 def generateshoppinglist(userid):
 	query1 = """
 		SELECT
