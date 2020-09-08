@@ -345,7 +345,7 @@ def jsonifycategories(records):
 	return categories		
 
 def jsonifyinventorycategories(records,cattype):
-
+	print("cattype")
 	topcats = fetchtopcats()
 
 	categories = {}
@@ -364,7 +364,8 @@ def jsonifyinventorycategories(records,cattype):
 
 		historicaltotal = 0
 		if cattype == 'children':
-			historicaltotal = record[8]
+			historicaltotal = record[9]
+			print(category + '->' + historicaltotal)
 
 		item = {}
 		item['gtin'] 			= gtin
