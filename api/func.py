@@ -350,6 +350,7 @@ def jsonifyinventorycategories(records,cattype):
 
 	categories = {}
 	categoriescnt = {}
+	categoriescnthistorical = {}
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
@@ -360,6 +361,10 @@ def jsonifyinventorycategories(records,cattype):
 		category	   	= record[6]
 		dateexpiry 		= record[7]
 		itemstotal		= record[8]
+
+		historicaltotal = 0
+		if cattype == 'children':
+			historicaltotal = record[8]
 
 		item = {}
 		item['gtin'] 			= gtin
@@ -376,9 +381,11 @@ def jsonifyinventorycategories(records,cattype):
 		if category in categories:
 			categories[category].append(item)
 			categoriescnt[category] += math.ceil(itemstotal)
+			categoriescnthistorical[category] += math.ceil(historicaltotal)
 		else:
 			categories[category] = [item]
 			categoriescnt[category] = math.ceil(itemstotal)
+			categoriescnthistorical[category] += math.ceil(historicaltotal)
 
 	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
@@ -387,16 +394,19 @@ def jsonifyinventorycategories(records,cattype):
 		cat = catobj[0]
 		catcnt = catobj[1]
 		items = categories[cat]
+		catcnthistorical = categoriescnthistorical[cat]
 
 		catobj = {}
 		if cattype == 'parents' and cat in topcats:
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['items'] = items
+
 		elif cattype == 'children' and cat not in topcats:
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['items'] = items
+			catobj['counthistorical'] = catcnthistorical
 		
 		if len(catobj) > 0:
 			categoriesobjects.append(catobj)
@@ -766,9 +776,9 @@ def generateshoppinglistbycat(userid):
 		  pc.category,
 		  max(i.dateexpiry) as dateexpiry,
 		  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal,
+		  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal,
 		  max(i.dateentry) AS recentpurchasedate,
-		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
-		  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal
+		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers
 		FROM inventories AS i
 		JOIN products AS p
 		ON i.gtin = p.gtin

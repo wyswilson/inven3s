@@ -219,7 +219,27 @@ class ToBuy extends React.Component {
       }
     });
   }
-        
+      
+  fetchshoppinglistbycat(){
+    console.log('fetchshoppinglistbycat');
+   
+    axios.get(this.state.apihost + '/shoppinglist/categories',
+      {
+        headers: {
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      console.log('fetchshoppinglistbycat [' + response.data[0]['message'] + ']');
+      console.log(response.data[0]['results']);
+    })
+    .catch(error => {
+      console.log('fetchshoppinglistbycat [server unreachable]');
+    });
+  }
+
   fetchshoppinglist(){
     this.setState({ loadingshopping: true});
     console.log('fetchshoppinglist');
@@ -234,7 +254,7 @@ class ToBuy extends React.Component {
     )
     .then(response => { 
      if(response.status === 200){
-        console.log('shoppinglist [' + response.data[0]['message'] + ']');
+        console.log('fetchshoppinglist [' + response.data[0]['message'] + ']');
         
         const updatedlist = _.map(response.data[0]['results'], (item) => (
           {
@@ -260,14 +280,14 @@ class ToBuy extends React.Component {
       this.setState({ hasshoppinglist: false });
       if(error.response){
         if(error.response.status === 404){
-          console.log('shoppinglist [' + error.response.data[0]['message'] + ']');        
+          console.log('fetchshoppinglist [' + error.response.data[0]['message'] + ']');        
          }
         else{
-          console.log('shoppinglist [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
+          console.log('fetchshoppinglist [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
         }
       }
       else{
-        console.log('fetchinventory [server unreachable]');
+        console.log('fetchshoppinglist [server unreachable]');
         this.setState({ inventorymsg: 'server unreachable' });
       }
       this.setState({ loadingshopping: false});
@@ -290,7 +310,8 @@ class ToBuy extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchshoppinglist();
+    //this.fetchshoppinglist();
+    this.fetchshoppinglistbycat();
   }
 
   generateshoppinglist(){
