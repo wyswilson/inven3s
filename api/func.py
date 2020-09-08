@@ -405,10 +405,19 @@ def jsonifyinventorycategories(records,cattype):
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['counthistorical'] = catcnthistorical
+			catobj['wilsonsrestockfactor'] = (catcnt+0.5)/catcnthistorical
 			catobj['items'] = items
 		
 		if len(catobj) > 0:
 			categoriesobjects.append(catobj)
+
+	if cattype == 'children':
+		i = 0
+		for catobj in categoriesobjects
+			if catobj['wilsonsrestockfactor'] >= 0.5:
+				del categoriesobjects[i]
+			i += 1
+
 
 	return categoriesobjects
 
