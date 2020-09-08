@@ -385,7 +385,7 @@ def jsonifyinventorycategories(records,cattype):
 		else:
 			categories[category] = [item]
 			categoriescnt[category] = math.ceil(itemstotal)
-			categoriescnthistorical[category] += math.ceil(historicaltotal)
+			categoriescnthistorical[category] = math.ceil(historicaltotal)
 
 	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
