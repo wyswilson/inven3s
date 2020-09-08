@@ -344,7 +344,7 @@ def jsonifycategories(records):
 
 	return categories		
 
-def jsonifyinventorycategories(records):
+def jsonifyinventorycategories(records,cattype):
 
 	topcats = fetchtopcats()
 
@@ -386,14 +386,19 @@ def jsonifyinventorycategories(records):
 	for catobj in sortedcats:
 		cat = catobj[0]
 		catcnt = catobj[1]
+		items = categories[cat]
 
-		if cat in topcats:
-			items = categories[cat]
-			catobj = {}
+		catobj = {}
+		if cattype == 'parents' and cat in topcats:
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['items'] = items
-
+		elif cattype == 'children' and cat not in topcats:
+			catobj['name'] = cat
+			catobj['count'] = catcnt
+			catobj['items'] = items
+		
+		if len(catobj) > 0:
 			categoriesobjects.append(catobj)
 
 	return categoriesobjects

@@ -580,7 +580,7 @@ def inventorycategories(userid):
 	
 	records = func.fetchinventorybyuserbycat(userid)
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records,'parents'))
 
 @app.route('/inventory', methods=['POST'])
 @func.requiretoken
@@ -715,7 +715,7 @@ def shoppinglistbycats(userid):
 		status = "invalid user"
 		statuscode = 412#Precondition Failed		
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records))
+	return func.jsonifyoutput(statuscode,status,func.jsonifyinventorycategories(records,'children'))
 
 @app.route('/inventory', methods=['GET'])
 @func.requiretoken
