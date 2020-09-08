@@ -412,7 +412,8 @@ def jsonifyinventorycategories(records,cattype):
 			categoriesobjects.append(catobj)
 
 	if cattype == 'children':
-		for i,catobj in categoriesobjects.items():
+		for i in categoriesobjects:
+			catobj = categoriesobjects[i]
 			if catobj['wilsonsrestockfactor'] >= 0.5:
 				del categoriesobjects[i]
 			i += 1
