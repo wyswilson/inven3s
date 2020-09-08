@@ -365,7 +365,7 @@ def jsonifyinventorycategories(records,cattype):
 		historicaltotal = 0
 		if cattype == 'children':
 			historicaltotal = record[9]
-			print(category + '->' + historicaltotal)
+			print(category + '->' + str(historicaltotal))
 
 		item = {}
 		item['gtin'] 			= gtin
@@ -408,8 +408,7 @@ def jsonifyinventorycategories(records,cattype):
 			catobj['count'] = catcnt
 			catobj['items'] = items
 			catobj['counthistorical'] = catcnthistorical
-			print('cat:' + cat)
-			print(catcnthistorical)
+			print(cat + '->' + str(catcnthistorical))
 		
 		if len(catobj) > 0:
 			categoriesobjects.append(catobj)
