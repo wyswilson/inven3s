@@ -410,8 +410,7 @@ def jsonifyinventorycategories(records,cattype):
 			catobj['counthistorical'] = catcnthistorical
 			print(cat + '->' + str(catcnthistorical))
 		
-		if len(catobj) > 0:
-			categoriesobjects.append(catobj)
+		categoriesobjects.append(catobj)
 
 	return categoriesobjects
 
