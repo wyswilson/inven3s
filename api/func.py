@@ -396,21 +396,20 @@ def jsonifyinventorycategories(records,cattype):
 		catcnthistorical = categoriescnthistorical[cat]
 
 		catobj = {}
-		if cattype == 'parents' and cat in topcats:
-			catobj['name'] = cat
-			catobj['count'] = catcnt
-			catobj['items'] = items
-
-		elif cattype == 'children' and cat not in topcats:
+		if cattype == 'children' and cat not in topcats:
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['counthistorical'] = catcnthistorical
 			catobj['wilsonsrestockfactor'] = (catcnt+0.5)/catcnthistorical
 			catobj['items'] = items
+		elif cattype == 'parents' and cat in topcats:
+			catobj['name'] = cat
+			catobj['count'] = catcnt
+			catobj['items'] = items
 		
-		if cattype == 'children' and catobj['wilsonsrestockfactor'] >= 0.5 and len(catobj) > 0:
+		if cattype == 'children' and catobj['wilsonsrestockfactor'] >= 0.5:
 			categoriesobjects.append(catobj)
-		else:
+		elif cattype == 'parents':
 			categoriesobjects.append(catobj)
 
 	return categoriesobjects
