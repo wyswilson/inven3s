@@ -811,6 +811,7 @@ def generateshoppinglistbycat(userid):
 		ON i.gtin = pf.gtin AND i.userid = pf.userid
 		WHERE i.userid = %s AND p.isedible IN (0,1)
 		GROUP BY 1,2,3,4,5,6,7
+		ORDER 10 DESC
 	"""
 	cursor.execute(query1,(userid,))
 	records = cursor.fetchall()	
