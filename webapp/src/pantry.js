@@ -566,15 +566,13 @@ class Pan3 extends React.Component {
       return this.state.inventory.map( (item) => (
               <Card raised key={item.gtin}>
                 <Card.Content>
-                  <Image rounded
-                    centered src={item.productimagelocal}
-                    floated='right'
-                    size='tiny' style={{width: 'auto', height: '70px'}}                      
-                    onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
-                  />
+                  <Image src={item.productimagelocal}
+                      floated='left'
+                      size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}            
+                      onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+                    />
                   <Card.Header className="item title">{item.productname}</Card.Header>
-                  <Card.Meta className="item small">{item.brandname}</Card.Meta>
-                  <Card.Description className="item small" textAlign="left">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Description>
+                  <Card.Meta textAlign="left" className="item small">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Meta>
                   <Label className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 
@@ -690,7 +688,7 @@ class Pan3 extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        <Card.Group doubling itemsPerRow={3} stackable>
+        <Card.Group doubling itemsPerRow={5} stackable>
           {this.generategriddefault()}
           {this.generategriditems()}
         </Card.Group>
