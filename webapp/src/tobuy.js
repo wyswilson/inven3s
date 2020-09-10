@@ -200,7 +200,7 @@ class ToBuy extends React.Component {
         this.setState({ dateexpiry: ''});
         this.setState({ quantity: 1 });
 
-        this.fetchshoppinglist();
+        this.fetchshoppinglistbycat();
       }
     })
     .catch(error => {
@@ -238,7 +238,6 @@ class ToBuy extends React.Component {
     .then(response => { 
       this.setState({ loadingshopping: false});
       console.log('fetchshoppinglistbycat [' + response.data[0]['message'] + ']');
-      console.log(response.data[0]['results']);
 
       this.setState({ slistbycat: response.data[0]['results'] });
       this.setState({ hasshoppinglist: true});
