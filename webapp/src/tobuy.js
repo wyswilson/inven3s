@@ -344,9 +344,8 @@ class ToBuy extends React.Component {
               <Card.Group doubling itemsPerRow={5} stackable>
               {item.items.map(proditem => (
                 <Card raised key={proditem.gtin}>
-                  <Card.Content>
+                  <Card.Content textAlign="center">
                     <Image src={proditem.productimagelocal}
-                      floated='left'
                       size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}                  
                       onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
                     />

@@ -565,14 +565,14 @@ class Pan3 extends React.Component {
     else{
       return this.state.inventory.map( (item) => (
               <Card raised key={item.gtin}>
-                <Card.Content>
+                <Card.Content textAlign="center">
                   <Image src={item.productimagelocal}
-                      floated='left'
+                      centered
                       size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}            
                       onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
                     />
                   <Card.Header className="item title">{item.productname}</Card.Header>
-                  <Card.Meta textAlign="left" className="item small">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Meta>
+                  <Card.Meta className="item small">{item.dateexpiry ? 'Best before ' + item.dateexpiry : ''}</Card.Meta>
                   <Label className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{item.itemcount}</Label>
                 </Card.Content>
 
