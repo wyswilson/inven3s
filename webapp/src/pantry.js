@@ -452,11 +452,10 @@ class Pan3 extends React.Component {
     if(this.state.inventoryfetched){
       return (
         <Card raised key="1">
-          <Card.Content>
-            <Image rounded
+          <Card.Content textAlign="center">
+            <Image
               centered src={this.state.defaultimage}
-              floated='right'
-              size='tiny'
+              size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}                  
             />
             <Card.Header className="item title">{this.state.inventorymsg}</Card.Header>
             <Card.Description textAlign="center"></Card.Description>
