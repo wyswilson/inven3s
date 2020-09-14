@@ -340,7 +340,7 @@ class ToBuy extends React.Component {
       this.state.slistbycat.forEach(function(item) {
         let pane = {};
         pane['menuItem'] = (<Menu.Item key={item.name} >
-                              {item.name}<Label size='tiny'>{item.count}</Label>
+                              {item.name}<Label size='mini' attached='top right'>{item.count}</Label>
                             </Menu.Item>
                           );
 
@@ -442,7 +442,7 @@ class ToBuy extends React.Component {
 
       return (
           <Tab 
-            menu={{ fluid: false, vertical: true }}
+            menu={{ fluid: true, vertical: true }}
             menuPosition='left'
             panes={panes}
           />
