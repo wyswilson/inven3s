@@ -391,7 +391,7 @@ def jsonifyinventorycategories(records,cattype):
 		categoriesrestockfactor = {}	
 		for cat,itemstotal in categoriescnt.items():
 			historicaltotal = categoriescnthistorical[cat]
-			wilsonsrestockfactor = (itemstotal+0.5)/historicaltotal
+			wilsonsrestockfactor = round((itemstotal+0.5)/historicaltotal, 2)
 			categoriesrestockfactor[cat] = wilsonsrestockfactor
 
 		sortedcats = sorted(categoriesrestockfactor.items(), key=lambda x: x[1], reverse=False)
@@ -400,12 +400,12 @@ def jsonifyinventorycategories(records,cattype):
 
 	categoriesobjects = []
 	for catobj in sortedcats:
-		cat 	= catobj[0]
-		items 	= categories[cat]
+		cat 				= catobj[0]
+		items 				= categories[cat]
+		catcntavailable 	= 0
+		catcnthistorical 	= 0
+		catrestockfactor 	= 0
 
-		catcntavailable = 0
-		catcnthistorical = 0
-		catrestockfactor = 0
 		if cattype == 'children':
 			catrestockfactor = catobj[1]
 			catcnthistorical = categoriescnthistorical[cat]
