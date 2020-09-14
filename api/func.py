@@ -409,6 +409,7 @@ def jsonifyinventorycategories(records,cattype):
 		if cattype == 'children':
 			catrestockfactor = catobj[1]
 			catcnthistorical = categoriescnthistorical[cat]
+			catcntavailable  = categoriescnt[cat]
 		else:
 			catcntavailable = catobj[1]
 

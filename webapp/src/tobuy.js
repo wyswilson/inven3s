@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Card, Accordion, Icon, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -336,118 +336,127 @@ class ToBuy extends React.Component {
 
   generateshoppinglistbycat(){
     if(!this.state.loadingshopping && this.state.hasshoppinglist){
-      return this.state.slistbycat.map( (item) => (
-          <Accordion.Accordion key={item.name}>
-            <Accordion.Title
-              active={this.state.activecat === item.name}
-              index={item.name}
-              onClick={this.switchcat.bind(this)}>
-              <Icon name='dropdown'/>{item.name} ({item.count} items - {item.wilsonsrestockfactor})
-            </Accordion.Title>
-            <Accordion.Content active={this.state.activecat === item.name}>
-              <Card.Group doubling itemsPerRow={5} stackable>
-              {item.items.map(proditem => (
-                <Card raised key={proditem.gtin}>
-                  <Card.Content textAlign="center">
-                    <Image src={proditem.productimagelocal}
-                      size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}                  
-                      onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
-                    />
-                    <Card.Header className="item title">{proditem.productname}</Card.Header>
-                    <Label className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{proditem.itemstotal}</Label>
-                  </Card.Content>
-                  <Card.Content extra textAlign="center">
-                    <div className='ui two buttons'>
-                      <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname,proditem.productimage,proditem.productimagelocal, proditem.brandname, proditem.isedible, proditem.isfavourite, proditem.categories)} />
-                      <Modal
-                            trigger={<Button icon="plus" fluid className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'}
-                            onClick={this.setproductmetadata.bind(this,item.gtin)} />}
-                            centered={false}
-                            size="fullscreen"
-                            dimmer="blurring"
-                            closeIcon
-                      >
-                        <Modal.Header>Add items</Modal.Header>
-                        <Modal.Content image>
-                          <Image
-                            wrapped size='tiny' src={proditem.productimagelocal}
-                            onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
-                          />
-                          <Modal.Description>
-                            <Grid columns={1} doubling stackable>
+      let panes = [];
+      this.state.slistbycat.forEach(function(item) {
+        let pane = {};
+        pane['menuItem'] = item.name + ' (' + item.count + ')';
+        const render = () => {
+
+          return (
+            <Tab.Pane attached={true}>
+              <Card.Group doubling itemsPerRow={3} stackable>
+                {item.items.map(proditem => (
+                  <Card raised key={proditem.gtin}>
+                    <Card.Content textAlign="center">
+                      <Image src={proditem.productimagelocal}
+                        size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}                  
+                        onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
+                      />
+                      <Card.Header className="item title">{proditem.productname}</Card.Header>
+                      <Label className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{proditem.itemstotal}</Label>
+                    </Card.Content>
+                    <Card.Content extra textAlign="center">
+                      <div className='ui two buttons'>
+                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname,proditem.productimage,proditem.productimagelocal, proditem.brandname, proditem.isedible, proditem.isfavourite, proditem.categories)} />
+                        <Modal
+                              trigger={<Button icon="plus" fluid className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'}
+                              onClick={this.setproductmetadata.bind(this,item.gtin)} />}
+                              centered={false}
+                              size="fullscreen"
+                              dimmer="blurring"
+                              closeIcon
+                        >
+                          <Modal.Header>Add items</Modal.Header>
+                          <Modal.Content image>
+                            <Image
+                              wrapped size='tiny' src={proditem.productimagelocal}
+                              onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
+                            />
+                            <Modal.Description>
+                              <Grid columns={1} doubling stackable>
+                                <Grid.Column>
+                                 <label className="fullwidth">Retailer</label>                    
+                                  <Dropdown className="fullwidth" name="retailername"
+                                    search
+                                    selection
+                                    allowAdditions
+                                    value={this.state.retailername}
+                                    noResultsMessage="No retailer found"
+                                    options={this.state.retailersuggests}
+                                    onSearchChange={this.lookupretailer.bind(this)}
+                                    onAddItem={this.addnewretailer.bind(this)}
+                                    onChange={this.setinventorymetadata.bind(this)}
+                                  />
+                                </Grid.Column>
+                                <Grid.Row columns={2}>
+                                  <Grid.Column>
+                                    <label className="fullwidth">Quantity</label>                    
+                                    <Input className="fullwidth" name="quantity"
+                                      value={this.state.quantity}
+                                      onChange={this.setinventorymetadata.bind(this)}
+                                    />
+                                  </Grid.Column>
+                                  <Grid.Column>
+                                    <label className="fullwidth">Expiry</label>                    
+                                    <DateInput name="dateexpiry" className="fullwidth"
+                                      dateFormat="YYYY-MM-DD"
+                                      value={this.state.dateexpiry}
+                                      onChange={this.setinventorymetadata.bind(this)}
+                                    />
+                                  </Grid.Column>
+                                </Grid.Row>
+                              </Grid>
+                            </Modal.Description>
+                          </Modal.Content>
+                          <Modal.Actions>
+                            <Grid columns={2} container doubling stackable>
                               <Grid.Column>
-                               <label className="fullwidth">Retailer</label>                    
-                                <Dropdown className="fullwidth" name="retailername"
-                                  search
-                                  selection
-                                  allowAdditions
-                                  value={this.state.retailername}
-                                  noResultsMessage="No retailer found"
-                                  options={this.state.retailersuggests}
-                                  onSearchChange={this.lookupretailer.bind(this)}
-                                  onAddItem={this.addnewretailer.bind(this)}
-                                  onChange={this.setinventorymetadata.bind(this)}
-                                />
+                                <Button loading={this.state.loading || false} 
+                                className='grey button fullwidth'
+                                onClick={this.addinventory.bind(this,proditem.gtin)}>
+                                  ADD
+                                </Button>
                               </Grid.Column>
-                              <Grid.Row columns={2}>
-                                <Grid.Column>
-                                  <label className="fullwidth">Quantity</label>                    
-                                  <Input className="fullwidth" name="quantity"
-                                    value={this.state.quantity}
-                                    onChange={this.setinventorymetadata.bind(this)}
-                                  />
-                                </Grid.Column>
-                                <Grid.Column>
-                                  <label className="fullwidth">Expiry</label>                    
-                                  <DateInput name="dateexpiry" className="fullwidth"
-                                    dateFormat="YYYY-MM-DD"
-                                    value={this.state.dateexpiry}
-                                    onChange={this.setinventorymetadata.bind(this)}
-                                  />
-                                </Grid.Column>
-                              </Grid.Row>
+                              <Grid.Column>
+                                {this.generateitemadditionmsg()}
+                              </Grid.Column>
                             </Grid>
-                          </Modal.Description>
-                        </Modal.Content>
-                        <Modal.Actions>
-                          <Grid columns={2} container doubling stackable>
-                            <Grid.Column>
-                              <Button loading={this.state.loading || false} 
-                              className='grey button fullwidth'
-                              onClick={this.addinventory.bind(this,proditem.gtin)}>
-                                ADD
-                              </Button>
-                            </Grid.Column>
-                            <Grid.Column>
-                              {this.generateitemadditionmsg()}
-                            </Grid.Column>
-                          </Grid>
-                        </Modal.Actions>
-                      </Modal>
-                    </div>
-                  </Card.Content>
-                </Card>
-              ))}
+                          </Modal.Actions>
+                        </Modal>
+                      </div>
+                    </Card.Content>
+                  </Card>
+                ))}
               </Card.Group>
-            </Accordion.Content>
-          </Accordion.Accordion>
-        ));
+            </Tab.Pane>
+          );
+        };
+        pane['render'] = render;
+
+        
+        panes.push(pane);
+      },this);
+
+      return (
+        <Tab 
+          menu={{ fluid: true, vertical: true }}
+          menuPosition='left'
+          panes={panes}
+        />
+      );
     }
     else if(this.state.loadingshopping){
-      return (
-          <Accordion.Accordion key={0}>
-            <Accordion.Content style={{padding: '10px'}}><b>Loading your inventory.</b><br/>
-            Please try again later if it doesn't load.
-            </Accordion.Content>
-          </Accordion.Accordion>
+      return (<div>
+              <b>Loading your inventory.</b><br/>
+                Please try again later if it doesn't load.
+              </div>
           );
     }
     else{
-      return (<Accordion.Accordion key={0}>
-                <Accordion.Content style={{padding: '10px'}}><b>No shopping list available.</b><br/>
+      return (<div>
+              <b>No shopping list available.</b><br/>
                 Start tracking items that go in and out of your inventory.
-                </Accordion.Content>
-              </Accordion.Accordion>
+              </div>
               );    
     }
   }
@@ -561,8 +570,7 @@ class ToBuy extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        <Accordion fluid styled>{this.generateshoppinglistbycat()}</Accordion>
-        {/*<List divided celled relaxed floated="left" size="medium" className='fullwidth'>{this.generateshoppinglist()}</List>*/}
+        {this.generateshoppinglistbycat()}
       </div>
     )
   }
