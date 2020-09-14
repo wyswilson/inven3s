@@ -84,6 +84,7 @@ body {
 
 .item.small{
   font-size: 12px !important;
+  color: #29231e !important;
 }
 
 .bodyrest2.login{
@@ -248,7 +249,7 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #29231e;
+  color: #6b6665;
 }
 
 .error {
