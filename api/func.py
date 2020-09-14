@@ -836,49 +836,6 @@ def generateshoppinglistbycat(userid):
 
 	return records
 
-def generateshoppinglist(userid):
-	query1 = """
-		SELECT
-			gtin, productname, productimage, brandname, isedible,
-			isfavourite,
-			categories,
-			itemstotal, dateexpiry, retailers
-		FROM (
-			SELECT
-			  i.gtin,p.productname,p.productimage,b.brandname,p.isedible,
-			  case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			  pc.categories,
-			  max(i.dateexpiry) as dateexpiry,
-			  max(i.dateentry) AS recentpurchasedate,
-	  		  GROUP_CONCAT(DISTINCT r.retailername ORDER BY r.retailername SEPARATOR ', ') AS retailers,
-			  SUM(case when i.itemstatus = 'IN' then i.quantity ELSE 0 END) AS historicaltotal,
-			  SUM(case when i.itemstatus = 'IN' then i.quantity else i.quantity*-1 END) AS itemstotal
-			FROM inventories AS i
-			JOIN products AS p
-			ON i.gtin = p.gtin
-			JOIN brands AS b
-			ON p.brandid = b.brandid
-			JOIN retailers AS r
-			ON i.retailerid = r.retailerid
-			LEFT JOIN (
-				SELECT gtin, GROUP_CONCAT(DISTINCT category SEPARATOR '; ') AS categories
-				FROM productscategory
-				GROUP BY 1		
-			) as pc
-			ON p.gtin = pc.gtin
-			LEFT JOIN productsfavourite AS pf
-			ON i.gtin = pf.gtin AND i.userid = pf.userid
-			WHERE i.userid = %s AND p.isedible IN (0,1)
-			GROUP BY 1,2,3,4,5,6,7
-			ORDER BY 6 DESC, 12 DESC, 10 DESC
-		) AS tmp
-		WHERE (isfavourite = 0 and itemstotal < 1 and historicaltotal >= 2) OR (isfavourite = 1 and itemstotal < 2 and historicaltotal >= 1)
-	"""
-	cursor.execute(query1,(userid,))
-	records = cursor.fetchall()	
-
-	return records
-
 def countallproducts():
 	query1 = """
 		SELECT count(*)

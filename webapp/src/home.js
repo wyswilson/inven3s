@@ -20,8 +20,7 @@ class Home extends React.Component {
         inediblenewcnt: 0,
         inedibleopenedcnt: 0,
         expiredcnt: 0,
-        expiringcnt: 0,
-        shoppinglistcnt: 0,
+        expiringcnt: 0
       },
       cardscats: [],
       feed: <Feed>Loading your activities.</Feed>,
@@ -134,7 +133,6 @@ class Home extends React.Component {
         const inedibleopenedcnt = response.data[0]['counts']['inedibleopened'];
         const expiringcnt = response.data[0]['counts']['expiring'];
         const expiredcnt = response.data[0]['counts']['expired'];
-        const shoppinglistcnt = response.data[0]['counts']['shoppinglist'];
 
         this.setState({expiringcnt: expiringcnt});
         this.setState({expiredcnt: expiredcnt});
@@ -142,7 +140,6 @@ class Home extends React.Component {
         this.setState({edibleopenedcnt: edibleopenedcnt});
         this.setState({inediblenewcnt: inediblenewcnt});
         this.setState({inedibleopenedcnt: inedibleopenedcnt});
-        this.setState({shoppinglistcnt: shoppinglistcnt});
 
         this.setState({insightsloaded: true});
       }
@@ -222,13 +219,6 @@ class Home extends React.Component {
 
   generateinsights(){
     const cardsstats = [
-     {
-        'id':1,
-        'number': this.state.shoppinglistcnt,
-        'label': 'items in 2Buy',
-        'isedible':-1,'isopened':-1,'expirystatus':'all',
-        'category': 'all'
-      },
       {
         'id':2,
         'number': this.state.expiringcnt,

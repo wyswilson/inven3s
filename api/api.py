@@ -671,29 +671,6 @@ def inventoryupsert(userid):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records),inventorycnt)
 
-@app.route('/shoppinglist/items', methods=['GET'])
-@func.requiretoken
-def shoppinglistbyitems(userid):
-	print('hit [shoppinglistbyitems] with [%s]' % (userid))
-	func.registerapilogs("shoppinglistbyitems",userid,flask.request)
-
-	status = ""
-	statuscode = 200
-	records = []
-
-	if func.validateuser(userid):
-		records = func.generateshoppinglist(userid)
-		if not records:
-			status = "no items in the shopping list"
-			statuscode = 404#Not Found
-		else:
-			status = "shopping list generated"
-	else:
-		status = "invalid user"
-		statuscode = 412#Precondition Failed		
-
-	return func.jsonifyoutput(statuscode,status,func.jsonifyinventory(records))
-
 @app.route('/shoppinglist/categories', methods=['GET'])
 @func.requiretoken
 def shoppinglistbycats(userid):
@@ -785,7 +762,6 @@ def inventoryinsights(userid):
 	
 	data1 = func.fetchinventorybyuser(userid,2,2,"all")
 	data2 = func.fetchinventoryexpireditems(userid)
-	data3 = func.generateshoppinglist(userid)
 
 	messages = {}
 	messages['message'] = status
@@ -797,7 +773,6 @@ def inventoryinsights(userid):
 	message1['edibleopened'] = data1['edible']['opened']['count']
 	message1['inediblenew'] = data1['inedible']['new']['count']
 	message1['inedibleopened'] = data1['inedible']['opened']['count']
-	message1['shoppinglist'] = len(data3)
 	messages['counts'] = message1
 
 	messagestoplvl = []
