@@ -46,7 +46,6 @@ class App extends React.Component {
   componentDidMount() {
     const permissiblehosts = ['inven3s.com','127.0.0.1','localhost']
     const hostname = window.location.hostname;
-    console.log(hostname);
 
     if(!permissiblehosts.includes(hostname)){
       document.title = 'Illegal Domain Name';

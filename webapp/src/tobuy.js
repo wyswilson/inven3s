@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Menu, Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Menu, Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -248,61 +248,6 @@ class ToBuy extends React.Component {
     });
   }
 
-  fetchshoppinglist(){
-    this.setState({ loadingshopping: true});
-    this.setState({ hasshoppinglist: false});
-    console.log('fetchshoppinglist');
-   
-    axios.get(this.state.apihost + '/shoppinglist/items',
-      {
-        headers: {
-          "content-type": "application/json",
-          "access-token": this.state.token
-        }
-      }
-    )
-    .then(response => { 
-     if(response.status === 200){
-        console.log('fetchshoppinglist [' + response.data[0]['message'] + ']');
-        
-        const updatedlist = _.map(response.data[0]['results'], (item) => (
-          {
-            gtin: item.gtin,
-            productname: item.productname,
-            productimage: item.productimage,
-            productimagelocal: item.productimagelocal,
-            brandname: item.brandname,
-            isedible: item.isedible,
-            isfavourite: item.isfavourite,
-            categories: item.categories,
-            retailers: item.retailers.split(',').map( (retailer) => (
-                <Label key={item.gtin + retailer} basic size='medium' className='margined' content={retailer}/>
-              ))
-          }
-        ));
-        this.setState({ slist: updatedlist });
-        this.setState({ hasshoppinglist: true});
-      }
-      this.setState({ loadingshopping: false});
-    })
-    .catch(error => {
-      this.setState({ hasshoppinglist: false });
-      if(error.response){
-        if(error.response.status === 404){
-          console.log('fetchshoppinglist [' + error.response.data[0]['message'] + ']');        
-         }
-        else{
-          console.log('fetchshoppinglist [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
-        }
-      }
-      else{
-        console.log('fetchshoppinglist [server unreachable]');
-        this.setState({ inventorymsg: 'server unreachable' });
-      }
-      this.setState({ loadingshopping: false});
-    });
-  }
-
   redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
     this.props.history.push({
       pathname: '/products',
@@ -330,7 +275,6 @@ class ToBuy extends React.Component {
   }
 
   componentDidMount() {
-    //this.fetchshoppinglist();
     this.fetchshoppinglistbycat();
   }
 
@@ -340,7 +284,7 @@ class ToBuy extends React.Component {
       this.state.slistbycat.forEach(function(item) {
         let pane = {};
         pane['menuItem'] = (<Menu.Item key={item.name} >
-                              {item.name}<Label size='mini' attached='top right'>{item.count}</Label>
+                              {item.name}<Label size='mini'>{item.count}</Label>
                             </Menu.Item>
                           );
 
@@ -435,136 +379,34 @@ class ToBuy extends React.Component {
           );
         };
         pane['render'] = render;
-
-        
         panes.push(pane);
       },this);
 
       return (
           <Tab 
-            menu={{ fluid: true, vertical: true }}
+            menu={{ fluid: true, vertical: true, tabular: true, attached: true }}
             menuPosition='left'
             panes={panes}
           />
       );
     }
     else if(this.state.loadingshopping){
-      return (<div>
-              <b>Loading your inventory.</b><br/>
-                Please try again later if it doesn't load.
-              </div>
+      return (<Card raised>
+                <Message size='tiny'
+                  header="Loading your shopping list."
+                  content="Please try again later if it doesn't load."
+                />
+              </Card>
           );
     }
     else{
-      return (<div>
-              <b>No shopping list available.</b><br/>
-                Start tracking items that go in and out of your inventory.
-              </div>
-              );    
-    }
-  }
-
-  generateshoppinglist(){
-    if(!this.state.loadingshopping && this.state.hasshoppinglist){
-      return this.state.slist.map( (item) => (
-            <List.Item key={item.gtin}>
-              <List.Content floated='right'>
-                <Modal
-                      trigger={<Button icon="plus" className='grey button'
-                      onClick={this.setproductmetadata.bind(this,item.gtin)} />}
-                      centered={false}
-                      size="fullscreen"
-                      dimmer="blurring"
-                      closeIcon
-                    >
-                  <Modal.Header>Add items</Modal.Header>
-                  <Modal.Content image>
-                    <Image
-                      wrapped size='tiny' src={item.productimagelocal}
-                      onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
-                    />
-                    <Modal.Description>
-                      <Grid columns={1} doubling stackable>
-                        <Grid.Column>
-                         <label className="fullwidth">Retailer</label>                    
-                          <Dropdown className="fullwidth" name="retailername"
-                            search
-                            selection
-                            allowAdditions
-                            value={this.state.retailername}
-                            noResultsMessage="No retailer found"
-                            options={this.state.retailersuggests}
-                            onSearchChange={this.lookupretailer.bind(this)}
-                            onAddItem={this.addnewretailer.bind(this)}
-                            onChange={this.setinventorymetadata.bind(this)}
-                          />
-                        </Grid.Column>
-                        <Grid.Row columns={2}>
-                          <Grid.Column>
-                            <label className="fullwidth">Quantity</label>                    
-                            <Input className="fullwidth" name="quantity"
-                              value={this.state.quantity}
-                              onChange={this.setinventorymetadata.bind(this)}
-                            />
-                          </Grid.Column>
-                          <Grid.Column>
-                            <label className="fullwidth">Expiry</label>                    
-                            <DateInput name="dateexpiry" className="fullwidth"
-                              dateFormat="YYYY-MM-DD"
-                              value={this.state.dateexpiry}
-                              onChange={this.setinventorymetadata.bind(this)}
-                            />
-                          </Grid.Column>
-                        </Grid.Row>
-                      </Grid>
-                    </Modal.Description>
-                  </Modal.Content>
-                  <Modal.Actions>
-                    <Grid columns={2} container doubling stackable>
-                      <Grid.Column>
-                        <Button loading={this.state.loading || false} 
-                        className='grey button fullwidth'
-                        onClick={this.addinventory.bind(this,item.gtin)}>
-                          ADD
-                        </Button>
-                      </Grid.Column>
-                      <Grid.Column>
-                        {this.generateitemadditionmsg()}
-                      </Grid.Column>
-                    </Grid>
-                  </Modal.Actions>
-                </Modal>
-              </List.Content>
-              <List.Content floated='left'>
-                <Image
-                  size="tiny" src={item.productimagelocal}
-                  onError={(e)=>{e.target.onerror = null; e.target.src=item.productimage}}
+      return (<Card raised>
+                <Message size='tiny'
+                  header="No shopping list available."
+                  content="Start tracking items that go in and out of your inventory."
                 />
-              </List.Content>
-              <List.Content>
-                <List.Header as="a" onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)}>{item.productname}</List.Header>
-                <List.Description>{item.retailers}</List.Description>
-              </List.Content>
-            </List.Item>
-         ));
-    }
-    else if(this.state.loadingshopping){
-      return (<List.Item key={0}>
-                <List.Content floated='left'>
-                  <List.Header>Loading your inventory.</List.Header>
-                  Please try again later if it doesn't load.
-                </List.Content>
-              </List.Item>
-              );
-    }
-    else{
-      return (<List.Item key={0}>
-                <List.Content floated='left'>
-                  <List.Header>No shopping list available.</List.Header>
-                  Start tracking items that go in and out of your inventory.
-                </List.Content>
-              </List.Item>
-              );      
+              </Card>
+              );    
     }
   }
 
