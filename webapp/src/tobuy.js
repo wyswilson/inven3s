@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
-import { Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
+import { Menu, Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, List, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
@@ -339,9 +339,12 @@ class ToBuy extends React.Component {
       let panes = [];
       this.state.slistbycat.forEach(function(item) {
         let pane = {};
-        pane['menuItem'] = item.name + ' (' + item.count + ')';
-        const render = () => {
+        pane['menuItem'] = (<Menu.Item key={item.name} >
+                              {item.name}<Label size='tiny'>{item.count}</Label>
+                            </Menu.Item>
+                          );
 
+        const render = () => {
           return (
             <Tab.Pane attached={true}>
               <Card.Group doubling itemsPerRow={3} stackable>
@@ -438,11 +441,11 @@ class ToBuy extends React.Component {
       },this);
 
       return (
-        <Tab 
-          menu={{ fluid: true, vertical: true }}
-          menuPosition='left'
-          panes={panes}
-        />
+          <Tab 
+            menu={{ fluid: false, vertical: true }}
+            menuPosition='left'
+            panes={panes}
+          />
       );
     }
     else if(this.state.loadingshopping){
