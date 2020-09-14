@@ -386,21 +386,32 @@ def jsonifyinventorycategories(records,cattype):
 			categoriescnt[category] = math.ceil(itemstotal)
 			categoriescnthistorical[category] = math.ceil(historicaltotal)
 
-	sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
+	categoriesrestockfactor = {}	
+	for cat,itemstotal in categoriescnt.items():
+		historicaltotal = categoriescnthistorical[cat]
+		wilsonsrestockfactor = (itemstotal+0.5)/historicaltotal
+		categoriesrestockfactor[cat] = wilsonsrestockfactor
+
+	sortedcats = []
+	if cattype == 'children':
+		sortedcats = sorted(categoriesrestockfactor.items(), key=lambda x: x[1], reverse=False)
+	else:
+		sortedcats = sorted(categoriescnt.items(), key=lambda x: x[1], reverse=True)
 
 	categoriesobjects = []
 	for catobj in sortedcats:
-		cat = catobj[0]
-		catcnt = catobj[1]
-		items = categories[cat]
+		cat 	= catobj[0]
+		catcnt 	= catobj[1]
+		items 	= categories[cat]
 		catcnthistorical = categoriescnthistorical[cat]
+		catrestockfactor = categoriesrestockfactor[cat]
 
 		catobj = {}
 		if cattype == 'children' and cat not in topcats:
 			catobj['name'] = cat
 			catobj['count'] = catcnt
 			catobj['counthistorical'] = catcnthistorical
-			catobj['wilsonsrestockfactor'] = (catcnt+0.5)/catcnthistorical
+			catobj['wilsonsrestockfactor'] = catrestockfactor
 			catobj['items'] = items
 		elif cattype == 'parents' and cat in topcats:
 			catobj['name'] = cat
@@ -408,7 +419,7 @@ def jsonifyinventorycategories(records,cattype):
 			catobj['items'] = items
 		
 		if len(catobj) > 0:
-			if cattype == 'children' and catobj['wilsonsrestockfactor'] < 0.5:
+			if cattype == 'children' and catrestockfactor < 0.5:
 				categoriesobjects.append(catobj)
 			elif cattype == 'parents':
 				categoriesobjects.append(catobj)

@@ -342,7 +342,7 @@ class ToBuy extends React.Component {
               active={this.state.activecat === item.name}
               index={item.name}
               onClick={this.switchcat.bind(this)}>
-              <Icon name='dropdown'/>{item.name} ({item.count} items)
+              <Icon name='dropdown'/>{item.name} ({item.count} items - {item.wilsonsrestockfactor})
             </Accordion.Title>
             <Accordion.Content active={this.state.activecat === item.name}>
               <Card.Group doubling itemsPerRow={5} stackable>
