@@ -298,7 +298,7 @@ class Home extends React.Component {
       >
          <Grid columns={2} doubling stackable>
           <Grid.Column textAlign="center">
-            <Message size='small'>
+            <Message size='large'>
               <Message.Header>{this.state.username}'s pantry</Message.Header>
               <p>
                 <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
@@ -309,7 +309,7 @@ class Home extends React.Component {
             </Grid>
           </Grid.Column>
           <Grid.Column textAlign="center">  
-            <Message size='small' 
+            <Message size='large' 
               header="Pantry activities"
             />
             <Segment>
