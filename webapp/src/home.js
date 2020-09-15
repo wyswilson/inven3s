@@ -299,7 +299,7 @@ class Home extends React.Component {
          <Grid columns={2} doubling stackable>
           <Grid.Column textAlign="center">
             <Message size='large'>
-              <Message.Header>{this.state.username}'s pantry</Message.Header>
+              <Message.Header>{this.state.username}'s Inventory</Message.Header>
               <p>
                 <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
               </p>
@@ -310,7 +310,7 @@ class Home extends React.Component {
           </Grid.Column>
           <Grid.Column textAlign="center">  
             <Message size='large' 
-              header="Pantry activities"
+              header="Inventory Activities"
             />
             <Segment>
               <Feed>  
