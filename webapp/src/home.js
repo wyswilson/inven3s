@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Image, Header, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import { Segment, Image, Header, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 import _ from 'lodash'
 
 class Home extends React.Component {
@@ -297,24 +297,26 @@ class Home extends React.Component {
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
          <Grid columns={2} doubling stackable>
-          <Grid.Column textAlign="left">
+          <Grid.Column textAlign="center">
+            <Message size='small'>
+              <Message.Header>{this.state.username}'s pantry</Message.Header>
+              <p>
+                <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
+              </p>
+            </Message>
             <Grid columns={2} doubling stackable textAlign='left'>
-              <Grid.Column key={0} textAlign="center">
-                <Card raised key={0} fluid>
-                  <Card.Content textAlign='center'>
-                    <Header size='small'>{this.state.username}'s pantry</Header>
-                    <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
-                  </Card.Content>
-                </Card> 
-              </Grid.Column>
               {this.generateinsights()}
             </Grid>
           </Grid.Column>
-          <Grid.Column textAlign="left">   
-            <Feed>  
-              <Header size='small'>Pantry activities</Header>
-              {this.state.feed}    
-            </Feed>
+          <Grid.Column textAlign="center">  
+            <Message size='small' 
+              header="Pantry activities"
+            />
+            <Segment>
+              <Feed>  
+                {this.state.feed}    
+              </Feed>
+            </Segment> 
           </Grid.Column>
         </Grid>
       </div>

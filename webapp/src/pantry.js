@@ -68,7 +68,7 @@ class Pan3 extends React.Component {
       if(error.response){
         if(error.response.status === 404){
           console.log('fetchinventory [' + error.response.data[0]['message'] + ']');        
-          this.setState({ inventorymsg: 'no items matching the criteria' })
+          this.setState({ inventorymsg: 'No items available' })
           this.setState({ inventoryfetched: true });
         }
         else{
