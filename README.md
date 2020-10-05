@@ -23,6 +23,8 @@ pip3 install py3-validate-email
 pip3 install flask-cors
 sudo pip3 install waitress
 
+IF "pip packagename" doesnt work, try this "py -m pip install packagename"
+
 ==============UBUNTU/SCREEN=========
 Home => /home/ubuntu/inven3s
 WEBAPP 	ssh -i inven3s.pem ubuntu@inven3s.com

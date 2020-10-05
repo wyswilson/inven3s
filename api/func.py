@@ -1,6 +1,7 @@
 import datetime
 import flask
 
+import time
 import functools
 import mysql.connector
 import hashlib
@@ -592,8 +593,49 @@ def removeproduct(gtin):
 	cursor.execute(query1,(gtin,))
 	db.commit()
 
+def fetchhtml(url):
+	html = ""
+	urlresolved = ""
+	try:
+		session = requests.Session()
+		randagent = random.choice(useragents)
+		headers = {'User-Agent': randagent}
+		r = session.get(url, headers=headers, timeout=10)
+		#cookie = dict(r.cookies)
+		#print(cookie)
+		#r = session.get(url, cookies=cookie)
+		
+		urlresolved = r.url
+		html = r.content.decode('utf-8')
+		if html != '':
+			errstr = "line 610: fetchhtml: [ok-page-fetched] [%s]" % (url)
+			print(errstr)
+			logging.debug(errstr)
+		else:
+			errstr = "line 614: fetchhtml: [error-empty-page] [%s]" % (url)
+			print(errstr)
+			logging.debug(errstr)
+
+	except requests.ConnectionError as e:
+		errstr = "line 619: fetchhtml: [error-connection] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+	except requests.Timeout as e:
+		errstr = "line 623: fetchhtml: [error-timeout] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+	except requests.RequestException as e:
+		errstr = "line 627: fetchhtml: [error-request] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+	except BaseException as e:
+		errstr = "line 631: fetchhtml: [error-unknown] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+
+	return html,urlresolved
+
 def downloadproductpages(gtin,engine,preferredsources):
-	print('line 560: ' + gtin + ':' + engine)
 	if engine == 'google':
 		url = "https://www.google.com/search?q=%s" % gtin
 	elif engine == 'bing':
@@ -606,13 +648,16 @@ def downloadproductpages(gtin,engine,preferredsources):
 		firsturl = ""
 		firsttitle = ""
 
-		randagent = random.choice(useragents)
-		headers = {'User-Agent': randagent}
-		r = requests.get(url, headers=headers, timeout=10)
-		urlresolved = r.url
-		html = r.content
-		logging.debug("webcrawl: [%s] [%s] [%s]" % (gtin,engine,urlresolved))
-		print("line 579: webcrawl [%s] [%s] [%s]" % (gtin,engine,urlresolved))
+		html,urlresolved = fetchhtml(url)
+
+		if html != '':
+			errstr = "line 653: downloadproductpages: [ok-searchengine-results] [%s] [%s] [%s]" % (gtin,engine,urlresolved)
+			print(errstr)
+			logging.debug(errstr)
+		else:
+			errstr = "line 657: downloadproductpages: [error-searchengine-resultspage] [%s] [%s] [%s]" % (gtin,engine,urlresolved)
+			print(errstr)
+			logging.debug(errstr)
 
 		soup = bs4.BeautifulSoup(html, 'html.parser')
 		results = []
@@ -647,22 +692,29 @@ def downloadproductpages(gtin,engine,preferredsources):
 		if selectedurl == "":
 			selectedurl = firsturl
 			selectedtitle = firsttitle
-		print("line 614: webcrawl output: [%s] [%s]" % (selectedurl,selectedtitle))
+
+		errstr = "line 695: downloadproductpages: [ok-productpage-found] [%s] [%s]" % (selectedurl,selectedtitle)
+		print(errstr)
+		logging.debug(errstr)
 
 		selectedtitle = string.capwords(selectedtitle.strip())
 		return selectedurl,selectedtitle
 	except requests.ConnectionError as e:
-		print("line 619: error: internet connection for [%s] [%s]" % (url,str(e)))
-		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))
+		errstr = "line 702: downloadproductpages: [error-connection] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
 	except requests.Timeout as e:
-		print("line 622: error: timeout for [%s] [%s]" % (url,str(e)))
-		logging.debug("error: timeout for [%s] [%s]" % (url,str(e)))
+		errstr = "line 706: downloadproductpages: [error-timeout] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
 	except requests.RequestException as e:
-		print("line 625: error: [%s] [%s]" % (url,str(e)))
-		logging.debug("error: [%s] [%s]" % (url,str(e)))
+		errstr = "line 710: downloadproductpages: [error-request] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
 	except BaseException as e:
-		print("line 628: error: unknown [%s] [%s]" % (url,format(e)))
-		logging.debug("error: unknown [%s] [%s]" % (url,format(e)))
+		errstr = "line 714: downloadproductpages: [error-unknown] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
 
 	return "ERR",""
 
@@ -694,29 +746,28 @@ def discovernewproduct(gtin,attempt):
 	attempt += 1
 	selectedurl,selectedtitle = downloadproductpages(gtin,searchengine,preferredsources)
 	if selectedurl != "ERR" and selectedurl != "":
-		print("line 657: NOT-ERROR")
 		selectedhtml = ""
 		try:
-			randagent1 = random.choice(useragents)
-			headers1 = {'User-Agent': randagent1}
-			r1 = requests.get(selectedurl, headers=headers1, timeout=10)
-			selectedhtml = r1.content
-			print("line 664: html fetched")
-		except:
-			logging.debug("scraper-error: [%s]" % selectedurl)
-			print("line 667: scraper-error: [%s]" % selectedurl)
+			selectedhtml,urlresolved = fetchhtml(selectedurl)
+
+			errstr = "line 752: discovernewproduct: [ok-productpage-fetched] [%s] [%s]" % (selectedurl,urlresolved)
+			print(errstr)
+			logging.debug(errstr)
+		except BaseException as e:
+			errstr = "line 756: discovernewproduct: [error-productpage-notfetched] [%s] [%s]" % (selectedurl,str(e))
+			print(errstr)
+			logging.debug(errstr)
+
 			selectedurl,selectedtitle = downloadproductpages(gtin,"bing",preferredsources)
 			if selectedurl != "ERR" and selectedurl != "":
-				randagent2 = random.choice(useragents)
-				headers2 = {'User-Agent': randagent2}
-				r2 = requests.get(selectedurl, headers=headers2, timeout=10)
-				selectedhtml = r2.content
+				selectedhtml,urlresolved = fetchhtml(selectedurl)
 
 		if selectedhtml != "":
 			soup = bs4.BeautifulSoup(selectedhtml, 'html.parser')
 			
-			logging.debug("crawler: selectedurl [%s]" % (selectedurl))
-			print("line 679: crawler: selectedurl [%s]" % (selectedurl))
+			errstr = "line 767: discovernewproduct: [ok-parse-productpage] [%s]" % (selectedurl)
+			print(errstr)
+			logging.debug(errstr)
 
 			brandid = ""
 			productname = ""
@@ -778,14 +829,23 @@ def discovernewproduct(gtin,attempt):
 			return "ERR","",""
 
 	elif selectedurl == "" and attempt == 2:
-		print("line 741: NO-SELECTED-URL-2NDATTEMPT")
+		errstr = "line 831: discovernewproduct: [ok-noproductpage-retry] [%s] [%s]" % (gtin,attempt)
+		print(errstr)
+		logging.debug(errstr)
+
 		productname,brandid,brandname = discovernewproduct(gtin,attempt)
 		return productname,brandid,brandname
 	elif selectedurl == "":
-		print("line 745: NO-SELECTED-URL")
+		errstr = "line 838: discovernewproduct: [error-noproductpage-retried-failed] [%s] [%s]" % (gtin,attempt)
+		print(errstr)
+		logging.debug(errstr)
+
 		return "WARN","",""
 	else:
-		print("line 748: ERR")
+		errstr = "line 844: discovernewproduct: [error-productpage-unknown] [%s] [%s]" % (gtin,attempt)
+		print(errstr)
+		logging.debug(errstr)
+
 		return "ERR","",""
 
 def generateshoppinglistbycat(userid):
@@ -1114,10 +1174,7 @@ def findproductimage(gtin,productname):
 	try:
 		source = "google"
 		url = "https://www.google.com/search?q=%s&tbm=isch" % productname 
-		randagent = random.choice(useragents)
-		headers = {'User-Agent': randagent}
-		r = requests.get(url, headers=headers, timeout=10)
-		html = r.content.decode('utf-8')
+		html,urlresolved = fetchhtml(url)
 
 		type = "productimage"
 		regex = r"\[\"(http.+?\.(?:jpg|jpeg|png))\","
@@ -1135,13 +1192,24 @@ def findproductimage(gtin,productname):
 				productimage = imageurl
 
 	except requests.ConnectionError as e:
-		logging.debug("error: internet connection for [%s] [%s]" % (url,str(e)))
+		errstr = "line 1194: findproductimage: [error-connection] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+
 	except requests.Timeout as e:
-		logging.debug("error: timeout for [%s] [%s]" % (url,str(e)))
+		errstr = "line 1199: findproductimage: [error-timeout] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+
 	except requests.RequestException as e:
-		logging.debug("error: [%s] [%s]" % (url,str(e)))
-	except:
-		logging.debug("error: unknown [%s]" % url)	
+		errstr = "line 1204: findproductimage: [error-request] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
+
+	except BaseException as e:
+		errstr = "line 1209: findproductimage: [error-unknown] [%s] [%s]" % (url,str(e))
+		print(errstr)
+		logging.debug(errstr)
 
 	if productimage != '':
 		successful = downloadproductimage(gtin,productname,productimage)
