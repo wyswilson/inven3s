@@ -62,10 +62,10 @@ def getledgeractivities():
 	return records
 
 def addledger(newtask,newstar,type):
-	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 	query1 = "INSERT INTO ledger (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
-	cursor.execute(query1,(newtask,newstar,eventdate1,type))
+	cursor.execute(query1,(newtask,newstar,eventdate,type))
 	db.commit()
 
 def getledger():
@@ -523,12 +523,12 @@ def jsonifyoutput(statuscode,status,records,special=None):
 		return response
 
 def addproductcandidate(source,gtin,title,url,rank):
-    id = hashlib.md5(title.encode('utf-8')).hexdigest()
-	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+	id = hashlib.md5(title.encode('utf-8')).hexdigest()
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
     type = "productname"
     query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate1))
+    cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate))
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
