@@ -524,9 +524,11 @@ def jsonifyoutput(statuscode,status,records,special=None):
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+
     type = "productname"
-    query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query1,(gtin,source,type,id,title,url,rank))
+    query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+    cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate))
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
@@ -662,7 +664,7 @@ def downloadproductpages(gtin,engine,preferredsources):
 		soup = bs4.BeautifulSoup(html, 'html.parser')
 		results = []
 		if engine == 'google':
-			results = soup.find_all('div',{'class':'r'})
+			results = soup.find_all('div',{'class':'g'})#previously class="r"
 		elif engine == 'bing':
 			results = soup.find_all('li',{'class':'b_algo'})
 
@@ -671,7 +673,9 @@ def downloadproductpages(gtin,engine,preferredsources):
 			resulttitle = ""
 			resultlink = ""
 			if engine == 'google':
-				resulttitle = result.find('h3').text
+				listhead = result.find('h3')
+				if listhead:
+					resulttitle = listhead.text
 				resultlink  = result.find('a').get('href', '')
 			elif engine == 'bing':
 				resulttitle = result.find('a').text
@@ -1169,6 +1173,7 @@ def fetchinventoryexpireditems(uid):
 	return data
 
 def findproductimage(gtin,productname):
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 	productimage = ""
 	try:
@@ -1182,8 +1187,8 @@ def findproductimage(gtin,productname):
 		rank = 1
 		for imageurl in images:
 			id = hashlib.md5(imageurl.encode('utf-8')).hexdigest()
-			query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank) VALUES (%s,%s,%s,%s,%s,%s,%s)"
-			cursor.execute(query1,(gtin,source,type,id,productname,imageurl,rank))
+			query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+			cursor.execute(query1,(gtin,source,type,id,productname,imageurl,rank,eventdate))
 			db.commit()
 
 			rank += 1

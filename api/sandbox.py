@@ -3,21 +3,21 @@ import requests
 import random
 import simplejson as json
 import configparser
-
+import func
+import bs4
 
 config = configparser.ConfigParser()
 config.read('conf.ini')
 
-useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 
+productname = "Cetaphil Baby Gentle Wash & Shampoo 230ml"
+searchurl = "https://www.google.com/search?q=%s" % productname
+html,urlresolved = func.fetchhtml(searchurl)
+soup = bs4.BeautifulSoup(html, 'html.parser')
+results = soup.find_all('div',{'class':'g'})
+for result in results:
+	print(result)
+	resulttitle = result.find('h3').text
+	resultlink  = result.find('a').get('href', '')
 
-productname = "Cetaphil Moisturising Cream 550g"
-url = "https://www.chemistwarehouse.com.au/searchapi/webapi/search/terms?category=catalog01_chemau&index=0&sort=&term=%s" % (productname)
-randagent = random.choice(useragents)
-header = {'User-Agent': randagent}
-response = requests.get(url, headers=header)
-status = response.status_code
-print(status)
-json = response.json()
-obj = json['universes']['universe'][0]['items-section']['items']
-print(obj)
+	print("[%s] [%s]" % (resulttitle,resultlink))
