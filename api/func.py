@@ -681,6 +681,8 @@ def downloadproductpages(gtin,engine,preferredsources):
 				resulttitle = result.find('a').text
 				resultlink  = result.find('a').get('href', '')
 
+			print('resultlink: [%s]' % resultlink)
+
 			for preferredsrc in preferredsources:
 				if re.match(r"^%s" % preferredsrc,resultlink):
 					selectedurl = resultlink
