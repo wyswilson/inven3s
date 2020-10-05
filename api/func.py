@@ -524,11 +524,11 @@ def jsonifyoutput(statuscode,status,records,special=None):
 
 def addproductcandidate(source,gtin,title,url,rank):
     id = hashlib.md5(title.encode('utf-8')).hexdigest()
-	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
     type = "productname"
     query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-    cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate))
+    cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate1))
     db.commit()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
