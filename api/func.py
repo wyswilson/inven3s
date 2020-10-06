@@ -522,11 +522,10 @@ def jsonifyoutput(statuscode,status,records,special=None):
 		response = flask.jsonify(messages),statuscode
 		return response
 
-def addproductcandidate(source,gtin,title,url,rank):
+def addproductcandidate(type,source,gtin,title,url,rank):
 	id = hashlib.md5(title.encode('utf-8')).hexdigest()
 	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 	
-	type = "productname"
 	query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 	cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate1))
 	db.commit()
@@ -668,6 +667,7 @@ def downloadproductpages(gtin,engine,preferredsources):
 		elif engine == 'bing':
 			results = soup.find_all('li',{'class':'b_algo'})
 
+		type = "productname"
 		i = 1
 		for result in results:
 			resulttitle = ""
@@ -692,7 +692,7 @@ def downloadproductpages(gtin,engine,preferredsources):
 				firsturl = resultlink
 				firsttitle = resulttitle
 
-			addproductcandidate(engine,gtin,resulttitle,resultlink,i)
+			addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
 			i += 1
 
 		if selectedurl == "":
@@ -1188,11 +1188,7 @@ def findproductimage(gtin,productname):
 		images = re.findall(regex, html)
 		rank = 1
 		for imageurl in images:
-			id = hashlib.md5(imageurl.encode('utf-8')).hexdigest()
-			query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-			cursor.execute(query1,(gtin,source,type,id,productname,imageurl,rank,eventdate))
-			db.commit()
-
+			addproductcandidate(type,source,gtin,productname,imageurl,rank)
 			rank += 1
 
 			if productimage == "":
