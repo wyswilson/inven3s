@@ -49,84 +49,67 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 
-def pricescrape(url):
+def pricescrape(url,retailer):
 	price = '0.0'
-	retailer = ''
 	matchobj = ""
 
 	html,urlresolved = func.fetchhtml(url)
 	soup = bs4.BeautifulSoup(html, 'html.parser')
 
-	if re.search(r'amcal\.com\.au',url): 
-		retailer = 'amcal'
+	if retailer == 'amcal': 
 		matchobj = soup.find_all('span',{'class':'price'})
 
-	elif re.search(r'discountchemist\.com\.au',url): 
-		retailer = 'discountchemist'
+	elif retailer == 'discountchemist': 
 		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
 
-	elif re.search(r'igashop\.com\.au',url): 
-		retailer = 'iga'
+	elif retailer == 'igashop': 
 		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
 
-	elif re.search(r'bigw\.com\.au',url): 
-		retailer = 'bigw'
+	elif retailer == 'bigw': 
 		matchobj = soup.find_all('span',{'id':'product_online_price'})
 
-	elif re.search(r'woolworths\.com\.au',url): 
-		retailer = 'woolworths'
+	elif retailer == 'woolworths': 
 		matchobj = soup.find_all('div',{'class':'price price--large'})
 	
-	elif re.search(r'coles\.com\.au',url): 
-		retailer = 'coles'
+	elif retailer == 'coles': 
 		matchobj = soup.find_all('span',{'class':'price-container'})
 
-	elif re.search(r'asiangrocerystore\.com\.au',url): 
-		retailer = 'asiangrocerystore'
+	elif retailer == 'asiangrocerystore': 
 		matchobj = soup.find_all('span',{'id':'line_discounted_price_126'})
 
-	elif re.search(r'drakes\.com\.au',url): 
-		retailer = 'drakes'
+	elif retailer == 'drakes': 
 		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
 
-	elif re.search(r'mysweeties\.com\.au',url): 
-		retailer = 'mysweeties'
+	elif retailer == 'mysweeties': 
 		matchobj = soup.find_all('span',{'id':'productPrice'})
 
-	elif re.search(r'allysbasket\.com',url): 
-		retailer = 'allysbasket'
+	elif retailer == 'allysbasket': 
 		matchobj = soup.find_all('span',{'itemprop':'price'})
 
-	elif re.search(r'buyasianfood\.com\.au',url): 
-		retailer = 'buyasianfood'
+	elif retailer == 'buyasianfood': 
 		matchobj = soup.find_all('span',{'class':'price'})
 
-	elif re.search(r'chemistwarehouse\.com\.au',url): 
-		retailer = 'chemistwarehouse'
+	elif retailer == 'chemistwarehouse': 
 		matchobj = soup.find_all('span',{'class':'product__price'})
 
-	elif re.search(r'goodpricepharmacy\.com\.au',url): 
-		retailer = 'goodpricepharmacy'
+	elif retailer == 'goodpricepharmacy': 
 		matchobj = soup.find_all('span',{'class':'price'})
 		
-	elif re.search(r'indoasiangroceries\.com\.au',url): 
-		retailer = 'indoasiangroceries'
+	elif retailer == 'indoasiangroceries': 
 		matchobj = soup.find_all('p',{'class':'price'})
 
-	elif re.search(r'myasiangrocer\.com\.au',url): 
-		retailer = 'myasiangrocer'
+	elif retailer == 'myasiangrocer': 
 		matchobj = soup.find_all('span',{'class':'price'})
 
-	elif re.search(r'pharmacydirect\.com\.au',url): 
-		retailer = 'pharmacydirect'
+	elif retailer == 'pharmacydirect': 
 		matchobj = soup.find_all('span',{'id':'price-display'})
 
-	elif re.search(r'officeworks\.com\.au',url): 
-		retailer = 'officeworks'
+	elif retailer == 'officeworks': 
 		matchobj = re.findall('"edlpPrice":"(.+?)"', html, re.IGNORECASE)
+	else:
+		retailer = 'not-supported'
 
-
-	if matchobj and retailer != '':
+	if matchobj and retailer != 'not-supported':
 		for match in matchobj:
 			if type(match) == str:
 				price = match
@@ -141,16 +124,15 @@ def pricescrape(url):
 			except:
 				price = "0.0"
 			break
-	elif retailer == '':
-		retailer = 'not-supported'
-		errstr = "price-scraper-norules: [%s] [%s]" % (retailer,url)
+	elif retailer == 'not-supported':
+		errstr = "no rules defined for retailer: [%s] [%s]" % (retailer,url)
 		print(errstr)
 	else:
-		errstr = "price-scraper-err: [%s] [%s]" % (retailer,url)
+		errstr = "unknown errors [%s] [%s]" % (retailer,url)
 		print(errstr)
 		logging.debug(errstr)
 
-	return float(price),retailer
+	return float(price)
 
 #url = "https://shop.coles.com.au/a/richmond-south/product/claratyne-childrens-grape-chew-5mg-tabs-10pk"
 
@@ -176,7 +158,8 @@ query1 = """
 		p.gtin,
 		p.productname,
 		DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d"),
-		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as priceurls,
+		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as pricesourceurls,
+		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as priceretailers,		
 		COUNT(*) 
 	FROM products AS p
 	LEFT JOIN inventories AS i
@@ -186,7 +169,7 @@ query1 = """
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 5 DESC, 1 ASC
+	ORDER BY 6 DESC, 1 ASC
 """
 cursor.execute(query1)
 records = cursor.fetchall()
@@ -195,23 +178,36 @@ for record in records:
 	gtin 			= record[0]
 	productname		= record[1]
 	date         	= record[2]
-	urls         	= record[3]
+	sourceurls     	= record[3]
+	retailerswithprice = record[4]
 
 	processedretailers = {}
-	for url in urls.split("; "):
-		price,retailer = pricescrape(url)
-		print("[%s][%s]" % (retailer,price))
-		if float(price) > 0 and not any(retailer in key for key in processedretailers):
-			timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-			date 		= datetime.datetime.today().strftime('%Y-%m-%d')
-			query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
-			cursor.execute(query1,(gtin,price,timestamp,date,retailer))
-			db.commit()	
-		elif float(price) == 0:
-			print("no price detected [%s][%s]" % (retailer,price))		
-		else:
-			print("price from retailer already exists [%s][%s]" % (retailer,price))		
+	if ';' in retailerswithprice:
+		for retailer in retailerswithprice.split("; "):
+			processedretailers[retailer] = ''
+	elif retailerswithprice != '':
+		processedretailers[retailerswithprice] = ''
 
-		processedretailers[retailer] = ''
+	for url in sourceurls.split("; "):
 
+		matchobj = re.findall('([^\.\/]+)\.com', url, re.IGNORECASE)
+		if matchobj:
+			retailer = matchobj[0]
+
+			if not any(retailer in key for key in processedretailers):
+				price = pricescrape(url,retailer)
+				print("[%s][%s]" % (retailer,price))
+				if float(price) > 0:
+					timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+					date 		= datetime.datetime.today().strftime('%Y-%m-%d')
+					query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
+					cursor.execute(query1,(gtin,price,timestamp,date,retailer))
+					db.commit()	
+				else:
+					print("no price detected [%s][%s]" % (retailer,price))		
+			else:
+				print("price from retailer already exists [%s]" % (retailer))		
+
+			processedretailers[retailer] = ''
+		
 	time.sleep(5)
