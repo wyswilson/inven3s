@@ -180,16 +180,20 @@ for record in records:
 	date         	= record[2]
 	sourceurls     	= record[3]
 	retailerswithprice = record[4]
+	if not retailerswithprice:
+		retailerswithprice = ''
+	if not ";" in sourceurls and sourceurls != '':
+		sourceurls = sourceurls + "; "
+
 
 	processedretailers = {}
-	if ';' in retailerswithprice:
+	if ";" in retailerswithprice:
 		for retailer in retailerswithprice.split("; "):
 			processedretailers[retailer] = ''
 	elif retailerswithprice != '':
 		processedretailers[retailerswithprice] = ''
 
 	for url in sourceurls.split("; "):
-
 		matchobj = re.findall('([^\.\/]+)\.com', url, re.IGNORECASE)
 		if matchobj:
 			retailer = matchobj[0]

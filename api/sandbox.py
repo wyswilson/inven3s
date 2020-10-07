@@ -48,8 +48,7 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-engine = "google"
-type = "productprice"
+
 
 query1 = """
 	SELECT 
@@ -72,6 +71,8 @@ records = cursor.fetchall()
 for record in records:
 	gtin = record[0]
 	productname = record[1]
+	engine = "google"
+	type = "productprice"
 
 	url = "https://www.google.com/search?q=%s" % productname
 	html,urlresolved = func.fetchhtml(url)

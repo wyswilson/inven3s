@@ -722,6 +722,30 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 	return "ERR",""
 
+def downloadproductpricepages(gtin,productname):
+	engine = "google"
+	type = "productprice"
+
+	query2 = "DELETE FROM productscandidate WHERE gtin = %s AND source = %s AND type = %s"
+	cursor.execute(query2,(gtin,engine,type))
+	db.commit()
+
+	url = "https://www.google.com/search?q=%s" % productname
+	html,urlresolved = fetchhtml(url)
+	soup = bs4.BeautifulSoup(html, 'html.parser')
+	results = soup.find_all('div',{'class':'g'})#previously class="r"
+
+	i = 1
+	for result in results:
+		listhead = result.find('h3')
+		if listhead:
+			resulttitle = listhead.text
+		resultlink  = result.find('a').get('href', '')
+		
+		if resultlink != '#' and resultlink != '':
+			#addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
+		i += 1
+
 def downloadproductimage(gtin,productname,productimage):
 	imageloc = imagepath + gtin + '.jpg'
 	try:

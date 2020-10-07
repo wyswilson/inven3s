@@ -281,9 +281,11 @@ def productupsert(userid):
 		if productname != '' and productimage == '':
 			productimage = func.findproductimage(gtin,productname)
 
-		if productname != '':
+		if productname != productname_old:
 			func.updateproductname(gtin,productname)
 			status = status + "name "
+			#REDOWNLOAD PRICE PAGES IF NAME CHANGED
+			func.downloadproductpricepages(gtin,productname)
 		if isperishable != '':
 			func.updateisperishable(gtin,isperishable)
 			status = status + "isperishable "
@@ -313,6 +315,7 @@ def productupsert(userid):
 			status = "no updates"
 
 		records = func.findproductbygtin(gtin,userid)
+		
 	elif gtinstatus == "NEW" and productname != "":
 		brandid,brandname,brandstatus = func.validatebrand("",brandname)
 		if brandstatus == 'NEW':
