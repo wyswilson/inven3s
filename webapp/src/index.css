@@ -30,7 +30,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #29231e !important;
+  background-color: #8f4c56 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -40,7 +40,7 @@ body {
 .button.kuning{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #29231e !important;
+  background-color: #8f4c56 !important;
 }
 
 .button.grey.fullwidth{
@@ -48,7 +48,7 @@ body {
   height: 56px !important;
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #6b6665 !important;
+  background-color: #585858 !important;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   padding-bottom: 0px !important;
@@ -58,11 +58,11 @@ body {
 .button.grey{
   font-size: 14px !important;
   color: #ffffff !important;
-  background-color: #6b6665 !important;
+  background-color: #585858 !important;
 }
 
 .fontdark{
-  color: #6b6665 !important;
+  color: #585858 !important;
 }
 
 .fontlight{
@@ -74,7 +74,7 @@ body {
 }
 
 .item.title{
-  color: #29231e !important;
+  color: #6b6b6b !important;
   font-size: 14px !important;
   padding-top: 0.8em !important;
   padding-bottom: 0em !important;
@@ -84,11 +84,11 @@ body {
 
 .item.small{
   font-size: 12px !important;
-  color: #29231e !important;
+  color: #6b6b6b !important;
 }
 
 .bodyrest2.login{
-  background-color: #6b6665 !important;
+  background-color: #4c4c4c !important;
   padding-top: 8em !important;
   padding-bottom: 8em !important;
   padding-left: 12em !important;
@@ -96,7 +96,7 @@ body {
 }
 
 .bodyrest2.login.mobile{
-  background-color: #6b6665 !important;
+  background-color: #4c4c4c !important;
   padding-top: 2em !important;
   padding-bottom: 2em !important;
   padding-left: 1em !important;
@@ -136,7 +136,7 @@ body {
 }
 
 .bodymain.login{
-  background: url('/background1.jpg') !important;
+  background: url('/background4.jpg') !important;
   opacity: 1;
   background-size: cover !important;
   background-repeat: no-repeat !important;
@@ -153,7 +153,7 @@ body {
 }
 
 .bodymain.login.mobile{
-  background: url('/background1.jpg') !important;
+  background: url('/background4.jpg') !important;
   opacity: 1;
   background-size: cover !important;
   background-repeat: no-repeat !important;
@@ -186,7 +186,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #222222;
+  background: #0c0c0c;
   border-bottom: 0px solid #FFFFFF;
 }
 
@@ -195,7 +195,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #222222;
+  background: #0c0c0c;
   border-bottom: 0px solid #FFFFFF;
 }
 
@@ -209,7 +209,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 12em !important;
   padding-right: 12em !important;
-  background: #222222;
+  background: #0c0c0c;
   border-bottom: 0px solid #FFFFFF;
 }
 
@@ -218,7 +218,7 @@ body {
 }
 
 .nav a:hover {
-  color: #29231e !important;
+  color: #6b6b6b !important;
 }
 
 .navheader a {
@@ -229,7 +229,7 @@ body {
 }
 
 .navheader a:hover {
-  color: #6b6665;
+  color: #525252;
 }
 
 .navheader.mobile {
@@ -237,7 +237,7 @@ body {
   padding-bottom: 2em !important;
   padding-left: 1em !important;
   padding-right: 1em !important;
-  background: #222222;
+  background: #0c0c0c;
   border-bottom: 0px solid #FFFFFF;
 }
 
@@ -249,14 +249,14 @@ body {
 }
 
 .navheader.mobile a:hover {
-  color: #6b6665;
+  color: #585858;
 }
 
 .error {
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-  color: #c75061;
+  color: #8f4c56;
   opacity: 1;
   pointer-events: none;
 }
@@ -274,7 +274,7 @@ body {
   font-size: 14px !important;
   position: relative !important;
   border-radius: 4px !important;
-  background-color: #29231e;
+  background-color: #5d5d5d;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
   margin-top: 4px !important;
   margin-bottom: 4px !important;
@@ -283,7 +283,7 @@ body {
 }
 
 .field:hover {
-  background-color: #6b6665;
+  background-color: #444444;
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
 }
 
@@ -299,7 +299,7 @@ body {
 .field.active input + label {
   top: 4px;
   opacity: 1;
-  color: #222222;
+  color: #0c0c0c;
 }
 
 .field.locked {
@@ -317,7 +317,7 @@ body {
   font-weight: 400;
   line-height: normal;
   background-color: transparent;
-  color: #222222;
+  color: #0c0c0c;
   outline: none;
   box-shadow: 0px 4px 14px 0px transparent;
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out,
