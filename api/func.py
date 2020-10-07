@@ -742,8 +742,8 @@ def downloadproductpricepages(gtin,productname):
 			resulttitle = listhead.text
 			resultlink  = result.find('a').get('href', '')
 
-		#if resultlink != '#' and resultlink != '':
-			#addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
+		if resultlink != '#' and resultlink != '':
+			addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
 		i += 1
 
 def downloadproductimage(gtin,productname,productimage):
