@@ -436,12 +436,12 @@ def jsonifyinventorycategories(records,cattype):
 
 def jsonifyprices(records):
 	prices = {}
-	#for record in records:
-	#	gtin	  		= record[0]
-	#	productname  	= record[1]
-	#	pricedate		= record[2]
-	#	priceval   		= record[3]
-	#	priceretailer	= record[4]
+	for record in records:
+		gtin	  		= record[0]
+		productname  	= record[1]
+		pricedate		= record[2]
+		priceval   		= record[3]
+		priceretailer	= record[4]
 
 	#	if gtin in prices:
 	#		prices[gtin].append(pricedate)
@@ -545,6 +545,110 @@ def jsonifyoutput(statuscode,status,records,special=None):
 	else:
 		response = flask.jsonify(messages),statuscode
 		return response
+
+def pricescrape(url,retailer):
+	price = '0.0'
+	matchobj = ""
+
+	html,urlresolved = fetchhtml(url)
+	soup = bs4.BeautifulSoup(html, 'html.parser')
+
+	rulesdefined = True
+	if retailer == 'amcal': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'discountchemist': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
+	elif retailer == 'igashop': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
+	elif retailer == 'bigw': 
+		matchobj = soup.find_all('span',{'id':'product_online_price'})
+	elif retailer == 'woolworths': 
+		matchobj = soup.find_all('div',{'class':'price price--large'})
+	elif retailer == 'coles': 
+		matchobj = soup.find_all('span',{'class':'price-container'})
+	elif retailer == 'asiangrocerystore': 
+		matchobj = soup.find_all('span',{'id':'line_discounted_price_126'})
+	elif retailer == 'drakes': 
+		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
+	elif retailer == 'mysweeties': 
+		matchobj = soup.find_all('span',{'id':'productPrice'})
+	elif retailer == 'allysbasket': 
+		matchobj = soup.find_all('span',{'itemprop':'price'})
+	elif retailer == 'buyasianfood': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'chemistwarehouse': 
+		matchobj = soup.find_all('span',{'class':'product__price'})
+	elif retailer == 'goodpricepharmacy': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'indoasiangroceries': 
+		matchobj = soup.find_all('p',{'class':'price'})
+	elif retailer == 'myasiangrocer': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'pharmacydirect': 
+		matchobj = soup.find_all('span',{'id':'price-display'})
+	elif retailer == 'officeworks': 
+		matchobj = re.findall('"edlpPrice":"(.+?)"', html, re.IGNORECASE)
+	elif retailer == 'cincottachemist': 
+		matchobj = soup.find_all('span',{'id':'price-display'})
+	elif retailer == 'yahwehasiangrocery': 
+		matchobj = soup.find_all('span',{'class':'ProductPrice VariationProductPrice'})
+	elif retailer == 'asianpantry': 
+		matchobj = soup.find_all('span',{'class':'price price--highlight'})
+	elif retailer == 'g2': 
+		matchobj = soup.find_all('span',{'class':'money'})
+	elif retailer == 'groceryasia': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
+	elif retailer == 'hongyi': 
+		matchobj = re.findall('<meta property="og:price:amount" content="(.+?)">', html, re.IGNORECASE)
+	elif retailer == 'iganathalia': 
+		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
+	elif retailer == 'yinyam': 
+		matchobj = soup.find_all('div',{'class':'price--main'})
+	elif retailer == 'yourdiscountchemist': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'winc': 
+		matchobj = soup.find_all('span',{'class':'price_text'})
+	elif retailer == 'theiconic': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'tastefuldelights': 
+		matchobj = soup.find_all('span',{'class':'product-price'})
+	elif retailer == 'superpharmacy': 
+		matchobj = soup.find_all('span',{'class':'price promo-price'})
+	elif retailer == 'savourofasia': 
+		matchobj = soup.find_all('span',{'itemprop':'price'})
+	elif retailer == 'pharmacyonline': 
+		matchobj = soup.find_all('span',{'class':'price-wrapper price'})
+	elif retailer == 'maizo': 
+		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)
+	elif retailer == 'igamarket': 
+		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
+	else:
+		rulesdefined = False
+
+	if rulesdefined and matchobj:
+		for match in matchobj:
+			if type(match) == str:
+				price = match
+			else:
+				price = match.text
+
+			price = price.replace('\n' , '') 
+			price = price.replace('Price:' , '') 
+			price = price.replace('$' , '') 
+			try:
+				test = float(price)
+			except:
+				price = "0.0"
+			break
+	elif not rulesdefined:
+		errstr = "no rules defined for retailer [%s] [%s]" % (retailer,url)
+		print(errstr)
+	else:
+		errstr = "defined rules are broken for [%s] [%s]" % (retailer,url)
+		print(errstr)
+		logging.debug(errstr)
+
+	return float(price)
 
 def addproductcandidate(type,source,gtin,title,url,rank):
 	id = hashlib.md5(title.encode('utf-8')).hexdigest()

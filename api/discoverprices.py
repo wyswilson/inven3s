@@ -48,111 +48,6 @@ db = mysql.connector.connect(
 
 cursor = db.cursor()
 
-
-def pricescrape(url,retailer):
-	price = '0.0'
-	matchobj = ""
-
-	html,urlresolved = func.fetchhtml(url)
-	soup = bs4.BeautifulSoup(html, 'html.parser')
-
-	if retailer == 'amcal': 
-		matchobj = soup.find_all('span',{'class':'price'})
-
-	elif retailer == 'discountchemist': 
-		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
-
-	elif retailer == 'igashop': 
-		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
-
-	elif retailer == 'bigw': 
-		matchobj = soup.find_all('span',{'id':'product_online_price'})
-
-	elif retailer == 'woolworths': 
-		matchobj = soup.find_all('div',{'class':'price price--large'})
-	
-	elif retailer == 'coles': 
-		matchobj = soup.find_all('span',{'class':'price-container'})
-
-	elif retailer == 'asiangrocerystore': 
-		matchobj = soup.find_all('span',{'id':'line_discounted_price_126'})
-
-	elif retailer == 'drakes': 
-		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
-
-	elif retailer == 'mysweeties': 
-		matchobj = soup.find_all('span',{'id':'productPrice'})
-
-	elif retailer == 'allysbasket': 
-		matchobj = soup.find_all('span',{'itemprop':'price'})
-
-	elif retailer == 'buyasianfood': 
-		matchobj = soup.find_all('span',{'class':'price'})
-
-	elif retailer == 'chemistwarehouse': 
-		matchobj = soup.find_all('span',{'class':'product__price'})
-
-	elif retailer == 'goodpricepharmacy': 
-		matchobj = soup.find_all('span',{'class':'price'})
-		
-	elif retailer == 'indoasiangroceries': 
-		matchobj = soup.find_all('p',{'class':'price'})
-
-	elif retailer == 'myasiangrocer': 
-		matchobj = soup.find_all('span',{'class':'price'})
-
-	elif retailer == 'pharmacydirect': 
-		matchobj = soup.find_all('span',{'id':'price-display'})
-
-	elif retailer == 'officeworks': 
-		matchobj = re.findall('"edlpPrice":"(.+?)"', html, re.IGNORECASE)
-	else:
-		retailer = 'not-supported'
-
-	if matchobj and retailer != 'not-supported':
-		for match in matchobj:
-			if type(match) == str:
-				price = match
-			else:
-				price = match.text
-
-			price = price.replace('\n' , '') 
-			price = price.replace('Price:' , '') 
-			price = price.replace('$' , '') 
-			try:
-				test = float(price)
-			except:
-				price = "0.0"
-			break
-	elif retailer == 'not-supported':
-		errstr = "no rules defined for retailer: [%s] [%s]" % (retailer,url)
-		print(errstr)
-	else:
-		errstr = "unknown errors [%s] [%s]" % (retailer,url)
-		print(errstr)
-		logging.debug(errstr)
-
-	return float(price)
-
-#url = "https://shop.coles.com.au/a/richmond-south/product/claratyne-childrens-grape-chew-5mg-tabs-10pk"
-
-#url = "https://igashop.com.au/product/leggos-pesto-traditional-basil-190g/"
-#url = "https://www.amcal.com.au/soov-bite-25g-p-93327381"
-#url = "https://www.bigw.com.au/product/oral-b-stages-2-mickey-2-4-years-toothbrush-extra-soft/p/169614/"
-#url = "https://discountchemist.com.au/product/ego-pinetarsol-solution-100ml/"
-#url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-traditional-basil"
-#url = "http://www.asiangrocerystore.com.au/lee-kum-kee-char-siu-sauce-397g.html"
-#url = "https://062.drakes.com.au/lines/obento-seasoning-sushi-250ml"
-#url = "https://mysweeties.com.au/products/doritos-salsa-dip-mild-300g-1-unit"
-#url = "https://www.allysbasket.com/biscuits-crackers/10608-arnott-s-premier-cookies-chocolate-chip-310g.html"
-#url = "https://www.buyasianfood.com.au/_products/NoodlesPasta/JapaneseKoreanNoodles/HakubakuOrganicUdonNoodles270G-25-35-.aspx"
-#url = "https://www.chemistwarehouse.com.au/buy/89956/grants-of-australia-toothpaste-propolis-with-mint-110g-online-only"
-#url = "https://www.goodpricepharmacy.com.au/palmolive-foam-hand-wash-antibacterial-lime-250ml"
-#url = "https://www.indoasiangroceries.com.au/lee-kum-kee-premium-dark-soy-sauce-500-ml"
-#url = "https://www.myasiangrocer.com.au/ajishima-nori-komi-furikake-rice-seasoning-50g/"
-#url = "https://www.officeworks.com.au/shop/officeworks/p/glen-20-disinfectant-300g-lavender-le0357053"
-#url = "https://www.pharmacydirect.com.au/dermeze-treatment-cream-500g"
-
 query1 = """
 	SELECT 
 		p.gtin,
@@ -180,11 +75,12 @@ cursor.execute(query1)
 records = cursor.fetchall()
 
 for record in records:
-	gtin 			= record[0]
-	productname		= record[1]
-	date         	= record[2]
-	retailerswithprice = record[6]
-	sourceurls     	= record[8]
+	gtin 				= record[0]
+	productname			= record[1]
+	date         		= record[2]
+	retailerswithprice 	= record[6]
+	sourceurls     		= record[8]
+
 	print("[%s][%s][%s]" % (gtin,sourceurls,retailerswithprice))
 
 	if not retailerswithprice:
@@ -195,7 +91,6 @@ for record in records:
 	elif not ";" in sourceurls: 
 		sourceurls = sourceurls + "; "
 		
-
 	processedretailers = {}
 	if ";" in retailerswithprice:
 		for retailer in retailerswithprice.split("; "):
@@ -204,21 +99,19 @@ for record in records:
 		processedretailers[retailerswithprice] = ''
 
 	for url in sourceurls.split("; "):
-		matchobj = re.findall('([^\.\/]+)\.com', url, re.IGNORECASE)
+		matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
 		if matchobj:
 			retailer = matchobj[0]
 
 			if not any(retailer in key for key in processedretailers):
-				price = pricescrape(url,retailer)
+				price = func.pricescrape(url,retailer)
 				print("[%s][%s]" % (retailer,price))
-				if float(price) > 0:
+				if price > 0:
 					timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 					date 		= datetime.datetime.today().strftime('%Y-%m-%d')
 					query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
 					cursor.execute(query1,(gtin,price,timestamp,date,retailer))
-					db.commit()	
-				else:
-					print("no price detected [%s][%s]" % (retailer,price))		
+					db.commit()		
 			else:
 				print("price from retailer already exists [%s]" % (retailer))		
 
