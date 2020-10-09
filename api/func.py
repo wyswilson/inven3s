@@ -440,7 +440,7 @@ def jsonifyprices(records):
 	for record in records:
 		gtin_	  		= record[0]
 		productname_  	= record[1]
-		pricedate		= record[2]
+		pricedate		= str(record[2])
 		priceval   		= record[3]
 		priceretailer	= record[4]
 
