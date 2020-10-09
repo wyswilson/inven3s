@@ -446,6 +446,20 @@ def productselect(userid,gtin):
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
+@app.route('/product/price/<gtin>', methods=['GET'])
+@func.requiretoken
+def productprice(userid,gtin):
+	print('hit [productprice] with [%s]' % (userid))
+	func.registerapilogs("productprice",userid,flask.request)
+
+	status = "product prices returned"
+	statuscode = 200
+	records = []
+	
+	records = func.findproductprices(gtin)
+
+	return func.jsonifyoutput(statuscode,status,func.jsonifyprices(records))
+
 @app.route('/product', methods=['GET'])
 @func.requiretoken
 def productselectall(userid):

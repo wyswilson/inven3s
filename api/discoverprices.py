@@ -157,19 +157,24 @@ query1 = """
 	SELECT 
 		p.gtin,
 		p.productname,
-		DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d"),
-		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as pricesourceurls,
-		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as priceretailers,		
-		COUNT(*) 
+		DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") AS todaydate,
+		MAX(pp.date) AS mostrecentpricedate,
+		COUNT(DISTINCT(pp.date)) AS dateswithprice,
+		COUNT(DISTINCT(pp.retailer)) AS retailerswithpricecnt,
+		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as retailerwithprice,	
+		COUNT(distinct(pc.candidateid)) AS retailerpageswithpricecnt,
+		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as retailerpageswithprice,
+		AVG(pp.price) AS avgprice,		
+		COUNT(distinct(i.entryid)) AS inventoryentries
 	FROM products AS p
 	LEFT JOIN inventories AS i
 	ON p.gtin = i.gtin
 	LEFT JOIN productsprice AS pp
-	ON p.gtin = pp.gtin AND pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d")
+	ON p.gtin = pp.gtin #AND pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d")
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 6 DESC, 1 ASC
+	ORDER BY 5 ASC, 11 DESC
 """
 cursor.execute(query1)
 records = cursor.fetchall()
@@ -178,13 +183,18 @@ for record in records:
 	gtin 			= record[0]
 	productname		= record[1]
 	date         	= record[2]
-	sourceurls     	= record[3]
-	retailerswithprice = record[4]
+	retailerswithprice = record[6]
+	sourceurls     	= record[8]
+	print("[%s][%s][%s]" % (gtin,sourceurls,retailerswithprice))
+
 	if not retailerswithprice:
 		retailerswithprice = ''
-	if not ";" in sourceurls and sourceurls != '':
-		sourceurls = sourceurls + "; "
 
+	if not sourceurls:
+		sourceurls = ''		
+	elif not ";" in sourceurls: 
+		sourceurls = sourceurls + "; "
+		
 
 	processedretailers = {}
 	if ";" in retailerswithprice:

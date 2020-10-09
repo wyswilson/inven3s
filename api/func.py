@@ -434,6 +434,30 @@ def jsonifyinventorycategories(records,cattype):
 
 	return categoriesobjects
 
+def jsonifyprices(records):
+	prices = {}
+	#for record in records:
+	#	gtin	  		= record[0]
+	#	productname  	= record[1]
+	#	pricedate		= record[2]
+	#	priceval   		= record[3]
+	#	priceretailer	= record[4]
+
+	#	if gtin in prices:
+	#		prices[gtin].append(pricedate)
+
+		
+	#product = {}
+	#product['gtin'] 			= gtin
+	#product['productname']		= productname
+
+
+
+	#products.append(product)
+
+	return prices	
+
+
 def jsonifyproducts(records):
 	products = []
 	for record in records:
@@ -525,7 +549,7 @@ def jsonifyoutput(statuscode,status,records,special=None):
 def addproductcandidate(type,source,gtin,title,url,rank):
 	id = hashlib.md5(title.encode('utf-8')).hexdigest()
 	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-	
+
 	query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 	cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate1))
 	db.commit()
@@ -742,8 +766,8 @@ def downloadproductpricepages(gtin,productname):
 			resulttitle = listhead.text
 			resultlink  = result.find('a').get('href', '')
 
-		if resultlink != '#' and resultlink != '':
-			addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
+			if resultlink != '#' and resultlink != '':
+				addproductcandidate(type,engine,gtin,resulttitle,resultlink,i)
 		i += 1
 
 def downloadproductimage(gtin,productname,productimage):
@@ -955,6 +979,24 @@ def gettopproductsallusers():
 		LIMIT 5
 	"""
 	cursor.execute(query1)
+	records = cursor.fetchall()
+
+	return records	
+
+def findproductprices(gtin):
+	query1 = """
+		SELECT
+			p.gtin,p.productname,
+			pp.date,
+			pp.price,
+			pp.retailer
+		FROM products AS p
+		JOIN productsprice AS pp
+		ON p.gtin = pp.gtin
+		WHERE p.gtin = %s
+		ORDER BY 5 DESC, 4 ASC
+	"""
+	cursor.execute(query1,(gtin,))
 	records = cursor.fetchall()
 
 	return records	
