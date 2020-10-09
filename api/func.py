@@ -453,7 +453,7 @@ def jsonifyprices(records):
 		if pricedate in dates:
 			dates[pricedate].append(price)
 		else:
-			dates[pricedate] = price
+			dates[pricedate] = [price]
 
 	return dates	
 
