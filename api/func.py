@@ -457,7 +457,7 @@ def jsonifyprices(records):
 
 	for date in dates:
 		prices_ = dates[date]
-		prices['date'] = dateexpiry
+		prices['date'] = date
 		prices['prices'] =  prices_
 
 		
