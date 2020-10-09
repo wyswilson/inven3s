@@ -455,9 +455,7 @@ def jsonifyprices(records):
 		else:
 			dates[pricedate] = [price]
 
-	sorteddates = sorted(dates.items(), key=lambda x: x[1], reverse=True)
-
-	for date in sorteddates:
+	for date in dates:
 		prices_ = dates[date]
 
 		datewithprice = {}
