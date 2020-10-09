@@ -455,8 +455,6 @@ def jsonifyprices(records):
 		price['date'] = pricedate
 		pricedates.append(price)
 		
-
-
 	prices['gtin'] = gtin
 	prices['productname'] = productname
 	prices['prices'] = pricedates
