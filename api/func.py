@@ -436,27 +436,32 @@ def jsonifyinventorycategories(records,cattype):
 
 def jsonifyprices(records):
 	prices = {}
+	pricedates = {}
+	gtin = ''
+	productname = ''
 	for record in records:
-		gtin	  		= record[0]
-		productname  	= record[1]
+		gtin_	  		= record[0]
+		productname_  	= record[1]
 		pricedate		= record[2]
 		priceval   		= record[3]
 		priceretailer	= record[4]
 
-	#	if gtin in prices:
-	#		prices[gtin].append(pricedate)
+		gtin = gtin_
+		productname = productname_
 
+		price = {}
+		price['price'] = priceval
+		price['source'] = priceretailer
+		price['date'] = pricedate
+		pricedates.append(price)
 		
-	#product = {}
-	#product['gtin'] 			= gtin
-	#product['productname']		= productname
 
 
-
-	#products.append(product)
+	prices['gtin'] = gtin
+	prices['productname'] = productname
+	prices['prices'] = pricedates
 
 	return prices	
-
 
 def jsonifyproducts(records):
 	products = []
