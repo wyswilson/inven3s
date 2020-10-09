@@ -436,7 +436,7 @@ def jsonifyinventorycategories(records,cattype):
 
 def jsonifyprices(records):
 	prices = {}
-	pricedates = {}
+	pricedates = []
 	gtin = ''
 	productname = ''
 	for record in records:
