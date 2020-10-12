@@ -1121,7 +1121,6 @@ def findproductprices(gtin):
 		GROUP BY 1,2,3
 		ORDER BY 1 ASC, 3 ASC
 	"""
-	print(query2)
 	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
 	i = 1
@@ -1129,7 +1128,6 @@ def findproductprices(gtin):
 	for fieldname in cursor.description:
 		retailername = fieldname[0]
 		if i > 3:
-			print(retailername)
 			retailernames.append(retailername)
 		i += 1
 
