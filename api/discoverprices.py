@@ -69,7 +69,7 @@ query1 = """
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 5 ASC, 11 DESC
+	ORDER BY 11 DESC,5 ASC
 """
 cursor.execute(query1)
 records = cursor.fetchall()

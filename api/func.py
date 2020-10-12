@@ -1117,8 +1117,8 @@ def findproductprices(gtin):
 	tmpstr = ""
 	for retailer in retailers:
 		retailerstr = retailer[0]
-		tmpstr += "CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END AS \"%s\"," % (retailerstr,retailerstr)
-	tmpstr = re.sub(r",$", "", tmpstr)
+		tmpstr += "SUM(CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END) AS \"%s\",\n" % (retailerstr,retailerstr)
+	tmpstr = re.sub(r",\n$", "", tmpstr)
 	query2 += tmpstr
 	query2 += """
 		FROM products AS p
@@ -1129,9 +1129,8 @@ def findproductprices(gtin):
 		ORDER BY 1 ASC, 3 ASC
 	"""
 	print(query2)
-	#cursor.execute(query2,(gtin,))
-	#records = cursor.fetchall()
-	records = []
+	cursor.execute(query2,(gtin,))
+	records = cursor.fetchall()
 	return records	
 
 def findallproducts(userid,isedible):
