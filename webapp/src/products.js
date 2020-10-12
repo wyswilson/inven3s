@@ -3,8 +3,8 @@ import axios from 'axios';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
-import {isMobile} from 'react-device-detect';
 
+import {isMobile} from 'react-device-detect';
 import { Chart } from "react-google-charts";
 
 class Product extends React.Component {
@@ -260,7 +260,7 @@ class Product extends React.Component {
           
           this.searchbrands(selectedgtin,selectedbrand);
           this.fetchdefaultcategories(selectedprodcategoryoptions);
-          this.setState({ pricegraph: defaultpricegraph });
+          this.setState({ pricegraph: this.state.defaultpricegraph });
         }
         else{
           //NEW PRODUCT
