@@ -435,36 +435,32 @@ def jsonifyinventorycategories(records,cattype):
 	return categoriesobjects
 
 def jsonifyprices(records,retailernames):
-	dates = {}
-	prices = []
+	dates = []
+	retailercnt = len(retailernames)
 	for record in records:
-		gtin_	  		= record[0]
-		productname_  	= record[1]
+		gtin	  		= record[0]
+		productname  	= record[1]
 		pricedate		= str(record[2])
-		priceval   		= record[3]
-		priceretailer	= record[4]
+		i = 3
+		j = 0
+		prices = []
+		while i < (3 + retailercnt):
+			priceval = record[i]
+			priceretailer = retailernames[j]
+			price = {}
+			price['price'] = priceval
+			price['source'] = priceretailer
+			i += 1
+			j += 1
 
-		gtin = gtin_
-		productname = productname_
-
-		price = {}
-		price['price'] = priceval
-		price['source'] = priceretailer
-		if pricedate in dates:
-			dates[pricedate].append(price)
-		else:
-			dates[pricedate] = [price]
-
-	for date in dates:
-		prices_ = dates[date]
+			prices.append(price)
 
 		datewithprice = {}
-		datewithprice['date'] = date
-		datewithprice['prices'] =  prices_
-		prices.append(datewithprice)
+		datewithprice['date'] = pricedate
+		datewithprice['prices'] =  prices
+		dates.append(datewithprice)
 		
-
-	return prices	
+	return dates	
 
 def jsonifyproducts(records):
 	products = []
