@@ -4,7 +4,6 @@ import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
 
-import {isMobile} from 'react-device-detect';
 import { Chart } from "react-google-charts";
 
 class Product extends React.Component {
@@ -34,7 +33,7 @@ class Product extends React.Component {
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
       categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
       defaultpricegraph: [['Date','Retailer'],['2020-10-01',0.0]],
-      pricegraph: defaultpricegraph
+      pricegraph: this.state.defaultpricegraph
     };
   }
 
