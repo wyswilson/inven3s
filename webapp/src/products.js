@@ -4,7 +4,6 @@ import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
-import { render } from "react-dom";
 import { Chart } from "react-google-charts";
 
 class Product extends React.Component {
@@ -145,6 +144,30 @@ class Product extends React.Component {
         else{
           console.log('searchproducts [server unreachable]');
         }
+      });
+  }
+
+  getproductprice(gtin){
+    console.log('getproductprice [' + gtin + ']');
+
+    axios.get(this.state.apihost + '/product/price/' + gtin,
+        {
+          headers: {
+            "content-type": "application/json",
+            "access-token": this.state.token
+          }
+        }
+      )
+      .then(response => { 
+        if(response.status === 200){
+          console.log('getproductprice [' + response.data[0]['message'] + ']');
+        }
+        else{
+          console.log('getproductprice [' + response.data[0]['message'] + ']');          
+        }
+      })
+      .catch(error => {
+          console.log('getproductprice [server unreachable]');
       });
   }
 
@@ -633,7 +656,7 @@ class Product extends React.Component {
               }}
               rootProps={{ 'data-testid': '2' }}
             />
-            
+
           </Card.Content>
         </Card>
       </div>
