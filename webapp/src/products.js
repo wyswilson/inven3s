@@ -32,8 +32,8 @@ class Product extends React.Component {
       selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
       categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
-      defaultpricegraph: [['Date'],['2020-10-01']],
-      pricegraph: [['Date'],['2020-10-01']]
+      defaultpricegraph: [['Date','Retailer'],['2020-10-01',0.0]],
+      pricegraph: [['Date','Retailer'],['2020-10-01',0.0]]
     };
   }
 
@@ -671,14 +671,14 @@ class Product extends React.Component {
               width={'100%'}
               height={'400px'}
               chartType="LineChart"
-              loader={<div>Loading Chart</div>}
+              loader={<div>Loading price chart</div>}
               data={this.state.pricegraph}
               options={{
                 hAxis: {
                   title: 'Date',
                 },
                 vAxis: {
-                  title: 'Price',
+                  title: 'Price ($)',
                 },
                 series: {
                   1: { curveType: 'function' },
