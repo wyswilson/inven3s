@@ -456,9 +456,9 @@ def productprice(userid,gtin):
 	statuscode = 200
 	records = []
 	
-	records = func.findproductprices(gtin)
+	records,retailernames = func.findproductprices(gtin)
 
-	return func.jsonifyoutput(statuscode,status,func.jsonifyprices(records))
+	return func.jsonifyoutput(statuscode,status,func.jsonifyprices(records,retailernames))
 
 @app.route('/product', methods=['GET'])
 @func.requiretoken

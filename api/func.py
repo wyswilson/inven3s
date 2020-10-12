@@ -434,7 +434,7 @@ def jsonifyinventorycategories(records,cattype):
 
 	return categoriesobjects
 
-def jsonifyprices(records):
+def jsonifyprices(records,retailernames):
 	dates = {}
 	prices = []
 	for record in records:
@@ -1128,10 +1128,15 @@ def findproductprices(gtin):
 	print(query2)
 	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
+	i = 1
+	retailernames = []
 	for fieldname in cursor.description:
-		print(fieldname)
+		if i > 3
+			print(fieldname)
+			retailernames.append(fieldname)
+		i += 1
 
-	return records	
+	return records,retailernames
 
 def findallproducts(userid,isedible):
 	query1 = """
