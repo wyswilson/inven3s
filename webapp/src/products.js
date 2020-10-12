@@ -32,8 +32,8 @@ class Product extends React.Component {
       selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
       categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
-      defaultpricegraph: [['Date','Retailer'],['2020-10-01',0.0]],
-      pricegraph: this.state.defaultpricegraph
+      defaultpricegraph: [['Date'],['2020-10-01']],
+      pricegraph: [['Date'],['2020-10-01']]
     };
   }
 
