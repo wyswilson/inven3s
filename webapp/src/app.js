@@ -7,7 +7,7 @@ import { Header, Grid } from 'semantic-ui-react'
 import { BrowserRouter, Switch, NavLink, Redirect } from 'react-router-dom';
 
 import Login from './login';
-import Pantry from './pantry';
+import Inventory from './inventory';
 import Home from './home';
 import Products from './products';
 import ToBuy from './tobuy';
@@ -89,18 +89,17 @@ class App extends React.Component {
         <BrowserRouter>
           <div className={isMobile ? "navheader mobile" : "navheader"}>
             <NavLink to="/home">Home</NavLink>
-            <NavLink to="/pantry">Pantry</NavLink>
+            <NavLink to="/inventory">Inventory</NavLink>
             <NavLink to="/tobuy">ToBuy</NavLink>
             <NavLink to="/products">Products</NavLink>
           </div>
           <div>
             <Switch>
               <PrivateRoute path="/home" component={Home} />
-              <PrivateRoute path="/pantry" component={Pantry} />
+              <PrivateRoute path="/inventory" component={Inventory} />
               <PrivateRoute path="/tobuy" component={ToBuy} />
               <PrivateRoute path="/products" component={Products} />
               <PublicRoute path="/login" component={Login} />
-              <PublicRoute path="/inventory" component={Login} />
               <PublicRoute exact path="/">
                 <Redirect to="/login" />
               </PublicRoute>

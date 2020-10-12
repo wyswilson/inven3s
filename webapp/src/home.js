@@ -187,7 +187,7 @@ class Home extends React.Component {
     const catencoded = encodeURIComponent(category);
     if(isedible >= 0 && isopened >= 0){
       this.props.history.push({
-        pathname: '/pantry',
+        pathname: '/inventory',
         //search: '?isedible=' + isedible + '&isopened=' + isopened,
         state: { queryisedible: isedible, queryisopened: isopened, queryexpirystatus: expirystatus, querycategory: catencoded }
       })      

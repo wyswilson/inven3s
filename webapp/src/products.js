@@ -4,6 +4,8 @@ import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
+import { render } from "react-dom";
+import { Chart } from "react-google-charts";
 
 class Product extends React.Component {
   constructor(props) {
@@ -500,11 +502,13 @@ class Product extends React.Component {
     }
   }
 
+ 
   render() {
+      
+ 
+
     return (
-      <div
-        className={isMobile ? "bodymain mobile" : "bodymain"}
-      >
+      <div> 
         <Card raised fluid>
           <Card.Content>
             <Card.Description>
@@ -599,6 +603,37 @@ class Product extends React.Component {
                 {this.generateitemadditionmsg()}
               </Grid.Column>
             </Grid>
+
+            <Chart
+              width={'600px'}
+              height={'400px'}
+              chartType="LineChart"
+              loader={<div>Loading Chart</div>}
+              data={[
+                ['x', 'dogs', 'cats'],
+                [0, 0, 0],
+                [1, 10, 5],
+                [2, 23, 15],
+                [3, 17, 9],
+                [4, 18, 10],
+                [5, 9, 5],
+                [6, 11, 3],
+                [7, 27, 19],
+              ]}
+              options={{
+                hAxis: {
+                  title: 'Time',
+                },
+                vAxis: {
+                  title: 'Popularity',
+                },
+                series: {
+                  1: { curveType: 'function' },
+                },
+              }}
+              rootProps={{ 'data-testid': '2' }}
+            />
+            
           </Card.Content>
         </Card>
       </div>

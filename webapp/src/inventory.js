@@ -6,7 +6,7 @@ import { Icon, Message, Grid, Dropdown, Modal, Button, Input, Label, Card, Image
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 
-class Pan3 extends React.Component {
+class Inventory extends React.Component {
   constructor(props) {
     super(props)
     const redirectstate = this.props.location.state;
@@ -695,4 +695,4 @@ class Pan3 extends React.Component {
     )
   }
 }
-export default Pan3;
+export default Inventory;

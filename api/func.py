@@ -1096,19 +1096,37 @@ def gettopproductsallusers():
 	return records	
 
 def findproductprices(gtin):
-	query1 = """
+
+
+	retailers = """
+		SELECT
+			distinct pp.retailer
+		FROM productsprice AS pp
+		WHERE pp.gtin = '9310088011661'
+		ORDER BY 1 ASC
+	"""
+	cursor.execute(query1,(gtin,))
+	retailers = cursor.fetchall()
+
+
+	query2 = """
 		SELECT
 			p.gtin,p.productname,
 			pp.date,
-			pp.price,
-			pp.retailer
+			"""
+	for retailer in retailers:
+		query2 += """
+			CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END AS %s,
+		""" % (retailer,retailer)
+	query2 += """
 		FROM products AS p
 		JOIN productsprice AS pp
 		ON p.gtin = pp.gtin
 		WHERE p.gtin = %s
-		ORDER BY 5 DESC, 4 ASC
+		ORDER BY 1 ASC, 3 ASC
 	"""
-	cursor.execute(query1,(gtin,))
+	print(query2)
+	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
 
 	return records	
