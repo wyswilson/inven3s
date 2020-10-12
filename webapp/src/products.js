@@ -92,12 +92,12 @@ class Product extends React.Component {
           this.setState({ actionedmsg: error.response.data[0]['message'] });        
         }
         else{
-          console.log('upsertproduct1 [server unreachable]');
+          console.log('upsertproduct [server unreachable]');
           this.setState({ actionedmsg: 'server unreachable' });
         }
       }
       else{
-        console.log('upsertproduct2 [server unreachable]');
+        console.log('upsertproduct [server unreachable]');
         this.setState({ actionedmsg: 'server unreachable' });
       }
     });
@@ -125,7 +125,6 @@ class Product extends React.Component {
       .then(response => { 
         if(response.status === 200){
           console.log('searchproducts [' + response.data[0]['message'] + ']');
-          
           this.updateproductsuggests(response.data[0]['results']);
         }
         else{
@@ -161,6 +160,7 @@ class Product extends React.Component {
       .then(response => { 
         if(response.status === 200){
           console.log('getproductprice [' + response.data[0]['message'] + ']');
+          console.log(response.data[0]['results']);
         }
         else{
           console.log('getproductprice [' + response.data[0]['message'] + ']');          
@@ -220,9 +220,8 @@ class Product extends React.Component {
           this.setState({ isfavourite: selectedisfavourite });
           this.setState({ categoryoptions: selectedprodcategoryoptions });
           
-          this.searchbrands(selectedbrand);
+          this.searchbrands(selectedgtin,selectedbrand);
           this.fetchdefaultcategories(selectedprodcategoryoptions);
-
         }
         else{
           //NEW PRODUCT
@@ -337,7 +336,7 @@ class Product extends React.Component {
           this.setState({ isedible: newproductdata['isedible'] });
           this.setState({ isfavourite: newproductdata['isfavourite'] });
 
-          this.searchbrands(newproductdata['brandname']);
+          this.searchbrands(newproductdata['gtin'],newproductdata['brandname']);
 
           this.fetchdefaultcategories(newproductdata['categories']);
         }
@@ -381,7 +380,7 @@ class Product extends React.Component {
     const brand = data.searchQuery;
 
     if(brand.length > 1){
-      this.searchbrands(brand);
+      this.searchbrands(this.state.gtin,brand);
     }
   }
 
@@ -414,7 +413,7 @@ class Product extends React.Component {
     }
   }
 
-  searchbrands(brand){
+  searchbrands(gtin,brand){
     console.log('searchbrands [' + brand + ']');
 
     axios.get(this.state.apihost + '/brand/' + brand,
@@ -429,6 +428,7 @@ class Product extends React.Component {
         if(response.status === 200){
           console.log('searchbrands [' + response.data[0]['message'] + ']');
           this.updatebrandsuggests(response.data[0]['results']);
+          this.getproductprice(gtin);
         }
         else{
           console.log('searchbrands [' + response.data[0]['message'] + ']');
@@ -502,7 +502,7 @@ class Product extends React.Component {
     //ONLOAD, IF REDIRECT WITH PRODUCT DETAILS FROM INVENTORY. NEED TO POPULATE DROPDOWN
     
     if(this.state.brandname !== ''){
-      this.searchbrands(this.state.brandname);//PRELOAD DEFAULT CAT === 1
+      this.searchbrands(this.state.gtin,this.state.brandname);//PRELOAD DEFAULT CAT === 1
     }
     this.fetchdefaultcategories(this.state.categoryoptions);
   }
@@ -527,8 +527,6 @@ class Product extends React.Component {
 
  
   render() {
-      
- 
 
     return (
       <div> 
