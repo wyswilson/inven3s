@@ -1131,9 +1131,10 @@ def findproductprices(gtin):
 	i = 1
 	retailernames = []
 	for fieldname in cursor.description:
+		retailername = fieldname[0]
 		if i > 3
-			print(fieldname)
-			retailernames.append(fieldname)
+			print(retailername)
+			retailernames.append(retailername)
 		i += 1
 
 	return records,retailernames
