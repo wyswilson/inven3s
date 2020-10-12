@@ -31,7 +31,8 @@ class Product extends React.Component {
       isperishable:0,
       selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
-      categoryoptions: redirectstate ? redirectstate.categoryoptions : ''
+      categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
+      pricegraph: [['Date','Retailer'],['2020-10-01',0.0]]
     };
   }
 
@@ -146,6 +147,40 @@ class Product extends React.Component {
       });
   }
 
+  renderpricepgraph(pricesobj){
+    let graphdata = [];
+    let i = 0;
+
+    pricesobj.forEach(function(datenprice) {
+        let datarow = [];
+        let axis    = ['date'];
+
+        const pricedate = datenprice['date'];
+        const prices    = datenprice['prices'];
+        datarow.push(pricedate);
+
+        prices.forEach(function(pricesource) {
+          const price = pricesource['price'];
+          const source = pricesource['source'];
+          if(i === 0){
+            axis.push(source);
+          }
+          datarow.push(price);
+        },this);
+
+        if(i === 0){
+          graphdata.push(axis); 
+
+        }
+        graphdata.push(datarow); 
+
+        i++;
+
+      },this);
+
+    this.setState({ pricegraph: graphdata });
+  }
+
   getproductprice(gtin){
     console.log('getproductprice [' + gtin + ']');
 
@@ -160,7 +195,8 @@ class Product extends React.Component {
       .then(response => { 
         if(response.status === 200){
           console.log('getproductprice [' + response.data[0]['message'] + ']');
-          console.log(response.data[0]['results']);
+          const prices = response.data[0]['results'];
+          this.renderpricepgraph(prices);
         }
         else{
           console.log('getproductprice [' + response.data[0]['message'] + ']');          
@@ -553,7 +589,7 @@ class Product extends React.Component {
             <Divider/>
             <Card.Meta>
               <Grid columns={1} doubling stackable>
-                <Grid.Row columns={2}>
+                <Grid.Row columns={2} divided stretched>
                   <Grid.Column width={4}>
                     <Image inline
                       src={this.state.productimagelocal}
@@ -563,47 +599,51 @@ class Product extends React.Component {
                     />
                   </Grid.Column>
                   <Grid.Column width={11}>
-                    <label className="fullwidth">GTIN</label>
-                    <Input className="fullwidth" disabled value={this.state.gtin}/>
+                    <Grid.Row>
+                      <Grid.Column>
+                        <label className="fullwidth">GTIN</label>
+                        <Input  style={{ paddingBottom: '50%' }} className="fullwidth" disabled value={this.state.gtin}/>
+                        <br/>
+                      </Grid.Column>
+                      <Grid.Column>
+                          <br/>
+                        <label className="fullwidth">Product</label>
+                        <Input className="fullwidth" value={this.state.productname} onChange={e => this.setState({ productname: e.target.value })}/>
+                      </Grid.Column>
+                    </Grid.Row>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Column>
-                  <label className="fullwidth">Product</label>
-                  <Input value={this.state.productname} className="fullwidth" onChange={e => this.setState({ productname: e.target.value })}/>
-                </Grid.Column>
                 <Grid.Column>
                   <label className="fullwidth">Image</label>
                   <Input value={this.state.productimage} className="fullwidth" onChange={e => this.setState({ productimage: e.target.value })}/>                     
                 </Grid.Column>
-                <Grid.Row columns={2}>
-                  <Grid.Column width={5}>
-                    <label className="fullwidth">Brand</label>
-                    <Dropdown className="fullwidth" name="brandname" 
-                      search
-                      selection
-                      allowAdditions
-                      value={this.state.brandname}
-                      options={this.state.brandsuggests}
-                      additionLabel = "Add new brand "
-                      noResultsMessage = "No brand found"
-                      onSearchChange={this.lookupbrand.bind(this)}
-                      onAddItem={this.addnewbrand.bind(this)}
-                      onChange={this.setproductmetadata.bind(this)}
-                    />
-                  </Grid.Column>
-                  <Grid.Column width={10}>
-                    <label className="fullwidth">Category</label>
-                    <Dropdown className="fullwidth" name="categoryname"
-                      clearable
-                      multiple
-                      search
-                      selection
-                      value={this.state.selectedcategories}
-                      options={this.state.categorysuggests}
-                      onChange={this.setproductmetadata.bind(this)}
-                    />
-                  </Grid.Column>
-                </Grid.Row>
+                <Grid.Column>
+                  <label className="fullwidth">Brand</label>
+                  <Dropdown className="fullwidth" name="brandname" 
+                    search
+                    selection
+                    allowAdditions
+                    value={this.state.brandname}
+                    options={this.state.brandsuggests}
+                    additionLabel = "Add new brand "
+                    noResultsMessage = "No brand found"
+                    onSearchChange={this.lookupbrand.bind(this)}
+                    onAddItem={this.addnewbrand.bind(this)}
+                    onChange={this.setproductmetadata.bind(this)}
+                  />
+                </Grid.Column>
+                <Grid.Column>
+                  <label className="fullwidth">Category</label>
+                  <Dropdown className="fullwidth" name="categoryname"
+                    clearable
+                    multiple
+                    search
+                    selection
+                    value={this.state.selectedcategories}
+                    options={this.state.categorysuggests}
+                    onChange={this.setproductmetadata.bind(this)}
+                  />
+                </Grid.Column>
                 <Grid.Column>
                    <Checkbox toggle label='Is edible?' checked={this.checkedible()} onChange={this.updateedibletoggle.bind(this)}/>
                    <Checkbox toggle label='Is favourite?' checked={this.checkfavourite()} onChange={this.updatefavouritetoggle.bind(this)}/>
@@ -626,27 +666,17 @@ class Product extends React.Component {
             </Grid>
 
             <Chart
-              width={'600px'}
+              width={'100%'}
               height={'400px'}
               chartType="LineChart"
               loader={<div>Loading Chart</div>}
-              data={[
-                ['x', 'dogs', 'cats'],
-                [0, 0, 0],
-                [1, 10, 5],
-                [2, 23, 15],
-                [3, 17, 9],
-                [4, 18, 10],
-                [5, 9, 5],
-                [6, 11, 3],
-                [7, 27, 19],
-              ]}
+              data={this.state.pricegraph}
               options={{
                 hAxis: {
-                  title: 'Time',
+                  title: 'Date',
                 },
                 vAxis: {
-                  title: 'Popularity',
+                  title: 'Price',
                 },
                 series: {
                   1: { curveType: 'function' },
