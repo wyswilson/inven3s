@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import {isMobile} from 'react-device-detect';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
+import {isMobile} from 'react-device-detect';
+
 import { Chart } from "react-google-charts";
 
 class Product extends React.Component {

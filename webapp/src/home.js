@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import {isMobile} from 'react-device-detect';
 import { getToken, getUser, removeUserSession } from './utils/common';
 import { Segment, Image, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 import _ from 'lodash'
+import {isMobile} from 'react-device-detect';
 
 class Home extends React.Component {
   constructor(props) {
