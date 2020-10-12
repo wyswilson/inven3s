@@ -33,7 +33,8 @@ class Product extends React.Component {
       selectedcategories: [],
       isfavourite: redirectstate ? redirectstate.isfavourite : 0,
       categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
-      pricegraph: [['Date','Retailer'],['2020-10-01',0.0]]
+      defaultpricegraph: [['Date','Retailer'],['2020-10-01',0.0]],
+      pricegraph: defaultpricegraph
     };
   }
 
@@ -259,6 +260,7 @@ class Product extends React.Component {
           
           this.searchbrands(selectedgtin,selectedbrand);
           this.fetchdefaultcategories(selectedprodcategoryoptions);
+          this.setState({ pricegraph: defaultpricegraph });
         }
         else{
           //NEW PRODUCT
