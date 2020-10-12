@@ -1098,7 +1098,7 @@ def gettopproductsallusers():
 def findproductprices(gtin):
 
 
-	retailers = """
+	query1 = """
 		SELECT
 			distinct pp.retailer
 		FROM productsprice AS pp
