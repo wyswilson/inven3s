@@ -1096,8 +1096,6 @@ def gettopproductsallusers():
 	return records	
 
 def findproductprices(gtin):
-
-
 	query1 = """
 		SELECT
 			distinct pp.retailer
@@ -1107,7 +1105,6 @@ def findproductprices(gtin):
 	"""
 	cursor.execute(query1,(gtin,))
 	retailers = cursor.fetchall()
-
 
 	query2 = """
 		SELECT
@@ -1131,6 +1128,9 @@ def findproductprices(gtin):
 	print(query2)
 	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
+	for fieldname in cursor.description:
+		print(fieldname)
+
 	return records	
 
 def findallproducts(userid,isedible):
