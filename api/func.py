@@ -1114,16 +1114,20 @@ def findproductprices(gtin):
 			p.gtin,p.productname,
 			pp.date,
 			"""
+	tmpstr = ""
 	for retailer in retailers:
 		retailerstr = retailer[0]
-		query2 += """
+		tmpstr += """
 			CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END AS "%s",
 		""" % (retailerstr,retailerstr)
+	tmpstr = re.sub(r",$", "", tmpstr)
+	query2 += tmpstr
 	query2 += """
 		FROM products AS p
 		JOIN productsprice AS pp
 		ON p.gtin = pp.gtin
 		WHERE p.gtin = %s
+		GROUP BY 1,2,3
 		ORDER BY 1 ASC, 3 ASC
 	"""
 	print(query2)
