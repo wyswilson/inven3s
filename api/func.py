@@ -1126,9 +1126,9 @@ def findproductprices(gtin):
 		ORDER BY 1 ASC, 3 ASC
 	"""
 	print(query2)
-	cursor.execute(query2,(gtin,))
-	records = cursor.fetchall()
-
+	#cursor.execute(query2,(gtin,))
+	#records = cursor.fetchall()
+	records = []
 	return records	
 
 def findallproducts(userid,isedible):
