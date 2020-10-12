@@ -1102,7 +1102,7 @@ def findproductprices(gtin):
 		SELECT
 			distinct pp.retailer
 		FROM productsprice AS pp
-		WHERE pp.gtin = '9310088011661'
+		WHERE pp.gtin = %s
 		ORDER BY 1 ASC
 	"""
 	cursor.execute(query1,(gtin,))
