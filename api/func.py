@@ -438,6 +438,9 @@ def jsonifyprices(records,retailernames):
 	dates = []
 	retailercnt = len(retailernames)
 	memory = {}
+	for name in retailernames:
+		memory[name] = 0
+
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
@@ -453,9 +456,9 @@ def jsonifyprices(records,retailernames):
 			price['price'] = priceval
 			price['source'] = priceretailer
 
-			if memory[priceretailer]:
-				if priceval == 0 and memory[priceretailer] > 0:
-					priceval = memory[priceretailer]
+
+			if priceval == 0 and memory[priceretailer] > 0:
+				priceval = memory[priceretailer]
 
 			memory[priceretailer] = priceval
 			i += 1
