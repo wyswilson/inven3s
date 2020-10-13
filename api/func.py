@@ -453,8 +453,8 @@ def jsonifyprices(records,retailernames):
 			price['price'] = priceval
 			price['source'] = priceretailer
 
-			#if memory{priceretailer} == 0:
-
+			if priceval == 0 and memory{priceretailer} > 0:
+				priceval = memory{priceretailer}
 
 			memory[priceretailer] = priceval
 			i += 1
@@ -1126,7 +1126,7 @@ def findproductprices(gtin):
 		ON p.gtin = pp.gtin
 		WHERE p.gtin = %s
 		GROUP BY 1,2,3
-		ORDER BY 1 ASC, 3 DESC
+		ORDER BY 1 ASC, 3 ASC
 	"""
 	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
