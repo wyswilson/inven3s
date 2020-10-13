@@ -452,10 +452,6 @@ def jsonifyprices(records,retailernames):
 		while i < (3 + retailercnt):
 			priceval = record[i]
 			priceretailer = retailernames[j]
-			price = {}
-			price['price'] = priceval
-			price['source'] = priceretailer
-
 
 			if priceval == 0 and memory[priceretailer] > 0:
 				priceval = memory[priceretailer]
@@ -464,6 +460,9 @@ def jsonifyprices(records,retailernames):
 			i += 1
 			j += 1
 
+			price = {}	
+			price['price'] = priceval
+			price['source'] = priceretailer
 			prices.append(price)
 
 		datewithprice = {}
