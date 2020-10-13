@@ -591,7 +591,7 @@ class Product extends React.Component {
             <Divider/>
             <Card.Meta>
               <Grid columns={1} doubling stackable>
-                <Grid.Row columns={2} divided stretched>
+                <Grid.Row columns={2} divided>
                   <Grid.Column width={4}>
                     <Image inline
                       src={this.state.productimagelocal}

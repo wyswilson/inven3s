@@ -69,7 +69,7 @@ query1 = """
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 11 DESC,5 ASC
+	ORDER BY 5 ASC, 11 DESC
 """
 cursor.execute(query1)
 records = cursor.fetchall()
@@ -102,7 +102,7 @@ for record in records:
 		matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
 		if matchobj:
 			retailer = matchobj[0]
-
+			
 			if not any(retailer in key for key in processedretailers):
 				price = func.pricescrape(url,retailer)
 				print("[%s][%s]" % (retailer,price))
