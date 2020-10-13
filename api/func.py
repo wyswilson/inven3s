@@ -1112,35 +1112,37 @@ def findproductprices(gtin):
 	cursor.execute(query1,(gtin,))
 	retailers = cursor.fetchall()
 
-	query2 = """
-		SELECT
-			p.gtin,p.productname,
-			pp.date,
-			"""
-	tmpstr = ""
-	for retailer in retailers:
-		retailerstr = retailer[0]
-		tmpstr += "SUM(CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END) AS \"%s\",\n" % (retailerstr,retailerstr)
-	tmpstr = re.sub(r",\n$", "", tmpstr)
-	query2 += tmpstr
-	query2 += """
-		FROM products AS p
-		JOIN productsprice AS pp
-		ON p.gtin = pp.gtin
-		WHERE p.gtin = %s
-		GROUP BY 1,2,3
-		ORDER BY 1 ASC, 3 ASC
-	"""
-	print(tmpstr)
-	cursor.execute(query2,(gtin,))
-	records = cursor.fetchall()
-	i = 1
+	records = []
 	retailernames = []
-	for fieldname in cursor.description:
-		retailername = fieldname[0]
-		if i > 3:
-			retailernames.append(retailername)
-		i += 1
+	if len(retailers) > 0:
+		query2 = """
+			SELECT
+				p.gtin,p.productname,
+				pp.date,
+		"""
+		tmpstr = ""
+		for retailer in retailers:
+			retailerstr = retailer[0]
+			tmpstr += "SUM(CASE WHEN pp.retailer = '%s' THEN pp.price ELSE 0 END) AS \"%s\",\n" % (retailerstr,retailerstr)
+		tmpstr = re.sub(r",\n$", "", tmpstr)
+		query2 += tmpstr
+		query2 += """
+			FROM products AS p
+			JOIN productsprice AS pp
+			ON p.gtin = pp.gtin
+			WHERE p.gtin = %s
+			GROUP BY 1,2,3
+			ORDER BY 1 ASC, 3 ASC
+		"""
+		cursor.execute(query2,(gtin,))
+		records = cursor.fetchall()
+		i = 1
+		
+		for fieldname in cursor.description:
+			retailername = fieldname[0]
+			if i > 3:
+				retailernames.append(retailername)
+			i += 1
 
 	return records,retailernames
 
