@@ -453,7 +453,7 @@ def jsonifyprices(records,retailernames):
 			price['price'] = priceval
 			price['source'] = priceretailer
 
-			if priceval == 0 and memory{priceretailer} > 0:
+			if priceval == 0 and memory[priceretailer] > 0:
 				priceval = memory{priceretailer}
 
 			memory[priceretailer] = priceval
