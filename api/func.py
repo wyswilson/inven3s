@@ -550,7 +550,8 @@ def jsonifyoutput(statuscode,status,records,special=None):
 		message['results'] = records
 	else:
 		message['count'] = special
-		
+		message['results'] = None
+
 	messages.append(message)
 
 	if isinstance(special, dict):
