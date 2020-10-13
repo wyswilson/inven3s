@@ -452,11 +452,14 @@ def productprice(userid,gtin):
 	print('hit [productprice] with [%s]' % (userid))
 	func.registerapilogs("productprice",userid,flask.request)
 
-	status = "product prices returned"
+	status = "product prices found"
 	statuscode = 200
 	records = []
 	
 	records,retailernames = func.findproductprices(gtin)
+	if len(records) == 0:
+		statuscode = 404
+		status = "prices Unavailable for product"
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyprices(records,retailernames))
 
@@ -839,5 +842,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	app.run(debug=True,host='0.0.0.0',port=88)
-	#waitress.serve(app, host="0.0.0.0", port=88)
+	#app.run(debug=True,host='0.0.0.0',port=88)
+	waitress.serve(app, host="0.0.0.0", port=88)
