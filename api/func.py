@@ -456,7 +456,7 @@ def jsonifyprices(records,retailernames):
 			#if memory{priceretailer} == 0:
 
 
-			memory{priceretailer} = priceval
+			memory[priceretailer] = priceval
 			i += 1
 			j += 1
 
