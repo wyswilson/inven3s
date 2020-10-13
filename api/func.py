@@ -437,6 +437,7 @@ def jsonifyinventorycategories(records,cattype):
 def jsonifyprices(records,retailernames):
 	dates = []
 	retailercnt = len(retailernames)
+	memory = {}
 	for record in records:
 		gtin	  		= record[0]
 		productname  	= record[1]
@@ -444,12 +445,18 @@ def jsonifyprices(records,retailernames):
 		i = 3
 		j = 0
 		prices = []
+
 		while i < (3 + retailercnt):
 			priceval = record[i]
 			priceretailer = retailernames[j]
 			price = {}
 			price['price'] = priceval
 			price['source'] = priceretailer
+
+			#if memory{priceretailer} == 0:
+
+
+			memory{priceretailer} = priceval
 			i += 1
 			j += 1
 
@@ -1119,7 +1126,7 @@ def findproductprices(gtin):
 		ON p.gtin = pp.gtin
 		WHERE p.gtin = %s
 		GROUP BY 1,2,3
-		ORDER BY 1 ASC, 3 ASC
+		ORDER BY 1 ASC, 3 DESC
 	"""
 	cursor.execute(query2,(gtin,))
 	records = cursor.fetchall()
