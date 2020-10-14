@@ -7,6 +7,7 @@ import functools
 import mysql.connector
 import hashlib
 import urllib
+import urllib.parse
 import logging
 import simplejson as json
 import requests
@@ -49,31 +50,33 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 query1 = """
-	SELECT gtin,productname
-	FROM (
-		SELECT 
-			p.gtin,
-			p.productname,
-			DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") AS todaydate,
-			MAX(pp.date) AS mostrecentpricedate,
-			COUNT(DISTINCT(pp.date)) AS dateswithprice,
-			COUNT(DISTINCT(pp.retailer)) AS retailerswithpricecnt,
-			GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as retailerwithprice,	
-			COUNT(distinct(pc.candidateid)) AS retailerpageswithpricecnt,
-			GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as retailerpageswithprice,
-			AVG(pp.price) AS avgprice,		
-			COUNT(distinct(i.entryid)) AS inventoryentries
-		FROM products AS p
-		LEFT JOIN inventories AS i
-		ON p.gtin = i.gtin
-		LEFT JOIN productsprice AS pp
-		ON p.gtin = pp.gtin #AND pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d")
-		LEFT JOIN productscandidate AS pc
-		ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
-		GROUP BY 1,2,3
-		ORDER BY 5 ASC, 11 DESC
-	) AS tmp
-	WHERE retailerpageswithpricecnt = 0
+SELECT
+	*
+FROM(
+	SELECT
+		p.gtin,
+		p.productname,
+		DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") AS todaydate,
+		MAX(pp.date) AS mostrecentpricedate,
+		COUNT(DISTINCT(pp.retailer)) AS retailerswithpricecnt,
+		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as retailerswithprice,	
+		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as retailerpricepages,
+		AVG(pp.price) AS avgprice,		
+		COUNT(DISTINCT(case when pp.date < DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") then pp.date ELSE null END)) AS previousprices,
+		COUNT(DISTINCT(case when pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") then pp.date ELSE null END)) AS todayprice,
+		COUNT(distinct(i.entryid)) AS inventoryentries
+	FROM products AS p
+	LEFT JOIN inventories AS i
+	ON p.gtin = i.gtin
+	LEFT JOIN productsprice AS pp
+	ON p.gtin = pp.gtin #AND pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d")
+	LEFT JOIN productscandidate AS pc
+	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
+	GROUP BY 1,2,3
+	ORDER BY 11 DESC
+) AS tmp
+WHERE retailerpricepages IS null
+ORDER BY inventoryentries DESC
 """
 cursor.execute(query1)
 records = cursor.fetchall()

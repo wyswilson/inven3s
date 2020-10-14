@@ -7,6 +7,7 @@ import functools
 import mysql.connector
 import hashlib
 import urllib
+import urllib.parse
 import logging
 import simplejson as json
 import requests

@@ -7,6 +7,7 @@ import functools
 import mysql.connector
 import hashlib
 import urllib
+import urllib.parse
 import logging
 import simplejson as json
 import requests
@@ -49,6 +50,7 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 #url = "https://shop.coles.com.au/a/richmond-south/product/claratyne-childrens-grape-chew-5mg-tabs-10pk"
+#url = "https://www.priceline.com.au/dermeze-moisturising-soap-free-wash-1-litre"
 
 #url = "https://igashop.com.au/product/leggos-pesto-traditional-basil-190g/"
 #url = "https://www.amcal.com.au/soov-bite-25g-p-93327381"
@@ -82,11 +84,40 @@ cursor = db.cursor()
 #url = "https://www.savourofasia.com.au/products/royal-family-mochi-bubble-tea-milk-120g"
 #url = "https://www.pharmacyonline.com.au/lucas-papaw-ointment-25g"
 #url = "https://maizo.com.au/product/3:15pm-brown-sugar-jelly-bubble-milk-tea-3-x-80g"
-url = "https://shop.lynwood.igamarket.com.au/lines/5c9c6b90e1272f5b45039276"
+#url = "https://shop.lynwood.igamarket.com.au/lines/5c9c6b90e1272f5b45039276"
+#url = "https://www.harrisfarm.com.au/products/nutella-hazelnut-spread-with-cocoa-400g"
+url = "https://www.chempro.com.au/Libra-Extra-Regular-Wings-14-Pack"
 
+def temp():
+	retailers = {}
+	query1 = """
+	SELECT
+		candidateurl
+	FROM productscandidate
+	WHERE type = 'productprice'
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	for record in records:
+		candidateurl = record[0]
+		matchobj = re.findall('([^\.\/]+)\.(?:com|net)', candidateurl, re.IGNORECASE)
+		if matchobj:
+			retailer = matchobj[0]
+
+			if retailer in retailers:
+				retailers[retailer] += 1
+			else:
+				retailers[retailer] = 1
+
+	data_sorted = {k: v for k, v in sorted(retailers.items(), key=lambda x: x[1])}
+
+	for retailer in data_sorted:
+		count = retailers[retailer]
+		print("[%s][%s]" % (retailer,count))
+
+#temp()
 matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
 if matchobj:
 	retailer = matchobj[0]
-
 	price = func.pricescrape(url,retailer)
 	print("[%s][%s]" % (retailer,price))

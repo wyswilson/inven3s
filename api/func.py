@@ -6,6 +6,7 @@ import functools
 import mysql.connector
 import hashlib
 import urllib
+import urllib.parse
 import logging
 import simplejson as json
 import requests
@@ -569,74 +570,76 @@ def pricescrape(url,retailer):
 	soup = bs4.BeautifulSoup(html, 'html.parser')
 
 	rulesdefined = True
-	if retailer == 'amcal': 
-		matchobj = soup.find_all('span',{'class':'price'})
-	elif retailer == 'discountchemist': 
-		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
-	elif retailer == 'igashop': 
-		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
-	elif retailer == 'bigw': 
-		matchobj = soup.find_all('span',{'id':'product_online_price'})
-	elif retailer == 'woolworths': 
+	if retailer == 'woolworths': 
 		matchobj = soup.find_all('div',{'class':'price price--large'})
-	elif retailer == 'coles': 
-		matchobj = soup.find_all('span',{'class':'price-container'})
-	elif retailer == 'asiangrocerystore': 
-		matchobj = soup.find_all('span',{'id':'line_discounted_price_126'})
+	elif retailer == 'chemistwarehouse': 
+		matchobj = soup.find_all('span',{'class':'product__price'})
 	elif retailer == 'drakes': 
 		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
-	elif retailer == 'mysweeties': 
-		matchobj = soup.find_all('span',{'id':'productPrice'})
+	elif retailer == 'bigw': 
+		matchobj = soup.find_all('span',{'id':'product_online_price'})
 	elif retailer == 'allysbasket': 
 		matchobj = soup.find_all('span',{'itemprop':'price'})
 	elif retailer == 'buyasianfood': 
 		matchobj = soup.find_all('span',{'class':'price'})
-	elif retailer == 'chemistwarehouse': 
-		matchobj = soup.find_all('span',{'class':'product__price'})
-	elif retailer == 'goodpricepharmacy': 
-		matchobj = soup.find_all('span',{'class':'price'})
-	elif retailer == 'indoasiangroceries': 
-		matchobj = soup.find_all('p',{'class':'price'})
 	elif retailer == 'myasiangrocer': 
 		matchobj = soup.find_all('span',{'class':'price'})
-	elif retailer == 'pharmacydirect': 
-		matchobj = soup.find_all('span',{'id':'price-display'})
-	elif retailer == 'officeworks': 
-		matchobj = re.findall('"edlpPrice":"(.+?)"', html, re.IGNORECASE)
-	elif retailer == 'cincottachemist': 
-		matchobj = soup.find_all('span',{'id':'price-display'})
-	elif retailer == 'yahwehasiangrocery': 
-		matchobj = soup.find_all('span',{'class':'ProductPrice VariationProductPrice'})
-	elif retailer == 'asianpantry': 
-		matchobj = soup.find_all('span',{'class':'price price--highlight'})
-	elif retailer == 'g2': 
-		matchobj = soup.find_all('span',{'class':'money'})
-	elif retailer == 'groceryasia': 
-		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
-	elif retailer == 'hongyi': 
-		matchobj = re.findall('<meta property="og:price:amount" content="(.+?)">', html, re.IGNORECASE)
-	elif retailer == 'iganathalia': 
-		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
-	elif retailer == 'yinyam': 
-		matchobj = soup.find_all('div',{'class':'price--main'})
-	elif retailer == 'yourdiscountchemist': 
+	elif retailer == 'priceline': 
+		matchobj = re.findall('<meta name="twitter:data1" content="(.+?)">', html, re.IGNORECASE)
+	elif retailer == 'igashop': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})		
+	elif retailer == 'amcal': 
 		matchobj = soup.find_all('span',{'class':'price'})
 	elif retailer == 'winc': 
 		matchobj = soup.find_all('span',{'class':'price_text'})
-	elif retailer == 'theiconic': 
+	elif retailer == 'goodpricepharmacy': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'officeworks': 
+		matchobj = re.findall('"edlpPrice":"(.+?)"', html, re.IGNORECASE)
+	elif retailer == 'superpharmacy': 
+		matchobj = soup.find_all('span',{'class':'price promo-price'})	
+	elif retailer == 'harrisfarm': 
+		matchobj = soup.find_all('span',{'class':'from_price'})
+	elif retailer == 'yourdiscountchemist': 
 		matchobj = soup.find_all('span',{'class':'price'})
 	elif retailer == 'tastefuldelights': 
 		matchobj = soup.find_all('span',{'class':'product-price'})
-	elif retailer == 'superpharmacy': 
-		matchobj = soup.find_all('span',{'class':'price promo-price'})
+	elif retailer == 'discountchemist': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
+	elif retailer == 'asiangrocerystore': 
+		matchobj = soup.find_all('span',{'id':'line_discounted_price_126'})
+	elif retailer == 'mysweeties': 
+		matchobj = soup.find_all('span',{'id':'productPrice'})
+	elif retailer == 'chempro': 
+		matchobj = soup.find_all('span',{'itemprop':'price'})
+	elif retailer == 'yinyam': 
+		matchobj = soup.find_all('div',{'class':'price--main'})		
+	elif retailer == 'pharmacydirect': 
+		matchobj = soup.find_all('span',{'id':'price-display'})	
 	elif retailer == 'savourofasia': 
 		matchobj = soup.find_all('span',{'itemprop':'price'})
+	elif retailer == 'cincottachemist': 
+		matchobj = soup.find_all('span',{'id':'price-display'})
+	elif retailer == 'iganathalia': 
+		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
+	elif retailer == 'hongyi': 
+		matchobj = re.findall('<meta property="og:price:amount" content="(.+?)">', html, re.IGNORECASE)
+	elif retailer == 'yahwehasiangrocery': 
+		matchobj = soup.find_all('span',{'class':'ProductPrice VariationProductPrice'})
 	elif retailer == 'pharmacyonline': 
 		matchobj = soup.find_all('span',{'class':'price-wrapper price'})
+	elif retailer == 'indoasiangroceries': 
+		matchobj = soup.find_all('p',{'class':'price'})
+	elif retailer == 'groceryasia': 
+		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
+	elif retailer == 'g2': 
+		matchobj = soup.find_all('span',{'class':'money'})
+	elif retailer == 'asianpantry': 
+		matchobj = soup.find_all('span',{'class':'price price--highlight'})
+	elif retailer == 'theiconic': 
+		matchobj = soup.find_all('span',{'class':'price'})
 	elif retailer == 'maizo': 
-		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)
-	elif retailer == 'igamarket': 
-		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
+		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)	
 	else:
 		rulesdefined = False
 
@@ -656,10 +659,10 @@ def pricescrape(url,retailer):
 				price = "0.0"
 			break
 	elif not rulesdefined:
-		errstr = "no rules defined for retailer [%s] [%s]" % (retailer,url)
+		errstr = "\tno rules defined for retailer [%s] [%s]" % (retailer,url)
 		print(errstr)
 	else:
-		errstr = "defined rules are broken for [%s] [%s]" % (retailer,url)
+		errstr = "\tdefined rules are broken for [%s] [%s]" % (retailer,url)
 		print(errstr)
 		logging.debug(errstr)
 
@@ -753,28 +756,28 @@ def fetchhtml(url):
 		html = r.content.decode('utf-8')
 		if html != '':
 			errstr = "line 610: fetchhtml: [ok-page-fetched] [%s]" % (url)
-			print(errstr)
+			#print(errstr)
 			logging.debug(errstr)
 		else:
 			errstr = "line 614: fetchhtml: [error-empty-page] [%s]" % (url)
-			print(errstr)
+			#print(errstr)
 			logging.debug(errstr)
 
 	except requests.ConnectionError as e:
 		errstr = "line 619: fetchhtml: [error-connection] [%s] [%s]" % (url,str(e))
-		print(errstr)
+		#print(errstr)
 		logging.debug(errstr)
 	except requests.Timeout as e:
 		errstr = "line 623: fetchhtml: [error-timeout] [%s] [%s]" % (url,str(e))
-		print(errstr)
+		#print(errstr)
 		logging.debug(errstr)
 	except requests.RequestException as e:
 		errstr = "line 627: fetchhtml: [error-request] [%s] [%s]" % (url,str(e))
-		print(errstr)
+		#print(errstr)
 		logging.debug(errstr)
 	except BaseException as e:
 		errstr = "line 631: fetchhtml: [error-unknown] [%s] [%s]" % (url,str(e))
-		print(errstr)
+		#print(errstr)
 		logging.debug(errstr)
 
 	return html,urlresolved
@@ -873,7 +876,8 @@ def downloadproductpricepages(gtin,productname):
 	cursor.execute(query2,(gtin,engine,type))
 	db.commit()
 
-	url = "https://www.google.com/search?q=%s" % productname
+	url = "https://www.google.com/search?q=%s" % urllib.parse.quote(productname)
+
 	html,urlresolved = fetchhtml(url)
 	soup = bs4.BeautifulSoup(html, 'html.parser')
 	results = soup.find_all('div',{'class':'g'})#previously class="r"
@@ -1390,7 +1394,7 @@ def findproductimage(gtin,productname):
 	productimage = ""
 	try:
 		source = "google"
-		url = "https://www.google.com/search?q=%s&tbm=isch" % productname 
+		url = "https://www.google.com/search?q=%s&tbm=isch" % urllib.parse.quote(productname) 
 		html,urlresolved = fetchhtml(url)
 
 		type = "productimage"

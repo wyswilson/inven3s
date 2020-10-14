@@ -4,6 +4,7 @@ import { getToken } from './utils/common';
 import { Icon, Message, Grid, Dropdown, Modal, Button, Input, Label, Card, Image  } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
+
 import {isMobile} from 'react-device-detect';
 
 class Inventory extends React.Component {

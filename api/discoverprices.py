@@ -7,6 +7,7 @@ import functools
 import mysql.connector
 import hashlib
 import urllib
+import urllib.parse
 import logging
 import simplejson as json
 import requests
@@ -49,27 +50,33 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 
 query1 = """
-	SELECT 
+SELECT
+	*
+FROM(
+	SELECT
 		p.gtin,
 		p.productname,
 		DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") AS todaydate,
 		MAX(pp.date) AS mostrecentpricedate,
-		COUNT(DISTINCT(pp.date)) AS dateswithprice,
 		COUNT(DISTINCT(pp.retailer)) AS retailerswithpricecnt,
-		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as retailerwithprice,	
-		COUNT(distinct(pc.candidateid)) AS retailerpageswithpricecnt,
-		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as retailerpageswithprice,
+		GROUP_CONCAT(distinct pp.retailer SEPARATOR '; ') as retailerswithprice,	
+		GROUP_CONCAT(distinct pc.candidateurl ORDER BY pc.candidaterank ASC SEPARATOR '; ') as retailerpricepages,
 		AVG(pp.price) AS avgprice,		
+		COUNT(DISTINCT(case when pp.date < DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") then pp.date ELSE null END)) AS previousprices,
+		COUNT(DISTINCT(case when pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d") then pp.date ELSE null END)) AS todayprice,
 		COUNT(distinct(i.entryid)) AS inventoryentries
 	FROM products AS p
 	LEFT JOIN inventories AS i
 	ON p.gtin = i.gtin
 	LEFT JOIN productsprice AS pp
-	ON p.gtin = pp.gtin #AND pp.date = DATE_FORMAT(CONVERT_TZ(NOW(),'+00:00','+10:00'), "%Y-%m-%d")
+	ON p.gtin = pp.gtin
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 5 DESC, 11 DESC
+	ORDER BY 11 DESC, 9 DESC
+) AS tmp
+WHERE todayprice = 0
+ORDER BY inventoryentries DESC
 """
 cursor.execute(query1)
 records = cursor.fetchall()
@@ -77,44 +84,27 @@ records = cursor.fetchall()
 for record in records:
 	gtin 				= record[0]
 	productname			= record[1]
-	date         		= record[2]
-	retailerswithprice 	= record[6]
-	sourceurls     		= record[8]
+	sourceurls     		= record[6]
 
-	print("[%s][%s][%s]" % (gtin,sourceurls,retailerswithprice))
-
-	if not retailerswithprice:
-		retailerswithprice = ''
+	print("[%s][%s]" % (gtin,productname))
 
 	if not sourceurls:
 		sourceurls = ''		
 	elif not ";" in sourceurls: 
 		sourceurls = sourceurls + "; "
-		
-	processedretailers = {}
-	if ";" in retailerswithprice:
-		for retailer in retailerswithprice.split("; "):
-			processedretailers[retailer] = ''
-	elif retailerswithprice != '':
-		processedretailers[retailerswithprice] = ''
-
+	
 	for url in sourceurls.split("; "):
 		matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
 		if matchobj:
 			retailer = matchobj[0]
 
-			if not any(retailer in key for key in processedretailers):
-				price = func.pricescrape(url,retailer)
-				print("[%s][%s]" % (retailer,price))
-				if price > 0:
-					timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-					date 		= datetime.datetime.today().strftime('%Y-%m-%d')
-					query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
-					cursor.execute(query1,(gtin,price,timestamp,date,retailer))
-					db.commit()		
-			else:
-				print("price from retailer already exists [%s]" % (retailer))		
-
-			processedretailers[retailer] = ''
+			price = func.pricescrape(url,retailer)
+			print("\t[%s][%s]" % (retailer,price))
+			if price > 0:
+				timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+				date 		= datetime.datetime.today().strftime('%Y-%m-%d')
+				query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
+				cursor.execute(query1,(gtin,price,timestamp,date,retailer))
+				db.commit()			
 		
 	time.sleep(5)

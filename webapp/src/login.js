@@ -4,8 +4,8 @@ import { setUserSession } from './utils/common';
 import { Popup, Icon, List, Header, Button, Card, Message, Grid, Image } from 'semantic-ui-react'
 import Field from './field.js';
 import _ from 'lodash'
-import {isMobile} from 'react-device-detect';
 
+import {isMobile} from 'react-device-detect';
 import scrollToComponent from 'react-scroll-to-component';
 
 class Login extends React.Component {
