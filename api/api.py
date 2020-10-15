@@ -459,7 +459,7 @@ def productprice(userid,gtin):
 	records,retailernames = func.findproductprices(gtin)
 	if len(records) == 0:
 		statuscode = 404
-		status = "prices Unavailable for product"
+		status = "prices unavailable for product"
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyprices(records,retailernames))
 

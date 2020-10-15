@@ -204,7 +204,17 @@ class Product extends React.Component {
         }
       })
       .catch(error => {
+        if(error.response){
+          if(error.response.status === 404){
+           console.log('getproductprice [' + error.response.data[0]['message'] + ']');       
+          }
+          else{
+            console.log('getproductprice [server unreachable]');       
+          }
+        }
+        else{
           console.log('getproductprice [server unreachable]');
+        }
       });
   }
 

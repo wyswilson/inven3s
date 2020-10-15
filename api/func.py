@@ -638,6 +638,8 @@ def pricescrape(url,retailer):
 		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
 	elif retailer == 'g2': 
 		matchobj = soup.find_all('span',{'class':'money'})
+	elif retailer == 'myer': 
+		matchobj = soup.find_all('p',{'data-automation':'product-price-was'})	
 	elif retailer == 'asianpantry': 
 		matchobj = soup.find_all('span',{'class':'price price--highlight'})
 	elif retailer == 'natonic': 

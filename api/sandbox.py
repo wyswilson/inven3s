@@ -93,7 +93,8 @@ cursor = db.cursor()
 #url = "https://www.fgb.com.au/product/bosistos-native-breathe-oil"
 #url = " https://www.davidjonespharmacy.com.au/voost-vitamin-c-1000mg-effervescent-20-tablets"
 #url = "https://www.aircart.com.au/product-page/sanitarium-weet-bix-bites-apricot-breakfast-cereal-500g"
-url = " https://www.intradco.com.au/product/chan-kong-thye-bulldog-black-vinegargongtaijiangyuan-gouzi-zhengnuomitianheicu/"
+#url = " https://www.intradco.com.au/product/chan-kong-thye-bulldog-black-vinegargongtaijiangyuan-gouzi-zhengnuomitianheicu/"
+#url = "https://www.myer.com.au/p/cleansing-facial-scrub-472720150-472723210"
 
 def showmainretailers():
 	retailers = {}

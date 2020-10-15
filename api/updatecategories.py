@@ -90,10 +90,18 @@ query1 = """
 	GROUP BY 1,2
 	ORDER BY 3 ASC;
 	COMMIT;
+"""
+cursor.execute(query1,multi=True)
+db.commit()
 
+query2 = """
 	DELETE FROM productscategory_top;
 	COMMIT;
+"""
+cursor.execute(query2,multi=True)
+db.commit()
 
+query3 = """
 	REPLACE INTO 
 		productscategory_top(category,subcategorycnt)
 	SELECT * FROM (
@@ -117,15 +125,15 @@ query1 = """
 	WHERE subcatcnt > 1;
 	COMMIT;
 """
-cursor.execute(query1,multi=True)
+cursor.execute(query3,multi=True)
 db.commit()
 
-query1 = """
+query4 = """
 	SELECT
     	category,subcategorycnt
 	FROM productscategory_top
 """
-cursor.execute(query1)
+cursor.execute(query4)
 records = cursor.fetchall()
 for record in records:
 	category 		= record[0]
