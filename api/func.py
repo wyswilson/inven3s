@@ -585,7 +585,7 @@ def pricescrape(url,retailer):
 	elif retailer == 'myasiangrocer': 
 		matchobj = soup.find_all('span',{'class':'price'})
 	elif retailer == 'priceline': 
-		matchobj = re.findall('<meta name="twitter:data1" content="(.+?)">', html, re.IGNORECASE)
+		matchobj = re.findall('<meta name="twitter:data1" content="(.+?)"', html, re.IGNORECASE)
 	elif retailer == 'igashop': 
 		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})		
 	elif retailer == 'amcal': 
@@ -623,23 +623,37 @@ def pricescrape(url,retailer):
 	elif retailer == 'iganathalia': 
 		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
 	elif retailer == 'hongyi': 
-		matchobj = re.findall('<meta property="og:price:amount" content="(.+?)">', html, re.IGNORECASE)
+		matchobj = re.findall('<meta property="og:price:amount" content="(.+?)"', html, re.IGNORECASE)
 	elif retailer == 'yahwehasiangrocery': 
 		matchobj = soup.find_all('span',{'class':'ProductPrice VariationProductPrice'})
 	elif retailer == 'pharmacyonline': 
 		matchobj = soup.find_all('span',{'class':'price-wrapper price'})
 	elif retailer == 'indoasiangroceries': 
 		matchobj = soup.find_all('p',{'class':'price'})
+	elif retailer == 'davidjonespharmacy': 
+		matchobj = soup.find_all('div',{'itemprop':'price'})	
+	elif retailer == 'aircart': 
+		matchobj = soup.find_all('span',{'data-hook':'formatted-primary-price'})
 	elif retailer == 'groceryasia': 
 		matchobj = soup.find_all('span',{'class':'woocommerce-Price-amount amount'})
 	elif retailer == 'g2': 
 		matchobj = soup.find_all('span',{'class':'money'})
 	elif retailer == 'asianpantry': 
 		matchobj = soup.find_all('span',{'class':'price price--highlight'})
+	elif retailer == 'natonic': 
+		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'intradco': 
+		matchobj = soup.find_all('p',{'class':'price'})
+	elif retailer == 'epharmacy': 
+		matchobj = soup.find_all('div',{'class':'product__price'})	
 	elif retailer == 'theiconic': 
 		matchobj = soup.find_all('span',{'class':'price'})
+	elif retailer == 'fgb': 
+		matchobj = re.findall('<meta itemprop="price" content="(.+?)"', html, re.IGNORECASE)
 	elif retailer == 'maizo': 
 		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)	
+	elif retailer == 'ilovehealth': 
+		matchobj = soup.find_all('span',{'class':'amount price-new'})
 	else:
 		rulesdefined = False
 

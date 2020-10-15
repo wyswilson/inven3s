@@ -72,6 +72,9 @@ class Inventory extends React.Component {
           this.setState({ inventorymsg: 'No items available' })
           this.setState({ inventoryfetched: true });
         }
+        else if(error.response.status === 401){
+          window.location.reload(false);
+        }
         else{
           console.log('fetchinventory [' + error.response.status + ':' + error.response.data[0]['message'] + ']');
           this.setState({ inventorymsg: error.response.data[0]['message'] })

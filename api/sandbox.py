@@ -86,9 +86,16 @@ cursor = db.cursor()
 #url = "https://maizo.com.au/product/3:15pm-brown-sugar-jelly-bubble-milk-tea-3-x-80g"
 #url = "https://shop.lynwood.igamarket.com.au/lines/5c9c6b90e1272f5b45039276"
 #url = "https://www.harrisfarm.com.au/products/nutella-hazelnut-spread-with-cocoa-400g"
-url = "https://www.chempro.com.au/Libra-Extra-Regular-Wings-14-Pack"
+#url = "https://www.chempro.com.au/Libra-Extra-Regular-Wings-14-Pack"
+#url = "https://epharmacy.com.au/buy/86991/huggies-ultra-dry-nappy-pants-size-5-12-17kg-boy-26-pack"
+#url = " https://ilovehealth.com.au/products/comvita-propolis-extract-alcohol-free-25ml"
+#url = "https://natonic.com.au/en/comvita-propolis-extract-alcohol-free-25ml"
+#url = "https://www.fgb.com.au/product/bosistos-native-breathe-oil"
+#url = " https://www.davidjonespharmacy.com.au/voost-vitamin-c-1000mg-effervescent-20-tablets"
+#url = "https://www.aircart.com.au/product-page/sanitarium-weet-bix-bites-apricot-breakfast-cereal-500g"
+url = " https://www.intradco.com.au/product/chan-kong-thye-bulldog-black-vinegargongtaijiangyuan-gouzi-zhengnuomitianheicu/"
 
-def temp():
+def showmainretailers():
 	retailers = {}
 	query1 = """
 	SELECT
@@ -115,9 +122,13 @@ def temp():
 		count = retailers[retailer]
 		print("[%s][%s]" % (retailer,count))
 
-#temp()
-matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
-if matchobj:
-	retailer = matchobj[0]
-	price = func.pricescrape(url,retailer)
-	print("[%s][%s]" % (retailer,price))
+
+def scrapeproductprice():
+	matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
+	if matchobj:
+		retailer = matchobj[0]
+		price = func.pricescrape(url,retailer)
+		print("[%s][%s]" % (retailer,price))
+
+#showmainretailers()
+scrapeproductprice()
