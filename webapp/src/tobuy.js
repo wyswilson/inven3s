@@ -280,7 +280,7 @@ class ToBuy extends React.Component {
 
   generateshoppinglist_accordion(){
     if(!this.state.loadingshopping && this.state.hasshoppinglist){
-      return this.state.slistbycat.map( (item) => (
+      const accordionlist = this.state.slistbycat.map( (item) => (
           <div key={item.name}>
             <Accordion.Title
               active={this.state.activecat === item.name}
@@ -381,6 +381,12 @@ class ToBuy extends React.Component {
             </Accordion.Content>
           </div>
       ));
+
+      return (
+        <Accordion fluid styled>
+        {accordionlist}
+        </Accordion>
+      );
     }
     else if(this.state.loadingshopping){
       return (
@@ -513,21 +519,19 @@ class ToBuy extends React.Component {
       );
     }
     else if(this.state.loadingshopping){
-      return (<Card raised>
+      return (
                 <Message size='tiny'
                   header="Loading your shopping list."
                   content="Please try again later if it doesn't load."
                 />
-              </Card>
           );
     }
     else{
-      return (<Card raised>
+      return (
                 <Message size='tiny'
                   header="No shopping list available."
                   content="Start tracking items that go in and out of your inventory."
                 />
-              </Card>
               );    
     }
   }
@@ -537,9 +541,7 @@ class ToBuy extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        <Accordion fluid styled>
-          {this.generateshoppinglist_accordion()}
-        </Accordion>
+        {this.generateshoppinglist_accordion()}
       </div>
     )
   }
