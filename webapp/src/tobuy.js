@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { getToken } from './utils/common';
-import { Menu, Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, Button, Image } from 'semantic-ui-react'
+import { Icon, Accordion, Menu, Card, Tab, Label, Message, Modal, Grid, Dropdown, Input, Button, Image } from 'semantic-ui-react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 import {isMobile} from 'react-device-detect';
@@ -278,7 +278,127 @@ class ToBuy extends React.Component {
     this.fetchshoppinglistbycat();
   }
 
-  generateshoppinglistbycat(){
+  generateshoppinglist_accordion(){
+    if(!this.state.loadingshopping && this.state.hasshoppinglist){
+      return this.state.slistbycat.map( (item) => (
+          <div key={item.name}>
+            <Accordion.Title
+              active={this.state.activecat === item.name}
+              index={item.name}
+              onClick={this.switchcat.bind(this)}
+            >
+              <Icon name='dropdown' />{item.name}
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activecat === item.name}>
+              <Card.Group doubling itemsPerRow={5} stackable>
+                {item.items.map(proditem => (
+                  <Card raised key={proditem.gtin}>
+                    <Card.Content textAlign="center">
+                      <Image src={proditem.productimagelocal}
+                        size='tiny' style={{padding: '10px', width: 'auto', height: '80px'}}                  
+                        onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
+                      />
+                      <Card.Header className="item title">{proditem.productname}</Card.Header>
+                      <Label className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} attached='top right'>{proditem.itemstotal}</Label>
+                    </Card.Content>
+                    <Card.Content extra textAlign="center">
+                      <div className='ui two buttons'>
+                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname,proditem.productimage,proditem.productimagelocal, proditem.brandname, proditem.isedible, proditem.isfavourite, proditem.categories)} />
+                        <Modal
+                              trigger={<Button icon="plus" fluid className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'}
+                              onClick={this.setproductmetadata.bind(this,item.gtin)} />}
+                              centered={false}
+                              size="fullscreen"
+                              dimmer="blurring"
+                              closeIcon
+                        >
+                          <Modal.Header>Add items</Modal.Header>
+                          <Modal.Content image>
+                            <Image
+                              wrapped size='tiny' src={proditem.productimagelocal}
+                              onError={(e)=>{e.target.onerror = null; e.target.src=proditem.productimage}}
+                            />
+                            <Modal.Description>
+                              <Grid columns={1} doubling stackable>
+                                <Grid.Column>
+                                 <label className="fullwidth">Retailer</label>                    
+                                  <Dropdown className="fullwidth" name="retailername"
+                                    search
+                                    selection
+                                    allowAdditions
+                                    value={this.state.retailername}
+                                    noResultsMessage="No retailer found"
+                                    options={this.state.retailersuggests}
+                                    onSearchChange={this.lookupretailer.bind(this)}
+                                    onAddItem={this.addnewretailer.bind(this)}
+                                    onChange={this.setinventorymetadata.bind(this)}
+                                  />
+                                </Grid.Column>
+                                <Grid.Row columns={2}>
+                                  <Grid.Column>
+                                    <label className="fullwidth">Quantity</label>                    
+                                    <Input className="fullwidth" name="quantity"
+                                      value={this.state.quantity}
+                                      onChange={this.setinventorymetadata.bind(this)}
+                                    />
+                                  </Grid.Column>
+                                  <Grid.Column>
+                                    <label className="fullwidth">Expiry</label>                    
+                                    <DateInput name="dateexpiry" className="fullwidth"
+                                      dateFormat="YYYY-MM-DD"
+                                      value={this.state.dateexpiry}
+                                      onChange={this.setinventorymetadata.bind(this)}
+                                    />
+                                  </Grid.Column>
+                                </Grid.Row>
+                              </Grid>
+                            </Modal.Description>
+                          </Modal.Content>
+                          <Modal.Actions>
+                            <Grid columns={2} container doubling stackable>
+                              <Grid.Column>
+                                <Button loading={this.state.loading || false} 
+                                className='grey button fullwidth'
+                                onClick={this.addinventory.bind(this,proditem.gtin)}>
+                                  ADD
+                                </Button>
+                              </Grid.Column>
+                              <Grid.Column>
+                                {this.generateitemadditionmsg()}
+                              </Grid.Column>
+                            </Grid>
+                          </Modal.Actions>
+                        </Modal>
+                      </div>
+                    </Card.Content>
+                  </Card>
+                ))}
+              </Card.Group>
+            </Accordion.Content>
+          </div>
+      ));
+    }
+    else if(this.state.loadingshopping){
+      return (<Card raised>
+                <Message size='tiny'
+                  header="Loading your shopping list."
+                  content="Please try again later if it doesn't load."
+                />
+              </Card>
+          );
+    }
+    else{
+      return (<Card raised>
+                <Message size='tiny'
+                  header="No shopping list available."
+                  content="Start tracking items that go in and out of your inventory."
+                />
+              </Card>
+              );    
+    }          
+  }
+
+  generateshoppinglist_tab(){
     if(!this.state.loadingshopping && this.state.hasshoppinglist){
       let panes = [];
       this.state.slistbycat.forEach(function(item) {
@@ -415,7 +535,9 @@ class ToBuy extends React.Component {
       <div
         className={isMobile ? "bodymain mobile" : "bodymain"}
       >
-        {this.generateshoppinglistbycat()}
+        <Accordion fluid styled>
+          {this.generateshoppinglist_accordion()}
+        </Accordion>
       </div>
     )
   }
