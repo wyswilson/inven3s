@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getToken } from './utils/common';
 import { Checkbox, Card, Label, Message, Divider, Input, Dropdown, Grid, Button, Image } from 'semantic-ui-react'
 import _ from 'lodash'
+import {isMobile} from 'react-device-detect';
 
 import { Chart } from "react-google-charts";
 
@@ -577,7 +578,9 @@ class Product extends React.Component {
   render() {
 
     return (
-      <div> 
+      <div
+        className={isMobile ? "bodymain mobile" : "bodymain"}
+      >
         <Card raised fluid>
           <Card.Content>
             <Card.Description>
