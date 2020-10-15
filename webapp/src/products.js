@@ -679,7 +679,7 @@ class Product extends React.Component {
 
             <Chart
               width={'100%'}
-              height={'400px'}
+              height={'350px'}
               chartType="LineChart"
               loader={<div>Loading price chart</div>}
               data={this.state.pricegraph}
@@ -689,6 +689,7 @@ class Product extends React.Component {
                 },
                 vAxis: {
                   title: 'Price ($)',
+                  viewWindow: { min: 0 }
                 },
                 series: {
                   1: { curveType: 'function' },
