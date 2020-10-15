@@ -287,7 +287,11 @@ class ToBuy extends React.Component {
               index={item.name}
               onClick={this.switchcat.bind(this)}
             >
-              <Icon name='dropdown' />{item.name}
+              <Label as='a' color='grey' image size='medium'>
+                <Icon name='barcode' />
+                {item.name} 
+                <Label.Detail>{item.count}</Label.Detail>
+              </Label>
             </Accordion.Title>
             <Accordion.Content active={this.state.activecat === item.name}>
               <Card.Group doubling itemsPerRow={5} stackable>
@@ -379,21 +383,19 @@ class ToBuy extends React.Component {
       ));
     }
     else if(this.state.loadingshopping){
-      return (<Card raised>
+      return (
                 <Message size='tiny'
                   header="Loading your shopping list."
                   content="Please try again later if it doesn't load."
                 />
-              </Card>
           );
     }
     else{
-      return (<Card raised>
+      return (
                 <Message size='tiny'
                   header="No shopping list available."
                   content="Start tracking items that go in and out of your inventory."
                 />
-              </Card>
               );    
     }          
   }
