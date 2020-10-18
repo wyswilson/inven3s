@@ -253,6 +253,18 @@ def productdelete(userid,gtin):
 	records = func.findproductbygtin(gtin,userid)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
+@app.route('/alert/data/product', methods=['GET'])
+@func.requiretoken
+def productdataalert(userid):
+	print('hit [productdataalert] with [%s]' % (userid))
+	func.registerapilogs("productdataalert",userid,flask.request)
+
+	status = "Product alerts"
+	statuscode = 200
+
+	responses = func.productalerts()
+	return func.jsonifyoutput(statuscode,status,responses)
+
 @app.route('/product', methods=['POST'])
 @func.requiretoken
 def productupsert(userid):
@@ -276,7 +288,6 @@ def productupsert(userid):
 	gtin,productname_old,gtinstatus = func.validategtin(gtin)
 
 	if gtinstatus == "EXISTS":
-
 		#TRY TO FETCH IMAGE URL IF PRODUCTNAME EXIsTS BUT NOT PRODUCTIMG
 		if productname != '' and productimage == '':
 			productimage = func.findproductimage(gtin,productname)
@@ -292,9 +303,9 @@ def productupsert(userid):
 		if isfavourite != '':
 			func.updateisfavourite(gtin,userid,isfavourite)
 			status = status + "isfavourite "
-		#if len(categories) > 0:
-		func.updateproductcategories(gtin,categories)
-		status = status + "categories "
+		if len(categories) > 0:
+			func.updateproductcategories(gtin,categories)
+			status = status + "categories "
 		
 		if isedible != '':
 			func.updateisedible(gtin,isedible)

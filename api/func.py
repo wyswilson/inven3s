@@ -264,6 +264,42 @@ def updateproductname(gtin,productname):
 	cursor.execute(query2,(productname.strip(),gtin))
 	db.commit()
 
+def productalerts():
+	###PRODUCT WITHOUT CATEGORIES
+	query1 = """
+		SELECT 
+			p.gtin, p.productname
+		FROM products AS p
+		LEFT JOIN productscategory AS pc
+		ON p.gtin = pc.gtin
+		WHERE pc.category IS NULL
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	
+	responses = []
+
+	response = {}
+	response['name'] = 'Product without categories' 
+	nocatcount = 0
+	items = []
+	for record in records:
+		gtin = record[0]
+		productname = record[1]
+		nocatcount += 1
+
+		item = {}
+		item['gtin'] = gtin
+		item['productname'] = productname
+
+		items.append(item)
+
+	response['items'] = items
+	responses.append(response)
+
+
+	return responses
+
 def jsonifybrands(records):
 	brands = []
 	for record in records:
