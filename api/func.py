@@ -293,7 +293,7 @@ def productalerts():
 		item['productname'] = productname
 
 		items.append(item)
-
+	response['count'] = nocatcount
 	response['items'] = items
 	responses.append(response)
 

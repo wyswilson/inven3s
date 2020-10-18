@@ -253,13 +253,13 @@ def productdelete(userid,gtin):
 	records = func.findproductbygtin(gtin,userid)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
-@app.route('/alert/data/product', methods=['GET'])
+@app.route('/data-issues', methods=['GET'])
 @func.requiretoken
-def productdataalert(userid):
-	print('hit [productdataalert] with [%s]' % (userid))
-	func.registerapilogs("productdataalert",userid,flask.request)
+def dataissues(userid):
+	print('hit [dataissues] with [%s]' % (userid))
+	func.registerapilogs("dataissues",userid,flask.request)
 
-	status = "Product alerts"
+	status = "Issues with data identified"
 	statuscode = 200
 
 	responses = func.productalerts()
