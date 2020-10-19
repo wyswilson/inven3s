@@ -264,7 +264,7 @@ def updateproductname(gtin,productname):
 	cursor.execute(query2,(productname.strip(),gtin))
 	db.commit()
 
-def productalerts():
+def productalerts_prodnocats(responses):
 	###PRODUCT WITHOUT CATEGORIES
 	query1 = """
 		SELECT 
@@ -277,10 +277,8 @@ def productalerts():
 	cursor.execute(query1)
 	records = cursor.fetchall()
 	
-	responses = []
-
 	response = {}
-	response['code'] = 'product-no-cat' 
+	response['code'] = 'product-no-cats' 
 	nocatcount = 0
 	items = []
 	for record in records:
@@ -297,6 +295,79 @@ def productalerts():
 	response['items'] = items
 	responses.append(response)
 
+	return responses
+
+def productalerts_prodno2ndcat(responses):
+	###PRODUCT WITHOUT SECOND CATEGORY
+	query1 = """
+		SELECT 
+			p.gtin, p.productname
+		FROM products AS p
+		LEFT JOIN productscategory AS pc
+		ON p.gtin = pc.gtin
+		WHERE pc.category IS NULL
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	
+	response = {}
+	response['code'] = 'product-no-cats' 
+	nocatcount = 0
+	items = []
+	for record in records:
+		gtin = record[0]
+		productname = record[1]
+		nocatcount += 1
+
+		item = {}
+		item['gtin'] = gtin
+		item['productname'] = productname
+
+		items.append(item)
+	response['count'] = nocatcount
+	response['items'] = items
+	responses.append(response)
+
+	return responses
+
+def productalerts_prodno2ndcat(responses):
+	###PRODUCT WITHOUT SECOND CATEGORY
+	query1 = """
+		SELECT 
+			p.gtin, p.productname
+		FROM products AS p
+		LEFT JOIN productscategory_transpose AS pct
+		ON p.gtin = pct.gtin
+		WHERE pct.category1 != '' and pct.category2 = ''
+	"""
+	cursor.execute(query1)
+	records = cursor.fetchall()
+	
+	response = {}
+	response['code'] = 'product-no-2nd-cat' 
+	nocatcount = 0
+	items = []
+	for record in records:
+		gtin = record[0]
+		productname = record[1]
+		nocatcount += 1
+
+		item = {}
+		item['gtin'] = gtin
+		item['productname'] = productname
+
+		items.append(item)
+	response['count'] = nocatcount
+	response['items'] = items
+	responses.append(response)
+
+	return responses
+
+def productalerts():
+	responses = []
+
+	responses = productalerts_prodnocats(responses)
+	responses = productalerts_prodno2ndcat(responses)
 
 	return responses
 
