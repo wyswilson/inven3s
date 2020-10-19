@@ -280,7 +280,7 @@ def productalerts():
 	responses = []
 
 	response = {}
-	response['name'] = 'Product without categories' 
+	response['code'] = 'product-no-cat' 
 	nocatcount = 0
 	items = []
 	for record in records:

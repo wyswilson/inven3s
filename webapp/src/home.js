@@ -97,6 +97,8 @@ class Home extends React.Component {
     .then(response => { 
       if(response.status === 200){
         console.log('getdataissues [' + response.data[0]['message'] + ']');
+        const productnotcats = response.data[0]['results'][0];
+        console.log(productnotcats);
       }
     })
     .catch(error => {
@@ -168,6 +170,8 @@ class Home extends React.Component {
         this.setState({inedibleopenedcnt: inedibleopenedcnt});
 
         this.setState({insightsloaded: true});
+
+        this.getdataissues();
       }
     })
     .catch(error => {
