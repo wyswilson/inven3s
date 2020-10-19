@@ -243,16 +243,16 @@ class Login extends React.Component {
         >
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
-              <Grid.Column className="fontlight">
-                <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
+              <Grid.Column className="fontdark">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
                   Food waste is a problem
                 </Header>
-                <p className="fontlight">
+                <p className="fontdark">
                   Aussie households throw away 3 average-size fridges worth of food each year <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer" style={{color: "#ffffff"}}>[1]</a>, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
-                <List floated="left" className="fontlight">
+                <List floated="left" className="fontdark">
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
                   <List.Item icon='barcode' content="Not knowing how to make the best use of the food that we have at home" />
@@ -267,15 +267,15 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Row textAlign='left'>
               <Grid.Column>
-                <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
+                <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
                   How does our technology help?
                 </Header>
-                <p className="fontdark">
+                <p className="fontlight">
                 Our web app enables effortless tracking of food items when you are at home or on-the-go and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
-                <List floated="left" className="fontdark">
+                <List floated="left" className="fontlight">
                   <List.Item icon='barcode' content="Reminds you of expiring food so that you can prioritise consuming them sooner" />
                   <List.Item icon='barcode' content="Writes your shopping lists for you with food that are running out or that you likely need" />
                   <List.Item icon='barcode' content="Suggests recipes you can make using the food that you have at home" />
@@ -289,10 +289,10 @@ class Login extends React.Component {
         >
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column>
-              <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
+              <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
                 Popular products across pantries at the moment
               </Header>
-              <p className="fontlight">
+              <p className="fontdark">
                 We have {this.state.allproductscnt} unique products in our pantries and the number is growing
               </p>
               <Grid doubling stackable>
@@ -308,11 +308,11 @@ class Login extends React.Component {
           ref={(div) => { this.registerinterestpanel = div; }}
         >
           <Grid celled='internally' columns='equal' stackable>
-            <Grid.Column className="fontdark">
-              <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
+            <Grid.Column className="fontlight">
+              <Header as='h3' style={{ fontSize: '24px' }} className="fontlight">
                 Ready to make a difference?
               </Header>
-              <p className="fontdark">
+              <p className="fontlight">
                 Want to find out more or interested in early access to the web app? Let us know and we'll get back to you
               </p>
             </Grid.Column>

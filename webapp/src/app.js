@@ -93,6 +93,7 @@ class App extends React.Component {
             <NavLink to="/tobuy">ToBuy</NavLink>
             <NavLink to="/products">Products</NavLink>
           </div>
+          
           <div>
             <Switch>
               <PrivateRoute path="/home" component={Home} />

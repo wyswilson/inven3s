@@ -34,13 +34,6 @@ class Home extends React.Component {
     this.props.history.push('/login');
   }
 
-  redirectoproduct(gtin, productname){
-    this.props.history.push({
-      pathname: '/products',
-      state: { gtin: gtin, productname: productname }
-    })
-  }
-
   instantiatefeed(item){
     this.setState({ feedcnt: this.state.feedcnt+1});
     return (
@@ -120,14 +113,15 @@ class Home extends React.Component {
   }
 
   processdataissuealert(issues){
-    let alertresponse;
+    let cat1alertresp;
+    let cat2alertresp;
     issues.forEach(function(issue) {
       const issuecode = issue['code'];
       const issueitems = issue['items'];
       console.log(issuecode);
 
       if(issuecode === 'product-without-cats'){
-        let code1alert = issueitems.map( (item) => (
+        let alert = issueitems.map( (item) => (
           <List.Item as='a' key={item.gtin}
             onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
           >
@@ -136,20 +130,36 @@ class Home extends React.Component {
           </List.Item>
         ));
 
-        alertresponse = (
+        cat1alertresp = (
           <List.Item>
             <List.Header>Non-categorised products</List.Header>
-            <List.List> {code1alert} </List.List>
+            <List.List> {alert} </List.List>
           </List.Item>
         );
 
       }
       else if(issuecode === 'product-without-2ndcat'){
+        let alert = issueitems.map( (item) => (
+          <List.Item as='a' key={item.gtin}
+            onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
+          >
+            <Icon name='edit' />
+            {item.productname}
+          </List.Item>
+        ));
 
+        cat2alertresp = (
+          <List.Item>
+            <List.Header>Products without secondary category</List.Header>
+            <List.List> {alert} </List.List>
+          </List.Item>
+        );
       }
     },this);  
 
-    this.setState({alerts: alertresponse});
+    const object3 = {...cat1alertresp, ...cat2alertresp };
+    console.log(object3);
+    this.setState({alerts: object3});
   }
 
   getinventoryfeed(){
