@@ -311,7 +311,7 @@ def productalerts_prodno2ndcat(responses):
 	records = cursor.fetchall()
 	
 	response = {}
-	response['code'] = 'product-no-cats' 
+	response['code'] = 'product-without-cats' 
 	nocatcount = 0
 	items = []
 	for record in records:
@@ -344,7 +344,7 @@ def productalerts_prodno2ndcat(responses):
 	records = cursor.fetchall()
 	
 	response = {}
-	response['code'] = 'product-no-2nd-cat' 
+	response['code'] = 'product-without-2ndcat' 
 	nocatcount = 0
 	items = []
 	for record in records:

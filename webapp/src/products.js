@@ -25,14 +25,14 @@ class Product extends React.Component {
       productdropdown: '',
       gtin: redirectstate ? redirectstate.gtin : '',
       productname: redirectstate ? redirectstate.productname : '',
-      productimage: redirectstate ? redirectstate.productimage : 'https://react.semantic-ui.com/images/wireframe/image.png',
-      productimagelocal: redirectstate ? redirectstate.productimagelocal : 'https://react.semantic-ui.com/images/wireframe/image.png',
-      brandname: redirectstate ? redirectstate.brandname : '',
-      isedible: redirectstate ? redirectstate.isedible : 1,
+      productimage: 'https://react.semantic-ui.com/images/wireframe/image.png',
+      productimagelocal: 'https://react.semantic-ui.com/images/wireframe/image.png',
+      brandname: '',
+      isedible: 1,
       isperishable:0,
       selectedcategories: [],
-      isfavourite: redirectstate ? redirectstate.isfavourite : 0,
-      categoryoptions: redirectstate ? redirectstate.categoryoptions : '',
+      isfavourite: 0,
+      categoryoptions: '',
       defaultpricegraph: [['Date','Retailer'],['2020-10-01',0.0]],
       pricegraph: [['Date','Retailer'],['2020-10-01',0.0]]
     };
@@ -129,6 +129,10 @@ class Product extends React.Component {
         if(response.status === 200){
           console.log('searchproducts [' + response.data[0]['message'] + ']');
           this.updateproductsuggests(response.data[0]['results']);
+
+          if(this.state.productsuggests.length === 1){//IF THERE'S ONLY 1 ITEM, PRE-SELECT
+            this.selectproductfromsuggest('productname',this.state.productname);
+          }
         }
         else{
           console.log('searchproducts [' + response.data[0]['message'] + ']');          
@@ -237,48 +241,52 @@ class Product extends React.Component {
     this.setState({ productsuggests: updatedsuggest });
   }
 
+  selectproductfromsuggest(field,value){
+    const array = this.state.productsuggests;
+    let selectedarr = [];
+
+    try{
+      selectedarr = array.filter(prod => prod.value.includes(value))[0];
+
+      if(selectedarr){
+        const selectedgtin = selectedarr['key'];
+        const selectedimg = selectedarr['img'];
+        const selectedimglocal = selectedarr['imglocal'];
+        const selectedbrand = selectedarr['brand'];
+        const selectedisedible = selectedarr['isedible'];
+        const selectedisfavourite = selectedarr['isfavourite'];
+        const selectedprodcategoryoptions = selectedarr['categories'];
+
+        this.setState({ productdropdown: value });
+        this.setState({ gtin: selectedgtin });
+        this.setState({ productname: value });
+        this.setState({ productimage: selectedimg });
+        this.setState({ productimagelocal: selectedimglocal });
+        this.setState({ brandname: selectedbrand });
+        this.setState({ isedible: selectedisedible });
+        this.setState({ isfavourite: selectedisfavourite });
+        this.setState({ categoryoptions: selectedprodcategoryoptions });
+        
+        this.searchbrands(selectedgtin,selectedbrand);
+        this.fetchdefaultcategories(selectedprodcategoryoptions);
+        this.setState({ pricegraph: this.state.defaultpricegraph });
+      }
+      else{
+        //NEW PRODUCT
+      }
+    }
+    catch(error){
+      console.log("setproductmetadata: " + error)
+    }
+  }
+
   setproductmetadata(event, data){
     const field = data.name;
     const value = data.value;
     console.log('setproductmetadata [' + field + ':' + value + ']');
 
     if(field === 'productname'){
-      const array = this.state.productsuggests;
-      let selectedarr = [];
-
-      try{
-        selectedarr = array.filter(prod => prod.value.includes(value))[0];
-
-        if(selectedarr){
-          const selectedgtin = selectedarr['key'];
-          const selectedimg = selectedarr['img'];
-          const selectedimglocal = selectedarr['imglocal'];
-          const selectedbrand = selectedarr['brand'];
-          const selectedisedible = selectedarr['isedible'];
-          const selectedisfavourite = selectedarr['isfavourite'];
-          const selectedprodcategoryoptions = selectedarr['categories'];
-
-          this.setState({ productdropdown: value });
-          this.setState({ gtin: selectedgtin });
-          this.setState({ productname: value });
-          this.setState({ productimage: selectedimg });
-          this.setState({ productimagelocal: selectedimglocal });
-          this.setState({ brandname: selectedbrand });
-          this.setState({ isedible: selectedisedible });
-          this.setState({ isfavourite: selectedisfavourite });
-          this.setState({ categoryoptions: selectedprodcategoryoptions });
-          
-          this.searchbrands(selectedgtin,selectedbrand);
-          this.fetchdefaultcategories(selectedprodcategoryoptions);
-          this.setState({ pricegraph: this.state.defaultpricegraph });
-        }
-        else{
-          //NEW PRODUCT
-        }
-      }
-      catch(error){
-        console.log("setproductmetadata: " + error)
-      }
+      this.selectproductfromsuggest(field,value);
     }
     else if(field === 'brandname'){
       const array = this.state.brandsuggests;
@@ -548,10 +556,8 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
-    //ONLOAD, IF REDIRECT WITH PRODUCT DETAILS FROM INVENTORY. NEED TO POPULATE DROPDOWN
-    
-    if(this.state.brandname !== ''){
-      this.searchbrands(this.state.gtin,this.state.brandname);//PRELOAD DEFAULT CAT === 1
+    if(this.state.gtin !== ''){
+      this.searchproducts(this.state.gtin);
     }
     this.fetchdefaultcategories(this.state.categoryoptions);
   }

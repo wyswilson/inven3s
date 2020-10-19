@@ -6,7 +6,6 @@ import { DateInput } from 'semantic-ui-calendar-react';
 import _ from 'lodash'
 import {isMobile} from 'react-device-detect';
 
-
 class Inventory extends React.Component {
   constructor(props) {
     super(props)
@@ -436,11 +435,10 @@ class Inventory extends React.Component {
     this.setState({ actionedmsg: '' });
   }
 
-  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
+  redirectoproduct(gtin, productname){
     this.props.history.push({
       pathname: '/products',
-      //search: '?isedible=' + this.state.queryisedible + '&isopened=' + this.state.queryisopened,
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
+      state: { gtin: gtin, productname: productname }
     })
   }
   
@@ -581,7 +579,7 @@ class Inventory extends React.Component {
 
                 <Card.Content extra textAlign="center">
                   <div className='ui three buttons'>
-                    <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname,item.productimage,item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)} />
+                    <Button icon="edit" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)} />
                     
                     <Modal
                       trigger={<Button icon="minus" className={item.isfavourite === 1 ? 'kuning button' : 'grey button'}

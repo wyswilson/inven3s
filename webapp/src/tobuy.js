@@ -248,10 +248,10 @@ class ToBuy extends React.Component {
     });
   }
 
-  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
+  redirectoproduct(gtin, productname){
     this.props.history.push({
       pathname: '/products',
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
+      state: { gtin: gtin, productname: productname }
     })
   }
 
@@ -307,7 +307,7 @@ class ToBuy extends React.Component {
                     </Card.Content>
                     <Card.Content extra textAlign="center">
                       <div className='ui two buttons'>
-                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname,proditem.productimage,proditem.productimagelocal, proditem.brandname, proditem.isedible, proditem.isfavourite, proditem.categories)} />
+                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname)} />
                         <Modal
                               trigger={<Button icon="plus" fluid className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'}
                               onClick={this.setproductmetadata.bind(this,item.gtin)} />}
@@ -432,7 +432,7 @@ class ToBuy extends React.Component {
                     </Card.Content>
                     <Card.Content extra textAlign="center">
                       <div className='ui two buttons'>
-                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname,proditem.productimage,proditem.productimagelocal, proditem.brandname, proditem.isedible, proditem.isfavourite, proditem.categories)} />
+                        <Button icon="edit" className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'} onClick={this.redirectoproduct.bind(this,proditem.gtin,proditem.productname)} />
                         <Modal
                               trigger={<Button icon="plus" fluid className={proditem.isfavourite === 1 ? 'kuning button' : 'grey button'}
                               onClick={this.setproductmetadata.bind(this,item.gtin)} />}

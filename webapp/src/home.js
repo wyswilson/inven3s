@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { getToken, getUser, removeUserSession } from './utils/common';
-import { Segment, Image, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
+import { List, Modal, Icon, Segment, Image, Feed, Card, Message, Grid, Button, Statistic } from 'semantic-ui-react'
 import _ from 'lodash'
 import {isMobile} from 'react-device-detect';
 
@@ -24,7 +24,8 @@ class Home extends React.Component {
       },
       cardscats: [],
       feed: <Feed>Loading your activities.</Feed>,
-      feedcnt: 0
+      feedcnt: 0,
+      alerts: ''
     };
   }
 
@@ -33,10 +34,10 @@ class Home extends React.Component {
     this.props.history.push('/login');
   }
 
-  redirectoproduct(gtin, productname, productimage, productimagelocal, brandname, isedible, isfavourite, categories){
+  redirectoproduct(gtin, productname){
     this.props.history.push({
       pathname: '/products',
-      state: { gtin: gtin, productname: productname, productimage: productimage, productimagelocal: productimagelocal, brandname: brandname, isedible: isedible, isfavourite: isfavourite, categoryoptions: categories }
+      state: { gtin: gtin, productname: productname }
     })
   }
 
@@ -53,7 +54,7 @@ class Home extends React.Component {
           <Feed.Content>
             <Feed.Summary>
               {item.itemstatus === 'IN' ? 'added ' : 'consuming '}
-              <Feed.User onClick={this.redirectoproduct.bind(this,item.gtin,item.productname, item.productimage, item.productimagelocal, item.brandname, item.isedible, item.isfavourite, item.categories)}>{item.productname}</Feed.User>
+              <Feed.User onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}>{item.productname}</Feed.User>
               {item.itemstatus === 'IN' ? ' (' + item.itemcount + ' items)' : ''}
               <Feed.Date>{item.dateentry}</Feed.Date>
             </Feed.Summary>
@@ -97,8 +98,8 @@ class Home extends React.Component {
     .then(response => { 
       if(response.status === 200){
         console.log('getdataissues [' + response.data[0]['message'] + ']');
-        const productnotcats = response.data[0]['results'][0];
-        console.log(productnotcats);
+        const issues = response.data[0]['results'];
+        this.processdataissuealert(issues);
       }
     })
     .catch(error => {
@@ -109,6 +110,46 @@ class Home extends React.Component {
         console.log('getdataissues [server unreachable]');
       }
     });
+  }
+
+  redirectoproduct(gtin, productname){
+    this.props.history.push({
+      pathname: '/products',
+      state: { gtin: gtin, productname: productname }
+    })
+  }
+
+  processdataissuealert(issues){
+    let alertresponse;
+    issues.forEach(function(issue) {
+      const issuecode = issue['code'];
+      const issueitems = issue['items'];
+      console.log(issuecode);
+
+      if(issuecode === 'product-without-cats'){
+        let code1alert = issueitems.map( (item) => (
+          <List.Item as='a' key={item.gtin}
+            onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
+          >
+            <Icon name='edit' />
+            {item.productname}
+          </List.Item>
+        ));
+
+        alertresponse = (
+          <List.Item>
+            <List.Header>Non-categorised products</List.Header>
+            <List.List> {code1alert} </List.List>
+          </List.Item>
+        );
+
+      }
+      else if(issuecode === 'product-without-2ndcat'){
+
+      }
+    },this);  
+
+    this.setState({alerts: alertresponse});
   }
 
   getinventoryfeed(){
@@ -329,7 +370,26 @@ class Home extends React.Component {
          <Grid columns={2} doubling stackable>
           <Grid.Column textAlign="center">
             <Message size='large'>
-              <Message.Header>{this.state.username}'s Inventory</Message.Header>
+              <Message.Header>{this.state.username}'s Inventory 
+                <Modal
+                  trigger={
+                      <Icon name='alarm' />
+                  }
+                  closeIcon
+                  centered={false}
+                  size="fullscreen"
+                  dimmer="blurring"
+                  >
+                  <Modal.Header>Alerts</Modal.Header>
+                  <Modal.Content>
+                    <Modal.Description>
+                      <List celled ordered>
+                      {this.state.alerts}
+                      </List>
+                    </Modal.Description>
+                  </Modal.Content>
+                </Modal>
+              </Message.Header>
               <p>
                 <Button className='kuning button' onClick={this.handlelogout.bind(this)}>LOGOUT</Button>
               </p>
