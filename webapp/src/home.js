@@ -83,6 +83,32 @@ class Home extends React.Component {
     this.setState( { feed: feed});
   }
 
+  getdataissues(){
+    console.log('getdataissues');
+
+    axios.get(this.state.apihost + '/data-issues',
+      {
+        headers: {
+          "content-type": "application/json",
+          "access-token": this.state.token
+        }
+      }
+    )
+    .then(response => { 
+      if(response.status === 200){
+        console.log('getdataissues [' + response.data[0]['message'] + ']');
+      }
+    })
+    .catch(error => {
+      if(error.response){
+        console.log("getdataissues ["+ error.response.status + ":" + error.response.data[0]['message'] + ']');
+      }
+      else{
+        console.log('getdataissues [server unreachable]');
+      }
+    });
+  }
+
   getinventoryfeed(){
     console.log('getinventoryfeed');
 
