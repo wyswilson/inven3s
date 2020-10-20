@@ -25,7 +25,8 @@ class Home extends React.Component {
       cardscats: [],
       feed: <Feed>Loading your activities.</Feed>,
       feedcnt: 0,
-      alerts: ''
+      alert1: (<List.Item></List.Item>),
+      alert2: (<List.Item></List.Item>)
     };
   }
 
@@ -92,7 +93,7 @@ class Home extends React.Component {
       if(response.status === 200){
         console.log('getdataissues [' + response.data[0]['message'] + ']');
         const issues = response.data[0]['results'];
-        this.processdataissuealert(issues);
+        this.processalertissues(issues);
       }
     })
     .catch(error => {
@@ -112,54 +113,41 @@ class Home extends React.Component {
     })
   }
 
-  processdataissuealert(issues){
-    let cat1alertresp;
-    let cat2alertresp;
-    issues.forEach(function(issue) {
-      const issuecode = issue['code'];
-      const issueitems = issue['items'];
-      console.log(issuecode);
+  processalertissue(issue,issuename){
+    const issuecode  = issue['code'];
+    const issueitems = issue['items'];
 
-      if(issuecode === 'product-without-cats'){
-        let alert = issueitems.map( (item) => (
-          <List.Item as='a' key={item.gtin}
-            onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
-          >
-            <Icon name='edit' />
-            {item.productname}
-          </List.Item>
-        ));
+    let alertitems = issueitems.map( (item) => (
+      <List.Item as='a' key={item.gtin}
+        onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
+      >
+        <List.Icon name='edit' />
+        <List.Content>
+          <List.Header>{item.productname}</List.Header>
+        </List.Content>
+      </List.Item>
+    ));
 
-        cat1alertresp = (
-          <List.Item>
-            <List.Header>Non-categorised products</List.Header>
-            <List.List> {alert} </List.List>
-          </List.Item>
-        );
+    const alertresp = (
+      <List.Item>
+        <List.Icon name='question circle' />
+        <List.Content>
+          <List.Header>{issuename}</List.Header>
+          <List.List> {alertitems} </List.List>
+        </List.Content>
+      </List.Item>
+    );
 
-      }
-      else if(issuecode === 'product-without-2ndcat'){
-        let alert = issueitems.map( (item) => (
-          <List.Item as='a' key={item.gtin}
-            onClick={this.redirectoproduct.bind(this,item.gtin,item.productname)}
-          >
-            <Icon name='edit' />
-            {item.productname}
-          </List.Item>
-        ));
+    return alertresp;
+    
+  }
 
-        cat2alertresp = (
-          <List.Item>
-            <List.Header>Products without secondary category</List.Header>
-            <List.List> {alert} </List.List>
-          </List.Item>
-        );
-      }
-    },this);  
-
-    const object3 = {...cat1alertresp, ...cat2alertresp };
-    console.log(object3);
-    this.setState({alerts: object3});
+  processalertissues(issues){
+    let alert;
+    alert = this.processalertissue(issues[0],"Non-categorised products");
+    this.setState({alert1: alert});
+    alert = this.processalertissue(issues[1],"Products without secondary category");
+    this.setState({alert2: alert});
   }
 
   getinventoryfeed(){
@@ -383,7 +371,7 @@ class Home extends React.Component {
               <Message.Header>{this.state.username}'s Inventory 
                 <Modal
                   trigger={
-                      <Icon name='alarm' />
+                      <Icon name='alarm' color='yellow'/>
                   }
                   closeIcon
                   centered={false}
@@ -393,8 +381,9 @@ class Home extends React.Component {
                   <Modal.Header>Alerts</Modal.Header>
                   <Modal.Content>
                     <Modal.Description>
-                      <List celled ordered>
-                      {this.state.alerts}
+                      <List divided relaxed>
+                      {this.state.alert1}
+                      {this.state.alert2}
                       </List>
                     </Modal.Description>
                   </Modal.Content>
