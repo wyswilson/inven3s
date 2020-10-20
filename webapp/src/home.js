@@ -114,7 +114,6 @@ class Home extends React.Component {
   }
 
   processalertissue(issue,issuename){
-    const issuecode  = issue['code'];
     const issueitems = issue['items'];
 
     let alertitems = issueitems.map( (item) => (
@@ -139,14 +138,13 @@ class Home extends React.Component {
     );
 
     return alertresp;
-    
   }
 
   processalertissues(issues){
     let alert;
-    alert = this.processalertissue(issues[0],"Non-categorised products");
+    alert = this.processalertissue(issues[0],issues[0]['code']);
     this.setState({alert1: alert});
-    alert = this.processalertissue(issues[1],"Products without secondary category");
+    alert = this.processalertissue(issues[1],issues[1]['code']);
     this.setState({alert2: alert});
   }
 
