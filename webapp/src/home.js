@@ -81,7 +81,7 @@ class Home extends React.Component {
   getdataissues(){
     console.log('getdataissues');
 
-    axios.get(this.state.apihost + '/data-issues',
+    axios.get(this.state.apihost + '/alerts',
       {
         headers: {
           "content-type": "application/json",
