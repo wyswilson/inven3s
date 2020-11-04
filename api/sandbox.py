@@ -126,12 +126,12 @@ def showmainretailers():
 		print("[%s][%s]" % (retailer,count))
 
 
-def scrapeproductprice():
+def scrapeproductprice(url):
 	matchobj = re.findall('([^\.\/]+)\.(?:com|net)', url, re.IGNORECASE)
 	if matchobj:
 		retailer = matchobj[0]
 		price = func.pricescrape(url,retailer)
 		print("[%s][%s]" % (retailer,price))
 
-#showmainretailers()
-scrapeproductprice()
+showmainretailers()
+#scrapeproductprice(url)

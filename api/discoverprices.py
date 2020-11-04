@@ -73,7 +73,7 @@ FROM(
 	LEFT JOIN productscandidate AS pc
 	ON p.gtin = pc.gtin AND pc.`type` = 'productprice'
 	GROUP BY 1,2,3
-	ORDER BY 11 ASC
+	ORDER BY 11 DESC
 ) AS tmp
 WHERE todayprice = 0
 ORDER BY inventoryentries DESC

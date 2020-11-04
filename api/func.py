@@ -700,6 +700,8 @@ def pricescrape(url,retailer):
 		matchobj = soup.find_all('span',{'id':'price-display'})	
 	elif retailer == 'savourofasia': 
 		matchobj = soup.find_all('span',{'itemprop':'price'})
+	elif retailer == 'snackaffair': 
+		matchobj = soup.find_all('p',{'class':'price'})		
 	elif retailer == 'cincottachemist': 
 		matchobj = soup.find_all('span',{'id':'price-display'})
 	elif retailer == 'iganathalia': 
@@ -738,10 +740,6 @@ def pricescrape(url,retailer):
 		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)	
 	elif retailer == 'ilovehealth': 
 		matchobj = soup.find_all('span',{'class':'amount price-new'})
-
-	elif retailer == 'snackaffair': 
-		matchobj = soup.find_all('p',{'class':'price'})
-
 	else:
 		rulesdefined = False
 
@@ -1341,16 +1339,17 @@ def fetchcategories():
 
 def findproductexpiry(uid,gtin):
 	query1 = """
-		SELECT
-			i.retailerid,i.dateexpiry
-		FROM inventories AS i
-		JOIN products AS p
-		ON i.gtin = p.gtin
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		WHERE i.userid = %s AND p.gtin = %s
-		ORDER BY i.dateexpiry ASC
-		LIMIT 1
+		SELECT retailerid,dateexpiry,itemstotal
+		FROM (
+			SELECT
+				retailerid,dateexpiry,
+				SUM(case when itemstatus = 'IN' then quantity else quantity*-1 END) AS itemstotal
+			FROM inventories
+			WHERE userid = %s AND gtin = %s
+			GROUP BY 1,2
+		) AS tmp
+		WHERE itemstotal > 0
+		ORDER BY dateexpiry ASC
 	"""
 	cursor.execute(query1,(uid,gtin))
 	records = cursor.fetchall()

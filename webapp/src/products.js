@@ -694,7 +694,7 @@ class Product extends React.Component {
               data={this.state.pricegraph}
               options={{
                 hAxis: {
-                  title: 'Date',
+                  title: 'Date'
                 },
                 vAxis: {
                   title: 'Price ($)',
