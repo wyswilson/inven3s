@@ -1178,16 +1178,17 @@ def gettopproductsallusers():
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
 			1 AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
-			SUM(i.quantity)
-		FROM products AS p
-		JOIN inventories AS i
-		ON p.gtin = i.gtin AND i.itemstatus = 'IN'
+			CONCAT(pc.category1, ';', pc.category2) AS categories,
+			SUM(case when i.itemstatus = 'IN' then i.quantity ELSE i.quantity*-1 END) AS itemtotal
+		FROM inventories AS i
+		JOIN products AS p
+		ON p.gtin = i.gtin
 		JOIN brands AS b
 		ON p.brandid = b.brandid	
-		LEFT JOIN productscategory as pc
-		ON p.gtin = pc.gtin	AND pc.status = 'SELECTED'
-		GROUP BY 1,2
+		LEFT JOIN productscategory_transpose as pc
+		ON p.gtin = pc.gtin
+		WHERE i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
+		GROUP BY 1,2,3,4,5,6,7
 		ORDER BY 8 DESC
 		LIMIT 5
 	"""
