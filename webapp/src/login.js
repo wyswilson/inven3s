@@ -248,7 +248,7 @@ class Login extends React.Component {
                   Food waste is a problem
                 </Header>
                 <p className="fontdark">
-                  Aussie households throw away 3 average-size fridges worth of food each year <a href="https://www.foodwise.com.au/foodwaste/food-waste-fast-facts/" target="_blank" rel="noopener noreferrer" style={{color: "#ffffff"}}>[1]</a>, which is both bad for the environment and your pocket
+                  Aussie households throw away 3 average-size fridges worth of food each year, which is both bad for the environment and your pocket
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
