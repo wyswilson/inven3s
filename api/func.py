@@ -184,7 +184,7 @@ def registerapilogs(endpoint, email, flaskreq):
 
 	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
-	query1 = "INSERT INTO apilogs (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
+	query1 = "INSERT INTO logsapi (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 	cursor.execute(query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
 	db.commit()
 
@@ -637,21 +637,27 @@ def jsonifyoutput(statuscode,status,records,special=None):
 		return response
 
 def pricescrape(url,retailer):
-	price = '0.0'
 	matchobj = ""
 
 	html,urlresolved = fetchhtml(url)
 	soup = bs4.BeautifulSoup(html, 'html.parser')
-
 	rulesdefined = True
 	if retailer == 'woolworths': 
-		matchobj = soup.find_all('div',{'class':'price price--large'})
+		#matchobj = soup.find_all('div',{'class':'price price--large'})
+		matchobjtmp = soup.find_all('script',{'type':'application/ld+json'})
+		try:
+			jsonstr = matchobjtmp[0].text
+			jsonobj = json.loads(jsonstr)
+			matchobj = str(jsonobj['offers']['price'])
+		except:
+			matchobj = ""
 	elif retailer == 'chemistwarehouse': 
 		matchobj = soup.find_all('span',{'class':'product__price'})
 	elif retailer == 'drakes': 
 		matchobj = soup.find_all('strong',{'class':'MoreInfo__Price'})
 	elif retailer == 'bigw': 
-		matchobj = soup.find_all('span',{'id':'product_online_price'})
+		#matchobj = soup.find_all('span',{'id':'product_online_price'})
+		matchobj = re.findall('<meta name="twitter:data1" content="(.+?)"', html, re.IGNORECASE)
 	elif retailer == 'allysbasket': 
 		matchobj = soup.find_all('span',{'itemprop':'price'})
 	elif retailer == 'buyasianfood': 
@@ -733,30 +739,44 @@ def pricescrape(url,retailer):
 	else:
 		rulesdefined = False
 
+	price = '0.0'
 	if rulesdefined and matchobj:
-		for match in matchobj:
-			if type(match) == str:
-				price = match
-			else:
-				price = match.text
+		if type(matchobj) == str:
+			price = matchobj
+		else:
+			for match in matchobj:
+				if type(match) == str:
+					price = match
+				else:
+					price = match.text
+				break
 
-			price = price.replace('\n' , '') 
-			price = price.replace('Price:' , '') 
-			price = price.replace('$' , '') 
-			try:
-				test = float(price)
-			except:
-				price = "0.0"
-			break
+		price = price.replace('\n' , '') 
+		price = price.replace('Price:' , '') 
+		price = price.replace('$' , '') 
+		try:
+			test = float(price)
+		except:
+			price = "0.0"
 	elif not rulesdefined:
-		errstr = "\tno rules defined for retailer [%s] [%s]" % (retailer,url)
+		errstr = "pricescrape: [no-rules-defined] [%s] [%s]" % (retailer,url)
 		print(errstr)
 	else:
-		errstr = "\tdefined rules are broken for [%s] [%s]" % (retailer,url)
+		errstr = "pricescrape: [defined-rules-broken] [%s] [%s]" % (retailer,url)
 		print(errstr)
 		logging.debug(errstr)
+		logbrokenpricerule(retailer,url)
 
 	return float(price)
+
+def logbrokenpricerule(retailer,url):
+
+	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+	scrapedate = datetime.datetime.today().strftime('%Y-%m-%d')
+
+	query1 = "INSERT INTO logsprice (retailer,url,eventdate,scrapedate) VALUES (%s,%s,%s,%s)"
+	cursor.execute(query1,(retailer,url,eventdate,scrapedate))
+	db.commit()
 
 def addproductcandidate(type,source,gtin,title,url,rank):
 	id = hashlib.md5(title.encode('utf-8')).hexdigest()
@@ -844,30 +864,21 @@ def fetchhtml(url):
 		
 		urlresolved = r.url
 		html = r.content.decode('utf-8')
-		if html != '':
-			errstr = "line 610: fetchhtml: [ok-page-fetched] [%s]" % (url)
-			#print(errstr)
-			logging.debug(errstr)
-		else:
-			errstr = "line 614: fetchhtml: [error-empty-page] [%s]" % (url)
-			#print(errstr)
+		if html == '':
+			errstr = "fetchhtml: [error-empty-page] [%s]" % (url)
 			logging.debug(errstr)
 
 	except requests.ConnectionError as e:
-		errstr = "line 619: fetchhtml: [error-connection] [%s] [%s]" % (url,str(e))
-		#print(errstr)
+		errstr = "fetchhtml: [error-connection] [%s] [%s]" % (url,str(e))
 		logging.debug(errstr)
 	except requests.Timeout as e:
-		errstr = "line 623: fetchhtml: [error-timeout] [%s] [%s]" % (url,str(e))
-		#print(errstr)
+		errstr = "fetchhtml: [error-timeout] [%s] [%s]" % (url,str(e))
 		logging.debug(errstr)
 	except requests.RequestException as e:
-		errstr = "line 627: fetchhtml: [error-request] [%s] [%s]" % (url,str(e))
-		#print(errstr)
+		errstr = "fetchhtml: [error-request] [%s] [%s]" % (url,str(e))
 		logging.debug(errstr)
 	except BaseException as e:
-		errstr = "line 631: fetchhtml: [error-unknown] [%s] [%s]" % (url,str(e))
-		#print(errstr)
+		errstr = "fetchhtml: [error-unknown] [%s] [%s]" % (url,str(e))
 		logging.debug(errstr)
 
 	return html,urlresolved
@@ -887,12 +898,8 @@ def downloadproductpages(gtin,engine,preferredsources):
 
 		html,urlresolved = fetchhtml(url)
 
-		if html != '':
-			errstr = "line 653: downloadproductpages: [ok-searchengine-results] [%s] [%s] [%s]" % (gtin,engine,urlresolved)
-			print(errstr)
-			logging.debug(errstr)
-		else:
-			errstr = "line 657: downloadproductpages: [error-searchengine-resultspage] [%s] [%s] [%s]" % (gtin,engine,urlresolved)
+		if html == '':
+			errstr = "downloadproductpages: [error-searchengine-resultspage] [%s] [%s] [%s]" % (gtin,engine,urlresolved)
 			print(errstr)
 			logging.debug(errstr)
 
@@ -933,26 +940,22 @@ def downloadproductpages(gtin,engine,preferredsources):
 			selectedurl = firsturl
 			selectedtitle = firsttitle
 
-		errstr = "line 695: downloadproductpages: [ok-productpage-found] [%s] [%s]" % (selectedurl,selectedtitle)
-		print(errstr)
-		logging.debug(errstr)
-
 		selectedtitle = string.capwords(selectedtitle.strip())
 		return selectedurl,selectedtitle
 	except requests.ConnectionError as e:
-		errstr = "line 702: downloadproductpages: [error-connection] [%s] [%s]" % (url,str(e))
+		errstr = "downloadproductpages: [error-connection] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 	except requests.Timeout as e:
-		errstr = "line 706: downloadproductpages: [error-timeout] [%s] [%s]" % (url,str(e))
+		errstr = "downloadproductpages: [error-timeout] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 	except requests.RequestException as e:
-		errstr = "line 710: downloadproductpages: [error-request] [%s] [%s]" % (url,str(e))
+		errstr = "downloadproductpages: [error-request] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 	except BaseException as e:
-		errstr = "line 714: downloadproductpages: [error-unknown] [%s] [%s]" % (url,str(e))
+		errstr = "downloadproductpages: [error-unknown] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 
@@ -1015,11 +1018,8 @@ def discovernewproduct(gtin,attempt):
 		try:
 			selectedhtml,urlresolved = fetchhtml(selectedurl)
 
-			errstr = "line 752: discovernewproduct: [ok-productpage-fetched] [%s] [%s]" % (selectedurl,urlresolved)
-			print(errstr)
-			logging.debug(errstr)
 		except BaseException as e:
-			errstr = "line 756: discovernewproduct: [error-productpage-notfetched] [%s] [%s]" % (selectedurl,str(e))
+			errstr = "discovernewproduct: [error-productpage-notfetched] [%s] [%s]" % (selectedurl,str(e))
 			print(errstr)
 			logging.debug(errstr)
 
@@ -1029,10 +1029,6 @@ def discovernewproduct(gtin,attempt):
 
 		if selectedhtml != "":
 			soup = bs4.BeautifulSoup(selectedhtml, 'html.parser')
-			
-			errstr = "line 767: discovernewproduct: [ok-parse-productpage] [%s]" % (selectedurl)
-			print(errstr)
-			logging.debug(errstr)
 
 			brandid = ""
 			productname = ""
@@ -1094,20 +1090,20 @@ def discovernewproduct(gtin,attempt):
 			return "ERR","",""
 
 	elif selectedurl == "" and attempt == 2:
-		errstr = "line 831: discovernewproduct: [ok-noproductpage-retry] [%s] [%s]" % (gtin,attempt)
+		errstr = "discovernewproduct: [ok-noproductpage-retry] [%s] [%s]" % (gtin,attempt)
 		print(errstr)
 		logging.debug(errstr)
 
 		productname,brandid,brandname = discovernewproduct(gtin,attempt)
 		return productname,brandid,brandname
 	elif selectedurl == "":
-		errstr = "line 838: discovernewproduct: [error-noproductpage-retried-failed] [%s] [%s]" % (gtin,attempt)
+		errstr = "discovernewproduct: [error-noproductpage-retried-failed] [%s] [%s]" % (gtin,attempt)
 		print(errstr)
 		logging.debug(errstr)
 
 		return "WARN","",""
 	else:
-		errstr = "line 844: discovernewproduct: [error-productpage-unknown] [%s] [%s]" % (gtin,attempt)
+		errstr = "discovernewproduct: [error-productpage-unknown] [%s] [%s]" % (gtin,attempt)
 		print(errstr)
 		logging.debug(errstr)
 
@@ -1499,22 +1495,22 @@ def findproductimage(gtin,productname):
 				productimage = imageurl
 
 	except requests.ConnectionError as e:
-		errstr = "line 1194: findproductimage: [error-connection] [%s] [%s]" % (url,str(e))
+		errstr = "findproductimage: [error-connection] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 
 	except requests.Timeout as e:
-		errstr = "line 1199: findproductimage: [error-timeout] [%s] [%s]" % (url,str(e))
+		errstr = "findproductimage: [error-timeout] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 
 	except requests.RequestException as e:
-		errstr = "line 1204: findproductimage: [error-request] [%s] [%s]" % (url,str(e))
+		errstr = "findproductimage: [error-request] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 
 	except BaseException as e:
-		errstr = "line 1209: findproductimage: [error-unknown] [%s] [%s]" % (url,str(e))
+		errstr = "findproductimage: [error-unknown] [%s] [%s]" % (url,str(e))
 		print(errstr)
 		logging.debug(errstr)
 

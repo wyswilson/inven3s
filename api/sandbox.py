@@ -56,7 +56,7 @@ cursor = db.cursor()
 #url = "https://www.amcal.com.au/soov-bite-25g-p-93327381"
 #url = "https://www.bigw.com.au/product/oral-b-stages-2-mickey-2-4-years-toothbrush-extra-soft/p/169614/"
 #url = "https://discountchemist.com.au/product/ego-pinetarsol-solution-100ml/"
-#url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-traditional-basil"
+url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-traditional-basil"
 #url = "http://www.asiangrocerystore.com.au/lee-kum-kee-char-siu-sauce-397g.html"
 #url = "https://062.drakes.com.au/lines/obento-seasoning-sushi-250ml"
 #url = "https://mysweeties.com.au/products/doritos-salsa-dip-mild-300g-1-unit"
@@ -131,5 +131,5 @@ def scrapeproductprice():
 		price = func.pricescrape(url,retailer)
 		print("[%s][%s]" % (retailer,price))
 
-#showmainretailers()
-scrapeproductprice()
+showmainretailers()
+#scrapeproductprice()

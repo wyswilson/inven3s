@@ -44,14 +44,21 @@ db = mysql.connector.connect(
 	port = mysqlport,
 	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
     pool_name='sqlpool',
-    pool_size = 6, pool_reset_session = True
+    pool_size = 6, pool_reset_session = True,
+    autocommit=True
    	)
 
 cursor = db.cursor()
 
+query0 = """
+	DELETE FROM productscategory_transpose
+"""
+cursor.execute(query0)
+db.commit()
+
 query1 = """
-	SET @row_number = 0
-	SET @gtin = ''
+	SET @row_number = 0;
+	SET @gtin = '';
 
 	REPLACE INTO 
 		productscategory_transpose(gtin,productname,category1,category2)
@@ -88,10 +95,10 @@ query1 = """
 		) AS prodswithmultiplecats
 	) AS prodswithinlinecats
 	GROUP BY 1,2
-	ORDER BY 3 ASC
-	COMMIT
+	ORDER BY 3 ASC;
+	COMMIT;
 """
-cursor.execute(query1,multi=True)
+for _ in cursor.execute(query1, multi=True): pass
 db.commit()
 
 query0 = """
@@ -105,9 +112,8 @@ print("# of products with categories transposed: %s" % len(records))
 
 query2 = """
 	DELETE FROM productscategory_top
-	COMMIT
 """
-cursor.execute(query2,multi=True)
+cursor.execute(query2)
 db.commit()
 
 query3 = """
@@ -131,10 +137,10 @@ query3 = """
 		GROUP BY 1
 		ORDER BY 2 DESC
 	) AS topcats
-	WHERE subcatcnt > 1
-	COMMIT
+	WHERE subcatcnt > 1 and category != '';
+	COMMIT;
 """
-cursor.execute(query3,multi=True)
+for _ in cursor.execute(query3, multi=True): pass
 db.commit()
 
 query4 = """
