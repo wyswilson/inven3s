@@ -201,7 +201,7 @@ class Login extends React.Component {
           <Grid columns={2} doubling stackable>
             <Grid.Column textAlign="left" verticalAlign="middle">
               <Header
-                content='Reducing food waste starts with your pantry'
+                content='Reducing food waste starts with your inventory'
                 className={isMobile ? "text main mobile" : "text main"}
               />
             </Grid.Column>
@@ -254,7 +254,7 @@ class Login extends React.Component {
               <Grid.Column verticalAlign="middle">
                 <List floated="left" className="fontdark">
                   <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
-                  <List.Item icon='barcode' content="Buying more than what we need by not checking our pantry before shopping and not sticking to shopping list" />
+                  <List.Item icon='barcode' content="Buying more than what we need by not checking our inventory before shopping and not sticking to shopping list" />
                   <List.Item icon='barcode' content="Not knowing how to make the best use of the food that we have at home" />
                 </List>
               </Grid.Column>
@@ -290,10 +290,10 @@ class Login extends React.Component {
           <Grid celled='internally' columns='equal' stackable>
             <Grid.Column>
               <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
-                Popular products across pantries at the moment
+              Recent top products in inventories
               </Header>
               <p className="fontdark">
-                We have {this.state.allproductscnt} unique products in our pantries and the number is growing
+                We have {this.state.allproductscnt} unique products in our inventories and the number is growing
               </p>
               <Grid doubling stackable>
                 <Grid.Row stretched columns={5}>
