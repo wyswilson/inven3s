@@ -651,6 +651,8 @@ def pricescrape(url,retailer):
 			matchobj = str(jsonobj['offers']['price'])
 		except:
 			matchobj = ""
+	elif retailer == 'amazon': 
+		matchobj = soup.find_all('span',{'id':'priceblock_ourprice'})		
 	elif retailer == 'chemistwarehouse': 
 		matchobj = soup.find_all('span',{'class':'product__price'})
 	elif retailer == 'drakes': 
@@ -736,6 +738,10 @@ def pricescrape(url,retailer):
 		matchobj = re.findall('"price":(.+?),', html, re.IGNORECASE)	
 	elif retailer == 'ilovehealth': 
 		matchobj = soup.find_all('span',{'class':'amount price-new'})
+
+	elif retailer == 'snackaffair': 
+		matchobj = soup.find_all('p',{'class':'price'})
+
 	else:
 		rulesdefined = False
 

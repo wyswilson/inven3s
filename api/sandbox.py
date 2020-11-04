@@ -56,7 +56,7 @@ cursor = db.cursor()
 #url = "https://www.amcal.com.au/soov-bite-25g-p-93327381"
 #url = "https://www.bigw.com.au/product/oral-b-stages-2-mickey-2-4-years-toothbrush-extra-soft/p/169614/"
 #url = "https://discountchemist.com.au/product/ego-pinetarsol-solution-100ml/"
-url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-traditional-basil"
+#url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-traditional-basil"
 #url = "http://www.asiangrocerystore.com.au/lee-kum-kee-char-siu-sauce-397g.html"
 #url = "https://062.drakes.com.au/lines/obento-seasoning-sushi-250ml"
 #url = "https://mysweeties.com.au/products/doritos-salsa-dip-mild-300g-1-unit"
@@ -95,6 +95,8 @@ url = "https://www.woolworths.com.au/shop/productdetails/94375/leggo-s-pesto-tra
 #url = "https://www.aircart.com.au/product-page/sanitarium-weet-bix-bites-apricot-breakfast-cereal-500g"
 #url = " https://www.intradco.com.au/product/chan-kong-thye-bulldog-black-vinegargongtaijiangyuan-gouzi-zhengnuomitianheicu/"
 #url = "https://www.myer.com.au/p/cleansing-facial-scrub-472720150-472723210"
+#url = "https://www.amazon.com.au/Annalisa-Red-Kidney-Beans-400/dp/B07L6PX24S"
+#url = "https://snackaffair.com.au/product/prima-singapore-la-mian-black-pepper-crab-flavoured/"
 
 def showmainretailers():
 	retailers = {}
@@ -131,5 +133,5 @@ def scrapeproductprice():
 		price = func.pricescrape(url,retailer)
 		print("[%s][%s]" % (retailer,price))
 
-showmainretailers()
-#scrapeproductprice()
+#showmainretailers()
+scrapeproductprice()
