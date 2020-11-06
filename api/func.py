@@ -41,71 +41,32 @@ useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
-	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
-    pool_name='sqlpool',
-    pool_size = 6, pool_reset_session = True
+	user = mysqluser, passwd = mysqlpassword, database=mysqldb#,
+    #pool_name='sqlpool',
+    #pool_size = 6, pool_reset_session = True
    	)
 
-cursor = db.cursor()
+#cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
 
-###############################################################
-def getledgeractivities():
-	query1 = """
-    	SELECT
-        	distinct(activity) as activity
-    	FROM ledger
-	"""
-	cursor.execute(query1)
-	records = cursor.fetchall()
-
-	return records
-
-def addledger(newtask,newstar,type):
-	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
-
-	query1 = "INSERT INTO ledger (activity,stars,datetime,type) VALUES (%s,%s,%s,%s)"
-	cursor.execute(query1,(newtask,newstar,eventdate,type))
-	db.commit()
-
-def getledger():
-	tasks = []
-	query1 = """
-    	SELECT
-        	activity,stars,datetime,type
-    	FROM ledger
-	"""
-	cursor.execute(query1)
-	records = cursor.fetchall()
-	totalstars = 0
-	totalins = 0
-	totalouts = 0
-	for record in records:
-		task = {}
-
-		activity 	= record[0]
-		stars		= record[1]
-		datetime	= record[2]
-		type	= record[3]
-
-		task['activity']	= activity
-		task['stars']  	 	= stars
-		task['datetime'] 	= datetime
-		task['type'] 	= type
-		tasks.append(task)
-
-		if type == 'earned':
-			totalstars += int(stars)
-			totalins += 1
+def _execute(db,query,params):
+	cursor_ = None
+	try:
+		cursor_ = db.cursor()
+		if type(params) is tuple:
+			cursor_.execute(query,params)
 		else:
-			totalstars -= int(stars)
-			totalouts += 1
+			cursor_.execute(query)
+	except mysql.connector.Error as e:
+		db.reconnect(attempts=3, delay=0)
+		cursor_ = db.cursor()
+		if type(params) is tuple:
+			cursor_.execute(query,params)
+		else:
+			cursor_.execute(query)
 
-	return tasks, totalstars, totalins, totalouts
-###############################################################
-
-###############################################################
+	return cursor_
 
 def generatehash(password):
 	return werkzeug.security.generate_password_hash(password, method='sha256')
@@ -185,84 +146,99 @@ def registerapilogs(endpoint, email, flaskreq):
 	eventdate = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 	query1 = "INSERT INTO logsapi (endpoint,email,clientip,browser,platform,language,eventdate,referrer) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-	cursor.execute(query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
+	cursor = _execute(db,query1,(endpoint,email,clientip,browser,platform,language,eventdate,referrer))
 	db.commit()
+	cursor.close()
 
 	return True
 
 def addnewuser(email,fullname,passwordhashed):
 	userid = hashlib.md5(email.encode('utf-8')).hexdigest()
 	query1 = "INSERT INTO users (userid,fullname,email,passwordhashed) VALUES (%s,%s,%s,%s)"
-	cursor.execute(query1,(userid,fullname,email,passwordhashed))
+	cursor = _execute(db,query1,(userid,fullname,email,passwordhashed))
 	db.commit()
+	cursor.close()
 
 def updatebrandurl(brandid,brandurl):
 	query2 = "UPDATE brands SET brandurl = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandurl,brandid))
+	cursor = _execute(db,query2,(brandurl,brandid))
 	db.commit()
+	cursor.close()
 
 def updatebrandimage(brandid,brandimage):
 	query2 = "UPDATE brands SET brandimage = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandimage,brandid))
+	cursor = _execute(db,query2,(brandimage,brandid))
 	db.commit()
+	cursor.close()
 
 def updatebrandowner(brandid,brandowner):
 	#string.capwords(brandowner.strip())
 	query2 = "UPDATE brands SET brandowner = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandowner.strip(),brandid))
+	cursor = _execute(db,query2,(brandowner.strip(),brandid))
 	db.commit()
+	cursor.close()
 
 def updatebrandname(brandid,brandname):
 	#string.capwords(brandname.strip())
 	query2 = "UPDATE brands SET brandname = %s WHERE brandid = %s"
-	cursor.execute(query2,(brandname.strip(),brandid))
+	cursor = _execute(db,query2,(brandname.strip(),brandid))
 	db.commit()
+	cursor.close()
 
 def updateproductcategories(gtin,categories):
 	query2 = "DELETE FROM productscategory WHERE gtin = %s"
-	cursor.execute(query2,(gtin,))
+	cursor = _execute(db,query2,(gtin,))
 	db.commit()
+	cursor.close()
 
 	for cat in categories:
 		cat = cat.strip()
 		query2 = "REPLACE INTO productscategory (gtin,category,status) VALUES (%s,%s,%s)"
-		cursor.execute(query2,(gtin,cat,'SELECTED'))
+		cursor = _execute(db,query2,(gtin,cat,'SELECTED'))
 		db.commit()
+		cursor.close()
 
 def updateproductbrand(gtin,brandid):
 	query2 = "UPDATE products SET brandid = %s WHERE gtin = %s"
-	cursor.execute(query2,(brandid,gtin))
+	cursor = _execute(db,query2,(brandid,gtin))
 	db.commit()
+	cursor.close()
 
 def updateproductimage(gtin,productimage):
 	query2 = "UPDATE products SET productimage = %s WHERE gtin = %s"
-	cursor.execute(query2,(productimage,gtin))
+	cursor = _execute(db,query2,(productimage,gtin))
 	db.commit()
+	cursor.close()
 
 def updateisfavourite(gtin,userid,isfavourite):
 	query1 = "REPLACE INTO productsfavourite (gtin,userid) VALUES (%s,%s)"
-	cursor.execute(query1,(gtin,userid))
+	cursor = _execute(db,query1,(gtin,userid))
 	db.commit()
+	cursor.close()
 
 	query2 = "UPDATE productsfavourite SET favourite = %s WHERE gtin = %s AND userid = %s"
-	cursor.execute(query2,(isfavourite,gtin,userid))
+	cursor = _execute(db,query2,(isfavourite,gtin,userid))
 	db.commit()
+	cursor.close()
 
 def updateisedible(gtin,isedible):
 	query2 = "UPDATE products SET isedible = %s WHERE gtin = %s"
-	cursor.execute(query2,(isedible,gtin))
+	cursor = _execute(db,query2,(isedible,gtin))
 	db.commit()
+	cursor.close()
 
 def updateisperishable(gtin,isperishable):
 	query2 = "UPDATE products SET isperishable = %s WHERE gtin = %s"
-	cursor.execute(query2,(isperishable,gtin))
+	cursor = _execute(db,query2,(isperishable,gtin))
 	db.commit()
+	cursor.close()
 
 def updateproductname(gtin,productname):
 	#string.capwords(productname.strip())
 	query2 = "UPDATE products SET productname = %s WHERE gtin = %s"
-	cursor.execute(query2,(productname.strip(),gtin))
+	cursor = _execute(db,query2,(productname.strip(),gtin))
 	db.commit()
+	cursor.close()
 
 def productalerts_prodnocats(responses):
 	###PRODUCT WITHOUT CATEGORIES
@@ -274,8 +250,9 @@ def productalerts_prodnocats(responses):
 		ON p.gtin = pc.gtin
 		WHERE pc.category IS NULL
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
 	
 	response = {}
 	response['code'] = 'Non-categorised products' 
@@ -307,8 +284,9 @@ def productalerts_prodno2ndcat(responses):
 		ON p.gtin = pct.gtin
 		WHERE pct.category1 != '' and pct.category2 = ''
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
 	
 	response = {}
 	response['code'] = 'Products without secondary category' 
@@ -779,23 +757,26 @@ def logbrokenpricerule(retailer,url):
 	scrapedate = datetime.datetime.today().strftime('%Y-%m-%d')
 
 	query1 = "INSERT INTO logsprice (retailer,url,eventdate,scrapedate) VALUES (%s,%s,%s,%s)"
-	cursor.execute(query1,(retailer,url,eventdate,scrapedate))
+	cursor = _execute(db,query1,(retailer,url,eventdate,scrapedate))
 	db.commit()
+	cursor.close()
 
 def addproductcandidate(type,source,gtin,title,url,rank):
 	id = hashlib.md5(title.encode('utf-8')).hexdigest()
 	eventdate1 = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 
 	query1 = "REPLACE INTO productscandidate (gtin,source,type,candidateid,candidatetitle,candidateurl,candidaterank,timestamp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-	cursor.execute(query1,(gtin,source,type,id,title,url,rank,eventdate1))
+	cursor = _execute(db,query1,(gtin,source,type,id,title,url,rank,eventdate1))
 	db.commit()
+	cursor.close()
 
 def addnewbrand(brandid,brandname,brandowner,brandimage,brandurl):
 	#string.capwords(brandname)
 	if brandname != "":
 		query2 = "REPLACE INTO brands (brandid,brandname,brandowner,brandimage,brandurl) VALUES (%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(brandid,brandname.strip(),brandowner.strip(),brandimage,brandurl))
+		cursor = _execute(db,query2,(brandid,brandname.strip(),brandowner.strip(),brandimage,brandurl))
 		db.commit()
+		cursor.close()
 
 		return brandid
 	else:
@@ -810,19 +791,22 @@ def addinventoryitem(uid,gtin,retailerid,dateexpiry,itemstatus,quantity,receiptn
 			i = 0
 			while i < quantity:
 				query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,1,%s)"
-				cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,receiptno))
+				cursor = _execute(db,query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,receiptno))
 				db.commit()
+				cursor.close()
 				i += 1#VERY IMPORTANT
 		else:#IF quantity = 0.5 (FOR CONSUMPTION ITEMSTATUS=OUT)
 			query1 = "INSERT INTO inventories (userid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-			cursor.execute(query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
+			cursor = _execute(db,query1,(uid,gtin,retailerid,dateentry,dateexpiry,itemstatus,quantity,receiptno))
 			db.commit()
+			cursor.close()
 
 def addnewproduct(gtin,productname,productimage,brandid,isperishable,isedible):
 	if productname != "":#and brandid != ""
 		query2 = "INSERT INTO products (gtin,productname,productimage,brandid,isperishable,isedible) VALUES (%s,%s,%s,%s,%s,%s)"
-		cursor.execute(query2,(gtin,productname.strip(),productimage,brandid,isperishable,isedible))
+		cursor = _execute(db,query2,(gtin,productname.strip(),productimage,brandid,isperishable,isedible))
 		db.commit()
+		cursor.close()
 	
 		return gtin
 	else:
@@ -837,8 +821,9 @@ def addnewretailer(retailername,retailercity=None):
 
 		retailerid = hashlib.md5(retailermash.encode('utf-8')).hexdigest()
 		query2 = "INSERT INTO retailers (retailerid,retailername,retailercity) VALUES (%s,%s,%s)"
-		cursor.execute(query2,(retailerid,retailername.strip(),retailercity))
+		cursor = _execute(db,query2,(retailerid,retailername.strip(),retailercity))
 		db.commit()
+		cursor.close()
 
 		return retailerid
 	else:
@@ -846,13 +831,15 @@ def addnewretailer(retailername,retailercity=None):
 
 def removebrand(brandid):
 	query1 = "DELETE FROM brands WHERE brandid = %s"
-	cursor.execute(query1,(brandid,))
+	cursor = _execute(db,query1,(brandid,))
 	db.commit()
+	cursor.close()
 	
 def removeproduct(gtin):
 	query1 = "DELETE FROM products WHERE gtin = %s"
-	cursor.execute(query1,(gtin,))
+	cursor = _execute(db,query1,(gtin,))
 	db.commit()
+	cursor.close()
 
 def fetchhtml(url):
 	html = ""
@@ -970,8 +957,9 @@ def downloadproductpricepages(gtin,productname):
 	type = "productprice"
 
 	query2 = "DELETE FROM productscandidate WHERE gtin = %s AND source = %s AND type = %s"
-	cursor.execute(query2,(gtin,engine,type))
+	cursor = _execute(db,query2,(gtin,engine,type))
 	db.commit()
+	cursor.close()
 
 	url = "https://www.google.com/search?q=%s" % urllib.parse.quote(productname)
 
@@ -1156,8 +1144,9 @@ def generateshoppinglistbycat(userid):
 		GROUP BY 1,2,3,4,5,6,7
 		ORDER BY 10 DESC
 	"""
-	cursor.execute(query1,(userid,))
+	cursor = _execute(db,query1,(userid,))
 	records = cursor.fetchall()	
+	cursor.close()
 
 	return records
 
@@ -1166,8 +1155,10 @@ def countallproducts():
 		SELECT count(*)
 		FROM products
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
+
 	count = records[0][0]
 
 	return count
@@ -1192,8 +1183,9 @@ def gettopproductsallusers():
 		ORDER BY 8 DESC
 		LIMIT 5
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records	
 
@@ -1205,8 +1197,9 @@ def findproductprices(gtin):
 		WHERE pp.gtin = %s
 		ORDER BY 1 ASC
 	"""
-	cursor.execute(query1,(gtin,))
+	cursor = _execute(db,query1,(gtin,))
 	retailers = cursor.fetchall()
+	cursor.close()
 
 	records = []
 	retailernames = []
@@ -1230,8 +1223,9 @@ def findproductprices(gtin):
 			GROUP BY 1,2,3
 			ORDER BY 1 ASC, 3 ASC
 		"""
-		cursor.execute(query2,(gtin,))
+		cursor = _execute(db,query2,(gtin,))
 		records = cursor.fetchall()
+		cursor.close()
 		i = 1
 		
 		for fieldname in cursor.description:
@@ -1263,8 +1257,9 @@ def findallproducts(userid,isedible):
 	else:
 		query1 += "WHERE p.isedible = %s"
 	query1 += " GROUP BY 1,2,3,4,5,6"
-	cursor.execute(query1,(userid,validateisedible(isedible)))
+	cursor = _execute(db,query1,(userid,validateisedible(isedible)))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1295,8 +1290,9 @@ def findproductbykeyword(gtin,userid,isedible):
 		GROUP BY 1,2,3,4,5,6
 		LIMIT 10
 	"""
-	cursor.execute(query1,(userid,gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
+	cursor = _execute(db,query1,(userid,gtinfuzzy,gtinfuzzy,validateisedible(isedible)))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1319,8 +1315,9 @@ def findproductbygtin(gtin,userid):
 		GROUP by 1,2,3,4,5,6
 		ORDER BY 2
 	"""
-	cursor.execute(query,(userid,gtin))
+	cursor = _execute(db,query,(userid,gtin))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1333,8 +1330,9 @@ def fetchcategories():
 		GROUP BY 1
 		ORDER BY 2 DESC
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()	
+	cursor.close()
 
 	return records
 
@@ -1352,8 +1350,10 @@ def findproductexpiry(uid,gtin):
 		WHERE itemstotal > 0
 		ORDER BY dateexpiry ASC
 	"""
-	cursor.execute(query1,(uid,gtin))
+	cursor = _execute(db,query1,(uid,gtin))
 	records = cursor.fetchall()
+	cursor.close()
+
 	if records:
 		retailerid = records[0][0]
 		dateexpiry = records[0][1]
@@ -1367,8 +1367,9 @@ def fetchtopcats():
 	query1 = """
 	SELECT category FROM productscategory_top;	
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
 
 	topcats = []
 	for record in records:
@@ -1409,8 +1410,9 @@ def fetchinventorybyuserbycat(uid):
 		WHERE itemstotal > 0
 		ORDER BY 9 DESC
 	"""
-	cursor.execute(query1,(uid,))
+	cursor = _execute(db,query1,(uid,))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1459,8 +1461,10 @@ def fetchinventoryexpireditems(uid):
 		WHERE itemstotal > 0 AND itemgoodness IN ('expired','expiring')
 		ORDER BY 9 asc
 	"""
-	cursor.execute(query1,(uid,))
+	cursor = _execute(db,query1,(uid,))
 	records = cursor.fetchall()
+	cursor.close()
+
 	expiringcnt 	= 0
 	expiredcnt 		= 0
 	expiringrecords = []
@@ -1550,8 +1554,9 @@ def fetchinventoryfeedbyuser(uid):
 		ORDER BY 8 DESC
 		LIMIT 20
 	"""
-	cursor.execute(query1,(uid,))
+	cursor = _execute(db,query1,(uid,))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1606,13 +1611,14 @@ def fetchinventorybyuser(uid,isedible,isopened,category):
 	"""
 	if category != "all" and category != "Not-Categorised":
 		query1 += "AND (categories LIKE '%; " + category + "' OR categories LIKE '" + category + ";%' OR categories = '" + category + "')"
-		cursor.execute(query1,(uid,isedible))
+		cursor = _execute(db,query1,(uid,isedible))
 	elif category == "Not-Categorised":
 		query1 += "AND (categories IS NULL)"
-		cursor.execute(query1,(uid,isedible))		
+		cursor = _execute(db,query1,(uid,isedible))		
 	else:
-		cursor.execute(query1,(uid,isedible))
+		cursor = _execute(db,query1,(uid,isedible))
 	records = cursor.fetchall()
+	cursor.close()
 
 	ediblenewcnt = 0
 	edibleopenedcnt = 0 
@@ -1691,8 +1697,10 @@ def countinventoryitems(uid,gtin):
 		ON p.brandid = b.brandid
 		WHERE i.userid = %s AND p.gtin = %s
 	"""
-	cursor.execute(query1,(uid,gtin))
+	cursor = _execute(db,query1,(uid,gtin))
 	records = cursor.fetchall()
+	cursor.close()
+
 	count = records[0][0]
 	if count:
 		return float(count)
@@ -1709,8 +1717,9 @@ def findallbrands():
 		GROUP BY 1,2,3,4,5
 		ORDER BY b.brandname
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1723,8 +1732,9 @@ def findretailerbykeyword(retailer):
 		FROM retailers
 		WHERE retailername LIKE %s
 	"""
-	cursor.execute(query1,(retailerfuzzy,))
+	cursor = _execute(db,query1,(retailerfuzzy,))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1741,8 +1751,9 @@ def findbrandbykeyword(brandid):
 		WHERE b.brandname LIKE %s
 		GROUP BY 1,2,3,4,5
 	"""
-	cursor.execute(query1,(brandfuzzy,))
+	cursor = _execute(db,query1,(brandfuzzy,))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1757,8 +1768,9 @@ def findbrandbyid(brandid):
 		GROUP BY 1,2,3,4,5
 		ORDER BY b.brandname
 	"""
-	cursor.execute(query,(brandid,))
+	cursor = _execute(db,query,(brandid,))
 	records = cursor.fetchall()
+	cursor.close()
 
 	return records
 
@@ -1769,8 +1781,10 @@ def resolveretailer(retailername):
     	FROM retailers
     	WHERE lower(retailername) = %s
 	"""
-	cursor.execute(query1,(retailername.lower(),))
+	cursor = _execute(db,query1,(retailername.lower(),))
 	records = cursor.fetchall()
+	cursor.close()
+
 	if records:
 		retailerid = records[0][0]
 		retailername = records[0][1]
@@ -1786,8 +1800,10 @@ def validatebrand(brandid,brandname):
     	FROM brands
     	WHERE brandid = %s OR lower(brandname) = %s
 	"""
-	cursor.execute(query1,(brandid,brandname.lower()))
+	cursor = _execute(db,query1,(brandid,brandname.lower()))
 	records = cursor.fetchall()
+	cursor.close()
+
 	if records:
 		brandid = records[0][0]
 		if brandname == "":#DO NOT OVERRIDE IF NAME IS PROVIDED
@@ -1813,8 +1829,10 @@ def finduserbyid(email):
     	FROM users
     	WHERE email = %s
 	"""
-	cursor.execute(query1,(email,))
+	cursor = _execute(db,query1,(email,))
 	records = cursor.fetchall()
+	cursor.close()
+
 	if records:
 		userid = records[0][0]
 		fullname = records[0][1]
@@ -1830,8 +1848,10 @@ def validateuser(userid):
     	FROM users
     	WHERE userid = %s
 	"""
-	cursor.execute(query1,(userid,))
+	cursor = _execute(db,query1,(userid,))
 	records = cursor.fetchall()
+	cursor.close()
+
 	if records:
 		email = records[0][0]
 		return True
@@ -1846,8 +1866,10 @@ def validategtin(gtin):
 	    	FROM products
 	    	WHERE gtin = %s
 		"""
-		cursor.execute(query1,(gtin,))
+		cursor = _execute(db,query1,(gtin,))
 		records = cursor.fetchall()
+		cursor.close()
+
 		if records:
 			gtin = records[0][0]
 			productname = records[0][1]

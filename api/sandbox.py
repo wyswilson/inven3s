@@ -42,12 +42,28 @@ useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
-	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
-    pool_name='sqlpool',
-    pool_size = 6, pool_reset_session = True
+	user = mysqluser, passwd = mysqlpassword, database=mysqldb#,
+    #pool_name='sqlpool',
+    #pool_size = 6, pool_reset_session = True
    	)
 
-cursor = db.cursor()
+def _execute(db,query,params):
+	cursor_ = None
+	try:
+		cursor_ = db.cursor()
+		if type(params) is tuple:
+			cursor_.execute(query,params)
+		else:
+			cursor_.execute(query)
+	except mysql.connector.Error as e:
+		db.reconnect(attempts=3, delay=0)
+		cursor_ = db.cursor()
+		if type(params) is tuple:
+			cursor_.execute(query,params)
+		else:
+			cursor_.execute(query)
+
+	return cursor_
 
 #url = "https://shop.coles.com.au/a/richmond-south/product/claratyne-childrens-grape-chew-5mg-tabs-10pk"
 #url = "https://www.priceline.com.au/dermeze-moisturising-soap-free-wash-1-litre"
@@ -101,12 +117,13 @@ cursor = db.cursor()
 def showmainretailers():
 	retailers = {}
 	query1 = """
-	SELECT
-		candidateurl
-	FROM productscandidate
-	WHERE type = 'productprice'
+		SELECT
+			candidateurl
+		FROM productscandidate
+		WHERE type = 'productprice'
+		limit 10
 	"""
-	cursor.execute(query1)
+	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
 	for record in records:
 		candidateurl = record[0]
@@ -118,6 +135,7 @@ def showmainretailers():
 				retailers[retailer] += 1
 			else:
 				retailers[retailer] = 1
+	cursor.close()
 
 	data_sorted = {k: v for k, v in sorted(retailers.items(), key=lambda x: x[1])}
 
