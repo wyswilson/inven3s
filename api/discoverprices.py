@@ -42,12 +42,8 @@ useragents 		= json.loads(config['scraper']['useragents'].replace('\n',''))
 db = mysql.connector.connect(
 	host = mysqlhost,
 	port = mysqlport,
-	user = mysqluser, passwd = mysqlpassword, database=mysqldb,
-    pool_name='sqlpool',
-    pool_size = 6, pool_reset_session = True
+	user = mysqluser, passwd = mysqlpassword, database=mysqldb
    	)
-
-cursor = db.cursor()
 
 query1 = """
 SELECT
@@ -78,8 +74,9 @@ FROM(
 WHERE todayprice = 0
 ORDER BY inventoryentries DESC
 """
-cursor.execute(query1)
+cursor = func._execute(db,query1,None)
 records = cursor.fetchall()
+cursor.close()
 
 for record in records:
 	gtin 				= record[0]
@@ -104,7 +101,8 @@ for record in records:
 				timestamp 	= datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
 				date 		= datetime.datetime.today().strftime('%Y-%m-%d')
 				query1 = "REPLACE INTO productsprice (gtin,price,timestamp,date,retailer) VALUES (%s,%s,%s,%s,%s)"
-				cursor.execute(query1,(gtin,price,timestamp,date,retailer))
+				cursor = func._execute(db,query1,(gtin,price,timestamp,date,retailer))
 				db.commit()			
-		
+				cursor.close()
+
 	time.sleep(5)

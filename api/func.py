@@ -45,7 +45,6 @@ db = mysql.connector.connect(
     #pool_name='sqlpool',
     #pool_size = 6, pool_reset_session = True
    	)
-
 #cursor = db.cursor()
 
 logging.basicConfig(filename=logfile,level=logging.DEBUG)
