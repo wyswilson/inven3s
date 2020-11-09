@@ -542,11 +542,18 @@ def jsonifyproducts(records):
 		product['gtin'] 			= gtin
 		product['productname']		= productname
 		product['productimage'] 	= productimage
-		product['productimagelocal'] 	= productdir + '/' + gtin + '.jpg'
+		product['productimagelocal']= productdir + '/' + gtin + '.jpg'
 		product['brandname'] 		= brandname
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
-		product['categories'] 		= categories
+		if categories != '':
+			cats = []
+			for cat in categories.split(";"):
+				cats.append(cat)
+
+			product['categories'] = cats
+		else:
+			product['categories'] = None
 
 		products.append(product)
 
@@ -1180,13 +1187,9 @@ def getallproducts(userid,isedible):
 		WHERE
 	"""
 	if userid != '':
-		 query1 += """
-			i.userid = '%s'
-		 """ % (userid)
+		 query1 += "i.userid = '%s'" % (userid)
 	else:
-		query1 += """
-			i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() 
-		 """ 
+		query1 += "i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()" 
 	if validateisedible(isedible) == "2":
 		query1 += "AND p.isedible != %s"
 	else:
