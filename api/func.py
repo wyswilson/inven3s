@@ -122,7 +122,6 @@ def requiresbasicauth(f):
         auth = flask.request.authorization
         if not auth: 
             return basicauth()
-
         elif auth.username != apiuser and auth.password != apipassword:
             return basicauth()
 
@@ -547,7 +546,7 @@ def jsonifyproducts(records):
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
 		product['categories'] = categories		
-		
+
 		products.append(product)
 
 	return products
@@ -601,8 +600,12 @@ def jsonifyoutput(statuscode,status,records,special=None):
 			message['count'] = len(records)
 		message['results'] = records
 	else:
-		message['count'] = special
-		message['results'] = None
+		if isinstance(special, float) or isinstance(special, int):
+			message['count'] = special
+			message['results'] = None
+		else:
+			message['count'] = None
+			message['results'] = special
 
 	messages.append(message)
 
