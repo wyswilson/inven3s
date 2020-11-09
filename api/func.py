@@ -1181,7 +1181,7 @@ def getallproducts(userid,isedible):
 			i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
 	"""
 	if userid != '':
-		 query1 += "i.userid = %s" % (userid)
+		 query1 += "i.userid = '%s'" % (userid)
 	if validateisedible(isedible) == "2":
 		query1 += "AND p.isedible != %s"
 	else:
