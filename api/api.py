@@ -145,7 +145,9 @@ def publicpopularproducts():
 	statuscode = 200
 	records = []
 
-	records = func.gettopproductsallusers()
+	userid = ''
+	isedible = 2#ALL
+	records = func.getallproducts(userid,isedible)
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
 @app.route('/public/productscnt', methods=['GET'])
@@ -486,7 +488,7 @@ def productselectall(userid):
 
 	isedible = flask.request.args.get("isedible")
 	
-	records = func.findallproducts(userid,isedible)
+	records = func.getallproducts(userid,isedible)
 
 	return func.jsonifyoutput(statuscode,status,func.jsonifyproducts(records))
 
@@ -853,5 +855,5 @@ def retaileradd(userid):
 	return func.jsonifyoutput(statuscode,status,func.jsonifyretailers(records))
 
 if __name__ == "__main__":
-	#app.run(debug=True,host='0.0.0.0',port=88)
-	waitress.serve(app, host="0.0.0.0", port=88)
+	app.run(debug=True,host='0.0.0.0',port=88)
+	#waitress.serve(app, host="0.0.0.0", port=88)

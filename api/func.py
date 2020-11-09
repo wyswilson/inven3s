@@ -1162,12 +1162,12 @@ def countallproducts():
 
 	return count
 
-def gettopproductsallusers():
+def getallproducts(userid,isedible):
 	query1 = """
 		SELECT
 			p.gtin,p.productname,p.productimage,b.brandname,
 			p.isedible,
-			1 AS isfavourite,
+			0 AS isfavourite,
 			CONCAT(pc.category1, ';', pc.category2) AS categories,
 			SUM(case when i.itemstatus = 'IN' then i.quantity ELSE i.quantity*-1 END) AS itemtotal
 		FROM inventories AS i
@@ -1177,16 +1177,24 @@ def gettopproductsallusers():
 		ON p.brandid = b.brandid	
 		LEFT JOIN productscategory_transpose as pc
 		ON p.gtin = pc.gtin
-		WHERE i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
+		WHERE
+			i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
+	"""
+	if userid != '':
+		 query1 += "i.userid = %s" % (userid)
+	if validateisedible(isedible) == "2":
+		query1 += "AND p.isedible != %s"
+	else:
+		query1 += "AND p.isedible = %s"
+	query1 += """
 		GROUP BY 1,2,3,4,5,6,7
 		ORDER BY 8 DESC
-		LIMIT 5
 	"""
-	cursor = _execute(db,query1,None)
+	cursor = _execute(db,query1,(userid,validateisedible(isedible)))
 	records = cursor.fetchall()
 	cursor.close()
 
-	return records	
+	return records
 
 def findproductprices(gtin):
 	query1 = """
@@ -1234,33 +1242,6 @@ def findproductprices(gtin):
 			i += 1
 
 	return records,retailernames
-
-def findallproducts(userid,isedible):
-	query1 = """
-		SELECT
-			p.gtin,p.productname,p.productimage,b.brandname,
-			p.isedible,
-			case when pf.favourite = 1 then 1 ELSE 0 END AS isfavourite,
-			GROUP_CONCAT(DISTINCT pc.category SEPARATOR '; ') AS categories,
-			count(*)
-		FROM products AS p
-		JOIN brands AS b
-		ON p.brandid = b.brandid
-		LEFT JOIN productscategory as pc
-		ON p.gtin = pc.gtin
-		LEFT JOIN productsfavourite AS pf
-		ON p.gtin = pf.gtin AND pf.userid = %s
-	"""
-	if validateisedible(isedible) == "2":
-		query1 += "WHERE p.isedible != %s"
-	else:
-		query1 += "WHERE p.isedible = %s"
-	query1 += " GROUP BY 1,2,3,4,5,6"
-	cursor = _execute(db,query1,(userid,validateisedible(isedible)))
-	records = cursor.fetchall()
-	cursor.close()
-
-	return records
 
 def findproductbykeyword(gtin,userid,isedible):
 	gtinfuzzy = "%" + gtin + "%"
