@@ -1178,10 +1178,15 @@ def getallproducts(userid,isedible):
 		LEFT JOIN productscategory_transpose as pc
 		ON p.gtin = pc.gtin
 		WHERE
-			i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW()
 	"""
 	if userid != '':
-		 query1 += "AND i.userid = '%s'" % (userid)
+		 query1 += """
+			i.userid = '%s'
+		 """ % (userid)
+	else:
+		query1 += """
+			i.dateentry BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND NOW() 
+		 """ 
 	if validateisedible(isedible) == "2":
 		query1 += "AND p.isedible != %s"
 	else:
