@@ -201,7 +201,7 @@ class Login extends React.Component {
           <Grid columns={2} doubling stackable>
             <Grid.Column textAlign="left" verticalAlign="middle">
               <Header
-                content='Reducing food waste starts with your inventory'
+                content='Reducing household waste starts with your inventory'
                 className={isMobile ? "text main mobile" : "text main"}
               />
             </Grid.Column>
@@ -245,7 +245,7 @@ class Login extends React.Component {
             <Grid.Row textAlign='left'>
               <Grid.Column className="fontdark">
                 <Header as='h3' style={{ fontSize: '24px' }} className="fontdark">
-                  Food waste is a problem
+                  Household and food waste is a problem
                 </Header>
                 <p className="fontdark">
                   Aussie households throw away 3 average-size fridges worth of food each year, which is both bad for the environment and your pocket
@@ -253,7 +253,7 @@ class Login extends React.Component {
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
                 <List floated="left" className="fontdark">
-                  <List.Item icon='barcode' content="Mistakenly throwing out food due to confusion with the used-by date" />
+                  <List.Item icon='barcode' content="Mistakenly throwing out edible items due to confusion with the used-by date" />
                   <List.Item icon='barcode' content="Buying more than what we need by not checking our inventory before shopping and not sticking to shopping list" />
                   <List.Item icon='barcode' content="Not knowing how to make the best use of the food that we have at home" />
                 </List>
@@ -271,13 +271,13 @@ class Login extends React.Component {
                   How does our technology help?
                 </Header>
                 <p className="fontlight">
-                Our web app enables effortless tracking of food items when you are at home or on-the-go and uses AI to help you manage them to reduce waste and save you time
+                Our web app enables effortless tracking of household items when you are at home or on-the-go and uses AI to help you manage them to reduce waste and save you time
                 </p>
               </Grid.Column>
               <Grid.Column verticalAlign="middle">
                 <List floated="left" className="fontlight">
                   <List.Item icon='barcode' content="Reminds you of expiring food so that you can prioritise consuming them sooner" />
-                  <List.Item icon='barcode' content="Writes your shopping lists for you with food that are running out or that you likely need" />
+                  <List.Item icon='barcode' content="Writes your shopping lists for you with household items that are running out or that you will likely need" />
                   <List.Item icon='barcode' content="Suggests recipes you can make using the food that you have at home" />
                 </List>
               </Grid.Column>
@@ -293,7 +293,7 @@ class Login extends React.Component {
               Recent top products in inventories
               </Header>
               <p className="fontdark">
-                We have {this.state.allproductscnt} unique products in our inventories and the number is growing
+                We have {this.state.allproductscnt} unique product items in our inventories and the number is growing
               </p>
               <Grid doubling stackable>
                 <Grid.Row stretched columns={5}>
