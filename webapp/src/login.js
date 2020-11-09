@@ -35,6 +35,10 @@ class Login extends React.Component {
     }
   }
 
+  fetchproductprice(){
+
+  }
+  
   loadtopproducts(products){
     const prodgrid = _.map(products, (item) => (
         <Grid.Column key={item.gtin}>

@@ -546,9 +546,8 @@ def jsonifyproducts(records):
 		product['brandname'] 		= brandname
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
-		product['categories'] = categories
+		product['categories'] = categories		
 		
-
 		products.append(product)
 
 	return products
