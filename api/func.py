@@ -546,14 +546,8 @@ def jsonifyproducts(records):
 		product['brandname'] 		= brandname
 		product['isedible'] 		= isedible
 		product['isfavourite'] 		= isfavourite
-		if categories != '':
-			cats = []
-			for cat in categories.split(";"):
-				cats.append(cat)
-
-			product['categories'] = cats
-		else:
-			product['categories'] = None
+		product['categories'] = categories
+		
 
 		products.append(product)
 
