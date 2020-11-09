@@ -1195,6 +1195,9 @@ def getallproducts(userid,isedible):
 		GROUP BY 1,2,3,4,5,6,7
 		ORDER BY 8 DESC
 	"""
+	if userid == '':
+		query1 += "LIMIT 5"
+
 	cursor = _execute(db,query1,(validateisedible(isedible),))
 	records = cursor.fetchall()
 	cursor.close()
