@@ -44,7 +44,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const permissiblehosts = ['inven3s.com','127.0.0.1','localhost']
+    const permissiblehosts = ['www.inven3s.com','inven3s.com','127.0.0.1','localhost']
     const hostname = window.location.hostname;
     console.log(hostname);
     if(!permissiblehosts.includes(hostname)){
