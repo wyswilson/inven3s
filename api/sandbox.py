@@ -121,7 +121,6 @@ def showmainretailers():
 			candidateurl
 		FROM productscandidate
 		WHERE type = 'productprice'
-		limit 10
 	"""
 	cursor = _execute(db,query1,None)
 	records = cursor.fetchall()
