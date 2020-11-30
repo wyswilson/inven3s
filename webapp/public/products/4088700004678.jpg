@@ -21,7 +21,7 @@
 <meta property="og:description" content="Buy Groceries Online with low prices. Easygrocery offer free and same day grocery delivery 7 days a week. Indian grocery online, online fruit and vegetable Sydney, Asian grocery online">
 <meta property="og:url" content="https://easygrocery.com.au/">
 <meta property="og:site_name" content="EasyGrocery">
-<meta property="og:updated_time" content="2020-11-22T23:09:38+11:00">
+<meta property="og:updated_time" content="2020-11-25T11:55:08+11:00">
 <meta property="fb:app_id" content="1831457733812275">
 <meta property="og:image" content="https://storage.googleapis.com/easygrocery/2016/08/dummy-1-2.jpg">
 <meta property="og:image:secure_url" content="https://storage.googleapis.com/easygrocery/2016/08/dummy-1-2.jpg">
@@ -96,7 +96,7 @@
             "url": "https://easygrocery.com.au/",
             "name": "Buy Groceries Online | EasyGrocery",
             "datePublished": "2016-04-26T12:34:20+11:00",
-            "dateModified": "2020-11-22T23:09:38+11:00",
+            "dateModified": "2020-11-25T11:55:08+11:00",
             "isPartOf": {
                 "@id": "https://easygrocery.com.au/#website"
             },
@@ -109,7 +109,7 @@
             "@type": "Article",
             "headline": "Buy Groceries Online | EasyGrocery",
             "datePublished": "2016-04-26GMT+110012:34:20+11:00",
-            "dateModified": "2020-11-22GMT+110023:09:38+11:00",
+            "dateModified": "2020-11-25GMT+110011:55:08+11:00",
             "author": {
                 "@type": "Person",
                 "name": "bipince13"
@@ -155,7 +155,7 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-	<link rel='stylesheet' id='child-styles-css'  href='https://easygrocery.com.au/wp-content/themes/flatsome-child/style.css?ver=1552473142' type='text/css' media='all' />
+	<link rel='stylesheet' id='child-styles-css'  href='https://easygrocery.com.au/wp-content/themes/flatsome-child/style.css?ver=1606414563' type='text/css' media='all' />
 <link rel='stylesheet' id='berocket_mm_quantity_style-css'  href='https://easygrocery.com.au/wp-content/plugins/minmax-quantity-for-woocommerce/css/shop.css?ver=1.2.13.1' type='text/css' media='all' />
 <link rel='stylesheet' id='vtprd-front-end-style-css'  href='https://easygrocery.com.au/wp-content/plugins/pricing-deals-for-woocommerce/core/css/vtprd-front-end-min.css?ver=5.5.3' type='text/css' media='all' />
 <link rel='stylesheet' id='wp-block-library-css'  href='https://easygrocery.com.au/wp-includes/css/dist/block-library/style.min.css?ver=5.5.3' type='text/css' media='all' />
@@ -175,7 +175,7 @@ img.emoji {
 <style id='woocommerce-inline-inline-css' type='text/css'>
 .woocommerce form .form-row .required { visibility: visible; }
 </style>
-<link rel='stylesheet' id='megamenu-css'  href='https://easygrocery.com.au/wp-content/uploads/maxmegamenu/style.css?ver=98613d' type='text/css' media='all' />
+<link rel='stylesheet' id='megamenu-css'  href='https://easygrocery.com.au/wp-content/uploads/maxmegamenu/style.css?ver=f4650b' type='text/css' media='all' />
 <link rel='stylesheet' id='dashicons-css'  href='https://easygrocery.com.au/wp-includes/css/dashicons.min.css?ver=5.5.3' type='text/css' media='all' />
 <style id='dashicons-inline-css' type='text/css'>
 [data-font="Dashicons"]:before {font-family: 'Dashicons' !important;content: attr(data-icon) !important;speak: none !important;font-weight: normal !important;font-variant: normal !important;text-transform: none !important;line-height: 1 !important;font-style: normal !important;-webkit-font-smoothing: antialiased !important;-moz-osx-font-smoothing: grayscale !important;}
@@ -196,7 +196,6 @@ img.emoji {
 <script type='text/javascript' id='google_gtagjs-js-after'>
 window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('set', 'developer_id.dZTNiMT', true);
 gtag('config', 'UA-116481298-1');
 </script>
 <link rel="https://api.w.org/" href="https://easygrocery.com.au/wp-json/" /><link rel="alternate" type="application/json" href="https://easygrocery.com.au/wp-json/wp/v2/pages/40" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://easygrocery.com.au/xmlrpc.php?rsd" />
@@ -643,7 +642,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
           <div id="logo" class="flex-col logo">
             <!-- Header logo -->
 <a href="https://easygrocery.com.au/" title="EasyGrocery - Online Grocery Shop Sydney" rel="home">
-    <img width="200" height="93" src="https://easygrocery.com.au/wp-content/uploads/2017/11/Asset-1@2x.png" class="header_logo header-logo" alt="EasyGrocery"/><img  width="200" height="93" src="https://easygrocery.com.au/wp-content/uploads/2017/11/Asset-1@2x.png" class="header-logo-dark" alt="EasyGrocery"/></a>
+    <img width="200" height="93" src="https://storage.googleapis.com/easygrocery/2020/07/Asset-1@2x.png" class="header_logo header-logo" alt="EasyGrocery"/><img  width="200" height="93" src="https://easygrocery.com.au/wp-content/uploads/2017/11/Asset-1@2x.png" class="header-logo-dark" alt="EasyGrocery"/></a>
           </div>
 
           <!-- Mobile Left Elements -->
@@ -857,7 +856,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 <div id="content" role="main" class="content-area">
 
 		
-				<section class="section" id="section_529364807">
+				<section class="section" id="section_1552274918">
 		<div class="bg section-bg fill bg-fill  bg-loaded" >
 
 			
@@ -869,7 +868,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 		<div class="section-content relative">
 			
 
-<div class="slider-wrapper relative hide-for-small" id="slider-163025840" >
+<div class="slider-wrapper relative hide-for-small" id="slider-1219614786" >
     <div class="slider slider-nav-circle slider-nav-large slider-nav-light slider-style-normal"
         data-flickity-options='{
             "cellAlign": "center",
@@ -894,7 +893,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
         
 
 
-  <div class="banner has-hover" id="banner-287589904">
+  <div class="banner has-hover" id="banner-571472229">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -910,10 +909,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1366" height="514" src="https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg" class="attachment-original size-original wp-stateless-item" alt="Online grocery shopping" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg 1366w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-800x301.jpg 800w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-768x289.jpg 768w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-510x192.jpg 510w" sizes="(max-width: 1366px) 100vw, 1366px" data-image-size="original" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/10/homepage-main-baner.jpg" title="Home"></div>
             
 <style>
-#banner-287589904 .bg.bg-loaded {
+#banner-571472229 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg);
 }
-#banner-287589904 {
+#banner-571472229 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -921,7 +920,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 
 
-  <div class="banner has-hover" id="banner-296504354">
+  <div class="banner has-hover" id="banner-1752917763">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -937,10 +936,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1600" height="600" src="https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg" class="attachment-original size-original wp-stateless-item" alt="Online fruit and vegetable" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg 1600w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-800x300.jpg 800w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-1400x525.jpg 1400w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-768x288.jpg 768w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-1536x576.jpg 1536w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-510x191.jpg 510w" sizes="(max-width: 1600px) 100vw, 1600px" data-image-size="original" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/09/Online-fruit-and-veg.jpg" title="Home"></div>
             
 <style>
-#banner-296504354 .bg.bg-loaded {
+#banner-1752917763 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg);
 }
-#banner-296504354 {
+#banner-1752917763 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -948,7 +947,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 
 
-  <div class="banner has-hover" id="banner-1185279735">
+  <div class="banner has-hover" id="banner-1165048243">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -964,10 +963,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1600" height="600" src="https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg" class="attachment-original size-original wp-stateless-item" alt="Indian grocery online" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg 1600w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-800x300.jpg 800w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-1400x525.jpg 1400w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-768x288.jpg 768w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-1536x576.jpg 1536w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-510x191.jpg 510w" sizes="(max-width: 1600px) 100vw, 1600px" data-image-size="original" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/08/01-8-1.jpg" title="Home"></div>
             
 <style>
-#banner-1185279735 .bg.bg-loaded {
+#banner-1165048243 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg);
 }
-#banner-1185279735 {
+#banner-1165048243 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -982,7 +981,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
      </div>
 
 
-<div class="slider-wrapper relative show-for-small" id="slider-1252515212" >
+<div class="slider-wrapper relative show-for-small" id="slider-1571325757" >
     <div class="slider slider-nav-circle slider-nav-large slider-nav-light slider-style-normal"
         data-flickity-options='{
             "cellAlign": "center",
@@ -1007,7 +1006,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
         
 
 
-  <div class="banner has-hover show-for-small" id="banner-1635966026">
+  <div class="banner has-hover show-for-small" id="banner-1122554440">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -1023,10 +1022,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1366" height="514" src="https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg" class="attachment-original size-original wp-stateless-item" alt="Online grocery shopping" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg 1366w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-800x301.jpg 800w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-768x289.jpg 768w, https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner-510x192.jpg 510w" sizes="(max-width: 1366px) 100vw, 1366px" data-image-size="original" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/10/homepage-main-baner.jpg" title="Home"></div>
             
 <style>
-#banner-1635966026 .bg.bg-loaded {
+#banner-1122554440 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2018/10/homepage-main-baner.jpg);
 }
-#banner-1635966026 {
+#banner-1122554440 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -1034,7 +1033,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 
 
-  <div class="banner has-hover show-for-small" id="banner-1230866049">
+  <div class="banner has-hover show-for-small" id="banner-993940911">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -1050,10 +1049,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1600" height="600" src="https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg" class="attachment-original size-original wp-stateless-item" alt="Online fruit and vegetable" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg 1600w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-800x300.jpg 800w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-1400x525.jpg 1400w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-768x288.jpg 768w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-1536x576.jpg 1536w, https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg-510x191.jpg 510w" sizes="(max-width: 1600px) 100vw, 1600px" data-image-size="original" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/09/Online-fruit-and-veg.jpg" title="Home"></div>
             
 <style>
-#banner-1230866049 .bg.bg-loaded {
+#banner-993940911 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2020/09/Online-fruit-and-veg.jpg);
 }
-#banner-1230866049 {
+#banner-993940911 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -1061,7 +1060,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 
 
-  <div class="banner has-hover show-for-small" id="banner-1209435112">
+  <div class="banner has-hover show-for-small" id="banner-1054904489">
           <div class="banner-inner fill">
         <div class="banner-bg fill" >
             <div class="bg fill bg-fill "></div>
@@ -1077,10 +1076,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
               <div class="height-fix is-invisible"><img width="1600" height="600" src="https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg" class="attachment-orginal size-orginal wp-stateless-item" alt="Indian grocery online" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg 1600w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-800x300.jpg 800w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-1400x525.jpg 1400w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-280x105.jpg 280w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-768x288.jpg 768w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-1536x576.jpg 1536w, https://storage.googleapis.com/easygrocery/2020/08/01-8-1-510x191.jpg 510w" sizes="(max-width: 1600px) 100vw, 1600px" data-image-size="orginal" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/08/01-8-1.jpg" title="Home"></div>
             
 <style>
-#banner-1209435112 .bg.bg-loaded {
+#banner-1054904489 .bg.bg-loaded {
   background-image: url(https://storage.googleapis.com/easygrocery/2020/08/01-8-1.jpg);
 }
-#banner-1209435112 {
+#banner-1054904489 {
   background-color: rgb(255,255,255);
 }
 </style>
@@ -1095,10 +1094,10 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
      </div>
 
 
-<div class="row row-collapse row-solid"  id="row-199616033">
+<div class="row row-collapse row-solid"  id="row-1604250163">
 
 
-	<div id="col-952597261" class="col medium-4 small-12 large-4"  >
+	<div id="col-1375806170" class="col medium-4 small-12 large-4"  >
 		<div class="col-inner"  >
 			
 			
@@ -1127,7 +1126,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 	
 
-	<div id="col-1479101184" class="col medium-4 small-12 large-4"  >
+	<div id="col-1575696287" class="col medium-4 small-12 large-4"  >
 		<div class="col-inner"  >
 			
 			
@@ -1156,7 +1155,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 	
 
-	<div id="col-471451639" class="col medium-4 small-12 large-4"  >
+	<div id="col-1219422437" class="col medium-4 small-12 large-4"  >
 		<div class="col-inner"  >
 			
 			
@@ -1187,7 +1186,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 
 <style>
-#row-199616033 > .col > .col-inner {
+#row-1604250163 > .col > .col-inner {
   padding: 1px 1px 1px 1pxz;
   background-color: rgb(255, 255, 255);
 }
@@ -1198,16 +1197,16 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 		
 <style>
-#section_529364807 {
+#section_1552274918 {
   padding-top: 0px;
   padding-bottom: 0px;
   background-color: rgb(255, 255, 255);
 }
-#section_529364807 .section-bg-overlay {
+#section_1552274918 .section-bg-overlay {
   background-color: rgba(255, 255, 255, 0.62);
 }
 @media (min-width:550px) {
-  #section_529364807 {
+  #section_1552274918 {
     padding-top: 0px;
     padding-bottom: 0px;
   }
@@ -1215,7 +1214,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </style>
 	</section>
 	
-	<section class="section" id="section_876355896">
+	<section class="section" id="section_1957313156">
 		<div class="bg section-bg fill bg-fill  bg-loaded" >
 
 			
@@ -1248,7 +1247,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Bakery Items                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      128 Products                      </p>
+	                      126 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1267,7 +1266,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Daily needs                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      591 Products                      </p>
+	                      597 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1286,7 +1285,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Fasting Items                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      13 Products                      </p>
+	                      15 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1305,7 +1304,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Frozen Items                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      190 Products                      </p>
+	                      195 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1324,7 +1323,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Others                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      732 Products                      </p>
+	                      711 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1343,7 +1342,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Pickles/Chutney/Paste                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      155 Products                      </p>
+	                      151 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1362,7 +1361,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Quick Meals                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      337 Products                      </p>
+	                      334 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1381,7 +1380,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Snacks                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      320 Products                      </p>
+	                      327 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1400,7 +1399,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
                       <h5 class="uppercase header-title">
                               Spices                      </h5>
                                             <p class="is-xsmall uppercase count ">
-	                      409 Products                      </p>
+	                      402 Products                      </p>
                                             
                   </div>
                 </div>
@@ -1770,319 +1769,9 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            	        </div>
 
-<div class="container section-title-container" ><h3 class="section-title section-title-bold-center"><b></b><span class="section-title-main" style="color:rgb(243, 136, 30);"><i class="icon-shopping-basket" ></i>Ice Cream</span><b></b></h3></div>
+<div class="container section-title-container hidden" ><h3 class="section-title section-title-bold-center"><b></b><span class="section-title-main" style="color:rgb(243, 136, 30);"><i class="icon-shopping-basket" ></i>Ice Cream</span><b></b></h3></div>
 
 
-  
-    <div class="row  equalize-box large-columns-5 medium-columns-3 small-columns-2 row-small has-shadow row-box-shadow-1 slider row-slider slider-nav-reveal slider-nav-push"  data-flickity-options='{"imagesLoaded": true, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": true,"prevNextButtons": true,"percentPosition": true,"pageDots": false, "rightToLeft": false, "autoPlay" : false}'>
-
-  	
-	     
-					
-<div class="product-small col has-hover product type-product post-440657 status-publish instock product_cat-others product_cat-dairyproducts product_tag-clearance product_tag-ice-cream has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440657">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/others/desi-scoop-paan-ice-cream-1-ltr/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/11/1-1-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Desi Scoop Paan Ice cream 1 Ltr" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/11/1-1-1.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-440657  wishlist-fragment on-first-load" data-fragment-ref="440657" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:440657,&quot;parent_product_id&quot;:440657,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=440657" rel="nofollow" data-product-id="440657" data-product-type="simple" data-original-product-id="440657" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Others		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/others/desi-scoop-paan-ice-cream-1-ltr/">Desi Scoop Paan Ice cream 1 Ltr</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>9.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=440657" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="440657" data-product_sku="" aria-label="Add &ldquo;Desi Scoop Paan Ice cream 1 Ltr&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-440670 status-publish last instock product_cat-dairyproducts product_cat-others product_tag-clearance product_tag-ice-cream has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440670">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/others/dairyproducts/desi-scoop-american-dry-fruit-ice-cream-1-ltr/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/11/4-4-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Desi Scoop American Dry Fruit 1 Ltr" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/11/4-4.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-440670  wishlist-fragment on-first-load" data-fragment-ref="440670" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:440670,&quot;parent_product_id&quot;:440670,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=440670" rel="nofollow" data-product-id="440670" data-product-type="simple" data-original-product-id="440670" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Dairy Products		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/others/dairyproducts/desi-scoop-american-dry-fruit-ice-cream-1-ltr/">Desi Scoop American Dry Fruit  Ice cream 1 Ltr</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>9.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=440670" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="440670" data-product_sku="" aria-label="Add &ldquo;Desi Scoop American Dry Fruit  Ice cream 1 Ltr&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-440669 status-publish first instock product_cat-others product_cat-dairyproducts product_tag-clearance product_tag-ice-cream has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440669">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/others/desi-scoop-rajbhog-ice-cream-1-ltr/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/11/5-3-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Desi Scoop Rajbhog Ice cream 1 Ltr" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/11/5-3.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-440669  wishlist-fragment on-first-load" data-fragment-ref="440669" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:440669,&quot;parent_product_id&quot;:440669,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=440669" rel="nofollow" data-product-id="440669" data-product-type="simple" data-original-product-id="440669" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Others		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/others/desi-scoop-rajbhog-ice-cream-1-ltr/">Desi Scoop Rajbhog Ice cream 1 Ltr</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>9.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=440669" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="440669" data-product_sku="" aria-label="Add &ldquo;Desi Scoop Rajbhog Ice cream 1 Ltr&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-440667 status-publish instock product_cat-others product_cat-dairyproducts product_tag-clearance product_tag-ice-cream has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440667">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/others/desi-scoop-butter-scotch-ice-cream-1-ltr/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/11/2-1-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Desi Scoop Butter Scotch Ice cream 1 Ltr" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/11/2-1-1.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-440667  wishlist-fragment on-first-load" data-fragment-ref="440667" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:440667,&quot;parent_product_id&quot;:440667,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=440667" rel="nofollow" data-product-id="440667" data-product-type="simple" data-original-product-id="440667" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Others		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/others/desi-scoop-butter-scotch-ice-cream-1-ltr/">Desi Scoop Butter Scotch Ice cream 1 Ltr</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>9.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=440667" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="440667" data-product_sku="" aria-label="Add &ldquo;Desi Scoop Butter Scotch Ice cream 1 Ltr&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-440666 status-publish instock product_cat-others product_cat-dairyproducts product_tag-clearance product_tag-ice-cream has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440666">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/others/desi-scoop-kaju-anjeer-ice-cream-1-ltr/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/11/3-1-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Desi Scoop Kaju Anjeer Ice cream 1 Ltr" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/11/3-1-1.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-440666  wishlist-fragment on-first-load" data-fragment-ref="440666" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:440666,&quot;parent_product_id&quot;:440666,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=440666" rel="nofollow" data-product-id="440666" data-product-type="simple" data-original-product-id="440666" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Others		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/others/desi-scoop-kaju-anjeer-ice-cream-1-ltr/">Desi Scoop Kaju Anjeer Ice cream 1 Ltr</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>9.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=440666" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="440666" data-product_sku="" aria-label="Add &ldquo;Desi Scoop Kaju Anjeer Ice cream 1 Ltr&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            	        </div>
 
 <div class="container section-title-container" ><h3 class="section-title section-title-bold-center"><b></b><span class="section-title-main" style="color:rgb(243, 136, 30);"><i class="icon-shopping-basket" ></i>Fruits &amp; Vegetables</span><b></b></h3></div>
 
@@ -2093,7 +1782,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
   	
 	     
 					
-<div class="product-small col has-hover product type-product post-15984 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-15984 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="15984">
 	<div class="isb_sale_percentage">
@@ -2154,7 +1843,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-440886 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-440886 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="440886">
 	<div class="isb_sale_percentage">
@@ -2215,7 +1904,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-423532 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-423532 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="423532">
 	<div class="isb_sale_percentage">
@@ -2276,7 +1965,113 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12961 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-441165 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="441165">
+	<div class="isb_sale_percentage">
+		<span class="isb_percentage">
+			25 
+		</span>
+		<span class="isb_percentage_text">
+			% 
+		</span>
+	</div>
+	<div class="isb_money_saved">
+		<span class="isb_saved_text">
+			Save 
+		</span>
+		<span class="isb_saved">
+			&#36;2.00		</span>
+	</div>
+</div>	<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/calypso-mango-2-pcs/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/09/Kensington-Mango-1-Pcs-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/09/Kensington-Mango-1-Pcs.jpg" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-441165  wishlist-fragment on-first-load" data-fragment-ref="441165" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:441165,&quot;parent_product_id&quot;:441165,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=441165" rel="nofollow" data-product-id="441165" data-product-type="simple" data-original-product-id="441165" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/calypso-mango-2-pcs/">Calypso Mango 2 Pcs</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>7.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=441165" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="441165" data-product_sku="" aria-label="Add &ldquo;Calypso Mango 2 Pcs&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-430818 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+		<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-turmeric-250-gm/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/09/Untitled-design-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Fresh Turmeric 250 gm" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/09/Untitled-design-1.png" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-430818  wishlist-fragment on-first-load" data-fragment-ref="430818" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:430818,&quot;parent_product_id&quot;:430818,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=430818" rel="nofollow" data-product-id="430818" data-product-type="simple" data-original-product-id="430818" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-turmeric-250-gm/">Fresh Turmeric 250 gm</a></p></div><div class="price-wrapper">
+	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=430818" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="430818" data-product_sku="" aria-label="Add &ldquo;Fresh Turmeric 250 gm&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-12961 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12961">
 	<div class="isb_sale_percentage">
@@ -2332,51 +2127,6 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/jap-pumpkin-cut-piece-1-each/">Jap Pumpkin Cut Piece 1 Each</a></p></div><div class="price-wrapper">
 	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>1.99</span></ins></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=12961" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12961" data-product_sku="" aria-label="Add &ldquo;Jap Pumpkin Cut Piece 1 Each&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-430818 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-		<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-turmeric-250-gm/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/09/Untitled-design-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Fresh Turmeric 250 gm" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/09/Untitled-design-1.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-430818  wishlist-fragment on-first-load" data-fragment-ref="430818" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:430818,&quot;parent_product_id&quot;:430818,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=430818" rel="nofollow" data-product-id="430818" data-product-type="simple" data-original-product-id="430818" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-turmeric-250-gm/">Fresh Turmeric 250 gm</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=430818" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="430818" data-product_sku="" aria-label="Add &ldquo;Fresh Turmeric 250 gm&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
@@ -2549,7 +2299,68 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-423530 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12991 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12991">
+	<div class="isb_sale_percentage">
+		<span class="isb_percentage">
+			17 
+		</span>
+		<span class="isb_percentage_text">
+			% 
+		</span>
+	</div>
+	<div class="isb_money_saved">
+		<span class="isb_saved_text">
+			Save 
+		</span>
+		<span class="isb_saved">
+			&#36;1.00		</span>
+	</div>
+</div>	<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/watermelon-half-pc/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Seedless-Watermelon--247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Seedless-Watermelon-.png" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12991  wishlist-fragment on-first-load" data-fragment-ref="12991" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12991,&quot;parent_product_id&quot;:12991,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=12991" rel="nofollow" data-product-id="12991" data-product-type="simple" data-original-product-id="12991" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/watermelon-half-pc/">Watermelon half pc</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=12991" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12991" data-product_sku="" aria-label="Add &ldquo;Watermelon half pc&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-423530 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="423530">
 	<div class="isb_sale_percentage">
@@ -2610,7 +2421,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-430520 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-430520 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -2655,7 +2466,68 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12943 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12993 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12993">
+	<div class="isb_sale_percentage">
+		<span class="isb_percentage">
+			20 
+		</span>
+		<span class="isb_percentage_text">
+			% 
+		</span>
+	</div>
+	<div class="isb_money_saved">
+		<span class="isb_saved_text">
+			Save 
+		</span>
+		<span class="isb_saved">
+			&#36;1.00		</span>
+	</div>
+</div>	<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/singuva-turia-1-pc/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Untitled-design-3-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Galka 1 Pc" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Untitled-design-3-1.png" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12993  wishlist-fragment on-first-load" data-fragment-ref="12993" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12993,&quot;parent_product_id&quot;:12993,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=12993" rel="nofollow" data-product-id="12993" data-product-type="simple" data-original-product-id="12993" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/singuva-turia-1-pc/">Singuva (Turia) 1 Pc</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=12993" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12993" data-product_sku="" aria-label="Add &ldquo;Singuva (Turia) 1 Pc&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-12943 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12943">
 	<div class="isb_sale_percentage">
@@ -2716,7 +2588,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-422869 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-422869 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -2761,7 +2633,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-13001 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-13001 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="13001">
 	<div class="isb_sale_percentage">
@@ -2822,7 +2694,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-11417 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale featured taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-11417 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale featured taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="11417">
 	<div class="isb_sale_percentage">
@@ -2878,128 +2750,6 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-pineapple/">Fresh Pineapple</a></p></div><div class="price-wrapper">
 	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></ins></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=11417" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="11417" data-product_sku="" aria-label="Add &ldquo;Fresh Pineapple&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-12990 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12990">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			17 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;1.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/rockmelon-1-each/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Rockmelon-1-Each-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Rockmelon-1-Each.jpg" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12990  wishlist-fragment on-first-load" data-fragment-ref="12990" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12990,&quot;parent_product_id&quot;:12990,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=12990" rel="nofollow" data-product-id="12990" data-product-type="simple" data-original-product-id="12990" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/rockmelon-1-each/">Rockmelon 1 Each</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=12990" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12990" data-product_sku="" aria-label="Add &ldquo;Rockmelon 1 Each&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-15749 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="15749">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			22 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;1.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/blueberries-1-box/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/11/Blueberries-1-box-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/11/Blueberries-1-box.jpg" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-15749  wishlist-fragment on-first-load" data-fragment-ref="15749" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:15749,&quot;parent_product_id&quot;:15749,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=15749" rel="nofollow" data-product-id="15749" data-product-type="simple" data-original-product-id="15749" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/blueberries-1-box/">Blueberries 1 box</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.49</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.49</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=15749" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="15749" data-product_sku="" aria-label="Add &ldquo;Blueberries 1 box&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
@@ -3066,12 +2816,12 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12947 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-15749 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12947">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="15749">
 	<div class="isb_sale_percentage">
 		<span class="isb_percentage">
-			13 
+			22 
 		</span>
 		<span class="isb_percentage_text">
 			% 
@@ -3087,8 +2837,8 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>	<div class="product-small box ">
 		<div class="box-image">
 			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/cooking-mango-1-kg/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Cooking-Mango-1-Kg-1-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Cooking-Mango-1-Kg-1.jpg" title="Home">				</a>
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/blueberries-1-box/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/11/Blueberries-1-box-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/11/Blueberries-1-box.jpg" title="Home">				</a>
 			</div>
 			<div class="image-tools is-small top right show-on-hover">
 						<div class="wishlist-icon">
@@ -3096,12 +2846,12 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 				<i class="icon-pen-alt-fill" ></i>			</button>
 			<div class="wishlist-popup dark">
 				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12947  wishlist-fragment on-first-load" data-fragment-ref="12947" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12947,&quot;parent_product_id&quot;:12947,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-15749  wishlist-fragment on-first-load" data-fragment-ref="15749" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:15749,&quot;parent_product_id&quot;:15749,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
 			
 			<!-- ADD TO WISHLIST -->
 			
 <div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=12947" rel="nofollow" data-product-id="12947" data-product-type="simple" data-original-product-id="12947" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+	<a href="https://easygrocery.com.au?add_to_wishlist=15749" rel="nofollow" data-product-id="15749" data-product-type="simple" data-original-product-id="15749" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
 				<span>Add to shopping list</span>
 	</a>
 </div>
@@ -3119,9 +2869,70 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 		<div class="box-text box-text-products text-center grid-style-2">
 			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
 			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/cooking-mango-1-kg/">Cooking Mango 1 Kg</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>7.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>6.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=12947" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12947" data-product_sku="10155" aria-label="Add &ldquo;Cooking Mango 1 Kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/blueberries-1-box/">Blueberries 1 box</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.49</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.49</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=15749" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="15749" data-product_sku="" aria-label="Add &ldquo;Blueberries 1 box&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-12990 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12990">
+	<div class="isb_sale_percentage">
+		<span class="isb_percentage">
+			17 
+		</span>
+		<span class="isb_percentage_text">
+			% 
+		</span>
+	</div>
+	<div class="isb_money_saved">
+		<span class="isb_saved_text">
+			Save 
+		</span>
+		<span class="isb_saved">
+			&#36;1.00		</span>
+	</div>
+</div>	<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/rockmelon-1-each/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Rockmelon-1-Each-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Rockmelon-1-Each.jpg" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12990  wishlist-fragment on-first-load" data-fragment-ref="12990" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12990,&quot;parent_product_id&quot;:12990,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=12990" rel="nofollow" data-product-id="12990" data-product-type="simple" data-original-product-id="12990" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/rockmelon-1-each/">Rockmelon 1 Each</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=12990" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12990" data-product_sku="" aria-label="Add &ldquo;Rockmelon 1 Each&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
@@ -3188,7 +2999,68 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12946 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12947 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12947">
+	<div class="isb_sale_percentage">
+		<span class="isb_percentage">
+			13 
+		</span>
+		<span class="isb_percentage_text">
+			% 
+		</span>
+	</div>
+	<div class="isb_money_saved">
+		<span class="isb_saved_text">
+			Save 
+		</span>
+		<span class="isb_saved">
+			&#36;1.00		</span>
+	</div>
+</div>	<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/cooking-mango-1-kg/">
+					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/08/Cooking-Mango-1-Kg-1-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Cooking-Mango-1-Kg-1.jpg" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12947  wishlist-fragment on-first-load" data-fragment-ref="12947" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12947,&quot;parent_product_id&quot;:12947,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=12947" rel="nofollow" data-product-id="12947" data-product-type="simple" data-original-product-id="12947" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/cooking-mango-1-kg/">Cooking Mango 1 Kg</a></p></div><div class="price-wrapper">
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>7.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>6.99</span></ins></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=12947" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12947" data-product_sku="10155" aria-label="Add &ldquo;Cooking Mango 1 Kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-12946 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -3233,7 +3105,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12983 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12983 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -3271,14 +3143,14 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
 			Daily needs		</p>
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/sweet-potato-1-kg/">Sweet Potato 1 Kg</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></span>
+	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=12983" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12983" data-product_sku="" aria-label="Add &ldquo;Sweet Potato 1 Kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-11427 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-11427 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="11427">
 	<div class="isb_sale_percentage">
@@ -3339,7 +3211,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12959 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12959 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -3384,25 +3256,9 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12979 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12979 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12979">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			20 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;1.00		</span>
-	</div>
-</div>	<div class="product-small box ">
+		<div class="product-small box ">
 		<div class="box-image">
 			<div class="image-none">
 				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/papaya-1-pc/">
@@ -3438,75 +3294,14 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
 			Daily needs		</p>
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/papaya-1-pc/">Papaya 1 pc</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></ins></span>
+	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>4.99</span></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=12979" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12979" data-product_sku="" aria-label="Add &ldquo;Papaya 1 pc&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-13903 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="13903">
-	<div class="isb_sale_percentage">
-		<span class="isb_percentage">
-			25 
-		</span>
-		<span class="isb_percentage_text">
-			% 
-		</span>
-	</div>
-	<div class="isb_money_saved">
-		<span class="isb_saved_text">
-			Save 
-		</span>
-		<span class="isb_saved">
-			&#36;2.00		</span>
-	</div>
-</div>	<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/australian-mango-kensington-pride-2-pcs/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2018/09/Kensington-Mango-1-Pcs-247x296.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/09/Kensington-Mango-1-Pcs.jpg" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-13903  wishlist-fragment on-first-load" data-fragment-ref="13903" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:13903,&quot;parent_product_id&quot;:13903,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=13903" rel="nofollow" data-product-id="13903" data-product-type="simple" data-original-product-id="13903" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/australian-mango-kensington-pride-2-pcs/">Australian Mango (Kensington Pride) 2 Pcs</a></p></div><div class="price-wrapper">
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>7.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>5.99</span></ins></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=13903" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="13903" data-product_sku="" aria-label="Add &ldquo;Australian Mango (Kensington Pride) 2 Pcs&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-11428 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale featured taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-11428 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale featured taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="11428">
 	<div class="isb_sale_percentage">
@@ -3612,7 +3407,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12992 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12992 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12992">
 	<div class="isb_sale_percentage">
@@ -3673,7 +3468,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-10266 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-10266 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="10266">
 	<div class="isb_sale_percentage">
@@ -3734,7 +3529,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-11415 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-11415 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="11415">
 	<div class="isb_sale_percentage">
@@ -3856,7 +3651,52 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12975 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12996 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+	<div class="col-inner">
+		<div class="product-small box ">
+		<div class="box-image">
+			<div class="image-none">
+				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/strawberry-box/">
+					<img width="225" height="225" src="https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box.jpg 225w, https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box-100x100.jpg 100w, https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box-32x32.jpg 32w" sizes="(max-width: 225px) 100vw, 225px" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Strawberry-Box.jpg" title="Home">				</a>
+			</div>
+			<div class="image-tools is-small top right show-on-hover">
+						<div class="wishlist-icon">
+			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
+				<i class="icon-pen-alt-fill" ></i>			</button>
+			<div class="wishlist-popup dark">
+				
+<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12996  wishlist-fragment on-first-load" data-fragment-ref="12996" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12996,&quot;parent_product_id&quot;:12996,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
+			
+			<!-- ADD TO WISHLIST -->
+			
+<div class="yith-wcwl-add-button">
+	<a href="https://easygrocery.com.au?add_to_wishlist=12996" rel="nofollow" data-product-id="12996" data-product-type="simple" data-original-product-id="12996" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
+				<span>Add to shopping list</span>
+	</a>
+</div>
+			<!-- COUNT TEXT -->
+			
+			</div>			</div>
+		</div>
+					</div>
+			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
+							</div>
+			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
+							</div>
+					</div>
+
+		<div class="box-text box-text-products text-center grid-style-2">
+			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
+			Daily needs		</p>
+	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/strawberry-box/">Strawberry Box</a></p></div><div class="price-wrapper">
+	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></span>
+</div><div class="add-to-cart-button"><a href="?add-to-cart=12996" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12996" data-product_sku="" aria-label="Add &ldquo;Strawberry Box&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
+	</div>
+		</div>
+</div>
+	            
+					
+<div class="product-small col has-hover product type-product post-12975 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-clearance product_tag-fruit product_tag-weekly-special has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="12975">
 	<div class="isb_sale_percentage">
@@ -3917,52 +3757,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12996 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-		<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/strawberry-box/">
-					<img width="225" height="225" src="https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box.jpg 225w, https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box-100x100.jpg 100w, https://storage.googleapis.com/easygrocery/2018/08/Strawberry-Box-32x32.jpg 32w" sizes="(max-width: 225px) 100vw, 225px" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/08/Strawberry-Box.jpg" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-12996  wishlist-fragment on-first-load" data-fragment-ref="12996" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:12996,&quot;parent_product_id&quot;:12996,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=12996" rel="nofollow" data-product-id="12996" data-product-type="simple" data-original-product-id="12996" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/strawberry-box/">Strawberry Box</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=12996" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12996" data-product_sku="" aria-label="Add &ldquo;Strawberry Box&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-409996 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-409996 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -4052,7 +3847,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-12974 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-12974 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
 		<div class="box-image">
@@ -4090,14 +3885,14 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
 			Daily needs		</p>
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/okra-fresh-1-kg/">Okra Fresh 1 Kg</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>11.99</span></span>
+	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>13.99</span></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=12974" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12974" data-product_sku="" aria-label="Add &ldquo;Okra Fresh 1 Kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-11438 status-publish last instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
+<div class="product-small col has-hover product type-product post-11438 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail sale taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 	<div class="isb_sale_badge isb_style_inline isb_sk_material isb_left" data-id="11438">
 	<div class="isb_sale_percentage">
@@ -4158,51 +3953,6 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 </div>
 	            
 					
-<div class="product-small col has-hover product type-product post-409997 status-publish first instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-		<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/small-purple-eggplant-500-gm/">
-					<img width="247" height="296" src="https://storage.googleapis.com/easygrocery/2020/06/2-1-247x296.png" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Small Purple Eggplant 500 gm" loading="lazy" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2020/06/2-1.png" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-409997  wishlist-fragment on-first-load" data-fragment-ref="409997" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:409997,&quot;parent_product_id&quot;:409997,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=409997" rel="nofollow" data-product-id="409997" data-product-type="simple" data-original-product-id="409997" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/small-purple-eggplant-500-gm/">Small Purple Eggplant 500 gm</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>3.99</span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=409997" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="409997" data-product_sku="" aria-label="Add &ldquo;Small Purple Eggplant 500 gm&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
 <div class="product-small col has-hover product type-product post-12986 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-fruit has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
 	<div class="col-inner">
 		<div class="product-small box ">
@@ -4243,51 +3993,6 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/red-delecious-apple-1-kg/">Red delecious Apple 1 kg</a></p></div><div class="price-wrapper">
 	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>6.99</span></span>
 </div><div class="add-to-cart-button"><a href="?add-to-cart=12986" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="12986" data-product_sku="" aria-label="Add &ldquo;Red delecious Apple 1 kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
-	</div>
-		</div>
-</div>
-	            
-					
-<div class="product-small col has-hover product type-product post-11412 status-publish instock product_cat-dailyneeds product_cat-vegetables-and-fruits product_tag-vegetable has-post-thumbnail taxable shipping-taxable purchasable product-type-simple">
-	<div class="col-inner">
-		<div class="product-small box ">
-		<div class="box-image">
-			<div class="image-none">
-				<a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-potato-white-washed-5-kg/">
-					<img width="225" height="225" src="https://storage.googleapis.com/easygrocery/2018/06/Fresh-Potato-White-Washed-1-Kg.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-stateless-item" alt="Buy Groceries Online" loading="lazy" srcset="https://storage.googleapis.com/easygrocery/2018/06/Fresh-Potato-White-Washed-1-Kg.jpg 225w, https://storage.googleapis.com/easygrocery/2018/06/Fresh-Potato-White-Washed-1-Kg-100x100.jpg 100w, https://storage.googleapis.com/easygrocery/2018/06/Fresh-Potato-White-Washed-1-Kg-32x32.jpg 32w" sizes="(max-width: 225px) 100vw, 225px" data-image-size="woocommerce_thumbnail" data-stateless-media-bucket="easygrocery" data-stateless-media-name="2018/06/Fresh-Potato-White-Washed-1-Kg.jpg" title="Home">				</a>
-			</div>
-			<div class="image-tools is-small top right show-on-hover">
-						<div class="wishlist-icon">
-			<button class="wishlist-button button is-outline circle icon" aria-label="Wishlist">
-				<i class="icon-pen-alt-fill" ></i>			</button>
-			<div class="wishlist-popup dark">
-				
-<div class="yith-wcwl-add-to-wishlist add-to-wishlist-11412  wishlist-fragment on-first-load" data-fragment-ref="11412" data-fragment-options="{&quot;base_url&quot;:&quot;https:\/\/easygrocery.com.au&quot;,&quot;wishlist_url&quot;:&quot;https:\/\/easygrocery.com.au\/wishlist\/&quot;,&quot;in_default_wishlist&quot;:false,&quot;is_single&quot;:false,&quot;show_exists&quot;:false,&quot;product_id&quot;:11412,&quot;parent_product_id&quot;:11412,&quot;product_type&quot;:&quot;simple&quot;,&quot;show_view&quot;:false,&quot;browse_wishlist_text&quot;:&quot;Browse shopping list&quot;,&quot;already_in_wishslist_text&quot;:&quot;The product is already in the shopping list!&quot;,&quot;product_added_text&quot;:&quot;Product added!&quot;,&quot;heading_icon&quot;:&quot;&quot;,&quot;available_multi_wishlist&quot;:false,&quot;disable_wishlist&quot;:false,&quot;show_count&quot;:false,&quot;ajax_loading&quot;:false,&quot;loop_position&quot;:false,&quot;item&quot;:&quot;add_to_wishlist&quot;}">
-			
-			<!-- ADD TO WISHLIST -->
-			
-<div class="yith-wcwl-add-button">
-	<a href="https://easygrocery.com.au?add_to_wishlist=11412" rel="nofollow" data-product-id="11412" data-product-type="simple" data-original-product-id="11412" class="add_to_wishlist single_add_to_wishlist" data-title="Add to shopping list">
-				<span>Add to shopping list</span>
-	</a>
-</div>
-			<!-- COUNT TEXT -->
-			
-			</div>			</div>
-		</div>
-					</div>
-			<div class="image-tools is-small hide-for-small bottom left show-on-hover">
-							</div>
-			<div class="image-tools grid-tools text-center hide-for-small bottom hover-slide-in show-on-hover">
-							</div>
-					</div>
-
-		<div class="box-text box-text-products text-center grid-style-2">
-			<div class="title-wrapper">		<p class="category uppercase is-smaller no-text-overflow product-cat op-7">
-			Daily needs		</p>
-	<p class="name product-title woocommerce-loop-product__title"><a href="https://easygrocery.com.au/product/dailyneeds/vegetables-and-fruits/fresh-potato-white-washed-5-kg/">Fresh Potato White Washed 5 Kg</a></p></div><div class="price-wrapper">
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&#36;</span>6.99</span></span>
-</div><div class="add-to-cart-button"><a href="?add-to-cart=11412" data-quantity="1" class="primary is-small mb-0 button product_type_simple add_to_cart_button ajax_add_to_cart is-gloss" data-product_id="11412" data-product_sku="" aria-label="Add &ldquo;Fresh Potato White Washed 5 Kg&rdquo; to your cart" rel="nofollow">Add to cart</a></div>		</div>
 	</div>
 		</div>
 </div>
@@ -4438,7 +4143,7 @@ div.nsl-container-grid[data-align="space-between"] .nsl-container-buttons {
 
 		
 <style>
-#section_876355896 {
+#section_1957313156 {
   padding-top: 30px;
   padding-bottom: 30px;
   background-color: rgb(255, 255, 255);
@@ -4733,7 +4438,7 @@ ABN: 97768336728
 						<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
 							<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> <span>Remember me</span>
 						</label>
-						<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="535610262b" /><input type="hidden" name="_wp_http_referer" value="/" />						<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
+						<input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="9b99e33471" /><input type="hidden" name="_wp_http_referer" value="/" />						<button type="submit" class="woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
 					</p>
 					<p class="woocommerce-LostPassword lost_password">
 						<a href="https://easygrocery.com.au/my-account/lost-password/">Lost your password?</a>
@@ -4769,7 +4474,7 @@ ABN: 97768336728
 					
 					<div class="woocommerce-privacy-policy-text"></div>
 					<p class="woocommerce-form-row form-row">
-						<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="1b0ca8b4b5" /><input type="hidden" name="_wp_http_referer" value="/" />						<button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
+						<input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="3f9c5bef92" /><input type="hidden" name="_wp_http_referer" value="/" />						<button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
 					</p>
 
 					
@@ -4849,19 +4554,19 @@ var flatsomeVars = {"ajaxurl":"https:\/\/easygrocery.com.au\/wp-admin\/admin-aja
 <script type='text/javascript' src='https://easygrocery.com.au/wp-content/themes/flatsome/inc/extensions/flatsome-live-search/flatsome-live-search.js?ver=3.12.3' id='flatsome-live-search-js'></script>
 <script type='text/javascript' id='wc-jilt-subscribe-form-js-extra'>
 /* <![CDATA[ */
-var wc_jilt_subscribe = {"nonce":"bd20b01f3d","loader":"https:\/\/easygrocery.com.au\/wp-content\/plugins\/jilt-for-woocommerce\/lib\/skyverge\/woocommerce\/assets\/images\/ajax-loader.gif"};
+var wc_jilt_subscribe = {"nonce":"5dbcd12e9c","loader":"https:\/\/easygrocery.com.au\/wp-content\/plugins\/jilt-for-woocommerce\/lib\/skyverge\/woocommerce\/assets\/images\/ajax-loader.gif"};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://easygrocery.com.au/wp-content/plugins/jilt-for-woocommerce/assets/js/frontend/wc-jilt-subscribe-form.min.js?ver=1.7.7' id='wc-jilt-subscribe-form-js'></script>
 <script type='text/javascript' id='wc-jilt-js-extra'>
 /* <![CDATA[ */
-var jiltStorefrontParams = {"public_key":"pk_2fda8587d06053192217c4ce0228bbcc","order_address_mapping":{"email":"email","first_name":"first_name","last_name":"last_name","address_1":"address1","address_2":"address2","company":"company","city":"city","state":"state_code","postcode":"postal_code","country":"country_code","phone":"phone"},"cart_hash":"7771f8ea73cb7c48f783f7ebd6f943d0","cart_token":"de0e1db5-f564-4206-8ebe-8c65cc45379c","ajax_url":"\/?wc-ajax=%%endpoint%%","nonce":"67a0a450ed","log_threshold":"900","x_jilt_shop_domain":"easygrocery.com.au","shop_uuid":"165953d0-0412-4abf-bc5e-1baefa033540","show_email_usage_notice":"","popover_dismiss_message":"No thanks, I'll enter my email later.","platform":"woocommerce","api_url":"https:\/\/api.jilt.com","tracking_elem_selector":"#jilt-cart-data","signup_form":{"enabled":true,"name_fields_enabled":false,"seconds_delay":2,"exit_intent":false,"heading":"Join us now","content":"Be the first to know about our latest offers and coupon code","tags":[],"list_ids":[3170],"button_color":"#f3881e","button_text_color":"#000000"},"capture_email_on_add_to_cart":"","recover_held_orders":"","show_marketing_consent_opt_in":"","checkout_consent_prompt":"Please send me emails with exclusive offers and other updates from EasyGrocery. Unsubscribe at any time and see our Privacy Policy for how we use your data."};
+var jiltStorefrontParams = {"public_key":"pk_2fda8587d06053192217c4ce0228bbcc","order_address_mapping":{"email":"email","first_name":"first_name","last_name":"last_name","address_1":"address1","address_2":"address2","company":"company","city":"city","state":"state_code","postcode":"postal_code","country":"country_code","phone":"phone"},"cart_hash":"58c659471524eaa0be263f36f365e3d0","cart_token":"90ede14a-788d-41b1-b950-fe4946b61019","ajax_url":"\/?wc-ajax=%%endpoint%%","nonce":"cfcdb729bd","log_threshold":"900","x_jilt_shop_domain":"easygrocery.com.au","shop_uuid":"165953d0-0412-4abf-bc5e-1baefa033540","show_email_usage_notice":"","popover_dismiss_message":"No thanks, I'll enter my email later.","platform":"woocommerce","api_url":"https:\/\/api.jilt.com","tracking_elem_selector":"#jilt-cart-data","signup_form":{"enabled":true,"name_fields_enabled":false,"seconds_delay":2,"exit_intent":false,"heading":"Join us now","content":"Be the first to know about our latest offers and coupon code","tags":[],"list_ids":[3170],"button_color":"#f3881e","button_text_color":"#000000"},"capture_email_on_add_to_cart":"","recover_held_orders":"","show_marketing_consent_opt_in":"","checkout_consent_prompt":"Please send me emails with exclusive offers and other updates from EasyGrocery. Unsubscribe at any time and see our Privacy Policy for how we use your data."};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://js.jilt.com/storefront/v1/jilt.js?ver=1.7.7' id='wc-jilt-js'></script>
 <script type='text/javascript' id='isb-scripts-js-extra'>
 /* <![CDATA[ */
-var isb = {"time":"1606246293","localization":{"d":"d","days":"days"}};
+var isb = {"time":"1606681178","localization":{"d":"d","days":"days"}};
 /* ]]> */
 </script>
 <script type='text/javascript' src='https://easygrocery.com.au/wp-content/plugins/improved-sale-badges/assets/js/scripts.js?ver=4.2.2' id='isb-scripts-js'></script>
@@ -5194,4 +4899,4 @@ window._nsl.push(function ($) {
 </body>
 </html>
 
-<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1606206694 -->
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1606641579 -->
