@@ -205,7 +205,7 @@ class Login extends React.Component {
           <Grid columns={2} doubling stackable>
             <Grid.Column textAlign="left" verticalAlign="middle">
               <Header
-                content='Reducing household waste starts with your inventory'
+                content='Reducing food waste starts with your inventory'
                 className={isMobile ? "text main mobile" : "text main"}
               />
             </Grid.Column>
