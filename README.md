@@ -5,3 +5,5 @@ The front-end code is in /webapp and the API is in /api.
 There's minimal configuration required and the main ones are in:
 - conf.ini in /api where details about the MySQL instance, etc are stored
 - and the respective .js files in /webapp/src for the API host address, e.g., https://inven3s.xyz
+
+The schema for the tables in the MySQL DB is in the file /dbschema.sql
